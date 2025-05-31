@@ -1,5 +1,7 @@
 # OctapusPrime One‐Touch Pentest Suite with Dark‐Mode Web UI
 
+![Octapus Logo](logo.png)
+
 **Octapus** is a headless pentesting appliance designed to run on a small ARM‐based board (e.g., Neo Pi running DietPi or Debian). It combines a suite of proven CLI tools (Nmap, Masscan, Gobuster, Nikto, SQLmap, Hydra, etc.) with:
 
 - A **physical GPIO trigger** (push-button + LED) to launch a default scan sequence  
