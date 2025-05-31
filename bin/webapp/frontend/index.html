@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Octapus Scan Designer - Dark Mode</title>
+  <style>
+    /* ===== Global Dark Mode Styles ===== */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Roboto Mono", monospace;
+      background: #0d0d0d;
+      color: #e6e6e6;
+      overflow: hidden;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      padding: 8px 16px;
+      transition: background 0.2s;
+      font-family: inherit;
+      color: #e6e6e6;
+      background: #1a1a1a;
+    }
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ===== Container Layout ===== */
+    #container {
+      display: flex;
+      height: 100%;
+    }
+
+    /* ===== Left Sidebar: Tool Palette ===== */
+    #palette {
+      width: 260px;
+      background: #141414;
+      border-right: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    #palette h3 {
+      margin: 0 0 12px 0;
+      font-size: 20px;
+      color: #39ff14;
+      text-shadow: 0 0 8px #39ff14;
+    }
+    .tool-card {
+      user-select: none;
+      background: #1f1f1f;
+      border: 1px solid #333;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      padding: 10px;
+      font-weight: 600;
+      text-align: center;
+      color: #39ff14;
+      transition: background 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+    .tool-card:hover {
+      background: #272727;
+      box-shadow: 0 0 8px #39ff14;
+    }
+    .tool-card:active {
+      background: #333;
+      box-shadow: 0 0 12px #39ff14;
+    }
+    .arg-palette {
+      margin-top: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .arg-chip {
+      background: #2d2d2d;
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 4px 8px;
+      font-size: 12px;
+      color: #e6e6e6;
+      cursor: grab;
+    }
+    .arg-chip:hover {
+      background: #3a3a3a;
+    }
+
+    /* ===== Main Content: Dropzone + Controls + Output ===== */
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    #header {
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #header h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #39ff14;
+      text-shadow: 0 0 8px #39ff14;
+    }
+    #controls {
+      flex: 0 0 auto;
+    }
+    #controls button#start-btn {
+      background: #39ff14;
+      color: #0d0d0d;
+      box-shadow: 0 0 8px #39ff14;
+    }
+    #controls button#start-btn:hover {
+      background: #2ecc71;
+      box-shadow: 0 0 12px #39ff14;
+    }
+    #controls button#stop-btn {
+      background: #ff0033;
+      color: #f0f0f0;
+      margin-left: 8px;
+      box-shadow: 0 0 8px #ff0033;
+    }
+    #controls button#stop-btn:hover {
+      background: #e6002e;
+      box-shadow: 0 0 12px #ff0033;
+    }
+
+    /* ===== Dropzone ===== */
+    #dropzone {
+      flex: 0 0 220px;
+      margin-top: 16px;
+      padding: 12px;
+      background: #1a1a1a;
+      border: 2px dashed #444;
+      border-radius: 4px;
+      overflow-y: auto;
+      transition: background 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    #dropzone.dragover {
+      background: #272727;
+      border-color: #39ff14;
+    }
+    #dropzone .placeholder {
+      text-align: center;
+      color: #777;
+      margin-top: 60px;
+      font-style: italic;
+    }
+    .scheduled-item {
+      background: #262626;
+      border: 1px solid #333;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.5);
+    }
+    .scheduled-item .tool-info {
+      display: flex;
+      align-items: center;
+    }
+    .scheduled-item .tool-label {
+      font-weight: 600;
+      color: #39ff14;
+      margin-right: 8px;
+      min-width: 60px;
+    }
+    .scheduled-item input {
+      flex: 1;
+      padding: 6px 10px;
+      font-size: 13px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background: #0d0d0d;
+      color: #e6e6e6;
+    }
+    .scheduled-item .remove-btn {
+      background: #ff0033;
+      color: #f0f0f0;
+      margin-left: 8px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .scheduled-item .remove-btn:hover {
+      background: #e6002e;
+    }
+
+    /* ===== Output Area ===== */
+    #output-container {
+      flex: 1;
+      margin-top: 16px;
+      overflow-y: auto;
+    }
+    .output-card {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.5);
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .output-header {
+      background: #262626;
+      padding: 10px 14px;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .output-header .title {
+      font-weight: 600;
+      color: #39ff14;
+    }
+    .output-header .toggle-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      color: #888;
+      transition: transform 0.2s;
+    }
+    .output-header.expanded .toggle-btn {
+      transform: rotate(90deg);
+      color: #39ff14;
+    }
+    .output-body {
+      max-height: 0;
+      overflow-y: auto;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 14px;
+      background: #0d0d0d;
+      font-family: Consolas, monospace;
+      font-size: 13px;
+      color: #00e600;
+      border-top: 1px solid #333;
+    }
+    .output-body.expanded {
+      padding: 8px 14px;
+      max-height: 300px;
+    }
+    .output-line {
+      white-space: pre-wrap;
+      margin: 0;
+      line-height: 1.3em;
+    }
+
+    /* ===== Arguments Drag-Drop ===== */
+    .args-section {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      background: #141414;
+      border: 1px solid #333;
+      border-radius: 4px;
+      padding: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+      animation: fadeIn 0.3s ease-out;
+    }
+    .args-section h4 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      color: #39ff14;
+    }
+    .arg-category {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .arg-category label {
+      font-size: 14px;
+      margin-right: 4px;
+      color: #ccc;
+    }
+
+    /* Hide default scrollbar in dark areas */
+    #dropzone::-webkit-scrollbar,
+    #output-container::-webkit-scrollbar,
+    .output-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    #dropzone::-webkit-scrollbar-thumb,
+    #output-container::-webkit-scrollbar-thumb,
+    .output-body::-webkit-scrollbar-thumb {
+      background-color: #333;
+      border-radius: 3px;
+    }
+    #dropzone::-webkit-scrollbar-track,
+    #output-container::-webkit-scrollbar-track,
+    .output-body::-webkit-scrollbar-track {
+      background: #0d0d0d;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- ===== Left Sidebar: Tool Palette with Arguments ===== -->
+    <div id="palette">
+      <h3>Tools</h3>
+      <div class="tool-card" draggable="true" data-tool="nmap">
+        Nmap
+        <div class="arg-palette">
+          <!-- Example argument chips -->
+          <div class="arg-chip" draggable="true" data-arg="-sV">-sV</div>
+          <div class="arg-chip" draggable="true" data-arg="-A">-A</div>
+          <div class="arg-chip" draggable="true" data-arg="-O">-O</div>
+          <div class="arg-chip" draggable="true" data-arg="-T4">-T4</div>
+          <div class="arg-chip" draggable="true" data-arg="-p 80,443">-p 80,443</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="masscan">
+        Masscan
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-p1-65535">-p1-65535</div>
+          <div class="arg-chip" draggable="true" data-arg="--rate 1000">--rate 1000</div>
+          <div class="arg-chip" draggable="true" data-arg="--ping">--ping</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="gobuster">
+        Gobuster
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="dir -u http://target">dir</div>
+          <div class="arg-chip" draggable="true" data-arg="-w /usr/share/wordlists/dirb/common.txt">-w common.txt</div>
+          <div class="arg-chip" draggable="true" data-arg="-x php,txt">-x php,txt</div>
+          <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="nikto">
+        Nikto
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-h http://target">-h target</div>
+          <div class="arg-chip" draggable="true" data-arg="-Tuning x">-Tuning x</div>
+          <div class="arg-chip" draggable="true" data-arg="-Display V">-Display V</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="sqlmap">
+        SQLmap
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-u http://target?id=1">-u target</div>
+          <div class="arg-chip" draggable="true" data-arg="--batch">--batch</div>
+          <div class="arg-chip" draggable="true" data-arg="--level 5">--level 5</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="hydra">
+        Hydra
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-l admin">-l admin</div>
+          <div class="arg-chip" draggable="true" data-arg="-P /path/to/wordlist">-P wordlist</div>
+          <div class="arg-chip" draggable="true" data-arg="-t 4">-t 4</div>
+        </div>
+      </div>
+    </div> <!-- /palette -->
+
+    <!-- ===== Main Content: Dropzone, Controls, Output ===== -->
+    <div id="main">
+      <!-- Header + Controls -->
+      <div id="header">
+        <h2>Scheduled Scans</h2>
+        <div id="controls">
+          <button id="start-btn">Start</button>
+          <button id="stop-btn">Stop</button>
+        </div>
+      </div>
+
+      <!-- Drop Zone ===== -->
+      <div id="dropzone">
+        <p class="placeholder">Drag a tool here to add it.</p>
+      </div>
+
+      <!-- Output Area ===== -->
+      <div id="output-container">
+        <!-- Dynamically created output cards appear here -->
+      </div>
+    </div> <!-- /main -->
+  </div> <!-- /container -->
+
+  <!-- Socket.IO client for live logs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
+  <script>
+    // ======== WebSocket / Live Logs Setup ========
+    const socket = io();
+    const outputCards = {};
+
+    socket.on('log', msg => {
+      const { tool, line } = msg;
+      if (!outputCards[tool]) return;
+      const body = outputCards[tool].querySelector('.output-body');
+      const p = document.createElement('p');
+      p.className = 'output-line';
+      p.textContent = line;
+      body.appendChild(p);
+      if (body.classList.contains('expanded')) {
+        body.scrollTop = body.scrollHeight;
+      }
+    });
+
+    // ======== Drag & Drop Logic ========
+    const toolCards = document.querySelectorAll('.tool-card');
+    const dropzone = document.getElementById('dropzone');
+    const placeholder = dropzone.querySelector('.placeholder');
+
+    toolCards.forEach(card => {
+      // Dragging tool itself
+      card.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', card.dataset.tool);
+      });
+
+      // Dragging argument chips
+      const argChips = card.querySelectorAll('.arg-chip');
+      argChips.forEach(chip => {
+        chip.addEventListener('dragstart', e => {
+          // Transfer chip text and parent tool name
+          e.dataTransfer.setData('application/json', JSON.stringify({
+            tool: card.dataset.tool,
+            arg: chip.dataset.arg
+          }));
+        });
+      });
+    });
+
+    dropzone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('dragover');
+    });
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      let data;
+      try {
+        data = JSON.parse(e.dataTransfer.getData('application/json'));
+        // Argument chip drop
+        const { tool, arg } = data;
+        const existingItem = Array.from(document.querySelectorAll('.scheduled-item')).find(it => it.dataset.tool === tool);
+        if (existingItem) {
+          const input = existingItem.querySelector('input');
+          const current = input.value.trim();
+          if (!current.includes(arg)) {
+            input.value = current ? `${current} ${arg}` : arg;
+          }
+        }
+      } catch {
+        // Not an argument chip, treat as tool card
+        const toolName = e.dataTransfer.getData('text/plain');
+        if (toolName) {
+          addScheduledTool(toolName);
+        }
+      }
+    });
+
+    function addScheduledTool(toolName) {
+      if (placeholder) {
+        placeholder.style.display = 'none';
+      }
+      // Prevent duplicates
+      if (document.querySelector(`.scheduled-item[data-tool="${toolName}"]`)) return;
+
+      const item = document.createElement('div');
+      item.className = 'scheduled-item';
+      item.dataset.tool = toolName;
+
+      const info = document.createElement('div');
+      info.className = 'tool-info';
+      const label = document.createElement('div');
+      label.className = 'tool-label';
+      label.textContent = toolName;
+      info.appendChild(label);
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = 'Drag args here or type manually';
+      info.appendChild(input);
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'remove-btn';
+      removeBtn.textContent = '✕';
+      removeBtn.addEventListener('click', () => {
+        if (outputCards[toolName]) {
+          outputCards[toolName].remove();
+          delete outputCards[toolName];
+        }
+        item.remove();
+        if (!document.querySelector('.scheduled-item')) {
+          placeholder.style.display = '';
+        }
+      });
+
+      item.appendChild(info);
+      item.appendChild(removeBtn);
+      dropzone.appendChild(item);
+
+      if (!outputCards[toolName]) {
+        const card = createOutputCard(toolName);
+        outputCards[toolName] = card;
+        document.getElementById('output-container').appendChild(card);
+      }
+    }
+
+    // ======== Create Output Card ========
+    function createOutputCard(toolName) {
+      const card = document.createElement('div');
+      card.className = 'output-card';
+      card.dataset.tool = toolName;
+
+      const header = document.createElement('div');
+      header.className = 'output-header';
+      header.innerHTML = `
+        <div class="title">${toolName} Output</div>
+        <button class="toggle-btn">▶</button>
+      `;
+      card.appendChild(header);
+
+      const body = document.createElement('div');
+      body.className = 'output-body';
+      card.appendChild(body);
+
+      const toggleBtn = header.querySelector('.toggle-btn');
+      header.addEventListener('click', () => {
+        const expanded = body.classList.toggle('expanded');
+        if (expanded) {
+          header.classList.add('expanded');
+          toggleBtn.textContent = '▼';
+          body.scrollTop = body.scrollHeight;
+        } else {
+          header.classList.remove('expanded');
+          toggleBtn.textContent = '▶';
+        }
+      });
+
+      return card;
+    }
+
+    // ======== Start/Stop Button Logic ========
+    document.getElementById('start-btn').addEventListener('click', () => {
+      const items = document.querySelectorAll('.scheduled-item');
+      if (items.length === 0) {
+        alert('No tools scheduled. Drag at least one tool into the list.');
+        return;
+      }
+      const scripts = [];
+      items.forEach(it => {
+        const tool = it.dataset.tool;
+        const argsText = it.querySelector('input').value.trim();
+        const args = argsText ? argsText.split(/\s+/) : [];
+        scripts.push({ tool, args });
+      });
+      // Clear existing logs
+      for (const t in outputCards) {
+        const body = outputCards[t].querySelector('.output-body');
+        body.innerHTML = '';
+      }
+      fetch('/start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scripts })
+      })
+      .then(resp => {
+        if (!resp.ok) {
+          return resp.json().then(j => {
+            console.error(j);
+            alert('Error: ' + j.message);
+          });
+        } else {
+          console.log('Scan launched.');
+        }
+      })
+      .catch(err => {
+        console.error('Fetch error:', err);
+      });
+    });
+
+    document.getElementById('stop-btn').addEventListener('click', () => {
+      fetch('/stop', { method: 'POST' })
+        .then(() => console.log('Stop requested.'))
+        .catch(err => console.error(err));
+    });
+  </script>
+</body>
+</html>
