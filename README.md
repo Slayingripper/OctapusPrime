@@ -1,4 +1,4 @@
-# OctapusPrime One‐Touch Pentest Suite with Dark‐Mode Web UI
+# OctapusPrime One‐Touch Pentest Suite 
 
 ![Octapus Logo](logo.png)
 
@@ -17,7 +17,7 @@ With OctapusPrime, you can either press a button to run a preconfigured scan sui
 
 ## Table of Contents
 
-- [OctapusPrime One‐Touch Pentest Suite with Dark‐Mode Web UI](#octapusprime-onetouch-pentest-suite-with-darkmode-web-ui)
+- [OctapusPrime One‐Touch Pentest Suite](#octapusprime-onetouch-pentest-suite)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Architecture Overview](#architecture-overview)
