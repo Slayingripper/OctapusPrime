@@ -1,0 +1,333 @@
+2025-06-01 10:30:16,386 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 10:30:16,386 [33mPress CTRL+C to quit[0m
+2025-06-01 10:30:27,313 127.0.0.1 - - [01/Jun/2025 10:30:27] "GET / HTTP/1.1" 200 -
+2025-06-01 10:30:27,571 127.0.0.1 - - [01/Jun/2025 10:30:27] "GET /socket.io/?EIO=4&transport=polling&t=PSgPYXm HTTP/1.1" 200 -
+2025-06-01 10:30:27,574 127.0.0.1 - - [01/Jun/2025 10:30:27] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 10:30:27,577 127.0.0.1 - - [01/Jun/2025 10:30:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 10:30:27,587 New WebSocket client connected
+2025-06-01 10:30:27,588 127.0.0.1 - - [01/Jun/2025 10:30:27] "POST /socket.io/?EIO=4&transport=polling&t=PSgPYXv&sid=d8o5uHGGAo9chq3PAAAA HTTP/1.1" 200 -
+2025-06-01 10:30:27,588 127.0.0.1 - - [01/Jun/2025 10:30:27] "GET /socket.io/?EIO=4&transport=polling&t=PSgPYXv.0&sid=d8o5uHGGAo9chq3PAAAA HTTP/1.1" 200 -
+2025-06-01 10:30:27,594 127.0.0.1 - - [01/Jun/2025 10:30:27] "GET /socket.io/?EIO=4&transport=polling&t=PSgPYY8&sid=d8o5uHGGAo9chq3PAAAA HTTP/1.1" 200 -
+2025-06-01 10:30:27,611 127.0.0.1 - - [01/Jun/2025 10:30:27] "GET /socket.io/?EIO=4&transport=polling&t=PSgPYYP&sid=d8o5uHGGAo9chq3PAAAA HTTP/1.1" 200 -
+2025-06-01 10:30:30,706 [octapus] Failed to detect local CIDR: [Errno 19] No such device
+2025-06-01 10:30:30,706 127.0.0.1 - - [01/Jun/2025 10:30:30] "[35m[1mGET /local_cidr HTTP/1.1[0m" 500 -
+2025-06-01 10:30:35,518 [octapus] Failed to detect local CIDR: [Errno 19] No such device
+2025-06-01 10:30:35,518 127.0.0.1 - - [01/Jun/2025 10:30:35] "[35m[1mGET /local_cidr HTTP/1.1[0m" 500 -
+2025-06-01 10:30:43,148 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': []}]
+2025-06-01 10:30:43,148 127.0.0.1 - - [01/Jun/2025 10:30:43] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:30:43,173 [octapus] Starting nmap: nmap -oX /tmp/octapus_nmap_28531.xml
+2025-06-01 10:30:43,227 [nmap] Starting Nmap 7.80 ( https://nmap.org ) at 2025-06-01 10:30 EEST
+2025-06-01 10:30:43,229 [nmap] WARNING: No targets were specified, so 0 hosts scanned.
+2025-06-01 10:30:43,229 [nmap] Nmap done: 0 IP addresses (0 hosts up) scanned in 0.04 seconds
+2025-06-01 10:30:43,231 [octapus] Finished nmap
+2025-06-01 10:30:43,231 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:30:53,226 [octapus] Failed to detect local CIDR: [Errno 19] No such device
+2025-06-01 10:30:53,227 127.0.0.1 - - [01/Jun/2025 10:30:53] "[35m[1mGET /local_cidr HTTP/1.1[0m" 500 -
+2025-06-01 10:32:07,572 127.0.0.1 - - [01/Jun/2025 10:32:07] "GET /socket.io/?EIO=4&transport=websocket&sid=d8o5uHGGAo9chq3PAAAA HTTP/1.1" 200 -
+2025-06-01 10:32:26,600 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 10:32:26,600 [33mPress CTRL+C to quit[0m
+2025-06-01 10:32:29,409 127.0.0.1 - - [01/Jun/2025 10:32:29] "GET / HTTP/1.1" 200 -
+2025-06-01 10:32:29,450 127.0.0.1 - - [01/Jun/2025 10:32:29] "GET /socket.io/?EIO=4&transport=polling&t=PSgQ0I7 HTTP/1.1" 200 -
+2025-06-01 10:32:29,453 127.0.0.1 - - [01/Jun/2025 10:32:29] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 10:32:29,469 New WebSocket client connected
+2025-06-01 10:32:29,469 127.0.0.1 - - [01/Jun/2025 10:32:29] "POST /socket.io/?EIO=4&transport=polling&t=PSgQ0IM&sid=_r7E2Gp-lipxAqNcAAAA HTTP/1.1" 200 -
+2025-06-01 10:32:29,471 127.0.0.1 - - [01/Jun/2025 10:32:29] "GET /socket.io/?EIO=4&transport=polling&t=PSgQ0IM.0&sid=_r7E2Gp-lipxAqNcAAAA HTTP/1.1" 200 -
+2025-06-01 10:32:29,475 127.0.0.1 - - [01/Jun/2025 10:32:29] "GET /socket.io/?EIO=4&transport=polling&t=PSgQ0IY&sid=_r7E2Gp-lipxAqNcAAAA HTTP/1.1" 200 -
+2025-06-01 10:32:30,002 127.0.0.1 - - [01/Jun/2025 10:32:30] "GET /socket.io/?EIO=4&transport=websocket&sid=_r7E2Gp-lipxAqNcAAAA HTTP/1.1" 200 -
+2025-06-01 10:32:30,011 127.0.0.1 - - [01/Jun/2025 10:32:30] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 10:32:30,037 127.0.0.1 - - [01/Jun/2025 10:32:30] "GET /socket.io/?EIO=4&transport=polling&t=PSgQ0RI HTTP/1.1" 200 -
+2025-06-01 10:32:30,038 127.0.0.1 - - [01/Jun/2025 10:32:30] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 10:32:30,054 New WebSocket client connected
+2025-06-01 10:32:30,054 127.0.0.1 - - [01/Jun/2025 10:32:30] "POST /socket.io/?EIO=4&transport=polling&t=PSgQ0RU&sid=PLkd6WrBLjvYP9vMAAAC HTTP/1.1" 200 -
+2025-06-01 10:32:30,055 127.0.0.1 - - [01/Jun/2025 10:32:30] "GET /socket.io/?EIO=4&transport=polling&t=PSgQ0RV&sid=PLkd6WrBLjvYP9vMAAAC HTTP/1.1" 200 -
+2025-06-01 10:32:30,060 127.0.0.1 - - [01/Jun/2025 10:32:30] "GET /socket.io/?EIO=4&transport=polling&t=PSgQ0Rg&sid=PLkd6WrBLjvYP9vMAAAC HTTP/1.1" 200 -
+2025-06-01 10:32:31,024 127.0.0.1 - - [01/Jun/2025 10:32:31] "GET /local_cidr HTTP/1.1" 200 -
+2025-06-01 10:33:03,773 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.10.0/24']}, {'tool': 'gobuster', 'args': []}, {'tool': 'nikto', 'args': []}, {'tool': 'sqlmap', 'args': []}, {'tool': 'hydra', 'args': []}]
+2025-06-01 10:33:03,774 127.0.0.1 - - [01/Jun/2025 10:33:03] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:33:03,789 [octapus] Starting nmap: nmap -sV 192.168.10.0/24 -oX /tmp/octapus_nmap_30359.xml
+2025-06-01 10:33:03,829 [nmap] Starting Nmap 7.80 ( https://nmap.org ) at 2025-06-01 10:33 EEST
+2025-06-01 10:35:16,392 127.0.0.1 - - [01/Jun/2025 10:35:16] "POST /save_scenario HTTP/1.1" 200 -
+2025-06-01 10:35:20,188 127.0.0.1 - - [01/Jun/2025 10:35:20] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 10:35:22,094 127.0.0.1 - - [01/Jun/2025 10:35:22] "GET /load_scenario/test HTTP/1.1" 200 -
+2025-06-01 10:35:42,011 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.10.0/24']}, {'tool': 'gobuster', 'args': []}, {'tool': 'nikto', 'args': []}, {'tool': 'sqlmap', 'args': []}, {'tool': 'hydra', 'args': []}]
+2025-06-01 10:35:42,011 127.0.0.1 - - [01/Jun/2025 10:35:42] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:35:42,013 [octapus] Starting nmap: nmap -sV 192.168.10.0/24 -oX /tmp/octapus_nmap_30359.xml
+2025-06-01 10:35:42,063 [nmap] Starting Nmap 7.80 ( https://nmap.org ) at 2025-06-01 10:35 EEST
+2025-06-01 10:35:47,521 HTTP /stop received (stub).
+2025-06-01 10:35:47,522 127.0.0.1 - - [01/Jun/2025 10:35:47] "POST /stop HTTP/1.1" 200 -
+2025-06-01 10:35:47,704 HTTP /stop received (stub).
+2025-06-01 10:35:47,704 127.0.0.1 - - [01/Jun/2025 10:35:47] "POST /stop HTTP/1.1" 200 -
+2025-06-01 10:35:47,871 HTTP /stop received (stub).
+2025-06-01 10:35:47,871 127.0.0.1 - - [01/Jun/2025 10:35:47] "POST /stop HTTP/1.1" 200 -
+2025-06-01 10:35:48,044 HTTP /stop received (stub).
+2025-06-01 10:35:48,044 127.0.0.1 - - [01/Jun/2025 10:35:48] "POST /stop HTTP/1.1" 200 -
+2025-06-01 10:35:57,099 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.10.254']}, {'tool': 'gobuster', 'args': []}, {'tool': 'nikto', 'args': []}, {'tool': 'sqlmap', 'args': []}, {'tool': 'hydra', 'args': []}]
+2025-06-01 10:35:57,099 127.0.0.1 - - [01/Jun/2025 10:35:57] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:35:57,101 [octapus] Starting nmap: nmap -sV 192.168.10.254 -oX /tmp/octapus_nmap_30359.xml
+2025-06-01 10:35:57,142 [nmap] Starting Nmap 7.80 ( https://nmap.org ) at 2025-06-01 10:35 EEST
+2025-06-01 10:36:05,982 HTTP /stop received (stub).
+2025-06-01 10:36:05,982 127.0.0.1 - - [01/Jun/2025 10:36:05] "POST /stop HTTP/1.1" 200 -
+2025-06-01 10:36:08,343 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 10:36:08,343 [33mPress CTRL+C to quit[0m
+2025-06-01 10:36:09,071 127.0.0.1 - - [01/Jun/2025 10:36:09] "GET /socket.io/?EIO=4&transport=polling&t=PSgQrvh HTTP/1.1" 200 -
+2025-06-01 10:36:09,078 New WebSocket client connected
+2025-06-01 10:36:09,078 127.0.0.1 - - [01/Jun/2025 10:36:09] "POST /socket.io/?EIO=4&transport=polling&t=PSgQrvn&sid=rZns4r7IXX8HQpjFAAAA HTTP/1.1" 200 -
+2025-06-01 10:36:09,078 127.0.0.1 - - [01/Jun/2025 10:36:09] "GET /socket.io/?EIO=4&transport=polling&t=PSgQrvn.0&sid=rZns4r7IXX8HQpjFAAAA HTTP/1.1" 200 -
+2025-06-01 10:36:09,083 127.0.0.1 - - [01/Jun/2025 10:36:09] "GET /socket.io/?EIO=4&transport=polling&t=PSgQrvw&sid=rZns4r7IXX8HQpjFAAAA HTTP/1.1" 200 -
+2025-06-01 10:36:09,883 127.0.0.1 - - [01/Jun/2025 10:36:09] "GET /socket.io/?EIO=4&transport=websocket&sid=rZns4r7IXX8HQpjFAAAA HTTP/1.1" 200 -
+2025-06-01 10:36:09,899 127.0.0.1 - - [01/Jun/2025 10:36:09] "GET / HTTP/1.1" 200 -
+2025-06-01 10:36:09,946 127.0.0.1 - - [01/Jun/2025 10:36:09] "GET /socket.io/?EIO=4&transport=polling&t=PSgQs7N HTTP/1.1" 200 -
+2025-06-01 10:36:09,947 127.0.0.1 - - [01/Jun/2025 10:36:09] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 10:36:09,962 New WebSocket client connected
+2025-06-01 10:36:09,962 127.0.0.1 - - [01/Jun/2025 10:36:09] "POST /socket.io/?EIO=4&transport=polling&t=PSgQs7Z&sid=sbem3VGKxcgY4rnhAAAC HTTP/1.1" 200 -
+2025-06-01 10:36:09,962 127.0.0.1 - - [01/Jun/2025 10:36:09] "GET /socket.io/?EIO=4&transport=polling&t=PSgQs7a&sid=sbem3VGKxcgY4rnhAAAC HTTP/1.1" 200 -
+2025-06-01 10:36:09,967 127.0.0.1 - - [01/Jun/2025 10:36:09] "GET /socket.io/?EIO=4&transport=polling&t=PSgQs7l&sid=sbem3VGKxcgY4rnhAAAC HTTP/1.1" 200 -
+2025-06-01 10:36:26,153 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sn', '192.168.10.254']}]
+2025-06-01 10:36:26,154 127.0.0.1 - - [01/Jun/2025 10:36:26] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:36:26,169 [octapus] Starting nmap: nmap -sn 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:36:26,177 [nmap] Starting Nmap 7.80 ( https://nmap.org ) at 2025-06-01 10:36 EEST
+2025-06-01 10:36:26,186 [nmap] Nmap scan report for _gateway (192.168.10.254)
+2025-06-01 10:36:26,186 [nmap] Host is up (0.0026s latency).
+2025-06-01 10:36:26,187 [nmap] Nmap done: 1 IP address (1 host up) scanned in 0.01 seconds
+2025-06-01 10:36:26,188 [octapus] Finished nmap
+2025-06-01 10:36:26,188 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:36:36,452 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-Sv', '192.168.10.254']}]
+2025-06-01 10:36:36,453 127.0.0.1 - - [01/Jun/2025 10:36:36] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:36:36,454 [octapus] Starting nmap: nmap -Sv 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:36:36,463 [nmap] Failed to resolve/decode supposed IPv4 source address "v": No address associated with hostname
+2025-06-01 10:36:36,463 [nmap] QUITTING!
+2025-06-01 10:36:36,463 [octapus] Finished nmap
+2025-06-01 10:36:36,464 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_33732.xml'
+2025-06-01 10:36:36,464 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:36:45,532 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sv', '192.168.10.254']}]
+2025-06-01 10:36:45,533 127.0.0.1 - - [01/Jun/2025 10:36:45] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:36:45,534 [octapus] Starting nmap: nmap -sv 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:36:45,541 [nmap] Nmap 7.80 ( https://nmap.org )
+2025-06-01 10:36:45,541 [nmap] Usage: nmap [Scan Type(s)] [Options] {target specification}
+2025-06-01 10:36:45,541 [nmap] TARGET SPECIFICATION:
+2025-06-01 10:36:45,541 [nmap]   Can pass hostnames, IP addresses, networks, etc.
+2025-06-01 10:36:45,541 [nmap]   Ex: scanme.nmap.org, microsoft.com/24, 192.168.0.1; 10.0.0-255.1-254
+2025-06-01 10:36:45,541 [nmap]   -iL <inputfilename>: Input from list of hosts/networks
+2025-06-01 10:36:45,541 [nmap]   -iR <num hosts>: Choose random targets
+2025-06-01 10:36:45,541 [nmap]   --exclude <host1[,host2][,host3],...>: Exclude hosts/networks
+2025-06-01 10:36:45,541 [nmap]   --excludefile <exclude_file>: Exclude list from file
+2025-06-01 10:36:45,542 [nmap] HOST DISCOVERY:
+2025-06-01 10:36:45,542 [nmap]   -sL: List Scan - simply list targets to scan
+2025-06-01 10:36:45,542 [nmap]   -sn: Ping Scan - disable port scan
+2025-06-01 10:36:45,542 [nmap]   -Pn: Treat all hosts as online -- skip host discovery
+2025-06-01 10:36:45,542 [nmap]   -PS/PA/PU/PY[portlist]: TCP SYN/ACK, UDP or SCTP discovery to given ports
+2025-06-01 10:36:45,542 [nmap]   -PE/PP/PM: ICMP echo, timestamp, and netmask request discovery probes
+2025-06-01 10:36:45,542 [nmap]   -PO[protocol list]: IP Protocol Ping
+2025-06-01 10:36:45,542 [nmap]   -n/-R: Never do DNS resolution/Always resolve [default: sometimes]
+2025-06-01 10:36:45,542 [nmap]   --dns-servers <serv1[,serv2],...>: Specify custom DNS servers
+2025-06-01 10:36:45,542 [nmap]   --system-dns: Use OS's DNS resolver
+2025-06-01 10:36:45,542 [nmap]   --traceroute: Trace hop path to each host
+2025-06-01 10:36:45,542 [nmap] SCAN TECHNIQUES:
+2025-06-01 10:36:45,542 [nmap]   -sS/sT/sA/sW/sM: TCP SYN/Connect()/ACK/Window/Maimon scans
+2025-06-01 10:36:45,542 [nmap]   -sU: UDP Scan
+2025-06-01 10:36:45,542 [nmap]   -sN/sF/sX: TCP Null, FIN, and Xmas scans
+2025-06-01 10:36:45,542 [nmap]   --scanflags <flags>: Customize TCP scan flags
+2025-06-01 10:36:45,542 [nmap]   -sI <zombie host[:probeport]>: Idle scan
+2025-06-01 10:36:45,542 [nmap]   -sY/sZ: SCTP INIT/COOKIE-ECHO scans
+2025-06-01 10:36:45,542 [nmap]   -sO: IP protocol scan
+2025-06-01 10:36:45,542 [nmap]   -b <FTP relay host>: FTP bounce scan
+2025-06-01 10:36:45,542 [nmap] PORT SPECIFICATION AND SCAN ORDER:
+2025-06-01 10:36:45,542 [nmap]   -p <port ranges>: Only scan specified ports
+2025-06-01 10:36:45,542 [nmap]     Ex: -p22; -p1-65535; -p U:53,111,137,T:21-25,80,139,8080,S:9
+2025-06-01 10:36:45,542 [nmap]   --exclude-ports <port ranges>: Exclude the specified ports from scanning
+2025-06-01 10:36:45,542 [nmap]   -F: Fast mode - Scan fewer ports than the default scan
+2025-06-01 10:36:45,542 [nmap]   -r: Scan ports consecutively - don't randomize
+2025-06-01 10:36:45,542 [nmap]   --top-ports <number>: Scan <number> most common ports
+2025-06-01 10:36:45,542 [nmap]   --port-ratio <ratio>: Scan ports more common than <ratio>
+2025-06-01 10:36:45,542 [nmap] SERVICE/VERSION DETECTION:
+2025-06-01 10:36:45,542 [nmap]   -sV: Probe open ports to determine service/version info
+2025-06-01 10:36:45,542 [nmap]   --version-intensity <level>: Set from 0 (light) to 9 (try all probes)
+2025-06-01 10:36:45,542 [nmap]   --version-light: Limit to most likely probes (intensity 2)
+2025-06-01 10:36:45,542 [nmap]   --version-all: Try every single probe (intensity 9)
+2025-06-01 10:36:45,542 [nmap]   --version-trace: Show detailed version scan activity (for debugging)
+2025-06-01 10:36:45,542 [nmap] SCRIPT SCAN:
+2025-06-01 10:36:45,542 [nmap]   -sC: equivalent to --script=default
+2025-06-01 10:36:45,542 [nmap]   --script=<Lua scripts>: <Lua scripts> is a comma separated list of
+2025-06-01 10:36:45,542 [nmap]            directories, script-files or script-categories
+2025-06-01 10:36:45,542 [nmap]   --script-args=<n1=v1,[n2=v2,...]>: provide arguments to scripts
+2025-06-01 10:36:45,542 [nmap]   --script-args-file=filename: provide NSE script args in a file
+2025-06-01 10:36:45,542 [nmap]   --script-trace: Show all data sent and received
+2025-06-01 10:36:45,542 [nmap]   --script-updatedb: Update the script database.
+2025-06-01 10:36:45,542 [nmap]   --script-help=<Lua scripts>: Show help about scripts.
+2025-06-01 10:36:45,542 [nmap]            <Lua scripts> is a comma-separated list of script-files or
+2025-06-01 10:36:45,543 [nmap]            script-categories.
+2025-06-01 10:36:45,543 [nmap] OS DETECTION:
+2025-06-01 10:36:45,543 [nmap]   -O: Enable OS detection
+2025-06-01 10:36:45,543 [nmap]   --osscan-limit: Limit OS detection to promising targets
+2025-06-01 10:36:45,543 [nmap]   --osscan-guess: Guess OS more aggressively
+2025-06-01 10:36:45,543 [nmap] TIMING AND PERFORMANCE:
+2025-06-01 10:36:45,543 [nmap]   Options which take <time> are in seconds, or append 'ms' (milliseconds),
+2025-06-01 10:36:45,543 [nmap]   's' (seconds), 'm' (minutes), or 'h' (hours) to the value (e.g. 30m).
+2025-06-01 10:36:45,543 [nmap]   -T<0-5>: Set timing template (higher is faster)
+2025-06-01 10:36:45,543 [nmap]   --min-hostgroup/max-hostgroup <size>: Parallel host scan group sizes
+2025-06-01 10:36:45,543 [nmap]   --min-parallelism/max-parallelism <numprobes>: Probe parallelization
+2025-06-01 10:36:45,543 [nmap]   --min-rtt-timeout/max-rtt-timeout/initial-rtt-timeout <time>: Specifies
+2025-06-01 10:36:45,543 [nmap]       probe round trip time.
+2025-06-01 10:36:45,544 [nmap]   --max-retries <tries>: Caps number of port scan probe retransmissions.
+2025-06-01 10:36:45,544 [nmap]   --host-timeout <time>: Give up on target after this long
+2025-06-01 10:36:45,544 [nmap]   --scan-delay/--max-scan-delay <time>: Adjust delay between probes
+2025-06-01 10:36:45,544 [nmap]   --min-rate <number>: Send packets no slower than <number> per second
+2025-06-01 10:36:45,544 [nmap]   --max-rate <number>: Send packets no faster than <number> per second
+2025-06-01 10:36:45,544 [nmap] FIREWALL/IDS EVASION AND SPOOFING:
+2025-06-01 10:36:45,544 [nmap]   -f; --mtu <val>: fragment packets (optionally w/given MTU)
+2025-06-01 10:36:45,544 [nmap]   -D <decoy1,decoy2[,ME],...>: Cloak a scan with decoys
+2025-06-01 10:36:45,544 [nmap]   -S <IP_Address>: Spoof source address
+2025-06-01 10:36:45,544 [nmap]   -e <iface>: Use specified interface
+2025-06-01 10:36:45,544 [nmap]   -g/--source-port <portnum>: Use given port number
+2025-06-01 10:36:45,544 [nmap]   --proxies <url1,[url2],...>: Relay connections through HTTP/SOCKS4 proxies
+2025-06-01 10:36:45,544 [nmap]   --data <hex string>: Append a custom payload to sent packets
+2025-06-01 10:36:45,544 [nmap]   --data-string <string>: Append a custom ASCII string to sent packets
+2025-06-01 10:36:45,544 [nmap]   --data-length <num>: Append random data to sent packets
+2025-06-01 10:36:45,544 [nmap]   --ip-options <options>: Send packets with specified ip options
+2025-06-01 10:36:45,544 [nmap]   --ttl <val>: Set IP time-to-live field
+2025-06-01 10:36:45,544 [nmap]   --spoof-mac <mac address/prefix/vendor name>: Spoof your MAC address
+2025-06-01 10:36:45,544 [nmap]   --badsum: Send packets with a bogus TCP/UDP/SCTP checksum
+2025-06-01 10:36:45,544 [nmap] OUTPUT:
+2025-06-01 10:36:45,544 [nmap]   -oN/-oX/-oS/-oG <file>: Output scan in normal, XML, s|<rIpt kIddi3,
+2025-06-01 10:36:45,544 [nmap]      and Grepable format, respectively, to the given filename.
+2025-06-01 10:36:45,544 [nmap]   -oA <basename>: Output in the three major formats at once
+2025-06-01 10:36:45,544 [nmap]   -v: Increase verbosity level (use -vv or more for greater effect)
+2025-06-01 10:36:45,544 [nmap]   -d: Increase debugging level (use -dd or more for greater effect)
+2025-06-01 10:36:45,544 [nmap]   --reason: Display the reason a port is in a particular state
+2025-06-01 10:36:45,544 [nmap]   --open: Only show open (or possibly open) ports
+2025-06-01 10:36:45,544 [nmap]   --packet-trace: Show all packets sent and received
+2025-06-01 10:36:45,544 [nmap]   --iflist: Print host interfaces and routes (for debugging)
+2025-06-01 10:36:45,544 [nmap]   --append-output: Append to rather than clobber specified output files
+2025-06-01 10:36:45,544 [nmap]   --resume <filename>: Resume an aborted scan
+2025-06-01 10:36:45,544 [nmap]   --stylesheet <path/URL>: XSL stylesheet to transform XML output to HTML
+2025-06-01 10:36:45,544 [nmap]   --webxml: Reference stylesheet from Nmap.Org for more portable XML
+2025-06-01 10:36:45,544 [nmap]   --no-stylesheet: Prevent associating of XSL stylesheet w/XML output
+2025-06-01 10:36:45,544 [nmap] MISC:
+2025-06-01 10:36:45,544 [nmap]   -6: Enable IPv6 scanning
+2025-06-01 10:36:45,544 [nmap]   -A: Enable OS detection, version detection, script scanning, and traceroute
+2025-06-01 10:36:45,544 [nmap]   --datadir <dirname>: Specify custom Nmap data file location
+2025-06-01 10:36:45,544 [nmap]   --send-eth/--send-ip: Send using raw ethernet frames or IP packets
+2025-06-01 10:36:45,544 [nmap]   --privileged: Assume that the user is fully privileged
+2025-06-01 10:36:45,544 [nmap]   --unprivileged: Assume the user lacks raw socket privileges
+2025-06-01 10:36:45,544 [nmap]   -V: Print version number
+2025-06-01 10:36:45,544 [nmap]   -h: Print this help summary page.
+2025-06-01 10:36:45,545 [nmap] EXAMPLES:
+2025-06-01 10:36:45,545 [nmap]   nmap -v -A scanme.nmap.org
+2025-06-01 10:36:45,545 [nmap]   nmap -v -sn 192.168.0.0/16 10.0.0.0/8
+2025-06-01 10:36:45,545 [nmap]   nmap -v -iR 10000 -Pn -p 80
+2025-06-01 10:36:45,545 [nmap] SEE THE MAN PAGE (https://nmap.org/book/man.html) FOR MORE OPTIONS AND EXAMPLES
+2025-06-01 10:36:45,545 [nmap] Scantype v not supported
+2025-06-01 10:36:45,545 [nmap] 
+2025-06-01 10:36:45,545 [octapus] Finished nmap
+2025-06-01 10:36:45,545 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_33732.xml'
+2025-06-01 10:36:45,546 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:36:57,873 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-V', '-A', '192.168.10.254']}]
+2025-06-01 10:36:57,873 127.0.0.1 - - [01/Jun/2025 10:36:57] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:36:57,875 [octapus] Starting nmap: nmap -V -A 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:36:57,883 [nmap] Nmap version 7.80 ( https://nmap.org )
+2025-06-01 10:36:57,883 [nmap] Platform: x86_64-pc-linux-gnu
+2025-06-01 10:36:57,883 [nmap] Compiled with: liblua-5.3.6 openssl-3.0.2 nmap-libssh2-1.8.2 libz-1.2.11 libpcre-8.39 libpcap-1.10.1 nmap-libdnet-1.12 ipv6
+2025-06-01 10:36:57,883 [nmap] Compiled without:
+2025-06-01 10:36:57,883 [nmap] Available nsock engines: epoll poll select
+2025-06-01 10:36:57,883 [octapus] Finished nmap
+2025-06-01 10:36:57,883 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_33732.xml'
+2025-06-01 10:36:57,883 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:37:05,571 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-V', '192.168.10.254']}]
+2025-06-01 10:37:05,572 127.0.0.1 - - [01/Jun/2025 10:37:05] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:37:05,573 [octapus] Starting nmap: nmap -V 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:37:05,582 [nmap] Nmap version 7.80 ( https://nmap.org )
+2025-06-01 10:37:05,582 [nmap] Platform: x86_64-pc-linux-gnu
+2025-06-01 10:37:05,582 [nmap] Compiled with: liblua-5.3.6 openssl-3.0.2 nmap-libssh2-1.8.2 libz-1.2.11 libpcre-8.39 libpcap-1.10.1 nmap-libdnet-1.12 ipv6
+2025-06-01 10:37:05,582 [nmap] Compiled without:
+2025-06-01 10:37:05,582 [nmap] Available nsock engines: epoll poll select
+2025-06-01 10:37:05,582 [octapus] Finished nmap
+2025-06-01 10:37:05,582 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_33732.xml'
+2025-06-01 10:37:05,582 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:37:06,228 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-V', '192.168.10.254']}]
+2025-06-01 10:37:06,228 127.0.0.1 - - [01/Jun/2025 10:37:06] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:37:06,230 [octapus] Starting nmap: nmap -V 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:37:06,238 [nmap] Nmap version 7.80 ( https://nmap.org )
+2025-06-01 10:37:06,238 [nmap] Platform: x86_64-pc-linux-gnu
+2025-06-01 10:37:06,238 [nmap] Compiled with: liblua-5.3.6 openssl-3.0.2 nmap-libssh2-1.8.2 libz-1.2.11 libpcre-8.39 libpcap-1.10.1 nmap-libdnet-1.12 ipv6
+2025-06-01 10:37:06,238 [nmap] Compiled without:
+2025-06-01 10:37:06,238 [nmap] Available nsock engines: epoll poll select
+2025-06-01 10:37:06,238 [octapus] Finished nmap
+2025-06-01 10:37:06,238 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_33732.xml'
+2025-06-01 10:37:06,238 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:37:06,431 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-V', '192.168.10.254']}]
+2025-06-01 10:37:06,431 127.0.0.1 - - [01/Jun/2025 10:37:06] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:37:06,433 [octapus] Starting nmap: nmap -V 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:37:06,440 [nmap] Nmap version 7.80 ( https://nmap.org )
+2025-06-01 10:37:06,440 [nmap] Platform: x86_64-pc-linux-gnu
+2025-06-01 10:37:06,440 [nmap] Compiled with: liblua-5.3.6 openssl-3.0.2 nmap-libssh2-1.8.2 libz-1.2.11 libpcre-8.39 libpcap-1.10.1 nmap-libdnet-1.12 ipv6
+2025-06-01 10:37:06,440 [nmap] Compiled without:
+2025-06-01 10:37:06,440 [nmap] Available nsock engines: epoll poll select
+2025-06-01 10:37:06,440 [octapus] Finished nmap
+2025-06-01 10:37:06,441 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_33732.xml'
+2025-06-01 10:37:06,441 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:37:06,643 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-V', '192.168.10.254']}]
+2025-06-01 10:37:06,644 127.0.0.1 - - [01/Jun/2025 10:37:06] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:37:06,645 [octapus] Starting nmap: nmap -V 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:37:06,653 [nmap] Nmap version 7.80 ( https://nmap.org )
+2025-06-01 10:37:06,653 [nmap] Platform: x86_64-pc-linux-gnu
+2025-06-01 10:37:06,653 [nmap] Compiled with: liblua-5.3.6 openssl-3.0.2 nmap-libssh2-1.8.2 libz-1.2.11 libpcre-8.39 libpcap-1.10.1 nmap-libdnet-1.12 ipv6
+2025-06-01 10:37:06,653 [nmap] Compiled without:
+2025-06-01 10:37:06,653 [nmap] Available nsock engines: epoll poll select
+2025-06-01 10:37:06,653 [octapus] Finished nmap
+2025-06-01 10:37:06,654 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_33732.xml'
+2025-06-01 10:37:06,654 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:37:06,817 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-V', '192.168.10.254']}]
+2025-06-01 10:37:06,818 127.0.0.1 - - [01/Jun/2025 10:37:06] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:37:06,819 [octapus] Starting nmap: nmap -V 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:37:06,827 [nmap] Nmap version 7.80 ( https://nmap.org )
+2025-06-01 10:37:06,827 [nmap] Platform: x86_64-pc-linux-gnu
+2025-06-01 10:37:06,827 [nmap] Compiled with: liblua-5.3.6 openssl-3.0.2 nmap-libssh2-1.8.2 libz-1.2.11 libpcre-8.39 libpcap-1.10.1 nmap-libdnet-1.12 ipv6
+2025-06-01 10:37:06,827 [nmap] Compiled without:
+2025-06-01 10:37:06,827 [nmap] Available nsock engines: epoll poll select
+2025-06-01 10:37:06,827 [octapus] Finished nmap
+2025-06-01 10:37:06,827 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_33732.xml'
+2025-06-01 10:37:06,828 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:37:17,417 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sn', '192.168.10.254']}]
+2025-06-01 10:37:17,417 127.0.0.1 - - [01/Jun/2025 10:37:17] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:37:17,419 [octapus] Starting nmap: nmap -sn 192.168.10.254 -oX /tmp/octapus_nmap_33732.xml
+2025-06-01 10:37:17,426 [nmap] Starting Nmap 7.80 ( https://nmap.org ) at 2025-06-01 10:37 EEST
+2025-06-01 10:37:17,435 [nmap] Nmap scan report for _gateway (192.168.10.254)
+2025-06-01 10:37:17,435 [nmap] Host is up (0.0019s latency).
+2025-06-01 10:37:17,435 [nmap] Nmap done: 1 IP address (1 host up) scanned in 0.01 seconds
+2025-06-01 10:37:17,436 [octapus] Finished nmap
+2025-06-01 10:37:17,436 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:37:38,338 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nikto', 'args': ['-h', 'http://192.168.10.254']}]
+2025-06-01 10:37:38,338 127.0.0.1 - - [01/Jun/2025 10:37:38] "POST /start HTTP/1.1" 200 -
+2025-06-01 10:37:38,340 [octapus] Starting nikto: nikto -h http://192.168.10.254
+2025-06-01 10:37:38,412 [nikto] - Nikto v2.1.5
+2025-06-01 10:37:38,412 [nikto] ---------------------------------------------------------------------------
+2025-06-01 10:37:38,610 [nikto] + Target IP:          192.168.10.254
+2025-06-01 10:37:38,610 [nikto] + Target Hostname:    _gateway
+2025-06-01 10:37:38,610 [nikto] + Target Port:        80
+2025-06-01 10:37:38,611 [nikto] + Start Time:         2025-06-01 10:37:38 (GMT3)
+2025-06-01 10:37:38,611 [nikto] ---------------------------------------------------------------------------
+2025-06-01 10:37:38,611 [nikto] + Server: ZTE web server 1.0 ZTE corp 2015.
+2025-06-01 10:37:38,717 [nikto] + Cookie _TESTCOOKIESUPPORT created without the httponly flag
+2025-06-01 10:37:38,718 [nikto] + Cookie SID created without the httponly flag
+2025-06-01 10:37:38,718 [nikto] + Uncommon header 'x-content-type-options' found, with contents: nosniff
+2025-06-01 10:37:38,718 [nikto] + Uncommon header 'content-security-policy' found, with contents: default-src 'self' 'unsafe-inline' 'unsafe-eval';img-src 'self' data:;
+2025-06-01 10:37:38,718 [nikto] + Uncommon header 'x-frame-options' found, with contents: SAMEORIGIN
+2025-06-01 10:37:38,718 [nikto] + Uncommon header 'x-xss-protection' found, with contents: 1; mode=block
+2025-06-01 10:37:39,568 [nikto] + No CGI Directories found (use '-C all' to force check all possible dirs)
+2025-06-01 10:37:41,181 [nikto] + Server leaks inodes via ETags, header found with file /img/favicon.ico, fields: 0x7bac1203a86eba0ef38ef761eb6b700d
+2025-06-01 10:38:19,979 [nikto] + 6544 items checked: 0 error(s) and 7 item(s) reported on remote host
+2025-06-01 10:38:19,979 [nikto] + End Time:           2025-06-01 10:38:19 (GMT3) (41 seconds)
+2025-06-01 10:38:19,979 [nikto] ---------------------------------------------------------------------------
+2025-06-01 10:38:19,979 [nikto] + 1 host(s) tested
+2025-06-01 10:38:19,984 [octapus] Finished nikto
+2025-06-01 10:38:19,984 [octapus] Full dynamic scan sequence completed
+2025-06-01 10:42:04,861 127.0.0.1 - - [01/Jun/2025 10:42:04] "GET /local_cidr HTTP/1.1" 200 -

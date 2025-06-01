@@ -1,0 +1,28 @@
+{
+  "name": "test",
+  "scripts": [
+    {
+      "tool": "nmap",
+      "args": [
+        "-sV",
+        "192.168.10.0/24"
+      ]
+    },
+    {
+      "tool": "gobuster",
+      "args": []
+    },
+    {
+      "tool": "nikto",
+      "args": []
+    },
+    {
+      "tool": "sqlmap",
+      "args": []
+    },
+    {
+      "tool": "hydra",
+      "args": []
+    }
+  ]
+}
