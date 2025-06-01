@@ -331,3 +331,1410 @@
 2025-06-01 10:38:19,984 [octapus] Finished nikto
 2025-06-01 10:38:19,984 [octapus] Full dynamic scan sequence completed
 2025-06-01 10:42:04,861 127.0.0.1 - - [01/Jun/2025 10:42:04] "GET /local_cidr HTTP/1.1" 200 -
+2025-06-01 10:46:25,372 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 10:46:25,372 [33mPress CTRL+C to quit[0m
+2025-06-01 10:46:25,384 127.0.0.1 - - [01/Jun/2025 10:46:25] "GET /socket.io/?EIO=4&transport=polling&t=PSgTCNc HTTP/1.1" 200 -
+2025-06-01 10:46:25,389 New WebSocket client connected
+2025-06-01 10:46:25,390 127.0.0.1 - - [01/Jun/2025 10:46:25] "POST /socket.io/?EIO=4&transport=polling&t=PSgTCNg&sid=4GGFJPeSuUbvKtHHAAAA HTTP/1.1" 200 -
+2025-06-01 10:46:25,390 127.0.0.1 - - [01/Jun/2025 10:46:25] "GET /socket.io/?EIO=4&transport=polling&t=PSgTCNg.0&sid=4GGFJPeSuUbvKtHHAAAA HTTP/1.1" 200 -
+2025-06-01 10:46:25,394 127.0.0.1 - - [01/Jun/2025 10:46:25] "GET /socket.io/?EIO=4&transport=polling&t=PSgTCNn&sid=4GGFJPeSuUbvKtHHAAAA HTTP/1.1" 200 -
+2025-06-01 10:46:35,564 127.0.0.1 - - [01/Jun/2025 10:46:35] "GET /socket.io/?EIO=4&transport=websocket&sid=4GGFJPeSuUbvKtHHAAAA HTTP/1.1" 200 -
+2025-06-01 10:46:35,577 127.0.0.1 - - [01/Jun/2025 10:46:35] "GET / HTTP/1.1" 200 -
+2025-06-01 10:46:35,609 127.0.0.1 - - [01/Jun/2025 10:46:35] "GET /socket.io/?EIO=4&transport=polling&t=PSgTEtM HTTP/1.1" 200 -
+2025-06-01 10:46:35,610 127.0.0.1 - - [01/Jun/2025 10:46:35] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 10:46:35,624 New WebSocket client connected
+2025-06-01 10:46:35,625 127.0.0.1 - - [01/Jun/2025 10:46:35] "POST /socket.io/?EIO=4&transport=polling&t=PSgTEtc&sid=EoWykqs_j4Yv31aIAAAC HTTP/1.1" 200 -
+2025-06-01 10:46:35,627 127.0.0.1 - - [01/Jun/2025 10:46:35] "GET /socket.io/?EIO=4&transport=polling&t=PSgTEtc.0&sid=EoWykqs_j4Yv31aIAAAC HTTP/1.1" 200 -
+2025-06-01 10:46:35,632 127.0.0.1 - - [01/Jun/2025 10:46:35] "GET /socket.io/?EIO=4&transport=polling&t=PSgTEtj&sid=EoWykqs_j4Yv31aIAAAC HTTP/1.1" 200 -
+2025-06-01 10:57:53,018 127.0.0.1 - - [01/Jun/2025 10:57:53] "GET /socket.io/?EIO=4&transport=websocket&sid=EoWykqs_j4Yv31aIAAAC HTTP/1.1" 200 -
+2025-06-01 10:57:53,023 127.0.0.1 - - [01/Jun/2025 10:57:53] "GET / HTTP/1.1" 200 -
+2025-06-01 10:57:53,052 127.0.0.1 - - [01/Jun/2025 10:57:53] "GET /socket.io/?EIO=4&transport=polling&t=PSgVqGQ HTTP/1.1" 200 -
+2025-06-01 10:57:53,054 127.0.0.1 - - [01/Jun/2025 10:57:53] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 10:57:53,072 New WebSocket client connected
+2025-06-01 10:57:53,072 127.0.0.1 - - [01/Jun/2025 10:57:53] "POST /socket.io/?EIO=4&transport=polling&t=PSgVqGe&sid=2ITnQnzPKWJKjMMgAAAE HTTP/1.1" 200 -
+2025-06-01 10:57:53,073 127.0.0.1 - - [01/Jun/2025 10:57:53] "GET /socket.io/?EIO=4&transport=polling&t=PSgVqGe.0&sid=2ITnQnzPKWJKjMMgAAAE HTTP/1.1" 200 -
+2025-06-01 10:57:53,077 127.0.0.1 - - [01/Jun/2025 10:57:53] "GET /socket.io/?EIO=4&transport=polling&t=PSgVqGq&sid=2ITnQnzPKWJKjMMgAAAE HTTP/1.1" 200 -
+2025-06-01 11:18:45,957 127.0.0.1 - - [01/Jun/2025 11:18:45] "GET /socket.io/?EIO=4&transport=websocket&sid=2ITnQnzPKWJKjMMgAAAE HTTP/1.1" 200 -
+2025-06-01 11:18:45,968 127.0.0.1 - - [01/Jun/2025 11:18:45] "GET / HTTP/1.1" 200 -
+2025-06-01 11:18:46,010 127.0.0.1 - - [01/Jun/2025 11:18:46] "GET /socket.io/?EIO=4&transport=polling&t=PSgac9u HTTP/1.1" 200 -
+2025-06-01 11:18:46,013 127.0.0.1 - - [01/Jun/2025 11:18:46] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 11:18:46,034 New WebSocket client connected
+2025-06-01 11:18:46,034 127.0.0.1 - - [01/Jun/2025 11:18:46] "POST /socket.io/?EIO=4&transport=polling&t=PSgacAA&sid=DHFzAF8tfAg9TwYEAAAG HTTP/1.1" 200 -
+2025-06-01 11:18:46,034 127.0.0.1 - - [01/Jun/2025 11:18:46] "GET /socket.io/?EIO=4&transport=polling&t=PSgacAB&sid=DHFzAF8tfAg9TwYEAAAG HTTP/1.1" 200 -
+2025-06-01 11:18:46,039 127.0.0.1 - - [01/Jun/2025 11:18:46] "GET /socket.io/?EIO=4&transport=polling&t=PSgacAM&sid=DHFzAF8tfAg9TwYEAAAG HTTP/1.1" 200 -
+2025-06-01 11:18:47,124 127.0.0.1 - - [01/Jun/2025 11:18:47] "GET /socket.io/?EIO=4&transport=websocket&sid=DHFzAF8tfAg9TwYEAAAG HTTP/1.1" 200 -
+2025-06-01 11:18:47,132 127.0.0.1 - - [01/Jun/2025 11:18:47] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 11:18:47,164 127.0.0.1 - - [01/Jun/2025 11:18:47] "GET /socket.io/?EIO=4&transport=polling&t=PSgacRu HTTP/1.1" 200 -
+2025-06-01 11:18:47,166 127.0.0.1 - - [01/Jun/2025 11:18:47] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 11:18:47,184 New WebSocket client connected
+2025-06-01 11:18:47,184 127.0.0.1 - - [01/Jun/2025 11:18:47] "POST /socket.io/?EIO=4&transport=polling&t=PSgacS7&sid=7Yw3TRVb57yoKr05AAAI HTTP/1.1" 200 -
+2025-06-01 11:18:47,185 127.0.0.1 - - [01/Jun/2025 11:18:47] "GET /socket.io/?EIO=4&transport=polling&t=PSgacS8&sid=7Yw3TRVb57yoKr05AAAI HTTP/1.1" 200 -
+2025-06-01 11:18:47,190 127.0.0.1 - - [01/Jun/2025 11:18:47] "GET /socket.io/?EIO=4&transport=polling&t=PSgacSL&sid=7Yw3TRVb57yoKr05AAAI HTTP/1.1" 200 -
+2025-06-01 11:19:13,504 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 11:19:13,504 [33mPress CTRL+C to quit[0m
+2025-06-01 11:19:15,980 127.0.0.1 - - [01/Jun/2025 11:19:15] "GET /socket.io/?EIO=4&transport=polling&t=PSgajU9 HTTP/1.1" 200 -
+2025-06-01 11:19:15,984 New WebSocket client connected
+2025-06-01 11:19:15,984 127.0.0.1 - - [01/Jun/2025 11:19:15] "POST /socket.io/?EIO=4&transport=polling&t=PSgajUD&sid=hlDKegyJQGgEBlpxAAAA HTTP/1.1" 200 -
+2025-06-01 11:19:15,985 127.0.0.1 - - [01/Jun/2025 11:19:15] "GET /socket.io/?EIO=4&transport=polling&t=PSgajUD.0&sid=hlDKegyJQGgEBlpxAAAA HTTP/1.1" 200 -
+2025-06-01 11:19:15,989 127.0.0.1 - - [01/Jun/2025 11:19:15] "GET /socket.io/?EIO=4&transport=polling&t=PSgajUJ&sid=hlDKegyJQGgEBlpxAAAA HTTP/1.1" 200 -
+2025-06-01 11:19:19,960 127.0.0.1 - - [01/Jun/2025 11:19:19] "GET /socket.io/?EIO=4&transport=websocket&sid=hlDKegyJQGgEBlpxAAAA HTTP/1.1" 200 -
+2025-06-01 11:19:19,971 127.0.0.1 - - [01/Jun/2025 11:19:19] "[33mGET /scenario.index HTTP/1.1[0m" 404 -
+2025-06-01 11:19:26,005 127.0.0.1 - - [01/Jun/2025 11:19:26] "[33mGET /scenario.html HTTP/1.1[0m" 404 -
+2025-06-01 11:19:38,728 127.0.0.1 - - [01/Jun/2025 11:19:38] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 11:26:33,407 127.0.0.1 - - [01/Jun/2025 11:26:33] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 11:26:34,980 127.0.0.1 - - [01/Jun/2025 11:26:34] "GET / HTTP/1.1" 200 -
+2025-06-01 11:26:35,013 127.0.0.1 - - [01/Jun/2025 11:26:35] "GET /socket.io/?EIO=4&transport=polling&t=PSgcOg1 HTTP/1.1" 200 -
+2025-06-01 11:26:35,015 127.0.0.1 - - [01/Jun/2025 11:26:35] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 11:26:35,029 New WebSocket client connected
+2025-06-01 11:26:35,029 127.0.0.1 - - [01/Jun/2025 11:26:35] "POST /socket.io/?EIO=4&transport=polling&t=PSgcOgI&sid=1mKE8MeipsbSSUmgAAAC HTTP/1.1" 200 -
+2025-06-01 11:26:35,029 127.0.0.1 - - [01/Jun/2025 11:26:35] "GET /socket.io/?EIO=4&transport=polling&t=PSgcOgI.0&sid=1mKE8MeipsbSSUmgAAAC HTTP/1.1" 200 -
+2025-06-01 11:26:35,033 127.0.0.1 - - [01/Jun/2025 11:26:35] "GET /socket.io/?EIO=4&transport=polling&t=PSgcOgO&sid=1mKE8MeipsbSSUmgAAAC HTTP/1.1" 200 -
+2025-06-01 11:26:41,246 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 11:26:41,246 [33mPress CTRL+C to quit[0m
+2025-06-01 11:26:42,786 127.0.0.1 - - [01/Jun/2025 11:26:42] "GET /socket.io/?EIO=4&transport=polling&t=PSgcQZU HTTP/1.1" 200 -
+2025-06-01 11:26:42,790 New WebSocket client connected
+2025-06-01 11:26:42,791 127.0.0.1 - - [01/Jun/2025 11:26:42] "POST /socket.io/?EIO=4&transport=polling&t=PSgcQZa&sid=TA87PNq3cgMqhFsSAAAA HTTP/1.1" 200 -
+2025-06-01 11:26:42,791 127.0.0.1 - - [01/Jun/2025 11:26:42] "GET /socket.io/?EIO=4&transport=polling&t=PSgcQZa.0&sid=TA87PNq3cgMqhFsSAAAA HTTP/1.1" 200 -
+2025-06-01 11:26:42,795 127.0.0.1 - - [01/Jun/2025 11:26:42] "GET /socket.io/?EIO=4&transport=polling&t=PSgcQZg&sid=TA87PNq3cgMqhFsSAAAA HTTP/1.1" 200 -
+2025-06-01 11:26:43,840 127.0.0.1 - - [01/Jun/2025 11:26:43] "GET /socket.io/?EIO=4&transport=websocket&sid=TA87PNq3cgMqhFsSAAAA HTTP/1.1" 200 -
+2025-06-01 11:26:43,849 127.0.0.1 - - [01/Jun/2025 11:26:43] "GET / HTTP/1.1" 200 -
+2025-06-01 11:28:16,973 127.0.0.1 - - [01/Jun/2025 11:28:16] "[33mGET /settings HTTP/1.1[0m" 404 -
+2025-06-01 11:28:19,205 127.0.0.1 - - [01/Jun/2025 11:28:19] "[33mGET /logs HTTP/1.1[0m" 404 -
+2025-06-01 11:28:22,836 127.0.0.1 - - [01/Jun/2025 11:28:22] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 11:28:22,874 127.0.0.1 - - [01/Jun/2025 11:28:22] "GET /socket.io/?EIO=4&transport=polling&t=PSgco_M HTTP/1.1" 200 -
+2025-06-01 11:28:22,876 127.0.0.1 - - [01/Jun/2025 11:28:22] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 11:28:22,895 New WebSocket client connected
+2025-06-01 11:28:22,895 127.0.0.1 - - [01/Jun/2025 11:28:22] "POST /socket.io/?EIO=4&transport=polling&t=PSgco_g&sid=vJYKBT1XXsQQKGqtAAAC HTTP/1.1" 200 -
+2025-06-01 11:28:22,896 127.0.0.1 - - [01/Jun/2025 11:28:22] "GET /socket.io/?EIO=4&transport=polling&t=PSgco_g.0&sid=vJYKBT1XXsQQKGqtAAAC HTTP/1.1" 200 -
+2025-06-01 11:28:22,900 127.0.0.1 - - [01/Jun/2025 11:28:22] "GET /socket.io/?EIO=4&transport=polling&t=PSgco_p&sid=vJYKBT1XXsQQKGqtAAAC HTTP/1.1" 200 -
+2025-06-01 11:28:24,020 127.0.0.1 - - [01/Jun/2025 11:28:24] "GET /socket.io/?EIO=4&transport=websocket&sid=vJYKBT1XXsQQKGqtAAAC HTTP/1.1" 200 -
+2025-06-01 11:28:25,382 127.0.0.1 - - [01/Jun/2025 11:28:25] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 11:28:28,436 127.0.0.1 - - [01/Jun/2025 11:28:28] "[33mGET /demo HTTP/1.1[0m" 404 -
+2025-06-01 11:29:54,763 127.0.0.1 - - [01/Jun/2025 11:29:54] "GET / HTTP/1.1" 200 -
+2025-06-01 11:29:55,356 127.0.0.1 - - [01/Jun/2025 11:29:55] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 11:29:55,549 127.0.0.1 - - [01/Jun/2025 11:29:55] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 11:29:55,690 127.0.0.1 - - [01/Jun/2025 11:29:55] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 11:29:58,744 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 11:29:58,744 [33mPress CTRL+C to quit[0m
+2025-06-01 11:30:00,589 127.0.0.1 - - [01/Jun/2025 11:30:00] "GET / HTTP/1.1" 200 -
+2025-06-01 11:30:01,152 127.0.0.1 - - [01/Jun/2025 11:30:01] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 11:30:02,043 127.0.0.1 - - [01/Jun/2025 11:30:02] "GET / HTTP/1.1" 200 -
+2025-06-01 11:30:02,309 127.0.0.1 - - [01/Jun/2025 11:30:02] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 11:30:02,491 127.0.0.1 - - [01/Jun/2025 11:30:02] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 11:30:57,948 127.0.0.1 - - [01/Jun/2025 11:30:57] "GET / HTTP/1.1" 200 -
+2025-06-01 11:31:34,164 127.0.0.1 - - [01/Jun/2025 11:31:34] "GET / HTTP/1.1" 200 -
+2025-06-01 11:31:35,577 127.0.0.1 - - [01/Jun/2025 11:31:35] "GET / HTTP/1.1" 200 -
+2025-06-01 11:33:15,130 127.0.0.1 - - [01/Jun/2025 11:33:15] "GET / HTTP/1.1" 200 -
+2025-06-01 11:33:16,574 127.0.0.1 - - [01/Jun/2025 11:33:16] "GET / HTTP/1.1" 200 -
+2025-06-01 11:34:29,849 127.0.0.1 - - [01/Jun/2025 11:34:29] "GET / HTTP/1.1" 200 -
+2025-06-01 11:34:29,878 127.0.0.1 - - [01/Jun/2025 11:34:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 11:35:09,197 127.0.0.1 - - [01/Jun/2025 11:35:09] "GET / HTTP/1.1" 200 -
+2025-06-01 11:35:23,027 127.0.0.1 - - [01/Jun/2025 11:35:23] "GET / HTTP/1.1" 200 -
+2025-06-01 11:35:31,776 127.0.0.1 - - [01/Jun/2025 11:35:31] "GET / HTTP/1.1" 200 -
+2025-06-01 11:35:40,015 127.0.0.1 - - [01/Jun/2025 11:35:40] "GET / HTTP/1.1" 200 -
+2025-06-01 11:36:19,914 127.0.0.1 - - [01/Jun/2025 11:36:19] "GET / HTTP/1.1" 200 -
+2025-06-01 11:36:26,136 127.0.0.1 - - [01/Jun/2025 11:36:26] "GET / HTTP/1.1" 200 -
+2025-06-01 11:36:31,021 127.0.0.1 - - [01/Jun/2025 11:36:31] "GET / HTTP/1.1" 200 -
+2025-06-01 11:36:38,892 127.0.0.1 - - [01/Jun/2025 11:36:38] "GET / HTTP/1.1" 200 -
+2025-06-01 11:36:57,417 127.0.0.1 - - [01/Jun/2025 11:36:57] "GET / HTTP/1.1" 200 -
+2025-06-01 11:37:05,308 127.0.0.1 - - [01/Jun/2025 11:37:05] "GET / HTTP/1.1" 200 -
+2025-06-01 11:37:13,470 127.0.0.1 - - [01/Jun/2025 11:37:13] "GET / HTTP/1.1" 200 -
+2025-06-01 11:37:21,194 127.0.0.1 - - [01/Jun/2025 11:37:21] "GET / HTTP/1.1" 200 -
+2025-06-01 11:37:29,407 127.0.0.1 - - [01/Jun/2025 11:37:29] "GET / HTTP/1.1" 200 -
+2025-06-01 11:37:34,051 127.0.0.1 - - [01/Jun/2025 11:37:34] "GET / HTTP/1.1" 200 -
+2025-06-01 11:37:40,581 127.0.0.1 - - [01/Jun/2025 11:37:40] "GET / HTTP/1.1" 200 -
+2025-06-01 11:37:49,256 127.0.0.1 - - [01/Jun/2025 11:37:49] "GET / HTTP/1.1" 200 -
+2025-06-01 11:38:00,116 127.0.0.1 - - [01/Jun/2025 11:38:00] "GET / HTTP/1.1" 200 -
+2025-06-01 11:38:05,926 127.0.0.1 - - [01/Jun/2025 11:38:05] "GET / HTTP/1.1" 200 -
+2025-06-01 11:38:10,127 127.0.0.1 - - [01/Jun/2025 11:38:10] "GET / HTTP/1.1" 200 -
+2025-06-01 11:38:43,343 127.0.0.1 - - [01/Jun/2025 11:38:43] "GET / HTTP/1.1" 200 -
+2025-06-01 11:38:50,640 127.0.0.1 - - [01/Jun/2025 11:38:50] "GET / HTTP/1.1" 200 -
+2025-06-01 11:38:54,741 127.0.0.1 - - [01/Jun/2025 11:38:54] "[33mGET /logs HTTP/1.1[0m" 404 -
+2025-06-01 11:39:15,888 127.0.0.1 - - [01/Jun/2025 11:39:15] "[33mGET /about HTTP/1.1[0m" 404 -
+2025-06-01 11:39:18,576 127.0.0.1 - - [01/Jun/2025 11:39:18] "[33mGET /updates HTTP/1.1[0m" 404 -
+2025-06-01 11:39:21,974 127.0.0.1 - - [01/Jun/2025 11:39:21] "[33mGET /demo HTTP/1.1[0m" 404 -
+2025-06-01 11:45:37,436 127.0.0.1 - - [01/Jun/2025 11:45:37] "[33mGET /help HTTP/1.1[0m" 404 -
+2025-06-01 11:45:51,289 127.0.0.1 - - [01/Jun/2025 11:45:51] "[33mGET /settings HTTP/1.1[0m" 404 -
+2025-06-01 11:45:53,681 127.0.0.1 - - [01/Jun/2025 11:45:53] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 11:45:55,624 127.0.0.1 - - [01/Jun/2025 11:45:55] "[33mGET /logs HTTP/1.1[0m" 404 -
+2025-06-01 11:45:57,857 127.0.0.1 - - [01/Jun/2025 11:45:57] "[33mGET /help HTTP/1.1[0m" 404 -
+2025-06-01 11:45:59,745 127.0.0.1 - - [01/Jun/2025 11:45:59] "[33mGET /updates HTTP/1.1[0m" 404 -
+2025-06-01 11:46:02,985 127.0.0.1 - - [01/Jun/2025 11:46:02] "[33mGET /demo HTTP/1.1[0m" 404 -
+2025-06-01 11:46:05,067 127.0.0.1 - - [01/Jun/2025 11:46:05] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 11:46:05,101 127.0.0.1 - - [01/Jun/2025 11:46:05] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 11:46:05,101 127.0.0.1 - - [01/Jun/2025 11:46:05] "GET /socket.io/?EIO=4&transport=polling&t=PSggsKd HTTP/1.1" 200 -
+2025-06-01 11:46:05,121 New WebSocket client connected
+2025-06-01 11:46:05,121 127.0.0.1 - - [01/Jun/2025 11:46:05] "POST /socket.io/?EIO=4&transport=polling&t=PSggsKv&sid=VWbHaoQh2KnF6ZntAAAA HTTP/1.1" 200 -
+2025-06-01 11:46:05,122 127.0.0.1 - - [01/Jun/2025 11:46:05] "GET /socket.io/?EIO=4&transport=polling&t=PSggsKw&sid=VWbHaoQh2KnF6ZntAAAA HTTP/1.1" 200 -
+2025-06-01 11:46:05,127 127.0.0.1 - - [01/Jun/2025 11:46:05] "GET /socket.io/?EIO=4&transport=polling&t=PSggsL6&sid=VWbHaoQh2KnF6ZntAAAA HTTP/1.1" 200 -
+2025-06-01 11:46:06,546 127.0.0.1 - - [01/Jun/2025 11:46:06] "GET /socket.io/?EIO=4&transport=websocket&sid=VWbHaoQh2KnF6ZntAAAA HTTP/1.1" 200 -
+2025-06-01 11:54:51,671 127.0.0.1 - - [01/Jun/2025 11:54:51] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 11:54:51,730 127.0.0.1 - - [01/Jun/2025 11:54:51] "GET /socket.io/?EIO=4&transport=polling&t=PSgisvF HTTP/1.1" 200 -
+2025-06-01 11:54:51,730 127.0.0.1 - - [01/Jun/2025 11:54:51] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 11:54:51,752 New WebSocket client connected
+2025-06-01 11:54:51,753 127.0.0.1 - - [01/Jun/2025 11:54:51] "POST /socket.io/?EIO=4&transport=polling&t=PSgisvW&sid=Ev4raoW2FLNA--DTAAAC HTTP/1.1" 200 -
+2025-06-01 11:54:51,753 127.0.0.1 - - [01/Jun/2025 11:54:51] "GET /socket.io/?EIO=4&transport=polling&t=PSgisvW.0&sid=Ev4raoW2FLNA--DTAAAC HTTP/1.1" 200 -
+2025-06-01 11:54:51,757 127.0.0.1 - - [01/Jun/2025 11:54:51] "GET /socket.io/?EIO=4&transport=polling&t=PSgisvj&sid=Ev4raoW2FLNA--DTAAAC HTTP/1.1" 200 -
+2025-06-01 11:54:53,412 127.0.0.1 - - [01/Jun/2025 11:54:53] "GET /socket.io/?EIO=4&transport=websocket&sid=Ev4raoW2FLNA--DTAAAC HTTP/1.1" 200 -
+2025-06-01 11:54:54,702 127.0.0.1 - - [01/Jun/2025 11:54:54] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 11:55:01,121 127.0.0.1 - - [01/Jun/2025 11:55:01] "GET /settings HTTP/1.1" 200 -
+2025-06-01 11:55:23,282 127.0.0.1 - - [01/Jun/2025 11:55:23] "GET /logs HTTP/1.1" 200 -
+2025-06-01 11:56:25,465 127.0.0.1 - - [01/Jun/2025 11:56:25] "GET /updates HTTP/1.1" 200 -
+2025-06-01 11:59:45,196 127.0.0.1 - - [01/Jun/2025 11:59:45] "GET /updates HTTP/1.1" 200 -
+2025-06-01 11:59:45,636 127.0.0.1 - - [01/Jun/2025 11:59:45] "GET / HTTP/1.1" 200 -
+2025-06-01 11:59:52,279 127.0.0.1 - - [01/Jun/2025 11:59:52] "GET /logs HTTP/1.1" 200 -
+2025-06-01 11:59:52,318 127.0.0.1 - - [01/Jun/2025 11:59:52] "[33mGET /fetch_logs HTTP/1.1[0m" 404 -
+2025-06-01 11:59:52,318 127.0.0.1 - - [01/Jun/2025 11:59:52] "GET /socket.io/?EIO=4&transport=polling&t=PSgk0Hx HTTP/1.1" 200 -
+2025-06-01 11:59:52,339 New WebSocket client connected
+2025-06-01 11:59:52,340 127.0.0.1 - - [01/Jun/2025 11:59:52] "POST /socket.io/?EIO=4&transport=polling&t=PSgk0IB&sid=ifX0AT8IA-9hxGoPAAAE HTTP/1.1" 200 -
+2025-06-01 11:59:52,340 127.0.0.1 - - [01/Jun/2025 11:59:52] "GET /socket.io/?EIO=4&transport=polling&t=PSgk0IC&sid=ifX0AT8IA-9hxGoPAAAE HTTP/1.1" 200 -
+2025-06-01 11:59:52,345 127.0.0.1 - - [01/Jun/2025 11:59:52] "GET /socket.io/?EIO=4&transport=polling&t=PSgk0IP&sid=ifX0AT8IA-9hxGoPAAAE HTTP/1.1" 200 -
+2025-06-01 12:01:55,989 127.0.0.1 - - [01/Jun/2025 12:01:55] "GET /socket.io/?EIO=4&transport=websocket&sid=ifX0AT8IA-9hxGoPAAAE HTTP/1.1" 200 -
+2025-06-01 12:01:55,999 127.0.0.1 - - [01/Jun/2025 12:01:55] "GET /logs HTTP/1.1" 200 -
+2025-06-01 12:01:56,035 127.0.0.1 - - [01/Jun/2025 12:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUU_ HTTP/1.1" 200 -
+2025-06-01 12:01:56,036 127.0.0.1 - - [01/Jun/2025 12:01:56] "[33mGET /fetch_logs HTTP/1.1[0m" 404 -
+2025-06-01 12:01:56,040 127.0.0.1 - - [01/Jun/2025 12:01:56] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 12:01:56,054 New WebSocket client connected
+2025-06-01 12:01:56,054 127.0.0.1 - - [01/Jun/2025 12:01:56] "POST /socket.io/?EIO=4&transport=polling&t=PSgkUVC&sid=-4zePyTsUf2M0D80AAAG HTTP/1.1" 200 -
+2025-06-01 12:01:56,055 127.0.0.1 - - [01/Jun/2025 12:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUVC.0&sid=-4zePyTsUf2M0D80AAAG HTTP/1.1" 200 -
+2025-06-01 12:01:56,060 127.0.0.1 - - [01/Jun/2025 12:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUVP&sid=-4zePyTsUf2M0D80AAAG HTTP/1.1" 200 -
+2025-06-01 12:01:56,729 127.0.0.1 - - [01/Jun/2025 12:01:56] "GET /socket.io/?EIO=4&transport=websocket&sid=-4zePyTsUf2M0D80AAAG HTTP/1.1" 200 -
+2025-06-01 12:01:56,736 127.0.0.1 - - [01/Jun/2025 12:01:56] "[36mGET /logs HTTP/1.1[0m" 304 -
+2025-06-01 12:01:56,759 127.0.0.1 - - [01/Jun/2025 12:01:56] "[33mGET /fetch_logs HTTP/1.1[0m" 404 -
+2025-06-01 12:01:56,760 127.0.0.1 - - [01/Jun/2025 12:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUgL HTTP/1.1" 200 -
+2025-06-01 12:01:56,783 New WebSocket client connected
+2025-06-01 12:01:56,784 127.0.0.1 - - [01/Jun/2025 12:01:56] "POST /socket.io/?EIO=4&transport=polling&t=PSgkUgb&sid=wtre3Wt5HjerPBuxAAAI HTTP/1.1" 200 -
+2025-06-01 12:01:56,784 127.0.0.1 - - [01/Jun/2025 12:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUgb.0&sid=wtre3Wt5HjerPBuxAAAI HTTP/1.1" 200 -
+2025-06-01 12:01:56,789 127.0.0.1 - - [01/Jun/2025 12:01:56] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUgp&sid=wtre3Wt5HjerPBuxAAAI HTTP/1.1" 200 -
+2025-06-01 12:01:57,070 127.0.0.1 - - [01/Jun/2025 12:01:57] "GET /socket.io/?EIO=4&transport=websocket&sid=wtre3Wt5HjerPBuxAAAI HTTP/1.1" 200 -
+2025-06-01 12:01:57,074 127.0.0.1 - - [01/Jun/2025 12:01:57] "[36mGET /logs HTTP/1.1[0m" 304 -
+2025-06-01 12:01:57,102 127.0.0.1 - - [01/Jun/2025 12:01:57] "[33mGET /fetch_logs HTTP/1.1[0m" 404 -
+2025-06-01 12:01:57,102 127.0.0.1 - - [01/Jun/2025 12:01:57] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUlf HTTP/1.1" 200 -
+2025-06-01 12:01:57,120 New WebSocket client connected
+2025-06-01 12:01:57,120 127.0.0.1 - - [01/Jun/2025 12:01:57] "POST /socket.io/?EIO=4&transport=polling&t=PSgkUlu&sid=BuJmGC7hHgEiTfxsAAAK HTTP/1.1" 200 -
+2025-06-01 12:01:57,121 127.0.0.1 - - [01/Jun/2025 12:01:57] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUlu.0&sid=BuJmGC7hHgEiTfxsAAAK HTTP/1.1" 200 -
+2025-06-01 12:01:57,125 127.0.0.1 - - [01/Jun/2025 12:01:57] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUm3&sid=BuJmGC7hHgEiTfxsAAAK HTTP/1.1" 200 -
+2025-06-01 12:01:57,279 127.0.0.1 - - [01/Jun/2025 12:01:57] "GET /socket.io/?EIO=4&transport=websocket&sid=BuJmGC7hHgEiTfxsAAAK HTTP/1.1" 200 -
+2025-06-01 12:01:57,288 127.0.0.1 - - [01/Jun/2025 12:01:57] "[36mGET /logs HTTP/1.1[0m" 304 -
+2025-06-01 12:01:57,313 127.0.0.1 - - [01/Jun/2025 12:01:57] "[33mGET /fetch_logs HTTP/1.1[0m" 404 -
+2025-06-01 12:01:57,313 127.0.0.1 - - [01/Jun/2025 12:01:57] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUo- HTTP/1.1" 200 -
+2025-06-01 12:01:57,335 New WebSocket client connected
+2025-06-01 12:01:57,335 127.0.0.1 - - [01/Jun/2025 12:01:57] "POST /socket.io/?EIO=4&transport=polling&t=PSgkUpE&sid=tG-mGBeQUilv_eX6AAAM HTTP/1.1" 200 -
+2025-06-01 12:01:57,337 127.0.0.1 - - [01/Jun/2025 12:01:57] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUpF&sid=tG-mGBeQUilv_eX6AAAM HTTP/1.1" 200 -
+2025-06-01 12:01:57,342 127.0.0.1 - - [01/Jun/2025 12:01:57] "GET /socket.io/?EIO=4&transport=polling&t=PSgkUpS&sid=tG-mGBeQUilv_eX6AAAM HTTP/1.1" 200 -
+2025-06-01 12:02:06,319 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 12:02:06,319 [33mPress CTRL+C to quit[0m
+2025-06-01 12:02:06,507 127.0.0.1 - - [01/Jun/2025 12:02:06] "GET /socket.io/?EIO=4&transport=polling&t=PSgkX2c HTTP/1.1" 200 -
+2025-06-01 12:02:06,513 New WebSocket client connected
+2025-06-01 12:02:06,513 127.0.0.1 - - [01/Jun/2025 12:02:06] "POST /socket.io/?EIO=4&transport=polling&t=PSgkX2k&sid=gyDWuEe7nm4CO2y0AAAA HTTP/1.1" 200 -
+2025-06-01 12:02:06,514 127.0.0.1 - - [01/Jun/2025 12:02:06] "GET /socket.io/?EIO=4&transport=polling&t=PSgkX2k.0&sid=gyDWuEe7nm4CO2y0AAAA HTTP/1.1" 200 -
+2025-06-01 12:02:06,518 127.0.0.1 - - [01/Jun/2025 12:02:06] "GET /socket.io/?EIO=4&transport=polling&t=PSgkX2r&sid=gyDWuEe7nm4CO2y0AAAA HTTP/1.1" 200 -
+2025-06-01 12:02:08,295 127.0.0.1 - - [01/Jun/2025 12:02:08] "GET /socket.io/?EIO=4&transport=websocket&sid=gyDWuEe7nm4CO2y0AAAA HTTP/1.1" 200 -
+2025-06-01 12:02:08,307 127.0.0.1 - - [01/Jun/2025 12:02:08] "GET /logs HTTP/1.1" 200 -
+2025-06-01 12:02:08,339 127.0.0.1 - - [01/Jun/2025 12:02:08] "GET /socket.io/?EIO=4&transport=polling&t=PSgkXVG HTTP/1.1" 200 -
+2025-06-01 12:02:08,340 127.0.0.1 - - [01/Jun/2025 12:02:08] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 12:02:08,364 New WebSocket client connected
+2025-06-01 12:02:08,364 127.0.0.1 - - [01/Jun/2025 12:02:08] "POST /socket.io/?EIO=4&transport=polling&t=PSgkXVX&sid=G0CSgiFmXMYercU_AAAC HTTP/1.1" 200 -
+2025-06-01 12:02:08,365 127.0.0.1 - - [01/Jun/2025 12:02:08] "GET /socket.io/?EIO=4&transport=polling&t=PSgkXVX.0&sid=G0CSgiFmXMYercU_AAAC HTTP/1.1" 200 -
+2025-06-01 12:02:08,370 127.0.0.1 - - [01/Jun/2025 12:02:08] "GET /socket.io/?EIO=4&transport=polling&t=PSgkXVn&sid=G0CSgiFmXMYercU_AAAC HTTP/1.1" 200 -
+2025-06-01 12:02:34,476 127.0.0.1 - - [01/Jun/2025 12:02:34] "GET /socket.io/?EIO=4&transport=websocket&sid=G0CSgiFmXMYercU_AAAC HTTP/1.1" 200 -
+2025-06-01 12:02:34,480 127.0.0.1 - - [01/Jun/2025 12:02:34] "GET / HTTP/1.1" 200 -
+2025-06-01 12:02:39,202 127.0.0.1 - - [01/Jun/2025 12:02:39] "GET /logs HTTP/1.1" 200 -
+2025-06-01 12:02:39,231 127.0.0.1 - - [01/Jun/2025 12:02:39] "GET /socket.io/?EIO=4&transport=polling&t=PSgkf1x HTTP/1.1" 200 -
+2025-06-01 12:02:39,231 127.0.0.1 - - [01/Jun/2025 12:02:39] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 12:02:39,251 New WebSocket client connected
+2025-06-01 12:02:39,252 127.0.0.1 - - [01/Jun/2025 12:02:39] "POST /socket.io/?EIO=4&transport=polling&t=PSgkf2D&sid=7Air16bM_MqhYGoAAAAE HTTP/1.1" 200 -
+2025-06-01 12:02:39,252 127.0.0.1 - - [01/Jun/2025 12:02:39] "GET /socket.io/?EIO=4&transport=polling&t=PSgkf2D.0&sid=7Air16bM_MqhYGoAAAAE HTTP/1.1" 200 -
+2025-06-01 12:02:39,257 127.0.0.1 - - [01/Jun/2025 12:02:39] "GET /socket.io/?EIO=4&transport=polling&t=PSgkf2O&sid=7Air16bM_MqhYGoAAAAE HTTP/1.1" 200 -
+2025-06-01 12:03:37,862 127.0.0.1 - - [01/Jun/2025 12:03:37] "GET /socket.io/?EIO=4&transport=websocket&sid=7Air16bM_MqhYGoAAAAE HTTP/1.1" 200 -
+2025-06-01 12:03:37,871 127.0.0.1 - - [01/Jun/2025 12:03:37] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 12:03:37,901 127.0.0.1 - - [01/Jun/2025 12:03:37] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 12:04:04,060 127.0.0.1 - - [01/Jun/2025 12:04:04] "GET / HTTP/1.1" 200 -
+2025-06-01 12:04:05,929 127.0.0.1 - - [01/Jun/2025 12:04:05] "GET /settings HTTP/1.1" 200 -
+2025-06-01 12:04:11,160 127.0.0.1 - - [01/Jun/2025 12:04:11] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 12:04:11,195 127.0.0.1 - - [01/Jun/2025 12:04:11] "GET /socket.io/?EIO=4&transport=polling&t=PSgk_Ut HTTP/1.1" 200 -
+2025-06-01 12:04:11,198 127.0.0.1 - - [01/Jun/2025 12:04:11] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 12:04:11,213 New WebSocket client connected
+2025-06-01 12:04:11,215 127.0.0.1 - - [01/Jun/2025 12:04:11] "POST /socket.io/?EIO=4&transport=polling&t=PSgk_V5&sid=Jg_e2r8bQAL6S1bYAAAG HTTP/1.1" 200 -
+2025-06-01 12:04:11,215 127.0.0.1 - - [01/Jun/2025 12:04:11] "GET /socket.io/?EIO=4&transport=polling&t=PSgk_V5.0&sid=Jg_e2r8bQAL6S1bYAAAG HTTP/1.1" 200 -
+2025-06-01 12:04:11,218 127.0.0.1 - - [01/Jun/2025 12:04:11] "GET /socket.io/?EIO=4&transport=polling&t=PSgk_VH&sid=Jg_e2r8bQAL6S1bYAAAG HTTP/1.1" 200 -
+2025-06-01 12:04:14,064 127.0.0.1 - - [01/Jun/2025 12:04:14] "GET /local_cidr HTTP/1.1" 200 -
+2025-06-01 12:04:17,790 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.10.0/24']}]
+2025-06-01 12:04:17,790 127.0.0.1 - - [01/Jun/2025 12:04:17] "POST /start HTTP/1.1" 200 -
+2025-06-01 12:04:17,805 [octapus] Starting nmap: nmap -sV 192.168.10.0/24 -oX /tmp/octapus_nmap_106467.xml
+2025-06-01 12:04:17,849 [nmap] Starting Nmap 7.80 ( https://nmap.org ) at 2025-06-01 12:04 EEST
+2025-06-01 12:09:19,495 192.168.10.146 - - [01/Jun/2025 12:09:19] "GET / HTTP/1.0" 200 -
+2025-06-01 12:09:19,507 192.168.10.146 - - [01/Jun/2025 12:09:19] "OPTIONS / HTTP/1.0" 200 -
+2025-06-01 12:09:19,509 192.168.10.146 - - [01/Jun/2025 12:09:19] code 400, message Bad request version ('RTSP/1.0')
+2025-06-01 12:09:19,509 192.168.10.146 - - [01/Jun/2025 12:09:19] "[35m[1mOPTIONS / RTSP/1.0[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:19,511 192.168.10.146 - - [01/Jun/2025 12:09:19] "[33mGET /nice%20ports,/Trinity.txt.bak HTTP/1.0[0m" 404 -
+2025-06-01 12:09:19,514 192.168.10.146 - - [01/Jun/2025 12:09:19] code 400, message Bad request syntax ('\x05\x04\x00\x01\x02\x80\x05\x01\x00\x03')
+2025-06-01 12:09:19,514 192.168.10.146 - - [01/Jun/2025 12:09:19] "[35m[1m  [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:24,515 192.168.10.146 - - [01/Jun/2025 12:09:24] code 400, message Bad request syntax ('\x04\x01\x00\x16\x7f\x00\x00\x01root\x00')
+2025-06-01 12:09:24,515 192.168.10.146 - - [01/Jun/2025 12:09:24] "[35m[1m   root [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:29,516 192.168.10.146 - - [01/Jun/2025 12:09:29] code 400, message Bad request version ('\x00\x01\x97|\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+2025-06-01 12:09:29,516 192.168.10.146 - - [01/Jun/2025 12:09:29] "[35m[1m  (rþ          |                    [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:34,516 192.168.10.146 - - [01/Jun/2025 12:09:34] code 400, message Bad HTTP/0.9 request type ('\x00')
+2025-06-01 12:09:34,516 192.168.10.146 - - [01/Jun/2025 12:09:34] "[35m[1m          versionbind   [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:39,516 192.168.10.146 - - [01/Jun/2025 12:09:39] code 400, message Bad HTTP/0.9 request type ('\x00')
+2025-06-01 12:09:39,517 192.168.10.146 - - [01/Jun/2025 12:09:39] "[35m[1m            [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:39,517 192.168.10.146 - - [01/Jun/2025 12:09:39] code 400, message Bad request syntax ('HELP')
+2025-06-01 12:09:39,517 192.168.10.146 - - [01/Jun/2025 12:09:39] "[35m[1mHELP[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:39,518 192.168.10.146 - - [01/Jun/2025 12:09:39] code 400, message Bad request syntax ('\x16\x03\x00\x00S\x01\x00\x00O\x03\x00?G×÷º,îê²`~ó\x00ý\x82{¹Õ\x96Èw\x9bæÄÛ<=Ûoï\x10n\x00\x00(\x00\x16\x00\x13\x00')
+2025-06-01 12:09:39,518 192.168.10.146 - - [01/Jun/2025 12:09:39] "[35m[1m  S  O ?G×÷º,îê²`~ó ý{¹ÕÈwæÄÛ<=Ûoïn  (   [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:39,521 192.168.10.146 - - [01/Jun/2025 12:09:39] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00*%à\x00\x00\x00\x00\x00Cookie:')
+2025-06-01 12:09:39,521 192.168.10.146 - - [01/Jun/2025 12:09:39] "[35m[1m  *%à     Cookie: mstshash=nmap[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:39,522 192.168.10.146 - - [01/Jun/2025 12:09:39] code 400, message Bad request version ('\x00/\x00')
+2025-06-01 12:09:39,522 192.168.10.146 - - [01/Jun/2025 12:09:39] "[35m[1m  i  eU§ärandom1random2random3random4   / [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:39,523 192.168.10.146 - - [01/Jun/2025 12:09:39] code 400, message Bad request syntax ('\x00\x00\x00qj\x81n0\x81k¡\x03\x02\x01\x05¢\x03\x02\x01')
+2025-06-01 12:09:39,523 192.168.10.146 - - [01/Jun/2025 12:09:39] "[35m[1m   qjn0k¡¢[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:44,524 192.168.10.146 - - [01/Jun/2025 12:09:44] code 400, message Bad request version ('0.12\x00')
+2025-06-01 12:09:44,524 192.168.10.146 - - [01/Jun/2025 12:09:44] "[35m[1m   ¤ÿSMBr    @              @     PC NETWORK PROGRAM 1.0 MICROSOFT NETWORKS 1.03 MICROSOFT NETWORKS 3.0 LANMAN1.0 LM1.2X002 Samba NT LANMAN 1.0 NT LM 0.12 [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:49,524 192.168.10.146 - - [01/Jun/2025 12:09:49] code 400, message Bad HTTP/0.9 request type ('l\x00')
+2025-06-01 12:09:49,524 192.168.10.146 - - [01/Jun/2025 12:09:49] "[35m[1ml          [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:49,524 192.168.10.146 - - [01/Jun/2025 12:09:49] code 400, message Bad request syntax ('\x01default')
+2025-06-01 12:09:49,524 192.168.10.146 - - [01/Jun/2025 12:09:49] "[35m[1mdefault[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:49,526 192.168.10.146 - - [01/Jun/2025 12:09:49] code 400, message Bad request syntax ('0\x84\x00\x00\x00-\x02\x01\x07c\x84\x00\x00\x00$\x04\x00')
+2025-06-01 12:09:49,526 192.168.10.146 - - [01/Jun/2025 12:09:49] "[35m[1m0   -c   $ [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:54,527 192.168.10.146 - - [01/Jun/2025 12:09:54] code 400, message Bad HTTP/0.9 request type ('0')
+2025-06-01 12:09:54,527 192.168.10.146 - - [01/Jun/2025 12:09:54] "[35m[1m0`  [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:54,527 192.168.10.146 - - [01/Jun/2025 12:09:54] code 400, message Bad request version ('SIP/2.0')
+2025-06-01 12:09:54,527 192.168.10.146 - - [01/Jun/2025 12:09:54] "[35m[1mOPTIONS sip:nm SIP/2.0[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:09:59,529 192.168.10.146 - - [01/Jun/2025 12:09:59] code 400, message Bad request syntax ('TNMP\x04\x00\x00\x00TNME\x00\x00\x04\x00')
+2025-06-01 12:09:59,530 192.168.10.146 - - [01/Jun/2025 12:09:59] "[35m[1mTNMP   TNME   [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:10:04,530 192.168.10.146 - - [01/Jun/2025 12:10:04] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00')
+2025-06-01 12:10:04,530 192.168.10.146 - - [01/Jun/2025 12:10:04] "[35m[1m  à     [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:10:09,530 192.168.10.146 - - [01/Jun/2025 12:10:09] code 400, message Bad request syntax ('DmdT\x00\x00\x00\x17\x00\x00\x00\x01\x00\x00\x00\x00\x11\x11\x00ÿ\x01ÿ\x13')
+2025-06-01 12:10:09,530 192.168.10.146 - - [01/Jun/2025 12:10:09] "[35m[1mDmdT           ÿÿ[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:10:14,530 192.168.10.146 - - [01/Jun/2025 12:10:14] code 400, message Bad HTTP/0.9 request type (':\x00\x00\x00/\x00\x00\x00\x02\x00\x00@\x02\x0f\x00\x01\x00=\x05\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00/\x00\x00\x00\x00\x00\x00\x00\x00\x00@')
+2025-06-01 12:10:14,530 192.168.10.146 - - [01/Jun/2025 12:10:14] "[35m[1m:   /     @  =            /         @                 [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:10:19,530 192.168.10.146 - - [01/Jun/2025 12:10:19] code 400, message Bad request syntax ('JRMI\x00\x02K')
+2025-06-01 12:10:19,530 192.168.10.146 - - [01/Jun/2025 12:10:19] "[35m[1mJRMI K[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:10:24,530 192.168.10.146 - - [01/Jun/2025 12:10:24] code 400, message Bad request version ('\x00{\x000\x000\x000\x000\x00A\x00A\x000\x000\x00-\x000\x00A\x000\x000\x00-\x000\x000\x00a\x000\x00-\x00A\x00A\x000\x00A\x00-\x000\x000\x000\x000\x00A\x000\x00A\x00A\x000\x00A\x00A\x000\x00}\x00\x00\x00àmß_')
+2025-06-01 12:10:24,530 192.168.10.146 - - [01/Jun/2025 12:10:24] "[35m[1m  ýÎú°    MMS                    ðððð    N S P l a y e r / 9 . 0 . 0 . 2 9 8 0 ;   { 0 0 0 0 A A 0 0 - 0 A 0 0 - 0 0 a 0 - A A 0 A - 0 0 0 0 A 0 A A 0 A A 0 }   àmß_[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:10:29,530 192.168.10.146 - - [01/Jun/2025 12:10:29] code 400, message Bad HTTP/0.9 request type ('\x00Z\x00\x00\x01\x00\x00\x00\x016\x01,\x00\x00\x08\x00\x7fÿ\x7f\x08\x00\x00\x00\x01\x00')
+2025-06-01 12:10:29,531 192.168.10.146 - - [01/Jun/2025 12:10:29] "[35m[1m Z     6,   ÿ      :                4æ           (CONNECT_DATA=(COMMAND=version))[0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:10:34,531 192.168.10.146 - - [01/Jun/2025 12:10:34] code 400, message Bad request version ('\x03\x00(\x00\x04ÿ\x08\x00\x01U\x00\x00\x00MSSQLServer\x00H\x0f\x00\x00')
+2025-06-01 12:10:34,531 192.168.10.146 - - [01/Jun/2025 12:10:34] "[35m[1m 4            ( ÿ U   MSSQLServer H  [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:10:39,531 192.168.10.146 - - [01/Jun/2025 12:10:39] code 400, message Bad request syntax ('\x00\x03\x00\x01\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x0f\x00')
+2025-06-01 12:10:39,531 192.168.10.146 - - [01/Jun/2025 12:10:39] "[35m[1m              [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:10:44,531 192.168.10.146 - - [01/Jun/2025 12:10:44] code 400, message Bad request syntax ('GIOP\x01\x00\x01\x00$\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x01\x00\x00\x00\x06\x00\x00\x00abcdef\x00\x00\x04\x00\x00\x00get\x00\x00\x00\x00\x00')
+2025-06-01 12:10:44,531 192.168.10.146 - - [01/Jun/2025 12:10:44] "[35m[1mGIOP  $                abcdef     get     [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:13:08,449 192.168.10.146 - - [01/Jun/2025 12:13:08] "[33mGET /nmaplowercheck1748769186 HTTP/1.1[0m" 404 -
+2025-06-01 12:13:08,598 192.168.10.146 - - [01/Jun/2025 12:13:08] "[33mGET /evox/about HTTP/1.1[0m" 404 -
+2025-06-01 12:13:39,824 192.168.10.146 - - [01/Jun/2025 12:13:39] "[33mPOST /sdk HTTP/1.1[0m" 404 -
+2025-06-01 12:13:41,320 192.168.10.146 - - [01/Jun/2025 12:13:41] "[33mGET /HNAP1 HTTP/1.1[0m" 404 -
+2025-06-01 12:14:23,137 192.168.10.146 - - [01/Jun/2025 12:14:23] code 400, message Bad HTTP/0.9 request type ('\x80\x00\x00(\x14ié"\x00\x00\x00\x00\x00\x00\x00\x02\x00\x01\x86')
+2025-06-01 12:14:23,137 192.168.10.146 - - [01/Jun/2025 12:14:23] "[35m[1m  (ié"                                [0m" HTTPStatus.BAD_REQUEST -
+2025-06-01 12:14:23,641 192.168.10.146 - - [01/Jun/2025 12:14:23] "GET / HTTP/1.1" 200 -
+2025-06-01 12:14:31,800 [nmap] Nmap scan report for 192.168.10.2
+2025-06-01 12:14:31,800 [nmap] Host is up (0.0064s latency).
+2025-06-01 12:14:31,801 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,801 [nmap] PORT     STATE SERVICE     VERSION
+2025-06-01 12:14:31,801 [nmap] 22/tcp   open  ssh         OpenSSH 9.2p1 Debian 2+deb12u6 (protocol 2.0)
+2025-06-01 12:14:31,801 [nmap] 8000/tcp open  nagios-nsca Nagios NSCA
+2025-06-01 12:14:31,801 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,801 [nmap] 
+2025-06-01 12:14:31,801 [nmap] Nmap scan report for 192.168.10.4
+2025-06-01 12:14:31,802 [nmap] Host is up (0.0019s latency).
+2025-06-01 12:14:31,802 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,802 [nmap] PORT    STATE SERVICE   VERSION
+2025-06-01 12:14:31,802 [nmap] 80/tcp  open  http
+2025-06-01 12:14:31,802 [nmap] 443/tcp open  ssl/https
+2025-06-01 12:14:31,802 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,802 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18A0%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,802 [nmap] SF:quest,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\x20\
+2025-06-01 12:14:31,802 [nmap] SF:"bb-110-64f80cf2\"\r\nLast-Modified:\x20Wed,\x2006\x20Sep\x202023\x2005
+2025-06-01 12:14:31,802 [nmap] SF::24:02\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:08:48\x20GMT\
+2025-06-01 12:14:31,802 [nmap] SF:r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-ancest
+2025-06-01 12:14:31,802 [nmap] SF:ors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x20272\r
+2025-06-01 12:14:31,802 [nmap] SF:\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYPE\x2
+2025-06-01 12:14:31,802 [nmap] SF:0html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http://www
+2025-06-01 12:14:31,802 [nmap] SF:\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://www\.
+2025-06-01 12:14:31,802 [nmap] SF:w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20conte
+2025-06-01 12:14:31,802 [nmap] SF:nt=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%r(HT
+2025-06-01 12:14:31,802 [nmap] SF:TPOptions,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\
+2025-06-01 12:14:31,802 [nmap] SF:x20\"bb-110-64f80cf2\"\r\nLast-Modified:\x20Wed,\x2006\x20Sep\x202023\x
+2025-06-01 12:14:31,802 [nmap] SF:2005:24:02\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:08:48\x20
+2025-06-01 12:14:31,802 [nmap] SF:GMT\r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-an
+2025-06-01 12:14:31,802 [nmap] SF:cestors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x202
+2025-06-01 12:14:31,802 [nmap] SF:72\r\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYP
+2025-06-01 12:14:31,802 [nmap] SF:E\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http:/
+2025-06-01 12:14:31,802 [nmap] SF:/www\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://w
+2025-06-01 12:14:31,802 [nmap] SF:ww\.w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20c
+2025-06-01 12:14:31,802 [nmap] SF:ontent=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%
+2025-06-01 12:14:31,802 [nmap] SF:r(RTSPRequest,79,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20
+2025-06-01 12:14:31,803 [nmap] SF:Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r
+2025-06-01 12:14:31,803 [nmap] SF:\n\r\n<h1>Bad\x20Request</h1>")%r(Help,79,"HTTP/0\.9\x20400\x20Bad\x20R
+2025-06-01 12:14:31,803 [nmap] SF:equest\r\nConnection:\x20Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nCon
+2025-06-01 12:14:31,803 [nmap] SF:tent-Type:\x20text/html\r\n\r\n<h1>Bad\x20Request</h1>")%r(SIPOptions,7
+2025-06-01 12:14:31,803 [nmap] SF:9,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20Keep-Alive\r\nK
+2025-06-01 12:14:31,803 [nmap] SF:eep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r\n\r\n<h1>Bad\x
+2025-06-01 12:14:31,803 [nmap] SF:20Request</h1>");
+2025-06-01 12:14:31,803 [nmap] 
+2025-06-01 12:14:31,803 [nmap] Nmap scan report for 192.168.10.14
+2025-06-01 12:14:31,803 [nmap] Host is up (0.0021s latency).
+2025-06-01 12:14:31,803 [nmap] Not shown: 999 filtered ports
+2025-06-01 12:14:31,803 [nmap] PORT   STATE SERVICE VERSION
+2025-06-01 12:14:31,803 [nmap] 80/tcp open  http
+2025-06-01 12:14:31,803 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,803 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18A0%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,803 [nmap] SF:quest,239,"HTTP/1\.1\x20200\x20OK\r\nConnection:\x20close\r\nX-Frame-Op
+2025-06-01 12:14:31,803 [nmap] SF:tions:\x20SAMEORIGIN\r\nX-XSS-Protection:\x201;\x20mode=block\r\nX-Cont
+2025-06-01 12:14:31,803 [nmap] SF:ent-Type-Options:\x20nosniff\r\nContent-Type:\x20text/html\r\nCache-Con
+2025-06-01 12:14:31,803 [nmap] SF:trol:\x20no-cache\r\nExpires:\x20-1\r\n\r\n<html>\n<head>\n<title>Redir
+2025-06-01 12:14:31,803 [nmap] SF:ect\x20to\x20Login</title>\n<meta\x20http-equiv=\"Content-Type\"\x20con
+2025-06-01 12:14:31,803 [nmap] SF:tent=\"text/html;\x20charset=UTF-8\">\n<link\x20rel=\"stylesheet\"\x20t
+2025-06-01 12:14:31,803 [nmap] SF:ype=\"text/css\"\x20href=\"/style\.css\?z4\">\n<script\x20type=\"text/j
+2025-06-01 12:14:31,804 [nmap] SF:avascript\"\x20language=\"JavaScript\">\nfunction\x20RedirectToLoginPag
+2025-06-01 12:14:31,804 [nmap] SF:e\(\)\n{\n\ttop\.location\.href\x20=\x20\"/login\.cgi\";\n}\n</script>\
+2025-06-01 12:14:31,804 [nmap] SF:n</head>\n<body\x20onload=\"RedirectToLoginPage\(\);\">\n</body>\n</htm
+2025-06-01 12:14:31,804 [nmap] SF:l>\n")%r(FourOhFourRequest,239,"HTTP/1\.1\x20200\x20OK\r\nConnection:\x
+2025-06-01 12:14:31,804 [nmap] SF:20close\r\nX-Frame-Options:\x20SAMEORIGIN\r\nX-XSS-Protection:\x201;\x2
+2025-06-01 12:14:31,804 [nmap] SF:0mode=block\r\nX-Content-Type-Options:\x20nosniff\r\nContent-Type:\x20t
+2025-06-01 12:14:31,804 [nmap] SF:ext/html\r\nCache-Control:\x20no-cache\r\nExpires:\x20-1\r\n\r\n<html>\
+2025-06-01 12:14:31,804 [nmap] SF:n<head>\n<title>Redirect\x20to\x20Login</title>\n<meta\x20http-equiv=\"
+2025-06-01 12:14:31,804 [nmap] SF:Content-Type\"\x20content=\"text/html;\x20charset=UTF-8\">\n<link\x20re
+2025-06-01 12:14:31,804 [nmap] SF:l=\"stylesheet\"\x20type=\"text/css\"\x20href=\"/style\.css\?z4\">\n<sc
+2025-06-01 12:14:31,804 [nmap] SF:ript\x20type=\"text/javascript\"\x20language=\"JavaScript\">\nfunction\
+2025-06-01 12:14:31,804 [nmap] SF:x20RedirectToLoginPage\(\)\n{\n\ttop\.location\.href\x20=\x20\"/login\.
+2025-06-01 12:14:31,804 [nmap] SF:cgi\";\n}\n</script>\n</head>\n<body\x20onload=\"RedirectToLoginPage\(\
+2025-06-01 12:14:31,804 [nmap] SF:);\">\n</body>\n</html>\n");
+2025-06-01 12:14:31,804 [nmap] 
+2025-06-01 12:14:31,804 [nmap] Nmap scan report for 192.168.10.23
+2025-06-01 12:14:31,804 [nmap] Host is up (0.028s latency).
+2025-06-01 12:14:31,804 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,804 [nmap] PORT     STATE SERVICE      VERSION
+2025-06-01 12:14:31,804 [nmap] 80/tcp   open  http
+2025-06-01 12:14:31,804 [nmap] 8001/tcp open  vcom-tunnel?
+2025-06-01 12:14:31,804 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,805 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C189D%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,805 [nmap] SF:quest,1670,"HTTP/1\.0\x20200\x20OK\r\nContent-Encoding:\x20gzip\r\nConn
+2025-06-01 12:14:31,805 [nmap] SF:ection:\x20close\r\nContent-Length:\x2043121\r\nContent-Type:\x20text/h
+2025-06-01 12:14:31,805 [nmap] SF:tml\r\n\r\n\x1f\x8b\x08\0:\x15Sg\x02\xff\xec\xbd\xd9\x92\xe2H\xb3\x20\|
+2025-06-01 12:14:31,805 [nmap] SF:\xff=\x85\xa6\xce\xd89\xfd\x19\r\xda\xb7>\xd5e&\xc4\x0eB\x80\xd8o\xda\x
+2025-06-01 12:14:31,805 [nmap] SF:b4!\t\xb4\xa1\x15\x18\xfb\xffg\x9a\xeb\xb9\x9c'\x9b\x08An\xb5&\x90\x95K
+2025-06-01 12:14:31,805 [nmap] SF:UfwV\x82\x14\xe1\x11\xe1\x1e\xee\xe1\xee\xe1\xe1\xf1\xf1\x7f\xd4dq\xbc\
+2025-06-01 12:14:31,805 [nmap] SF:x18\xd4\x11;\xf1\xdcO\xff\xfa\x08\xff\x20\xae\xea\[\x7f\x7f0\xfd\x0f\x8
+2025-06-01 12:14:31,805 [nmap] SF:8\xa1&jY\x8b\xcb\x89mz\xe6\xdf\x1f\xd44\t>\|\xfa\x17\x02~>\xda\xa6j\x1c
+2025-06-01 12:14:31,805 [nmap] SF:\?\x16_=3Q\x11\xddV\xa3\xd8L\xfe\xfe\x90&\xab2\xf7\x01A\?/\xe0\xab\x10L
+2025-06-01 12:14:31,805 [nmap] SF:\xe6\x98y\x18D\xc9\x07D\x0f\xfc\xc4\xf4A\x85\xdc1\x12\xfbo\xc3\xcc\x1c\
+2025-06-01 12:14:31,805 [nmap] SF:xdd,\x17_\xfeD\x1c\xdfI\x1c\xd5-\xc7\xba\xea\x9a\x7f\xe3\x0f\xc1%N\xe2\
+2025-06-01 12:14:31,805 [nmap] SF:x9a\x9fz\xc1HE\x9c\xa6\x9a\x98\xc8\x7f\"5\xc7r\x908X%\xb9\x1a\x81\xef\x
+2025-06-01 12:14:31,805 [nmap] SF:9e\xe3\xa7\xf1\x7f##GW##@\x9a\xe9\xc1S}D\x14\x88\xd1\|\xf2\x11=\xd6\xbf
+2025-06-01 12:14:31,805 [nmap] SF:\x83\xe7:\xfe\x06\x89L\xf7\xef\x0fq\xb2w\xcd\xd86M\xd0\?;2W\x7f\x7f@\xb
+2025-06-01 12:14:31,805 [nmap] SF:5\x20H\xe2\$R\xc3\x8a\x1e\xc7\x0f\xfb\xf1\xddz\xc5\xa3\xef\xd5q\0\x02nK
+2025-06-01 12:14:31,805 [nmap] SF:\xaf\xd4\x0c~\xaf\x84\xbe\xf5\x01I\xf6!\xc0\x94\xe3\xa9\x96\x89\xee\xca
+2025-06-01 12:14:31,805 [nmap] SF:E\xb9\x13\xe2\xd1;\xcc\x7f\xd4\x02c\x8f\xe8\xae\x1a\xc7\x7f\x7f\xd0\xac
+2025-06-01 12:14:31,805 [nmap] SF:2\xfcZN\xcc\x08\xa0-\xda\x7f\xb8\xd7\xa2\xe3\x87ir\x82\xb9r\\\xf3\x03\x
+2025-06-01 12:14:31,805 [nmap] SF:a2\xea\xba\x19\x02\xc4'\xe6\.A\xd7q\xe0\xffY\x81\xff~@\x8a>\xff\xfd\xc1
+2025-06-01 12:14:31,805 [nmap] SF:p\xe2\xd0U\xf7\x7f!~\xe0\x9b\x0f\xbb\xbf\n\"\x0f\x81SA\x0f\xbc\xd05\x13
+2025-06-01 12:14:31,805 [nmap] SF:P:X\xad\x20\xc8\xc4\t\|0\x10\xd0\xd9\x95c\xa5\x91\n\xbf\x9f\xc0\x02\xf2
+2025-06-01 12:14:31,805 [nmap] SF:\xdb\x81\xf1\xf7\x87\x81\xac\x8c\xef\xf5\xac\0\xe8\xab\xd9\x83\x07\xf0\
+2025-06-01 12:14:31,805 [nmap] SF:xe74\(\xf0JS#\xe4fl\xb1\t`\x1b`pHl\xabF\x90\x97c\x0f\xd1\x82\xc80#\xf0>
+2025-06-01 12:14:31,806 [nmap] SF:I\x02\x0ft\xdf\xd17\0\tA\x88\x1c\xeb\x96\xcd\]\xa8\xfaF\xd9\xb5><h\xe4\
+2025-06-01 12:14:31,806 [nmap] SF:xd3\x17M~4\x9c\xec\xa6\]81U\xc77\xa3\x0f_\x96\+\xca\xaa\x0f{X\xd6\"\xd0
+2025-06-01 12:14:31,806 [nmap] SF:\xc8\r\)\?\|\xb5N\xd1\xeaq\xfe\xfdW\x8c\xdcM\xdd\x8f\xa8\xfa\xd5\xf2\xd
+2025-06-01 12:14:31,806 [nmap] SF:fhYK\xc1@\xfd\xcf\x9aO\x02\xcbrAoO4>\x96\xb9\xc7\xbf\xc5k8,\xd7U\xc3\xd
+2025-06-01 12:14:31,806 [nmap] SF:8\xbc\xf7F\x8d,\xc8\xb1\xffq\x04\$\x06n\x10a\x80\xd7\xd4\xc8Q\xcb\x10\x
+2025-06-01 12:14:31,806 [nmap] SF:0bQ\xe0\xde6\xf3\xf0\xed\x11\xb1&\x20\xeaJu!\xcc\xe2\xa9\xabjpf\x8f\x8b
+2025-06-01 12:14:31,806 [nmap] SF:\x16!\r\x1c\xab\x98\x07\xdf@d1\xa4\x18\0\xfa\xfa\x80N3\xff#\n\x8b\|\x03
+2025-06-01 12:14:31,806 [nmap] SF:!\xe8q\xb4\xdfx\xfb\x80\xa8\xc7\xd1\xdf\xcc\x8c;l8\xc6\xe7C\xfcNoS\xf7\
+2025-06-01 12:14:31,806 [nmap] SF:xb3\xbe\x82\?`~\x97\xefI\xc7o\xd6u\x9d{u\xcbNbz\?\xa8\xf1\xc5d\+C\xe9q\
+2025-06-01 12:14:31,806 [nmap] SF:+3\x1eQ\x1b\xfe\x88\xf79\xf2\xc7\xed\xa1\xea\x0f\x86\x81\xba\xce3\x0f4\
+2025-06-01 12:14:31,806 [nmap] SF:r\xc1\x8c5\x1f9\xdcIQ\x18\xcc\+Ou\xddO\xf2X\0\xf3\xa7\xf8\xf8BCG\x8c\(\
+2025-06-01 12:14:31,806 [nmap] SF:x08\x81\xb8\xf2/\xc2\xc1m\xed\x13S\|\xc9\xd6\xb7\xe0O\xd8\xfa\x8f");
+2025-06-01 12:14:31,806 [nmap] 
+2025-06-01 12:14:31,807 [nmap] Nmap scan report for 192.168.10.54
+2025-06-01 12:14:31,807 [nmap] Host is up (0.036s latency).
+2025-06-01 12:14:31,807 [nmap] Not shown: 992 closed ports
+2025-06-01 12:14:31,807 [nmap] PORT      STATE    SERVICE   VERSION
+2025-06-01 12:14:31,807 [nmap] 1126/tcp  filtered hpvmmdata
+2025-06-01 12:14:31,807 [nmap] 3690/tcp  filtered svn
+2025-06-01 12:14:31,807 [nmap] 5550/tcp  filtered sdadmind
+2025-06-01 12:14:31,807 [nmap] 6699/tcp  filtered napster
+2025-06-01 12:14:31,807 [nmap] 8194/tcp  filtered sophos
+2025-06-01 12:14:31,807 [nmap] 20031/tcp filtered unknown
+2025-06-01 12:14:31,807 [nmap] 24444/tcp filtered unknown
+2025-06-01 12:14:31,807 [nmap] 50002/tcp filtered iiimsf
+2025-06-01 12:14:31,807 [nmap] 
+2025-06-01 12:14:31,807 [nmap] Nmap scan report for 192.168.10.64
+2025-06-01 12:14:31,807 [nmap] Host is up (0.00020s latency).
+2025-06-01 12:14:31,807 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,807 [nmap] PORT     STATE SERVICE     VERSION
+2025-06-01 12:14:31,807 [nmap] 22/tcp   open  ssh         OpenSSH 9.2p1 Debian 2+deb12u6 (protocol 2.0)
+2025-06-01 12:14:31,807 [nmap] 8000/tcp open  nagios-nsca Nagios NSCA
+2025-06-01 12:14:31,807 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,807 [nmap] 
+2025-06-01 12:14:31,807 [nmap] Nmap scan report for 192.168.10.77
+2025-06-01 12:14:31,807 [nmap] Host is up (0.00052s latency).
+2025-06-01 12:14:31,807 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,807 [nmap] PORT    STATE SERVICE   VERSION
+2025-06-01 12:14:31,807 [nmap] 80/tcp  open  http
+2025-06-01 12:14:31,807 [nmap] 443/tcp open  ssl/https
+2025-06-01 12:14:31,807 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,808 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18A0%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,808 [nmap] SF:quest,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\x20\
+2025-06-01 12:14:31,808 [nmap] SF:"d3-110-653f18fc\"\r\nLast-Modified:\x20Mon,\x2030\x20Oct\x202023\x2002
+2025-06-01 12:14:31,808 [nmap] SF::46:20\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:08:48\x20GMT\
+2025-06-01 12:14:31,808 [nmap] SF:r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-ancest
+2025-06-01 12:14:31,808 [nmap] SF:ors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x20272\r
+2025-06-01 12:14:31,808 [nmap] SF:\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYPE\x2
+2025-06-01 12:14:31,808 [nmap] SF:0html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http://www
+2025-06-01 12:14:31,808 [nmap] SF:\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://www\.
+2025-06-01 12:14:31,808 [nmap] SF:w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20conte
+2025-06-01 12:14:31,808 [nmap] SF:nt=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%r(HT
+2025-06-01 12:14:31,808 [nmap] SF:TPOptions,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\
+2025-06-01 12:14:31,808 [nmap] SF:x20\"d3-110-653f18fc\"\r\nLast-Modified:\x20Mon,\x2030\x20Oct\x202023\x
+2025-06-01 12:14:31,808 [nmap] SF:2002:46:20\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:08:48\x20
+2025-06-01 12:14:31,808 [nmap] SF:GMT\r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-an
+2025-06-01 12:14:31,808 [nmap] SF:cestors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x202
+2025-06-01 12:14:31,808 [nmap] SF:72\r\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYP
+2025-06-01 12:14:31,808 [nmap] SF:E\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http:/
+2025-06-01 12:14:31,808 [nmap] SF:/www\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://w
+2025-06-01 12:14:31,808 [nmap] SF:ww\.w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20c
+2025-06-01 12:14:31,808 [nmap] SF:ontent=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%
+2025-06-01 12:14:31,808 [nmap] SF:r(RTSPRequest,79,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20
+2025-06-01 12:14:31,808 [nmap] SF:Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r
+2025-06-01 12:14:31,809 [nmap] SF:\n\r\n<h1>Bad\x20Request</h1>")%r(Help,79,"HTTP/0\.9\x20400\x20Bad\x20R
+2025-06-01 12:14:31,809 [nmap] SF:equest\r\nConnection:\x20Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nCon
+2025-06-01 12:14:31,809 [nmap] SF:tent-Type:\x20text/html\r\n\r\n<h1>Bad\x20Request</h1>")%r(SIPOptions,7
+2025-06-01 12:14:31,809 [nmap] SF:9,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20Keep-Alive\r\nK
+2025-06-01 12:14:31,809 [nmap] SF:eep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r\n\r\n<h1>Bad\x
+2025-06-01 12:14:31,809 [nmap] SF:20Request</h1>");
+2025-06-01 12:14:31,809 [nmap] 
+2025-06-01 12:14:31,809 [nmap] Nmap scan report for 192.168.10.78
+2025-06-01 12:14:31,809 [nmap] Host is up (0.024s latency).
+2025-06-01 12:14:31,809 [nmap] Not shown: 994 closed ports
+2025-06-01 12:14:31,809 [nmap] PORT      STATE    SERVICE  VERSION
+2025-06-01 12:14:31,809 [nmap] 22/tcp    open     ssh      OpenSSH 7.9p1 Raspbian 10+deb10u4 (protocol 2.0)
+2025-06-01 12:14:31,809 [nmap] 81/tcp    open     http     nginx 1.18.0
+2025-06-01 12:14:31,809 [nmap] 443/tcp   open     ssl/http nginx 1.18.0
+2025-06-01 12:14:31,809 [nmap] 1984/tcp  open     http     Golang net/http server (Go-IPFS json-rpc or InfluxDB API)
+2025-06-01 12:14:31,809 [nmap] 7001/tcp  open     ssl/http nginx 1.18.0
+2025-06-01 12:14:31,809 [nmap] 10629/tcp filtered unknown
+2025-06-01 12:14:31,809 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,809 [nmap] 
+2025-06-01 12:14:31,809 [nmap] Nmap scan report for 192.168.10.80
+2025-06-01 12:14:31,809 [nmap] Host is up (0.0046s latency).
+2025-06-01 12:14:31,809 [nmap] Not shown: 999 closed ports
+2025-06-01 12:14:31,809 [nmap] PORT     STATE SERVICE VERSION
+2025-06-01 12:14:31,809 [nmap] 6668/tcp open  irc?
+2025-06-01 12:14:31,809 [nmap] 
+2025-06-01 12:14:31,809 [nmap] Nmap scan report for 192.168.10.81
+2025-06-01 12:14:31,809 [nmap] Host is up (0.0040s latency).
+2025-06-01 12:14:31,809 [nmap] Not shown: 996 closed ports
+2025-06-01 12:14:31,809 [nmap] PORT    STATE SERVICE   VERSION
+2025-06-01 12:14:31,809 [nmap] 22/tcp  open  ssh       Dropbear sshd (protocol 2.0)
+2025-06-01 12:14:31,809 [nmap] 53/tcp  open  domain    (generic dns response: NOTIMP)
+2025-06-01 12:14:31,809 [nmap] 80/tcp  open  http
+2025-06-01 12:14:31,809 [nmap] 443/tcp open  ssl/https
+2025-06-01 12:14:31,809 [nmap] 2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,809 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,809 [nmap] SF-Port53-TCP:V=7.80%I=7%D=6/1%Time=683C18A5%P=x86_64-pc-linux-gnu%r(DNSVe
+2025-06-01 12:14:31,809 [nmap] SF:rsionBindReqTCP,20,"\0\x1e\0\x06\x81\x84\0\x01\0\0\0\0\0\0\x07version\x
+2025-06-01 12:14:31,809 [nmap] SF:04bind\0\0\x10\0\x03")%r(DNSStatusRequestTCP,E,"\0\x0c\0\0\x90\x84\0\0\
+2025-06-01 12:14:31,809 [nmap] SF:0\0\0\0\0\0");
+2025-06-01 12:14:31,809 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,809 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18A0%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,809 [nmap] SF:quest,3CD,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\x20\
+2025-06-01 12:14:31,809 [nmap] SF:"4b3-30c-65537843\"\r\nLast-Modified:\x20Tue,\x2014\x20Nov\x202023\x201
+2025-06-01 12:14:31,809 [nmap] SF:3:38:11\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:08:48\x20GMT
+2025-06-01 12:14:31,809 [nmap] SF:\r\nContent-Type:\x20text/html\r\nContent-Length:\x20780\r\n\r\n<\?xml\
+2025-06-01 12:14:31,809 [nmap] SF:x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYPE\x20html\x20PUBL
+2025-06-01 12:14:31,809 [nmap] SF:IC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http://www\.w3\.org/TR/
+2025-06-01 12:14:31,809 [nmap] SF:xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://www\.w3\.org/1999/
+2025-06-01 12:14:31,809 [nmap] SF:xhtml\">\n\t<head>\n\t\t<meta\x20http-equiv=\"Cache-Control\"\x20conten
+2025-06-01 12:14:31,810 [nmap] SF:t=\"no-cache,\x20no-store,\x20must-revalidate\"\x20/>\n\t\t<meta\x20htt
+2025-06-01 12:14:31,810 [nmap] SF:p-equiv=\"Pragma\"\x20content=\"no-cache\"\x20/>\n\x20\x20\x20\x20\x20\
+2025-06-01 12:14:31,810 [nmap] SF:x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<meta\x20http-equiv=\"Expire
+2025-06-01 12:14:31,810 [nmap] SF:s\"\x20content=\"0\"\x20/>\n\t\t<meta\x20http-equiv=\"refresh\"\x20cont
+2025-06-01 12:14:31,810 [nmap] SF:ent=\"0;\x20URL=cgi-bin/luci/\"\x20/>\n\t\t<style\x20type=\"text/css\">
+2025-06-01 12:14:31,810 [nmap] SF:\n\t\t\tbody\x20{\x20background:\x20white;\x20font-family:\x20arial,\x2
+2025-06-01 12:14:31,810 [nmap] SF:0helvetica,\x20sans-serif;\x20}\n\t\t\ta\x20{\x20color:\x20black;\x20}\
+2025-06-01 12:14:31,810 [nmap] SF:n\n\t\t\t@media\x20\(prefers-color-scheme:\x20dark\)\x20{\n\t\t\t\tbody
+2025-06-01 12:14:31,810 [nmap] SF:\x20{\x20background:\x20black;\x20}\n\t\t\t\ta\x20{\x20color:\x20white;
+2025-06-01 12:14:31,810 [nmap] SF:\x20}\n\t\t\t}\n\t\t</style>\n\t</head>\n\t<body>\n\t\t<a\x20href")%r(H
+2025-06-01 12:14:31,810 [nmap] SF:TTPOptions,3CD,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:
+2025-06-01 12:14:31,811 [nmap] SF:\x20\"4b3-30c-65537843\"\r\nLast-Modified:\x20Tue,\x2014\x20Nov\x202023
+2025-06-01 12:14:31,811 [nmap] SF:\x2013:38:11\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:08:48\x
+2025-06-01 12:14:31,811 [nmap] SF:20GMT\r\nContent-Type:\x20text/html\r\nContent-Length:\x20780\r\n\r\n<\
+2025-06-01 12:14:31,811 [nmap] SF:?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYPE\x20html\x2
+2025-06-01 12:14:31,811 [nmap] SF:0PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http://www\.w3\.or
+2025-06-01 12:14:31,811 [nmap] SF:g/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://www\.w3\.org/
+2025-06-01 12:14:31,811 [nmap] SF:1999/xhtml\">\n\t<head>\n\t\t<meta\x20http-equiv=\"Cache-Control\"\x20c
+2025-06-01 12:14:31,811 [nmap] SF:ontent=\"no-cache,\x20no-store,\x20must-revalidate\"\x20/>\n\t\t<meta\x
+2025-06-01 12:14:31,811 [nmap] SF:20http-equiv=\"Pragma\"\x20content=\"no-cache\"\x20/>\n\x20\x20\x20\x20
+2025-06-01 12:14:31,811 [nmap] SF:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<meta\x20http-equiv=\"E
+2025-06-01 12:14:31,811 [nmap] SF:xpires\"\x20content=\"0\"\x20/>\n\t\t<meta\x20http-equiv=\"refresh\"\x2
+2025-06-01 12:14:31,811 [nmap] SF:0content=\"0;\x20URL=cgi-bin/luci/\"\x20/>\n\t\t<style\x20type=\"text/c
+2025-06-01 12:14:31,811 [nmap] SF:ss\">\n\t\t\tbody\x20{\x20background:\x20white;\x20font-family:\x20aria
+2025-06-01 12:14:31,811 [nmap] SF:l,\x20helvetica,\x20sans-serif;\x20}\n\t\t\ta\x20{\x20color:\x20black;\
+2025-06-01 12:14:31,811 [nmap] SF:x20}\n\n\t\t\t@media\x20\(prefers-color-scheme:\x20dark\)\x20{\n\t\t\t\
+2025-06-01 12:14:31,811 [nmap] SF:tbody\x20{\x20background:\x20black;\x20}\n\t\t\t\ta\x20{\x20color:\x20w
+2025-06-01 12:14:31,811 [nmap] SF:hite;\x20}\n\t\t\t}\n\t\t</style>\n\t</head>\n\t<body>\n\t\t<a\x20href"
+2025-06-01 12:14:31,811 [nmap] SF:);
+2025-06-01 12:14:31,811 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,811 [nmap] 
+2025-06-01 12:14:31,811 [nmap] Nmap scan report for 192.168.10.92
+2025-06-01 12:14:31,811 [nmap] Host is up (0.00048s latency).
+2025-06-01 12:14:31,811 [nmap] Not shown: 990 closed ports
+2025-06-01 12:14:31,811 [nmap] PORT     STATE SERVICE        VERSION
+2025-06-01 12:14:31,811 [nmap] 22/tcp   open  ssh            Dropbear sshd 2022.83 (protocol 2.0)
+2025-06-01 12:14:31,811 [nmap] 111/tcp  open  rpcbind        2-4 (RPC #100000)
+2025-06-01 12:14:31,811 [nmap] 139/tcp  open  netbios-ssn    Samba smbd 4.6.2
+2025-06-01 12:14:31,811 [nmap] 445/tcp  open  netbios-ssn    Samba smbd 4.6.2
+2025-06-01 12:14:31,811 [nmap] 631/tcp  open  ipp            CUPS 2.4
+2025-06-01 12:14:31,811 [nmap] 2049/tcp open  nfs_acl        3 (RPC #100227)
+2025-06-01 12:14:31,811 [nmap] 5357/tcp open  http           BaseHTTPServer 0.6 (Python 3.11.2)
+2025-06-01 12:14:31,811 [nmap] 6789/tcp open  ibm-db2-admin?
+2025-06-01 12:14:31,811 [nmap] 8000/tcp open  http-alt       granian
+2025-06-01 12:14:31,812 [nmap] 9091/tcp open  http           Transmission BitTorrent management httpd (unauthorized)
+2025-06-01 12:14:31,812 [nmap] 2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,812 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,812 [nmap] SF-Port6789-TCP:V=7.80%I=7%D=6/1%Time=683C18A6%P=x86_64-pc-linux-gnu%r(Get
+2025-06-01 12:14:31,812 [nmap] SF:Request,9A,"HTTP/1\.1\x20401\x20Unauthorized\r\nWWW-Authenticate:\x20Ba
+2025-06-01 12:14:31,812 [nmap] SF:sic\x20realm=\"NZBGet\"\r\nConnection:\x20close\r\nContent-Type:\x20tex
+2025-06-01 12:14:31,812 [nmap] SF:t/plain\r\nContent-Length:\x200\r\nServer:\x20nzbget-24\.5\r\n\r\n")%r(
+2025-06-01 12:14:31,812 [nmap] SF:HTTPOptions,121,"HTTP/1\.1\x20200\x20OK\r\nConnection:\x20close\r\nCont
+2025-06-01 12:14:31,812 [nmap] SF:ent-Length:\x200\r\nAccess-Control-Allow-Methods:\x20GET,\x20POST,\x20O
+2025-06-01 12:14:31,812 [nmap] SF:PTIONS\r\nAccess-Control-Allow-Origin:\x20\r\nAccess-Control-Allow-Cred
+2025-06-01 12:14:31,812 [nmap] SF:entials:\x20true\r\nAccess-Control-Max-Age:\x2086400\r\nAccess-Control-
+2025-06-01 12:14:31,812 [nmap] SF:Allow-Headers:\x20Content-Type,\x20Authorization\r\nServer:\x20nzbget-2
+2025-06-01 12:14:31,812 [nmap] SF:4\.5\r\n\r\n")%r(RTSPRequest,121,"HTTP/1\.1\x20200\x20OK\r\nConnection:
+2025-06-01 12:14:31,812 [nmap] SF:\x20close\r\nContent-Length:\x200\r\nAccess-Control-Allow-Methods:\x20G
+2025-06-01 12:14:31,812 [nmap] SF:ET,\x20POST,\x20OPTIONS\r\nAccess-Control-Allow-Origin:\x20\r\nAccess-C
+2025-06-01 12:14:31,812 [nmap] SF:ontrol-Allow-Credentials:\x20true\r\nAccess-Control-Max-Age:\x2086400\r
+2025-06-01 12:14:31,812 [nmap] SF:\nAccess-Control-Allow-Headers:\x20Content-Type,\x20Authorization\r\nSe
+2025-06-01 12:14:31,812 [nmap] SF:rver:\x20nzbget-24\.5\r\n\r\n")%r(FourOhFourRequest,9A,"HTTP/1\.1\x2040
+2025-06-01 12:14:31,812 [nmap] SF:1\x20Unauthorized\r\nWWW-Authenticate:\x20Basic\x20realm=\"NZBGet\"\r\n
+2025-06-01 12:14:31,812 [nmap] SF:Connection:\x20close\r\nContent-Type:\x20text/plain\r\nContent-Length:\
+2025-06-01 12:14:31,812 [nmap] SF:x200\r\nServer:\x20nzbget-24\.5\r\n\r\n")%r(SIPOptions,121,"HTTP/1\.1\x
+2025-06-01 12:14:31,812 [nmap] SF:20200\x20OK\r\nConnection:\x20close\r\nContent-Length:\x200\r\nAccess-C
+2025-06-01 12:14:31,812 [nmap] SF:ontrol-Allow-Methods:\x20GET,\x20POST,\x20OPTIONS\r\nAccess-Control-All
+2025-06-01 12:14:31,812 [nmap] SF:ow-Origin:\x20\r\nAccess-Control-Allow-Credentials:\x20true\r\nAccess-C
+2025-06-01 12:14:31,812 [nmap] SF:ontrol-Max-Age:\x2086400\r\nAccess-Control-Allow-Headers:\x20Content-Ty
+2025-06-01 12:14:31,812 [nmap] SF:pe,\x20Authorization\r\nServer:\x20nzbget-24\.5\r\n\r\n");
+2025-06-01 12:14:31,812 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,812 [nmap] SF-Port8000-TCP:V=7.80%I=7%D=6/1%Time=683C18AB%P=x86_64-pc-linux-gnu%r(Get
+2025-06-01 12:14:31,812 [nmap] SF:Request,1BE,"HTTP/1\.0\x20400\x20Bad\x20Request\r\ncontent-type:\x20tex
+2025-06-01 12:14:31,813 [nmap] SF:t/html;\x20charset=utf-8\r\nvary:\x20Accept-Language,\x20origin\r\ncont
+2025-06-01 12:14:31,813 [nmap] SF:ent-language:\x20en-us\r\nx-content-type-options:\x20nosniff\r\nreferre
+2025-06-01 12:14:31,813 [nmap] SF:r-policy:\x20same-origin\r\ncross-origin-opener-policy:\x20same-origin\
+2025-06-01 12:14:31,813 [nmap] SF:r\nserver:\x20granian\r\ncontent-length:\x20143\r\ndate:\x20Sun,\x2001\
+2025-06-01 12:14:31,813 [nmap] SF:x20Jun\x202025\x2009:08:59\x20GMT\r\n\r\n\n<!doctype\x20html>\n<html\x2
+2025-06-01 12:14:31,813 [nmap] SF:0lang=\"en\">\n<head>\n\x20\x20<title>Bad\x20Request\x20\(400\)</title>
+2025-06-01 12:14:31,813 [nmap] SF:\n</head>\n<body>\n\x20\x20<h1>Bad\x20Request\x20\(400\)</h1><p></p>\n<
+2025-06-01 12:14:31,813 [nmap] SF:/body>\n</html>\n")%r(X11Probe,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r
+2025-06-01 12:14:31,813 [nmap] SF:\nconnection:\x20close\r\ncontent-length:\x200\r\ndate:\x20Sun,\x2001\x
+2025-06-01 12:14:31,813 [nmap] SF:20Jun\x202025\x2009:08:59\x20GMT\r\n\r\n")%r(FourOhFourRequest,1BE,"HTT
+2025-06-01 12:14:31,813 [nmap] SF:P/1\.0\x20400\x20Bad\x20Request\r\ncontent-type:\x20text/html;\x20chars
+2025-06-01 12:14:31,813 [nmap] SF:et=utf-8\r\nvary:\x20Accept-Language,\x20origin\r\ncontent-language:\x2
+2025-06-01 12:14:31,813 [nmap] SF:0en-us\r\nx-content-type-options:\x20nosniff\r\nreferrer-policy:\x20sam
+2025-06-01 12:14:31,813 [nmap] SF:e-origin\r\ncross-origin-opener-policy:\x20same-origin\r\nserver:\x20gr
+2025-06-01 12:14:31,813 [nmap] SF:anian\r\ncontent-length:\x20143\r\ndate:\x20Sun,\x2001\x20Jun\x202025\x
+2025-06-01 12:14:31,813 [nmap] SF:2009:08:59\x20GMT\r\n\r\n\n<!doctype\x20html>\n<html\x20lang=\"en\">\n<
+2025-06-01 12:14:31,813 [nmap] SF:head>\n\x20\x20<title>Bad\x20Request\x20\(400\)</title>\n</head>\n<body
+2025-06-01 12:14:31,813 [nmap] SF:>\n\x20\x20<h1>Bad\x20Request\x20\(400\)</h1><p></p>\n</body>\n</html>\
+2025-06-01 12:14:31,813 [nmap] SF:n")%r(Socks5,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nconnection:\x20c
+2025-06-01 12:14:31,814 [nmap] SF:lose\r\ncontent-length:\x200\r\ndate:\x20Sun,\x2001\x20Jun\x202025\x200
+2025-06-01 12:14:31,814 [nmap] SF:9:08:59\x20GMT\r\n\r\n")%r(Socks4,67,"HTTP/1\.1\x20400\x20Bad\x20Reques
+2025-06-01 12:14:31,814 [nmap] SF:t\r\nconnection:\x20close\r\ncontent-length:\x200\r\ndate:\x20Sun,\x200
+2025-06-01 12:14:31,814 [nmap] SF:1\x20Jun\x202025\x2009:08:59\x20GMT\r\n\r\n")%r(HTTPOptions,1BE,"HTTP/1
+2025-06-01 12:14:31,814 [nmap] SF:\.0\x20400\x20Bad\x20Request\r\ncontent-type:\x20text/html;\x20charset=
+2025-06-01 12:14:31,814 [nmap] SF:utf-8\r\nvary:\x20Accept-Language,\x20origin\r\ncontent-language:\x20en
+2025-06-01 12:14:31,814 [nmap] SF:-us\r\nx-content-type-options:\x20nosniff\r\nreferrer-policy:\x20same-o
+2025-06-01 12:14:31,814 [nmap] SF:rigin\r\ncross-origin-opener-policy:\x20same-origin\r\nserver:\x20grani
+2025-06-01 12:14:31,814 [nmap] SF:an\r\ncontent-length:\x20143\r\ndate:\x20Sun,\x2001\x20Jun\x202025\x200
+2025-06-01 12:14:31,814 [nmap] SF:9:08:59\x20GMT\r\n\r\n\n<!doctype\x20html>\n<html\x20lang=\"en\">\n<hea
+2025-06-01 12:14:31,814 [nmap] SF:d>\n\x20\x20<title>Bad\x20Request\x20\(400\)</title>\n</head>\n<body>\n
+2025-06-01 12:14:31,814 [nmap] SF:\x20\x20<h1>Bad\x20Request\x20\(400\)</h1><p></p>\n</body>\n</html>\n");
+2025-06-01 12:14:31,814 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,814 [nmap] 
+2025-06-01 12:14:31,814 [nmap] Nmap scan report for 192.168.10.101
+2025-06-01 12:14:31,814 [nmap] Host is up (0.0090s latency).
+2025-06-01 12:14:31,814 [nmap] Not shown: 999 closed ports
+2025-06-01 12:14:31,814 [nmap] PORT   STATE SERVICE VERSION
+2025-06-01 12:14:31,814 [nmap] 22/tcp open  ssh     OpenSSH 8.4p1 Raspbian 5+deb11u4 (protocol 2.0)
+2025-06-01 12:14:31,814 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,814 [nmap] 
+2025-06-01 12:14:31,814 [nmap] Nmap scan report for 192.168.10.118
+2025-06-01 12:14:31,814 [nmap] Host is up (0.00037s latency).
+2025-06-01 12:14:31,814 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,814 [nmap] PORT    STATE SERVICE   VERSION
+2025-06-01 12:14:31,814 [nmap] 80/tcp  open  http
+2025-06-01 12:14:31,814 [nmap] 443/tcp open  ssl/https
+2025-06-01 12:14:31,814 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,814 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18AB%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,814 [nmap] SF:quest,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\x20\
+2025-06-01 12:14:31,814 [nmap] SF:"d3-110-653f18fc\"\r\nLast-Modified:\x20Mon,\x2030\x20Oct\x202023\x2002
+2025-06-01 12:14:31,814 [nmap] SF::46:20\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:08:59\x20GMT\
+2025-06-01 12:14:31,814 [nmap] SF:r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-ancest
+2025-06-01 12:14:31,814 [nmap] SF:ors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x20272\r
+2025-06-01 12:14:31,815 [nmap] SF:\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYPE\x2
+2025-06-01 12:14:31,815 [nmap] SF:0html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http://www
+2025-06-01 12:14:31,815 [nmap] SF:\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://www\.
+2025-06-01 12:14:31,815 [nmap] SF:w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20conte
+2025-06-01 12:14:31,815 [nmap] SF:nt=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%r(HT
+2025-06-01 12:14:31,815 [nmap] SF:TPOptions,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\
+2025-06-01 12:14:31,815 [nmap] SF:x20\"d3-110-653f18fc\"\r\nLast-Modified:\x20Mon,\x2030\x20Oct\x202023\x
+2025-06-01 12:14:31,815 [nmap] SF:2002:46:20\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:08:59\x20
+2025-06-01 12:14:31,815 [nmap] SF:GMT\r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-an
+2025-06-01 12:14:31,815 [nmap] SF:cestors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x202
+2025-06-01 12:14:31,815 [nmap] SF:72\r\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYP
+2025-06-01 12:14:31,815 [nmap] SF:E\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http:/
+2025-06-01 12:14:31,815 [nmap] SF:/www\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://w
+2025-06-01 12:14:31,815 [nmap] SF:ww\.w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20c
+2025-06-01 12:14:31,815 [nmap] SF:ontent=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%
+2025-06-01 12:14:31,815 [nmap] SF:r(RTSPRequest,79,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20
+2025-06-01 12:14:31,815 [nmap] SF:Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r
+2025-06-01 12:14:31,815 [nmap] SF:\n\r\n<h1>Bad\x20Request</h1>")%r(Help,79,"HTTP/0\.9\x20400\x20Bad\x20R
+2025-06-01 12:14:31,815 [nmap] SF:equest\r\nConnection:\x20Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nCon
+2025-06-01 12:14:31,815 [nmap] SF:tent-Type:\x20text/html\r\n\r\n<h1>Bad\x20Request</h1>")%r(SIPOptions,7
+2025-06-01 12:14:31,815 [nmap] SF:9,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20Keep-Alive\r\nK
+2025-06-01 12:14:31,815 [nmap] SF:eep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r\n\r\n<h1>Bad\x
+2025-06-01 12:14:31,815 [nmap] SF:20Request</h1>");
+2025-06-01 12:14:31,815 [nmap] 
+2025-06-01 12:14:31,815 [nmap] Nmap scan report for 192.168.10.119
+2025-06-01 12:14:31,815 [nmap] Host is up (0.044s latency).
+2025-06-01 12:14:31,815 [nmap] Not shown: 999 closed ports
+2025-06-01 12:14:31,815 [nmap] PORT   STATE SERVICE VERSION
+2025-06-01 12:14:31,815 [nmap] 80/tcp open  http
+2025-06-01 12:14:31,815 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,815 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18A9%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,815 [nmap] SF:quest,10D4,"HTTP/1\.0\x20200\x20OK\r\nContent-Type:\x20text/html\r\nCon
+2025-06-01 12:14:31,815 [nmap] SF:tent-Disposition:\x20inline;\x20filename=\"index\.html\"\r\nConnection:
+2025-06-01 12:14:31,815 [nmap] SF:\x20close\r\n\r\n1134\r\n<!DOCTYPE\x20html>\n<html>\n<head>\n\x20\x20<t
+2025-06-01 12:14:31,815 [nmap] SF:itle>rdzTTGOSonde\x20Server</title>\n\x20\x20<meta\x20name=\"viewport\"
+2025-06-01 12:14:31,815 [nmap] SF:\x20content=\"width=device-width,\x20initial-scale=1\">\n\x20\x20<meta\
+2025-06-01 12:14:31,815 [nmap] SF:x20charset=\"UTF-8\">\n\x20\x20<link\x20rel=\"icon\"\x20href=\"data:,\"
+2025-06-01 12:14:31,815 [nmap] SF:>\n\x20\x20<link\x20rel=\"stylesheet\"\x20type=\"text/css\"\x20href=\"s
+2025-06-01 12:14:31,816 [nmap] SF:tyle\.css\">\n</head>\n<body>\n\x20<div\x20class=\"wrapper\"><div\x20cl
+2025-06-01 12:14:31,816 [nmap] SF:ass=\"header\">\n<div\x20class=\"topnav\"\x20id=\"myTopnav\">\n\t<a\x20
+2025-06-01 12:14:31,816 [nmap] SF:href=\"#qrg\"\x20onclick=\"selTab\(event,'QRG'\)\"\x20class=\"tablinks\
+2025-06-01 12:14:31,816 [nmap] SF:"\x20id=\"defaultTab\">QRG</a>\n\t<a\x20href=\"#data\"\x20onclick=\"sel
+2025-06-01 12:14:31,816 [nmap] SF:Tab\(event,'Data'\)\"\x20class=\"tablinks\">Data</a>\n\t<a\x20href=\"#m
+2025-06-01 12:14:31,816 [nmap] SF:ap\"\x20onclick=\"selTab\(event,'Map'\)\"\x20class=\"tablinks\">Map</a>
+2025-06-01 12:14:31,816 [nmap] SF:\n\t<a\x20href=\"#livemap\"\x20onclick=\"document\.location\.href='live
+2025-06-01 12:14:31,816 [nmap] SF:map\.html'\"\x20class=\"tablinks\">LiveMap</a>\n\t<a\x20href=\"#ctrl\"\
+2025-06-01 12:14:31,816 [nmap] SF:x20onclick=\"selTab\(event,'Control'\)\"\x20class=\"tablinks\">Control<
+2025-06-01 12:14:31,816 [nmap] SF:/a>\n\t<a\x20href=\"#config\"\x20on")%r(HTTPOptions,39,"HTTP/1\.0\x2020
+2025-06-01 12:14:31,816 [nmap] SF:0\x20OK\r\nContent-Length:\x200\r\nConnection:\x20close\r\n\r\n")%r(RTS
+2025-06-01 12:14:31,816 [nmap] SF:PRequest,4E,"HTTP/1\.1\x20200\x20OK\r\nContent-Length:\x200\r\nConnecti
+2025-06-01 12:14:31,816 [nmap] SF:on:\x20close\r\nAccept-Ranges:\x20none\r\n\r\n")%r(FourOhFourRequest,40
+2025-06-01 12:14:31,816 [nmap] SF:,"HTTP/1\.0\x20404\x20Not\x20Found\r\nContent-Length:\x200\r\nConnectio
+2025-06-01 12:14:31,816 [nmap] SF:n:\x20close\r\n\r\n")%r(SIPOptions,4E,"HTTP/1\.1\x20200\x20OK\r\nConten
+2025-06-01 12:14:31,817 [nmap] SF:t-Length:\x200\r\nConnection:\x20close\r\nAccept-Ranges:\x20none\r\n\r\
+2025-06-01 12:14:31,817 [nmap] SF:n");
+2025-06-01 12:14:31,817 [nmap] 
+2025-06-01 12:14:31,817 [nmap] Nmap scan report for 192.168.10.123
+2025-06-01 12:14:31,817 [nmap] Host is up (0.016s latency).
+2025-06-01 12:14:31,817 [nmap] All 1000 scanned ports on 192.168.10.123 are closed
+2025-06-01 12:14:31,817 [nmap] 
+2025-06-01 12:14:31,817 [nmap] Nmap scan report for 192.168.10.126
+2025-06-01 12:14:31,817 [nmap] Host is up (0.027s latency).
+2025-06-01 12:14:31,817 [nmap] Not shown: 993 filtered ports
+2025-06-01 12:14:31,817 [nmap] PORT     STATE  SERVICE     VERSION
+2025-06-01 12:14:31,817 [nmap] 22/tcp   open   ssh         OpenSSH 7.9p1 Raspbian 10+deb10u4 (protocol 2.0)
+2025-06-01 12:14:31,817 [nmap] 80/tcp   open   http        nginx
+2025-06-01 12:14:31,817 [nmap] 139/tcp  open   netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+2025-06-01 12:14:31,817 [nmap] 443/tcp  closed https
+2025-06-01 12:14:31,817 [nmap] 445/tcp  open   netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+2025-06-01 12:14:31,817 [nmap] 2222/tcp open   http        ShellInABox
+2025-06-01 12:14:31,817 [nmap] 8080/tcp closed http-proxy
+2025-06-01 12:14:31,817 [nmap] Service Info: Host: PI-STAR; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,817 [nmap] 
+2025-06-01 12:14:31,817 [nmap] Nmap scan report for 192.168.10.129
+2025-06-01 12:14:31,817 [nmap] Host is up (0.0083s latency).
+2025-06-01 12:14:31,817 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,817 [nmap] PORT     STATE    SERVICE VERSION
+2025-06-01 12:14:31,817 [nmap] 515/tcp  filtered printer
+2025-06-01 12:14:31,817 [nmap] 6668/tcp open     irc?
+2025-06-01 12:14:31,817 [nmap] 
+2025-06-01 12:14:31,817 [nmap] Nmap scan report for 192.168.10.136
+2025-06-01 12:14:31,817 [nmap] Host is up (0.023s latency).
+2025-06-01 12:14:31,817 [nmap] Not shown: 996 closed ports
+2025-06-01 12:14:31,817 [nmap] PORT     STATE SERVICE    VERSION
+2025-06-01 12:14:31,817 [nmap] 23/tcp   open  telnet     BusyBox telnetd
+2025-06-01 12:14:31,817 [nmap] 554/tcp  open  rtsp       Darwin Streaming Server 6.0.3
+2025-06-01 12:14:31,817 [nmap] 7103/tcp open  tcpwrapped
+2025-06-01 12:14:31,817 [nmap] 8080/tcp open  rtsp       Darwin Streaming Server 6.0.3
+2025-06-01 12:14:31,817 [nmap] Service Info: Host: root; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,817 [nmap] 
+2025-06-01 12:14:31,817 [nmap] Nmap scan report for 192.168.10.137
+2025-06-01 12:14:31,817 [nmap] Host is up (0.055s latency).
+2025-06-01 12:14:31,817 [nmap] Not shown: 996 closed ports
+2025-06-01 12:14:31,817 [nmap] PORT     STATE SERVICE    VERSION
+2025-06-01 12:14:31,817 [nmap] 23/tcp   open  telnet     BusyBox telnetd
+2025-06-01 12:14:31,817 [nmap] 554/tcp  open  rtsp       Darwin Streaming Server 6.0.3
+2025-06-01 12:14:31,818 [nmap] 7103/tcp open  tcpwrapped
+2025-06-01 12:14:31,818 [nmap] 8080/tcp open  rtsp       Darwin Streaming Server 6.0.3
+2025-06-01 12:14:31,818 [nmap] Service Info: Host: root; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,818 [nmap] 
+2025-06-01 12:14:31,818 [nmap] Nmap scan report for 192.168.10.145
+2025-06-01 12:14:31,818 [nmap] Host is up (0.015s latency).
+2025-06-01 12:14:31,818 [nmap] Not shown: 999 closed ports
+2025-06-01 12:14:31,818 [nmap] PORT      STATE SERVICE    VERSION
+2025-06-01 12:14:31,818 [nmap] 62078/tcp open  tcpwrapped
+2025-06-01 12:14:31,818 [nmap] 
+2025-06-01 12:14:31,818 [nmap] Nmap scan report for whitefalcon (192.168.10.146)
+2025-06-01 12:14:31,818 [nmap] Host is up (0.00017s latency).
+2025-06-01 12:14:31,818 [nmap] Not shown: 996 closed ports
+2025-06-01 12:14:31,818 [nmap] PORT     STATE SERVICE         VERSION
+2025-06-01 12:14:31,818 [nmap] 22/tcp   open  ssh             OpenSSH 8.9p1 Ubuntu 3ubuntu0.13 (Ubuntu Linux; protocol 2.0)
+2025-06-01 12:14:31,818 [nmap] 80/tcp   open  http            lighttpd 1.4.63
+2025-06-01 12:14:31,818 [nmap] 8080/tcp open  http-proxy      Werkzeug/2.2.3 Python/3.10.12
+2025-06-01 12:14:31,818 [nmap] 8888/tcp open  sun-answerbook?
+2025-06-01 12:14:31,819 [nmap] 2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,819 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,819 [nmap] SF-Port8080-TCP:V=7.80%I=7%D=6/1%Time=683C18BF%P=x86_64-pc-linux-gnu%r(Get
+2025-06-01 12:14:31,819 [nmap] SF:Request,1BA8,"HTTP/1\.1\x20200\x20OK\r\nServer:\x20Werkzeug/2\.2\.3\x20
+2025-06-01 12:14:31,819 [nmap] SF:Python/3\.10\.12\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:09:19\x20G
+2025-06-01 12:14:31,819 [nmap] SF:MT\r\nContent-Disposition:\x20inline;\x20filename=landing\.html\r\nCont
+2025-06-01 12:14:31,819 [nmap] SF:ent-Type:\x20text/html;\x20charset=utf-8\r\nContent-Length:\x206701\r\n
+2025-06-01 12:14:31,819 [nmap] SF:Last-Modified:\x20Sun,\x2001\x20Jun\x202025\x2008:38:48\x20GMT\r\nCache
+2025-06-01 12:14:31,819 [nmap] SF:-Control:\x20no-cache\r\nETag:\x20\"1748767128\.903421-6701-4112325590\
+2025-06-01 12:14:31,819 [nmap] SF:"\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:09:19\x20GMT\r\nConnectio
+2025-06-01 12:14:31,819 [nmap] SF:n:\x20close\r\n\r\n<!DOCTYPE\x20html>\n<html\x20lang=\"en\">\n<head>\n\
+2025-06-01 12:14:31,819 [nmap] SF:x20\x20<meta\x20charset=\"UTF-8\"\x20/>\n\x20\x20<title>Octapus\x20Land
+2025-06-01 12:14:31,819 [nmap] SF:ing\x20Page</title>\n\x20\x20<style>\n\x20\x20\x20\x20/\*\x20=====\x20G
+2025-06-01 12:14:31,819 [nmap] SF:lobal\x20Dark\x20Mode\x20=====\x20\*/\n\x20\x20\x20\x20\*\x20{\n\x20\x2
+2025-06-01 12:14:31,819 [nmap] SF:0\x20\x20\x20\x20box-sizing:\x20border-box;\n\x20\x20\x20\x20\x20\x20ma
+2025-06-01 12:14:31,819 [nmap] SF:rgin:\x200;\n\x20\x20\x20\x20\x20\x20padding:\x200;\n\x20\x20\x20\x20}\
+2025-06-01 12:14:31,819 [nmap] SF:n\x20\x20\x20\x20html,\x20body\x20{\n\x20\x20\x20\x20\x20\x20height:\x2
+2025-06-01 12:14:31,819 [nmap] SF:0100%;\n\x20\x20\x20\x20\x20\x20background:\x20#0d0d0d;\n\x20\x20\x20\x
+2025-06-01 12:14:31,819 [nmap] SF:20\x20\x20color:\x20#e6e6e6;\n\x20\x20\x20\x20\x20\x20font-family:\x20\
+2025-06-01 12:14:31,819 [nmap] SF:"Roboto\x20Mono\",\x20monospace;\n\x20\x20\x20\x20\x20\x20overflow:\x20
+2025-06-01 12:14:31,819 [nmap] SF:hidden;\n\x20\x20\x20\x20\x20\x20display:\x20flex;\n\x20\x20\x20\x20\x2
+2025-06-01 12:14:31,819 [nmap] SF:0\x20justify-content:\x20center;\n\x20\x20\x20\x20\x20\x20align-items:\
+2025-06-01 12:14:31,819 [nmap] SF:x20center;\n\x20\x20\x20\x20}\n\x20\x20\x20\x20a\x20{\n\x20\x20\x20\x20
+2025-06-01 12:14:31,819 [nmap] SF:\x20\x20text-decoration:\x20none;\n\x20\x20\x20\x20\x20\x20color")%r(HT
+2025-06-01 12:14:31,819 [nmap] SF:TPOptions,C8,"HTTP/1\.1\x20200\x20OK\r\nServer:\x20Werkzeug/2\.2\.3\x20
+2025-06-01 12:14:31,819 [nmap] SF:Python/3\.10\.12\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:09:19\x20G
+2025-06-01 12:14:31,820 [nmap] SF:MT\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nAllow:\x20HEAD,\x
+2025-06-01 12:14:31,820 [nmap] SF:20OPTIONS,\x20GET\r\nContent-Length:\x200\r\nConnection:\x20close\r\n\r
+2025-06-01 12:14:31,820 [nmap] SF:\n")%r(RTSPRequest,1F4,"<!DOCTYPE\x20HTML\x20PUBLIC\x20\"-//W3C//DTD\x2
+2025-06-01 12:14:31,820 [nmap] SF:0HTML\x204\.01//EN\"\n\x20\x20\x20\x20\x20\x20\x20\x20\"http://www\.w3\
+2025-06-01 12:14:31,820 [nmap] SF:.org/TR/html4/strict\.dtd\">\n<html>\n\x20\x20\x20\x20<head>\n\x20\x20\
+2025-06-01 12:14:31,820 [nmap] SF:x20\x20\x20\x20\x20\x20<meta\x20http-equiv=\"Content-Type\"\x20content=
+2025-06-01 12:14:31,820 [nmap] SF:\"text/html;charset=utf-8\">\n\x20\x20\x20\x20\x20\x20\x20\x20<title>Er
+2025-06-01 12:14:31,820 [nmap] SF:ror\x20response</title>\n\x20\x20\x20\x20</head>\n\x20\x20\x20\x20<body
+2025-06-01 12:14:31,820 [nmap] SF:>\n\x20\x20\x20\x20\x20\x20\x20\x20<h1>Error\x20response</h1>\n\x20\x20
+2025-06-01 12:14:31,820 [nmap] SF:\x20\x20\x20\x20\x20\x20<p>Error\x20code:\x20400</p>\n\x20\x20\x20\x20\
+2025-06-01 12:14:31,820 [nmap] SF:x20\x20\x20\x20<p>Message:\x20Bad\x20request\x20version\x20\('RTSP/1\.0
+2025-06-01 12:14:31,820 [nmap] SF:'\)\.</p>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>Error\x20code\x20explanat
+2025-06-01 12:14:31,820 [nmap] SF:ion:\x20HTTPStatus\.BAD_REQUEST\x20-\x20Bad\x20request\x20syntax\x20or\
+2025-06-01 12:14:31,820 [nmap] SF:x20unsupported\x20method\.</p>\n\x20\x20\x20\x20</body>\n</html>\n");
+2025-06-01 12:14:31,820 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,820 [nmap] SF-Port8888-TCP:V=7.80%I=7%D=6/1%Time=683C18CA%P=x86_64-pc-linux-gnu%r(Fou
+2025-06-01 12:14:31,820 [nmap] SF:rOhFourRequest,1000,"HTTP/1\.0\x20200\x20OK\r\nServer:\x20webserver/1\.
+2025-06-01 12:14:31,820 [nmap] SF:0\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:09:30\x20GMT\r\nContent-T
+2025-06-01 12:14:31,820 [nmap] SF:ype:\x20text/html\r\nCache-Control:\x20no-store,\x20no-cache,\x20must-r
+2025-06-01 12:14:31,820 [nmap] SF:evalidate\r\nExpires:\x20Sat,\x2010\x20Jan\x202000\x2005:00:00\x20GMT\r
+2025-06-01 12:14:31,820 [nmap] SF:\nContent-Length:\x2021306\r\nLast-Modified:\x20Sun,\x2001\x20Jun\x2020
+2025-06-01 12:14:31,820 [nmap] SF:25\x2009:09:30\x20GMT\r\nConnection:\x20close\r\n\r\n<!DOCTYPE\x20HTML\
+2025-06-01 12:14:31,820 [nmap] SF:x20PUBLIC\x20\"-//W3C//DTD\x20HTML\x204\.01\x20Transitional//EN\"\n\x20
+2025-06-01 12:14:31,820 [nmap] SF:\x20\x20\"http://www\.w3\.org/TR/html4/loose\.dtd\">\n<HTML>\n<HEAD>\n\
+2025-06-01 12:14:31,820 [nmap] SF:t<title>OSCam\x20r11711</title>\n\t<meta\x20http-equiv=\"Content-Type\"
+2025-06-01 12:14:31,820 [nmap] SF:\x20content=\"text/html;\x20charset=UTF-8\">\n\t<meta\x20name=\"robots\
+2025-06-01 12:14:31,820 [nmap] SF:"\x20content=\"noindex,nofollow\">\n\t<meta\x20http-equiv=\"language\"\
+2025-06-01 12:14:31,820 [nmap] SF:x20content=\"en\">\n\t<link\x20rel=\"stylesheet\"\x20type=\"text/css\"\
+2025-06-01 12:14:31,820 [nmap] SF:x20href=\"site\.css\?v=11711\">\n\t<link\x20href=\"favicon\.ico\"\x20re
+2025-06-01 12:14:31,820 [nmap] SF:l=\"icon\"\x20type=\"image/x-icon\">\n\t<script\x20type=\"text/javascri
+2025-06-01 12:14:31,820 [nmap] SF:pt\"\x20src=\"jquery\.js\?v=11711\"></script>\n\t<script\x20type=\"text
+2025-06-01 12:14:31,820 [nmap] SF:/javascript\"\x20src=\"oscam\.js\?v=11711\"></script>\n\t<script\x20typ
+2025-06-01 12:14:31,820 [nmap] SF:e=\"text/javascript\">var\x20locale_decpoint\x20")%r(SIPOptions,1000,"H
+2025-06-01 12:14:31,820 [nmap] SF:TTP/1\.0\x20200\x20OK\r\nServer:\x20webserver/1\.0\r\nDate:\x20Sun,\x20
+2025-06-01 12:14:31,821 [nmap] SF:01\x20Jun\x202025\x2009:10:57\x20GMT\r\nContent-Type:\x20text/html\r\nC
+2025-06-01 12:14:31,821 [nmap] SF:ache-Control:\x20no-store,\x20no-cache,\x20must-revalidate\r\nExpires:\
+2025-06-01 12:14:31,821 [nmap] SF:x20Sat,\x2010\x20Jan\x202000\x2005:00:00\x20GMT\r\nContent-Length:\x202
+2025-06-01 12:14:31,821 [nmap] SF:1306\r\nLast-Modified:\x20Sun,\x2001\x20Jun\x202025\x2009:10:57\x20GMT\
+2025-06-01 12:14:31,821 [nmap] SF:r\nConnection:\x20close\r\n\r\n<!DOCTYPE\x20HTML\x20PUBLIC\x20\"-//W3C/
+2025-06-01 12:14:31,821 [nmap] SF:/DTD\x20HTML\x204\.01\x20Transitional//EN\"\n\x20\x20\x20\"http://www\.
+2025-06-01 12:14:31,821 [nmap] SF:w3\.org/TR/html4/loose\.dtd\">\n<HTML>\n<HEAD>\n\t<title>OSCam\x20r1171
+2025-06-01 12:14:31,821 [nmap] SF:1</title>\n\t<meta\x20http-equiv=\"Content-Type\"\x20content=\"text/htm
+2025-06-01 12:14:31,821 [nmap] SF:l;\x20charset=UTF-8\">\n\t<meta\x20name=\"robots\"\x20content=\"noindex
+2025-06-01 12:14:31,821 [nmap] SF:,nofollow\">\n\t<meta\x20http-equiv=\"language\"\x20content=\"en\">\n\t
+2025-06-01 12:14:31,821 [nmap] SF:<link\x20rel=\"stylesheet\"\x20type=\"text/css\"\x20href=\"site\.css\?v
+2025-06-01 12:14:31,821 [nmap] SF:=11711\">\n\t<link\x20href=\"favicon\.ico\"\x20rel=\"icon\"\x20type=\"i
+2025-06-01 12:14:31,821 [nmap] SF:mage/x-icon\">\n\t<script\x20type=\"text/javascript\"\x20src=\"jquery\.
+2025-06-01 12:14:31,821 [nmap] SF:js\?v=11711\"></script>\n\t<script\x20type=\"text/javascript\"\x20src=\
+2025-06-01 12:14:31,821 [nmap] SF:"oscam\.js\?v=11711\"></script>\n\t<script\x20type=\"text/javascript\">
+2025-06-01 12:14:31,821 [nmap] SF:var\x20locale_decpoint\x20");
+2025-06-01 12:14:31,821 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,821 [nmap] 
+2025-06-01 12:14:31,821 [nmap] Nmap scan report for 192.168.10.149
+2025-06-01 12:14:31,821 [nmap] Host is up (0.42s latency).
+2025-06-01 12:14:31,821 [nmap] All 1000 scanned ports on 192.168.10.149 are closed
+2025-06-01 12:14:31,822 [nmap] 
+2025-06-01 12:14:31,822 [nmap] Nmap scan report for 192.168.10.151
+2025-06-01 12:14:31,822 [nmap] Host is up (0.013s latency).
+2025-06-01 12:14:31,822 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,822 [nmap] PORT    STATE SERVICE   VERSION
+2025-06-01 12:14:31,822 [nmap] 80/tcp  open  http
+2025-06-01 12:14:31,822 [nmap] 443/tcp open  ssl/https
+2025-06-01 12:14:31,822 [nmap] 2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,822 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,822 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18C3%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,822 [nmap] SF:quest,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\x20\
+2025-06-01 12:14:31,822 [nmap] SF:"bb-110-64f80cf2\"\r\nLast-Modified:\x20Wed,\x2006\x20Sep\x202023\x2005
+2025-06-01 12:14:31,822 [nmap] SF::24:02\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:09:22\x20GMT\
+2025-06-01 12:14:31,822 [nmap] SF:r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-ancest
+2025-06-01 12:14:31,822 [nmap] SF:ors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x20272\r
+2025-06-01 12:14:31,822 [nmap] SF:\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYPE\x2
+2025-06-01 12:14:31,822 [nmap] SF:0html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http://www
+2025-06-01 12:14:31,822 [nmap] SF:\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://www\.
+2025-06-01 12:14:31,822 [nmap] SF:w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20conte
+2025-06-01 12:14:31,822 [nmap] SF:nt=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%r(HT
+2025-06-01 12:14:31,822 [nmap] SF:TPOptions,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\
+2025-06-01 12:14:31,822 [nmap] SF:x20\"bb-110-64f80cf2\"\r\nLast-Modified:\x20Wed,\x2006\x20Sep\x202023\x
+2025-06-01 12:14:31,822 [nmap] SF:2005:24:02\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:09:22\x20
+2025-06-01 12:14:31,822 [nmap] SF:GMT\r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-an
+2025-06-01 12:14:31,822 [nmap] SF:cestors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x202
+2025-06-01 12:14:31,822 [nmap] SF:72\r\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYP
+2025-06-01 12:14:31,822 [nmap] SF:E\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http:/
+2025-06-01 12:14:31,823 [nmap] SF:/www\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://w
+2025-06-01 12:14:31,823 [nmap] SF:ww\.w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20c
+2025-06-01 12:14:31,823 [nmap] SF:ontent=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%
+2025-06-01 12:14:31,823 [nmap] SF:r(RTSPRequest,79,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20
+2025-06-01 12:14:31,823 [nmap] SF:Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r
+2025-06-01 12:14:31,823 [nmap] SF:\n\r\n<h1>Bad\x20Request</h1>")%r(Help,79,"HTTP/0\.9\x20400\x20Bad\x20R
+2025-06-01 12:14:31,823 [nmap] SF:equest\r\nConnection:\x20Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nCon
+2025-06-01 12:14:31,823 [nmap] SF:tent-Type:\x20text/html\r\n\r\n<h1>Bad\x20Request</h1>")%r(SIPOptions,7
+2025-06-01 12:14:31,823 [nmap] SF:9,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20Keep-Alive\r\nK
+2025-06-01 12:14:31,823 [nmap] SF:eep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r\n\r\n<h1>Bad\x
+2025-06-01 12:14:31,823 [nmap] SF:20Request</h1>");
+2025-06-01 12:14:31,823 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,823 [nmap] SF-Port443-TCP:V=7.80%T=SSL%I=7%D=6/1%Time=683C18CF%P=x86_64-pc-linux-gnu%
+2025-06-01 12:14:31,823 [nmap] SF:r(GetRequest,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETa
+2025-06-01 12:14:31,823 [nmap] SF:g:\x20\"bb-110-64f80cf2\"\r\nLast-Modified:\x20Wed,\x2006\x20Sep\x20202
+2025-06-01 12:14:31,823 [nmap] SF:3\x2005:24:02\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:09:35\
+2025-06-01 12:14:31,823 [nmap] SF:x20GMT\r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame
+2025-06-01 12:14:31,823 [nmap] SF:-ancestors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x
+2025-06-01 12:14:31,823 [nmap] SF:20272\r\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOC
+2025-06-01 12:14:31,823 [nmap] SF:TYPE\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"htt
+2025-06-01 12:14:31,823 [nmap] SF:p://www\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http:
+2025-06-01 12:14:31,823 [nmap] SF://www\.w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x
+2025-06-01 12:14:31,823 [nmap] SF:20content=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n
+2025-06-01 12:14:31,823 [nmap] SF:");
+2025-06-01 12:14:31,823 [nmap] 
+2025-06-01 12:14:31,823 [nmap] Nmap scan report for 192.168.10.152
+2025-06-01 12:14:31,823 [nmap] Host is up (0.037s latency).
+2025-06-01 12:14:31,823 [nmap] Not shown: 999 closed ports
+2025-06-01 12:14:31,823 [nmap] PORT   STATE SERVICE VERSION
+2025-06-01 12:14:31,823 [nmap] 80/tcp open  http
+2025-06-01 12:14:31,823 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,823 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18C6%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,823 [nmap] SF:quest,F6,"HTTP/1\.0\x20401\x20Unauthorized\r\nContent-Type:\x20text/htm
+2025-06-01 12:14:31,823 [nmap] SF:l\r\nWWW-Authenticate:\x20Digest\x20realm=\"\",\x20qop=\"auth\",\x20non
+2025-06-01 12:14:31,823 [nmap] SF:ce=\"759ba1d986fcbfac0e654d96fa348b63\",\x20opaque=\"6c9823b78cb68fc62d
+2025-06-01 12:14:31,823 [nmap] SF:b31d184448c4c9\"\r\nContent-Length:\x2021\r\nConnection:\x20close\r\n\r
+2025-06-01 12:14:31,823 [nmap] SF:\nAuthentication\x20Failed")%r(HTTPOptions,F6,"HTTP/1\.0\x20401\x20Unau
+2025-06-01 12:14:31,823 [nmap] SF:thorized\r\nContent-Type:\x20text/html\r\nWWW-Authenticate:\x20Digest\x
+2025-06-01 12:14:31,823 [nmap] SF:20realm=\"\",\x20qop=\"auth\",\x20nonce=\"60f1426ba3f55a28395945192e9cb
+2025-06-01 12:14:31,823 [nmap] SF:0f0\",\x20opaque=\"3a662270ea4e19ca56617cc900c1200a\"\r\nContent-Length
+2025-06-01 12:14:31,823 [nmap] SF::\x2021\r\nConnection:\x20close\r\n\r\nAuthentication\x20Failed")%r(RTS
+2025-06-01 12:14:31,823 [nmap] SF:PRequest,F6,"HTTP/1\.0\x20401\x20Unauthorized\r\nContent-Type:\x20text/
+2025-06-01 12:14:31,824 [nmap] SF:html\r\nWWW-Authenticate:\x20Digest\x20realm=\"\",\x20qop=\"auth\",\x20
+2025-06-01 12:14:31,824 [nmap] SF:nonce=\"76f0384233b6ab6ebb81a4c828a87c9d\",\x20opaque=\"4dc53c36b79e075
+2025-06-01 12:14:31,824 [nmap] SF:c716e54a2c7a11472\"\r\nContent-Length:\x2021\r\nConnection:\x20close\r\
+2025-06-01 12:14:31,824 [nmap] SF:n\r\nAuthentication\x20Failed")%r(FourOhFourRequest,F6,"HTTP/1\.0\x2040
+2025-06-01 12:14:31,824 [nmap] SF:1\x20Unauthorized\r\nContent-Type:\x20text/html\r\nWWW-Authenticate:\x2
+2025-06-01 12:14:31,824 [nmap] SF:0Digest\x20realm=\"\",\x20qop=\"auth\",\x20nonce=\"f4c89780bc05442f6ff9
+2025-06-01 12:14:31,824 [nmap] SF:368ed75bc356\",\x20opaque=\"a2815b6229eefd18a981ac26ee59fd53\"\r\nConte
+2025-06-01 12:14:31,824 [nmap] SF:nt-Length:\x2021\r\nConnection:\x20close\r\n\r\nAuthentication\x20Faile
+2025-06-01 12:14:31,824 [nmap] SF:d");
+2025-06-01 12:14:31,824 [nmap] 
+2025-06-01 12:14:31,824 [nmap] Nmap scan report for 192.168.10.154
+2025-06-01 12:14:31,824 [nmap] Host is up (0.00019s latency).
+2025-06-01 12:14:31,824 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,824 [nmap] PORT   STATE SERVICE VERSION
+2025-06-01 12:14:31,824 [nmap] 22/tcp open  ssh     Dropbear sshd 2020.81 (protocol 2.0)
+2025-06-01 12:14:31,824 [nmap] 80/tcp open  http    lighttpd 1.4.59
+2025-06-01 12:14:31,824 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,824 [nmap] 
+2025-06-01 12:14:31,824 [nmap] Nmap scan report for 192.168.10.156
+2025-06-01 12:14:31,824 [nmap] Host is up (0.018s latency).
+2025-06-01 12:14:31,824 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,825 [nmap] PORT      STATE SERVICE    VERSION
+2025-06-01 12:14:31,825 [nmap] 9080/tcp  open  tcpwrapped
+2025-06-01 12:14:31,825 [nmap] 12345/tcp open  tcpwrapped
+2025-06-01 12:14:31,825 [nmap] 
+2025-06-01 12:14:31,825 [nmap] Nmap scan report for 192.168.10.157
+2025-06-01 12:14:31,825 [nmap] Host is up (0.020s latency).
+2025-06-01 12:14:31,825 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,825 [nmap] PORT    STATE SERVICE   VERSION
+2025-06-01 12:14:31,825 [nmap] 80/tcp  open  http
+2025-06-01 12:14:31,825 [nmap] 443/tcp open  ssl/https
+2025-06-01 12:14:31,825 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,825 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18CC%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,825 [nmap] SF:quest,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\x20\
+2025-06-01 12:14:31,825 [nmap] SF:"bb-110-64f80cf2\"\r\nLast-Modified:\x20Wed,\x2006\x20Sep\x202023\x2005
+2025-06-01 12:14:31,825 [nmap] SF::24:02\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:09:32\x20GMT\
+2025-06-01 12:14:31,825 [nmap] SF:r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-ancest
+2025-06-01 12:14:31,825 [nmap] SF:ors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x20272\r
+2025-06-01 12:14:31,825 [nmap] SF:\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYPE\x2
+2025-06-01 12:14:31,825 [nmap] SF:0html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http://www
+2025-06-01 12:14:31,825 [nmap] SF:\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://www\.
+2025-06-01 12:14:31,825 [nmap] SF:w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20conte
+2025-06-01 12:14:31,825 [nmap] SF:nt=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%r(HT
+2025-06-01 12:14:31,825 [nmap] SF:TPOptions,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\
+2025-06-01 12:14:31,825 [nmap] SF:x20\"bb-110-64f80cf2\"\r\nLast-Modified:\x20Wed,\x2006\x20Sep\x202023\x
+2025-06-01 12:14:31,825 [nmap] SF:2005:24:02\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:09:32\x20
+2025-06-01 12:14:31,825 [nmap] SF:GMT\r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-an
+2025-06-01 12:14:31,826 [nmap] SF:cestors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x202
+2025-06-01 12:14:31,826 [nmap] SF:72\r\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYP
+2025-06-01 12:14:31,826 [nmap] SF:E\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http:/
+2025-06-01 12:14:31,826 [nmap] SF:/www\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://w
+2025-06-01 12:14:31,826 [nmap] SF:ww\.w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20c
+2025-06-01 12:14:31,826 [nmap] SF:ontent=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%
+2025-06-01 12:14:31,826 [nmap] SF:r(RTSPRequest,79,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20
+2025-06-01 12:14:31,826 [nmap] SF:Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r
+2025-06-01 12:14:31,826 [nmap] SF:\n\r\n<h1>Bad\x20Request</h1>")%r(Help,79,"HTTP/0\.9\x20400\x20Bad\x20R
+2025-06-01 12:14:31,826 [nmap] SF:equest\r\nConnection:\x20Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nCon
+2025-06-01 12:14:31,826 [nmap] SF:tent-Type:\x20text/html\r\n\r\n<h1>Bad\x20Request</h1>")%r(SIPOptions,7
+2025-06-01 12:14:31,826 [nmap] SF:9,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20Keep-Alive\r\nK
+2025-06-01 12:14:31,826 [nmap] SF:eep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r\n\r\n<h1>Bad\x
+2025-06-01 12:14:31,826 [nmap] SF:20Request</h1>");
+2025-06-01 12:14:31,826 [nmap] 
+2025-06-01 12:14:31,826 [nmap] Nmap scan report for 192.168.10.159
+2025-06-01 12:14:31,826 [nmap] Host is up (0.021s latency).
+2025-06-01 12:14:31,826 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,826 [nmap] PORT    STATE SERVICE   VERSION
+2025-06-01 12:14:31,826 [nmap] 80/tcp  open  http
+2025-06-01 12:14:31,826 [nmap] 443/tcp open  ssl/https
+2025-06-01 12:14:31,826 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,826 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C18FD%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,826 [nmap] SF:quest,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\x20\
+2025-06-01 12:14:31,826 [nmap] SF:"bb-110-64f80cf2\"\r\nLast-Modified:\x20Wed,\x2006\x20Sep\x202023\x2005
+2025-06-01 12:14:31,826 [nmap] SF::24:02\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:10:21\x20GMT\
+2025-06-01 12:14:31,826 [nmap] SF:r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-ancest
+2025-06-01 12:14:31,826 [nmap] SF:ors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x20272\r
+2025-06-01 12:14:31,826 [nmap] SF:\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYPE\x2
+2025-06-01 12:14:31,826 [nmap] SF:0html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http://www
+2025-06-01 12:14:31,826 [nmap] SF:\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://www\.
+2025-06-01 12:14:31,826 [nmap] SF:w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20conte
+2025-06-01 12:14:31,826 [nmap] SF:nt=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%r(HT
+2025-06-01 12:14:31,826 [nmap] SF:TPOptions,218,"HTTP/1\.0\x20200\x20OK\r\nConnection:\x20close\r\nETag:\
+2025-06-01 12:14:31,826 [nmap] SF:x20\"bb-110-64f80cf2\"\r\nLast-Modified:\x20Wed,\x2006\x20Sep\x202023\x
+2025-06-01 12:14:31,826 [nmap] SF:2005:24:02\x20GMT\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:10:21\x20
+2025-06-01 12:14:31,826 [nmap] SF:GMT\r\nX-Frame-Options:\x20deny\r\nContent-Security-Policy:\x20frame-an
+2025-06-01 12:14:31,826 [nmap] SF:cestors\x20'none'\r\nContent-Type:\x20text/html\r\nContent-Length:\x202
+2025-06-01 12:14:31,826 [nmap] SF:72\r\n\r\n<\?xml\x20version=\"1\.0\"\x20encoding=\"utf-8\"\?>\n<!DOCTYP
+2025-06-01 12:14:31,826 [nmap] SF:E\x20html\x20PUBLIC\x20\"-//W3C//DTD\x20XHTML\x201\.1//EN\"\x20\"http:/
+2025-06-01 12:14:31,826 [nmap] SF:/www\.w3\.org/TR/xhtml11/DTD/xhtml11\.dtd\">\n<html\x20xmlns=\"http://w
+2025-06-01 12:14:31,827 [nmap] SF:ww\.w3\.org/1999/xhtml\">\n<head>\n<meta\x20http-equiv=\"refresh\"\x20c
+2025-06-01 12:14:31,827 [nmap] SF:ontent=\"0;\x20URL=/webpages/index\.html\"\x20/>\n</head>\n</html>\n")%
+2025-06-01 12:14:31,827 [nmap] SF:r(RTSPRequest,79,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20
+2025-06-01 12:14:31,827 [nmap] SF:Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r
+2025-06-01 12:14:31,827 [nmap] SF:\n\r\n<h1>Bad\x20Request</h1>")%r(Help,79,"HTTP/0\.9\x20400\x20Bad\x20R
+2025-06-01 12:14:31,827 [nmap] SF:equest\r\nConnection:\x20Keep-Alive\r\nKeep-Alive:\x20timeout=20\r\nCon
+2025-06-01 12:14:31,827 [nmap] SF:tent-Type:\x20text/html\r\n\r\n<h1>Bad\x20Request</h1>")%r(SIPOptions,7
+2025-06-01 12:14:31,827 [nmap] SF:9,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nConnection:\x20Keep-Alive\r\nK
+2025-06-01 12:14:31,827 [nmap] SF:eep-Alive:\x20timeout=20\r\nContent-Type:\x20text/html\r\n\r\n<h1>Bad\x
+2025-06-01 12:14:31,827 [nmap] SF:20Request</h1>");
+2025-06-01 12:14:31,827 [nmap] 
+2025-06-01 12:14:31,827 [nmap] Nmap scan report for 192.168.10.160
+2025-06-01 12:14:31,827 [nmap] Host is up (0.025s latency).
+2025-06-01 12:14:31,827 [nmap] Not shown: 999 closed ports
+2025-06-01 12:14:31,828 [nmap] PORT  STATE    SERVICE VERSION
+2025-06-01 12:14:31,828 [nmap] 7/tcp filtered echo
+2025-06-01 12:14:31,828 [nmap] 
+2025-06-01 12:14:31,828 [nmap] Nmap scan report for 192.168.10.177
+2025-06-01 12:14:31,828 [nmap] Host is up (0.016s latency).
+2025-06-01 12:14:31,828 [nmap] Not shown: 990 closed ports
+2025-06-01 12:14:31,828 [nmap] PORT     STATE SERVICE        VERSION
+2025-06-01 12:14:31,828 [nmap] 22/tcp   open  ssh            Dropbear sshd 2022.83 (protocol 2.0)
+2025-06-01 12:14:31,828 [nmap] 111/tcp  open  rpcbind        2-4 (RPC #100000)
+2025-06-01 12:14:31,828 [nmap] 139/tcp  open  netbios-ssn    Samba smbd 4.6.2
+2025-06-01 12:14:31,828 [nmap] 445/tcp  open  netbios-ssn    Samba smbd 4.6.2
+2025-06-01 12:14:31,828 [nmap] 631/tcp  open  ipp            CUPS 2.4
+2025-06-01 12:14:31,828 [nmap] 2049/tcp open  nfs_acl        3 (RPC #100227)
+2025-06-01 12:14:31,828 [nmap] 5357/tcp open  http           BaseHTTPServer 0.6 (Python 3.11.2)
+2025-06-01 12:14:31,828 [nmap] 6789/tcp open  ibm-db2-admin?
+2025-06-01 12:14:31,828 [nmap] 8000/tcp open  http-alt       granian
+2025-06-01 12:14:31,828 [nmap] 9091/tcp open  http           Transmission BitTorrent management httpd (unauthorized)
+2025-06-01 12:14:31,828 [nmap] 2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,828 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,828 [nmap] SF-Port6789-TCP:V=7.80%I=7%D=6/1%Time=683C1924%P=x86_64-pc-linux-gnu%r(Get
+2025-06-01 12:14:31,828 [nmap] SF:Request,9A,"HTTP/1\.1\x20401\x20Unauthorized\r\nWWW-Authenticate:\x20Ba
+2025-06-01 12:14:31,828 [nmap] SF:sic\x20realm=\"NZBGet\"\r\nConnection:\x20close\r\nContent-Type:\x20tex
+2025-06-01 12:14:31,828 [nmap] SF:t/plain\r\nContent-Length:\x200\r\nServer:\x20nzbget-24\.5\r\n\r\n")%r(
+2025-06-01 12:14:31,828 [nmap] SF:HTTPOptions,121,"HTTP/1\.1\x20200\x20OK\r\nConnection:\x20close\r\nCont
+2025-06-01 12:14:31,828 [nmap] SF:ent-Length:\x200\r\nAccess-Control-Allow-Methods:\x20GET,\x20POST,\x20O
+2025-06-01 12:14:31,828 [nmap] SF:PTIONS\r\nAccess-Control-Allow-Origin:\x20\r\nAccess-Control-Allow-Cred
+2025-06-01 12:14:31,828 [nmap] SF:entials:\x20true\r\nAccess-Control-Max-Age:\x2086400\r\nAccess-Control-
+2025-06-01 12:14:31,828 [nmap] SF:Allow-Headers:\x20Content-Type,\x20Authorization\r\nServer:\x20nzbget-2
+2025-06-01 12:14:31,828 [nmap] SF:4\.5\r\n\r\n")%r(RTSPRequest,121,"HTTP/1\.1\x20200\x20OK\r\nConnection:
+2025-06-01 12:14:31,828 [nmap] SF:\x20close\r\nContent-Length:\x200\r\nAccess-Control-Allow-Methods:\x20G
+2025-06-01 12:14:31,828 [nmap] SF:ET,\x20POST,\x20OPTIONS\r\nAccess-Control-Allow-Origin:\x20\r\nAccess-C
+2025-06-01 12:14:31,828 [nmap] SF:ontrol-Allow-Credentials:\x20true\r\nAccess-Control-Max-Age:\x2086400\r
+2025-06-01 12:14:31,828 [nmap] SF:\nAccess-Control-Allow-Headers:\x20Content-Type,\x20Authorization\r\nSe
+2025-06-01 12:14:31,829 [nmap] SF:rver:\x20nzbget-24\.5\r\n\r\n")%r(FourOhFourRequest,9A,"HTTP/1\.1\x2040
+2025-06-01 12:14:31,829 [nmap] SF:1\x20Unauthorized\r\nWWW-Authenticate:\x20Basic\x20realm=\"NZBGet\"\r\n
+2025-06-01 12:14:31,829 [nmap] SF:Connection:\x20close\r\nContent-Type:\x20text/plain\r\nContent-Length:\
+2025-06-01 12:14:31,829 [nmap] SF:x200\r\nServer:\x20nzbget-24\.5\r\n\r\n")%r(SIPOptions,121,"HTTP/1\.1\x
+2025-06-01 12:14:31,829 [nmap] SF:20200\x20OK\r\nConnection:\x20close\r\nContent-Length:\x200\r\nAccess-C
+2025-06-01 12:14:31,829 [nmap] SF:ontrol-Allow-Methods:\x20GET,\x20POST,\x20OPTIONS\r\nAccess-Control-All
+2025-06-01 12:14:31,829 [nmap] SF:ow-Origin:\x20\r\nAccess-Control-Allow-Credentials:\x20true\r\nAccess-C
+2025-06-01 12:14:31,829 [nmap] SF:ontrol-Max-Age:\x2086400\r\nAccess-Control-Allow-Headers:\x20Content-Ty
+2025-06-01 12:14:31,829 [nmap] SF:pe,\x20Authorization\r\nServer:\x20nzbget-24\.5\r\n\r\n");
+2025-06-01 12:14:31,829 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,829 [nmap] SF-Port8000-TCP:V=7.80%I=7%D=6/1%Time=683C1929%P=x86_64-pc-linux-gnu%r(Get
+2025-06-01 12:14:31,829 [nmap] SF:Request,1BE,"HTTP/1\.0\x20400\x20Bad\x20Request\r\ncontent-type:\x20tex
+2025-06-01 12:14:31,829 [nmap] SF:t/html;\x20charset=utf-8\r\nvary:\x20Accept-Language,\x20origin\r\ncont
+2025-06-01 12:14:31,829 [nmap] SF:ent-language:\x20en-us\r\nx-content-type-options:\x20nosniff\r\nreferre
+2025-06-01 12:14:31,829 [nmap] SF:r-policy:\x20same-origin\r\ncross-origin-opener-policy:\x20same-origin\
+2025-06-01 12:14:31,829 [nmap] SF:r\nserver:\x20granian\r\ncontent-length:\x20143\r\ndate:\x20Sun,\x2001\
+2025-06-01 12:14:31,829 [nmap] SF:x20Jun\x202025\x2009:11:05\x20GMT\r\n\r\n\n<!doctype\x20html>\n<html\x2
+2025-06-01 12:14:31,829 [nmap] SF:0lang=\"en\">\n<head>\n\x20\x20<title>Bad\x20Request\x20\(400\)</title>
+2025-06-01 12:14:31,829 [nmap] SF:\n</head>\n<body>\n\x20\x20<h1>Bad\x20Request\x20\(400\)</h1><p></p>\n<
+2025-06-01 12:14:31,829 [nmap] SF:/body>\n</html>\n")%r(X11Probe,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r
+2025-06-01 12:14:31,829 [nmap] SF:\nconnection:\x20close\r\ncontent-length:\x200\r\ndate:\x20Sun,\x2001\x
+2025-06-01 12:14:31,829 [nmap] SF:20Jun\x202025\x2009:11:05\x20GMT\r\n\r\n")%r(FourOhFourRequest,1BE,"HTT
+2025-06-01 12:14:31,829 [nmap] SF:P/1\.0\x20400\x20Bad\x20Request\r\ncontent-type:\x20text/html;\x20chars
+2025-06-01 12:14:31,829 [nmap] SF:et=utf-8\r\nvary:\x20Accept-Language,\x20origin\r\ncontent-language:\x2
+2025-06-01 12:14:31,829 [nmap] SF:0en-us\r\nx-content-type-options:\x20nosniff\r\nreferrer-policy:\x20sam
+2025-06-01 12:14:31,829 [nmap] SF:e-origin\r\ncross-origin-opener-policy:\x20same-origin\r\nserver:\x20gr
+2025-06-01 12:14:31,830 [nmap] SF:anian\r\ncontent-length:\x20143\r\ndate:\x20Sun,\x2001\x20Jun\x202025\x
+2025-06-01 12:14:31,830 [nmap] SF:2009:11:05\x20GMT\r\n\r\n\n<!doctype\x20html>\n<html\x20lang=\"en\">\n<
+2025-06-01 12:14:31,830 [nmap] SF:head>\n\x20\x20<title>Bad\x20Request\x20\(400\)</title>\n</head>\n<body
+2025-06-01 12:14:31,830 [nmap] SF:>\n\x20\x20<h1>Bad\x20Request\x20\(400\)</h1><p></p>\n</body>\n</html>\
+2025-06-01 12:14:31,830 [nmap] SF:n")%r(Socks5,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nconnection:\x20c
+2025-06-01 12:14:31,830 [nmap] SF:lose\r\ncontent-length:\x200\r\ndate:\x20Sun,\x2001\x20Jun\x202025\x200
+2025-06-01 12:14:31,830 [nmap] SF:9:11:05\x20GMT\r\n\r\n")%r(Socks4,67,"HTTP/1\.1\x20400\x20Bad\x20Reques
+2025-06-01 12:14:31,830 [nmap] SF:t\r\nconnection:\x20close\r\ncontent-length:\x200\r\ndate:\x20Sun,\x200
+2025-06-01 12:14:31,830 [nmap] SF:1\x20Jun\x202025\x2009:11:05\x20GMT\r\n\r\n")%r(HTTPOptions,1BE,"HTTP/1
+2025-06-01 12:14:31,830 [nmap] SF:\.0\x20400\x20Bad\x20Request\r\ncontent-type:\x20text/html;\x20charset=
+2025-06-01 12:14:31,830 [nmap] SF:utf-8\r\nvary:\x20Accept-Language,\x20origin\r\ncontent-language:\x20en
+2025-06-01 12:14:31,830 [nmap] SF:-us\r\nx-content-type-options:\x20nosniff\r\nreferrer-policy:\x20same-o
+2025-06-01 12:14:31,831 [nmap] SF:rigin\r\ncross-origin-opener-policy:\x20same-origin\r\nserver:\x20grani
+2025-06-01 12:14:31,831 [nmap] SF:an\r\ncontent-length:\x20143\r\ndate:\x20Sun,\x2001\x20Jun\x202025\x200
+2025-06-01 12:14:31,831 [nmap] SF:9:11:05\x20GMT\r\n\r\n\n<!doctype\x20html>\n<html\x20lang=\"en\">\n<hea
+2025-06-01 12:14:31,831 [nmap] SF:d>\n\x20\x20<title>Bad\x20Request\x20\(400\)</title>\n</head>\n<body>\n
+2025-06-01 12:14:31,831 [nmap] SF:\x20\x20<h1>Bad\x20Request\x20\(400\)</h1><p></p>\n</body>\n</html>\n");
+2025-06-01 12:14:31,831 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,831 [nmap] 
+2025-06-01 12:14:31,831 [nmap] Nmap scan report for 192.168.10.181
+2025-06-01 12:14:31,831 [nmap] Host is up (0.012s latency).
+2025-06-01 12:14:31,831 [nmap] Not shown: 998 closed ports
+2025-06-01 12:14:31,831 [nmap] PORT     STATE    SERVICE   VERSION
+2025-06-01 12:14:31,831 [nmap] 80/tcp   open     http      webserver
+2025-06-01 12:14:31,831 [nmap] 8899/tcp filtered ospf-lite
+2025-06-01 12:14:31,831 [nmap] 1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,831 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C1926%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,832 [nmap] SF:quest,125C,"HTTP/1\.0\x20200\x20OK\r\nContent-Type:\x20text/html\r\nAcc
+2025-06-01 12:14:31,832 [nmap] SF:ept-Ranges:\x20bytes\r\nETag:\x20\"759899130\"\r\nLast-Modified:\x20Tue
+2025-06-01 12:14:31,832 [nmap] SF:,\x2009\x20Jul\x202019\x2013:05:08\x20GMT\r\nCache-Control:\x20no-store
+2025-06-01 12:14:31,832 [nmap] SF:,\x20no-cache,\x20must-revalidate,\x20post-check=0,\x20pre-check=0\r\nC
+2025-06-01 12:14:31,832 [nmap] SF:ontent-Length:\x204393\r\nConnection:\x20close\r\nDate:\x20Sun,\x2001\x
+2025-06-01 12:14:31,832 [nmap] SF:20Jun\x202025\x2009:11:02\x20GMT\r\nServer:\x20webserver\r\n\r\n<!DOCTY
+2025-06-01 12:14:31,832 [nmap] SF:PE\x20html>\n<!--\x20MAIN-TEMPLATE\x20FOR\x20WEBSITE\x20-->\n<html\x20n
+2025-06-01 12:14:31,832 [nmap] SF:g-controller=\"rootCtrl\">\n\x20\x20\x20\x20<head>\n\x20\x20\x20\x20\x2
+2025-06-01 12:14:31,832 [nmap] SF:0\x20\x20\x20<!--\x20Use\x20the\x20most\x20recent\x20rendering\x20mode\
+2025-06-01 12:14:31,832 [nmap] SF:x20of\x20IE\x20or\x20use\x20Chrome\x20Frame\x20for\x20IE<=8\x20if\x20in
+2025-06-01 12:14:31,832 [nmap] SF:stalled\x20-->\n\x20\x20\x20\x20\x20\x20\x20\x20<meta\x20http-equiv=\"X
+2025-06-01 12:14:31,832 [nmap] SF:-UA-Compatible\"\x20content=\"IE=edge,chrome=IE8\">\n\n\x20\x20\x20\x20
+2025-06-01 12:14:31,832 [nmap] SF:\x20\x20\x20\x20<meta\x20http-equiv=\"Content-Type\"\x20content=\"text/
+2025-06-01 12:14:31,832 [nmap] SF:html;\x20charset=utf-8\"\x20/>\n\x20\x20\x20\x20\x20\x20\x20\x20<meta\x
+2025-06-01 12:14:31,832 [nmap] SF:20http-equiv=\"Content-Script-Type\"\x20content=\"text/javascript\">\n\
+2025-06-01 12:14:31,832 [nmap] SF:n\x20\x20\x20\x20\x20\x20\x20\x20<meta\x20http-equiv=\"cache-control\"\
+2025-06-01 12:14:31,832 [nmap] SF:x20content=\"max-age=0\"\x20/>\n\x20\x20\x20\x20\x20\x20\x20\x20<meta\x
+2025-06-01 12:14:31,832 [nmap] SF:20http-equiv=\"cache-control\"\x20content=\"no-cache\"\x20/>\n\x20\x20\
+2025-06-01 12:14:31,832 [nmap] SF:x20\x20\x20\x20\x20\x20<meta\x20http-equiv=\"expires\"\x20content=\"")%
+2025-06-01 12:14:31,832 [nmap] SF:r(HTTPOptions,E1,"HTTP/1\.0\x20200\x20OK\r\nAllow:\x20OPTIONS,\x20GET,\
+2025-06-01 12:14:31,832 [nmap] SF:x20HEAD,\x20POST\r\nCache-Control:\x20no-store,\x20no-cache,\x20must-re
+2025-06-01 12:14:31,832 [nmap] SF:validate,\x20post-check=0,\x20pre-check=0\r\nContent-Length:\x200\r\nCo
+2025-06-01 12:14:31,833 [nmap] SF:nnection:\x20close\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:11:02\x2
+2025-06-01 12:14:31,834 [nmap] SF:0GMT\r\nServer:\x20webserver\r\n\r\n")%r(RTSPRequest,1EE,"HTTP/1\.0\x20
+2025-06-01 12:14:31,834 [nmap] SF:400\x20Bad\x20Request\r\nContent-Type:\x20text/html\r\nContent-Length:\
+2025-06-01 12:14:31,834 [nmap] SF:x20345\r\nConnection:\x20close\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2
+2025-06-01 12:14:31,834 [nmap] SF:009:11:02\x20GMT\r\nServer:\x20webserver\r\n\r\n<\?xml\x20version=\"1\.
+2025-06-01 12:14:31,834 [nmap] SF:0\"\x20encoding=\"iso-8859-1\"\?>\n<!DOCTYPE\x20html\x20PUBLIC\x20\"-//
+2025-06-01 12:14:31,834 [nmap] SF:W3C//DTD\x20XHTML\x201\.0\x20Transitional//EN\"\n\x20\x20\x20\x20\x20\x
+2025-06-01 12:14:31,834 [nmap] SF:20\x20\x20\x20\"http://www\.w3\.org/TR/xhtml1/DTD/xhtml1-transitional\.
+2025-06-01 12:14:31,834 [nmap] SF:dtd\">\n<html\x20xmlns=\"http://www\.w3\.org/1999/xhtml\"\x20xml:lang=\
+2025-06-01 12:14:31,834 [nmap] SF:"en\"\x20lang=\"en\">\n\x20<head>\n\x20\x20<title>400\x20Bad\x20Request
+2025-06-01 12:14:31,834 [nmap] SF:</title>\n\x20</head>\n\x20<body>\n\x20\x20<h1>400\x20Bad\x20Request</h
+2025-06-01 12:14:31,834 [nmap] SF:1>\n\x20</body>\n</html>\n");
+2025-06-01 12:14:31,834 [nmap] 
+2025-06-01 12:14:31,834 [nmap] Nmap scan report for 192.168.10.186
+2025-06-01 12:14:31,835 [nmap] Host is up (0.00048s latency).
+2025-06-01 12:14:31,835 [nmap] Not shown: 995 closed ports
+2025-06-01 12:14:31,835 [nmap] PORT     STATE SERVICE          VERSION
+2025-06-01 12:14:31,835 [nmap] 22/tcp   open  ssh              Dropbear sshd 2020.81 (protocol 2.0)
+2025-06-01 12:14:31,835 [nmap] 53/tcp   open  domain           dnsmasq pi-hole-v2.91
+2025-06-01 12:14:31,835 [nmap] 80/tcp   open  http             lighttpd 1.4.59
+2025-06-01 12:14:31,835 [nmap] 8001/tcp open  ssl/vcom-tunnel?
+2025-06-01 12:14:31,835 [nmap] 8089/tcp open  webdav
+2025-06-01 12:14:31,835 [nmap] 2 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,835 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,835 [nmap] SF-Port8001-TCP:V=7.80%T=SSL%I=7%D=6/1%Time=683C1934%P=x86_64-pc-linux-gnu
+2025-06-01 12:14:31,835 [nmap] SF:%r(GetRequest,BA3,"HTTP/1\.0\x20200\x20OK\r\ncontent-type:\x20text/html
+2025-06-01 12:14:31,835 [nmap] SF:;\x20charset=utf-8\r\ncache-control:\x20public,\x20max-age=600\r\nexpir
+2025-06-01 12:14:31,835 [nmap] SF:es:\x20Sun,\x201\x20Jun\x202025\x2009:21:33\x20GMT\r\nserver:\x20Rocket
+2025-06-01 12:14:31,835 [nmap] SF:\r\nx-content-type-options:\x20nosniff\r\nx-frame-options:\x20SAMEORIGI
+2025-06-01 12:14:31,835 [nmap] SF:N\r\npermissions-policy:\x20accelerometer=\(\),\x20ambient-light-sensor
+2025-06-01 12:14:31,836 [nmap] SF:=\(\),\x20autoplay=\(\),\x20battery=\(\),\x20camera=\(\),\x20display-ca
+2025-06-01 12:14:31,836 [nmap] SF:pture=\(\),\x20document-domain=\(\),\x20encrypted-media=\(\),\x20execut
+2025-06-01 12:14:31,836 [nmap] SF:ion-while-not-rendered=\(\),\x20execution-while-out-of-viewport=\(\),\x
+2025-06-01 12:14:31,836 [nmap] SF:20fullscreen=\(\),\x20geolocation=\(\),\x20gyroscope=\(\),\x20keyboard-
+2025-06-01 12:14:31,836 [nmap] SF:map=\(\),\x20magnetometer=\(\),\x20microphone=\(\),\x20midi=\(\),\x20pa
+2025-06-01 12:14:31,836 [nmap] SF:yment=\(\),\x20picture-in-picture=\(\),\x20screen-wake-lock=\(\),\x20sy
+2025-06-01 12:14:31,836 [nmap] SF:nc-xhr=\(\),\x20usb=\(\),\x20web-share=\(\),\x20xr-spatial-tracking=\(\
+2025-06-01 12:14:31,836 [nmap] SF:)\r\nstrict-transport-security:\x20max-age=31536000\r\nreferrer-policy:
+2025-06-01 12:14:31,836 [nmap] SF:\x20same-origin\r\nx-robots-tag:\x20noindex,\x20nofollow\r\nx-xss-prote
+2025-06-01 12:14:31,836 [nmap] SF:ction:\x200\r\ncross-origin-resource-policy:\x20same-origin\r\ncontent-
+2025-06-01 12:14:31,836 [nmap] SF:security-policy:\x20default-src\x20'none';\x20font-src\x20'self';\x20ma
+2025-06-01 12:14:31,836 [nmap] SF:nifest-s")%r(HTTPOptions,6A9,"HTTP/1\.0\x20200\x20OK\r\ncontent-type:\x
+2025-06-01 12:14:31,836 [nmap] SF:20text/plain;\x20charset=utf-8\r\nserver:\x20Rocket\r\nx-content-type-o
+2025-06-01 12:14:31,836 [nmap] SF:ptions:\x20nosniff\r\nx-frame-options:\x20SAMEORIGIN\r\npermissions-pol
+2025-06-01 12:14:31,836 [nmap] SF:icy:\x20accelerometer=\(\),\x20ambient-light-sensor=\(\),\x20autoplay=\
+2025-06-01 12:14:31,836 [nmap] SF:(\),\x20battery=\(\),\x20camera=\(\),\x20display-capture=\(\),\x20docum
+2025-06-01 12:14:31,837 [nmap] SF:ent-domain=\(\),\x20encrypted-media=\(\),\x20execution-while-not-render
+2025-06-01 12:14:31,837 [nmap] SF:ed=\(\),\x20execution-while-out-of-viewport=\(\),\x20fullscreen=\(\),\x
+2025-06-01 12:14:31,837 [nmap] SF:20geolocation=\(\),\x20gyroscope=\(\),\x20keyboard-map=\(\),\x20magneto
+2025-06-01 12:14:31,837 [nmap] SF:meter=\(\),\x20microphone=\(\),\x20midi=\(\),\x20payment=\(\),\x20pictu
+2025-06-01 12:14:31,837 [nmap] SF:re-in-picture=\(\),\x20screen-wake-lock=\(\),\x20sync-xhr=\(\),\x20usb=
+2025-06-01 12:14:31,837 [nmap] SF:\(\),\x20web-share=\(\),\x20xr-spatial-tracking=\(\)\r\nstrict-transpor
+2025-06-01 12:14:31,837 [nmap] SF:t-security:\x20max-age=31536000\r\nreferrer-policy:\x20same-origin\r\nx
+2025-06-01 12:14:31,837 [nmap] SF:-robots-tag:\x20noindex,\x20nofollow\r\nx-xss-protection:\x200\r\ncross
+2025-06-01 12:14:31,837 [nmap] SF:-origin-resource-policy:\x20same-origin\r\ncontent-security-policy:\x20
+2025-06-01 12:14:31,837 [nmap] SF:default-src\x20'none';\x20font-src\x20'self';\x20manifest-src\x20'self'
+2025-06-01 12:14:31,837 [nmap] SF:;\x20base-uri\x20'self';\x20form-action\x20'self';\x20object-src\x20'se
+2025-06-01 12:14:31,837 [nmap] SF:lf'\x20blob:;\x20s");
+2025-06-01 12:14:31,837 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,837 [nmap] SF-Port8089-TCP:V=7.80%I=7%D=6/1%Time=683C192A%P=x86_64-pc-linux-gnu%r(Gen
+2025-06-01 12:14:31,837 [nmap] SF:ericLines,204,"HTTP/1\.0\x20400\x20Bad\x20Request\r\nCache-Control:\x20
+2025-06-01 12:14:31,837 [nmap] SF:no-cache,\x20no-store,\x20must-revalidate,\x20private,\x20max-age=0\r\n
+2025-06-01 12:14:31,837 [nmap] SF:Expires:\x200\r\nPragma:\x20no-cache\r\nContent-Security-Policy:\x20def
+2025-06-01 12:14:31,837 [nmap] SF:ault-src\x20'self'\x20'unsafe-inline';\r\nX-Frame-Options:\x20DENY\r\nX
+2025-06-01 12:14:31,838 [nmap] SF:-XSS-Protection:\x200\r\nX-Content-Type-Options:\x20nosniff\r\nReferrer
+2025-06-01 12:14:31,838 [nmap] SF:-Policy:\x20strict-origin-when-cross-origin\r\nAccess-Control-Allow-Hea
+2025-06-01 12:14:31,838 [nmap] SF:ders:\x20\*\r\nAccess-Control-Allow-Methods:\x20\*\r\nContent-Type:\x20
+2025-06-01 12:14:31,838 [nmap] SF:text/plain;\x20charset=utf-8\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x200
+2025-06-01 12:14:31,838 [nmap] SF:9:11:23\x20GMT\r\nConnection:\x20close\r\n\r\nError\x20400:\x20Bad\x20R
+2025-06-01 12:14:31,838 [nmap] SF:equest\nBad\x20request")%r(GetRequest,13C1,"HTTP/1\.0\x20403\x20Forbidd
+2025-06-01 12:14:31,838 [nmap] SF:en\r\nCache-Control:\x20no-cache,\x20no-store,\x20must-revalidate,\x20p
+2025-06-01 12:14:31,838 [nmap] SF:rivate,\x20max-age=0\r\nExpires:\x200\r\nPragma:\x20no-cache\r\nContent
+2025-06-01 12:14:31,838 [nmap] SF:-Security-Policy:\x20default-src\x20'self'\x20'unsafe-inline';\r\nX-Fra
+2025-06-01 12:14:31,838 [nmap] SF:me-Options:\x20DENY\r\nX-XSS-Protection:\x200\r\nX-Content-Type-Options
+2025-06-01 12:14:31,838 [nmap] SF::\x20nosniff\r\nReferrer-Policy:\x20strict-origin-when-cross-origin\r\n
+2025-06-01 12:14:31,838 [nmap] SF:Content-Type:\x20text/html;\x20charset=utf-8\r\nDate:\x20Sun,\x2001\x20
+2025-06-01 12:14:31,838 [nmap] SF:Jun\x202025\x2009:11:23\x20GMT\r\nConnection:\x20close\r\n\r\n<!DOCTYPE
+2025-06-01 12:14:31,838 [nmap] SF:\x20html>\n<!--\n\*\x20\x20Pi-hole:\x20A\x20black\x20hole\x20for\x20Int
+2025-06-01 12:14:31,838 [nmap] SF:ernet\x20advertisements\n\*\x20\x20\(c\)\x202017\x20Pi-hole,\x20LLC\x20
+2025-06-01 12:14:31,838 [nmap] SF:\(https://pi-hole\.net\)\n\*\x20\x20Network-wide\x20ad\x20blocking\x20v
+2025-06-01 12:14:31,838 [nmap] SF:ia\x20your\x20own\x20hardware\.\n\*\n\*\x20\x20This\x20file\x20is\x20co
+2025-06-01 12:14:31,838 [nmap] SF:pyright\x20under\x20the\x20latest\x20version\x20of\x20the\x20EUPL\.\n\*
+2025-06-01 12:14:31,838 [nmap] SF:\x20\x20Please\x20see\x20LICENSE\x20file\x20for\x20your\x20rights\x20un
+2025-06-01 12:14:31,838 [nmap] SF:der\x20this\x20license\.\n-->\n<html\x20lang=\"en\">\n<head>\n\x20\x20\
+2025-06-01 12:14:31,838 [nmap] SF:x20\x20<meta\x20charset=\"utf-8\">\n\x20\x20\x20\x20<!--\x20Usually\x20
+2025-06-01 12:14:31,839 [nmap] SF:browsers\x20proactively\x20perform\x20domain\x20name\x20resolution\x20o
+2025-06-01 12:14:31,839 [nmap] SF:n\x20links\x20that\x20the\x20user\x20may\x20choose\x20to\x20follow\.\x2
+2025-06-01 12:14:31,839 [nmap] SF:0We\x20disable\x20DNS\x20pr")%r(HTTPOptions,1A5,"HTTP/1\.0\x20200\x20OK
+2025-06-01 12:14:31,839 [nmap] SF:\r\nContent-Type:\x20text/html\r\nAllow:\x20GET,\x20POST,\x20PUT,\x20DE
+2025-06-01 12:14:31,839 [nmap] SF:LETE,\x20HEAD,\x20OPTIONS,\x20CONNECT,\x20PATCH,\x20PROPFIND,\x20MKCOL,
+2025-06-01 12:14:31,840 [nmap] SF:\x20LOCK,\x20UNLOCK,\x20PROPPATCH,\x20COPY,\x20MOVE,\x20REPORT\r\nDAV:\
+2025-06-01 12:14:31,840 [nmap] SF:x201\r\nContent-Security-Policy:\x20default-src\x20'self'\x20'unsafe-in
+2025-06-01 12:14:31,840 [nmap] SF:line';\r\nX-Frame-Options:\x20DENY\r\nX-XSS-Protection:\x200\r\nX-Conte
+2025-06-01 12:14:31,840 [nmap] SF:nt-Type-Options:\x20nosniff\r\nReferrer-Policy:\x20strict-origin-when-c
+2025-06-01 12:14:31,840 [nmap] SF:ross-origin\r\nDate:\x20Sun,\x2001\x20Jun\x202025\x2009:11:23\x20GMT\r\
+2025-06-01 12:14:31,840 [nmap] SF:nConnection:\x20close\r\n\r\n");
+2025-06-01 12:14:31,840 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,840 [nmap] 
+2025-06-01 12:14:31,840 [nmap] Nmap scan report for _gateway (192.168.10.254)
+2025-06-01 12:14:31,840 [nmap] Host is up (0.00034s latency).
+2025-06-01 12:14:31,840 [nmap] Not shown: 995 closed ports
+2025-06-01 12:14:31,840 [nmap] PORT      STATE    SERVICE   VERSION
+2025-06-01 12:14:31,840 [nmap] 23/tcp    filtered telnet
+2025-06-01 12:14:31,840 [nmap] 53/tcp    open     domain    (unknown banner: No version info available (refused-).)
+2025-06-01 12:14:31,840 [nmap] 80/tcp    open     http      ZTE web server 1.0 ZTE corp 2015.
+2025-06-01 12:14:31,840 [nmap] 443/tcp   open     ssl/https ZTE web server 1.0 ZTE corp 2015.
+2025-06-01 12:14:31,840 [nmap] 52869/tcp open     upnp      Portable SDK for UPnP devices 1.6.18 (UPnP 1.0)
+2025-06-01 12:14:31,840 [nmap] 3 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+2025-06-01 12:14:31,840 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,840 [nmap] SF-Port53-TCP:V=7.80%I=7%D=6/1%Time=683C1931%P=x86_64-pc-linux-gnu%r(DNSVe
+2025-06-01 12:14:31,840 [nmap] SF:rsionBindReqTCP,52,"\0P\0\x06\x85\0\0\x01\0\x01\0\0\0\0\x07version\x04b
+2025-06-01 12:14:31,841 [nmap] SF:ind\0\0\x10\0\x03\xc0\x0c\0\x10\0\x03\0\0\0\0\0&%No\x20version\x20info\
+2025-06-01 12:14:31,841 [nmap] SF:x20available\x20\(refused-\)\.");
+2025-06-01 12:14:31,841 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,841 [nmap] SF-Port80-TCP:V=7.80%I=7%D=6/1%Time=683C192F%P=x86_64-pc-linux-gnu%r(GetRe
+2025-06-01 12:14:31,841 [nmap] SF:quest,622E,"HTTP/1\.0\x20200\x20OK\r\nServer:\x20ZTE\x20web\x20server\x
+2025-06-01 12:14:31,841 [nmap] SF:201\.0\x20ZTE\x20corp\x202015\.\r\nAccept-Ranges:\x20bytes\r\nConnectio
+2025-06-01 12:14:31,841 [nmap] SF:n:\x20close\r\nX-Frame-Options:\x20SAMEORIGIN\r\nCache-Control:\x20no-c
+2025-06-01 12:14:31,841 [nmap] SF:ache,no-store\r\nContent-Length:\x20128491\r\nSet-Cookie:\x20_TESTCOOKI
+2025-06-01 12:14:31,841 [nmap] SF:ESUPPORT=1;\x20PATH=/;\x20HttpOnly\r\nContent-Type:\x20text/html;\x20ch
+2025-06-01 12:14:31,841 [nmap] SF:arset=utf-8\r\nX-Content-Type-Options:\x20nosniff\r\nContent-Security-P
+2025-06-01 12:14:31,841 [nmap] SF:olicy:\x20default-src\x20'self'\x20'unsafe-inline'\x20'unsafe-eval';img
+2025-06-01 12:14:31,841 [nmap] SF:-src\x20'self'\x20data:;\r\nX-XSS-Protection:\x201;\x20mode=block\r\nSe
+2025-06-01 12:14:31,841 [nmap] SF:t-Cookie:\x20SID=;expires=Thu,\x2001-Jan-1970\x2000:00:00\x20GMT;path=/
+2025-06-01 12:14:31,841 [nmap] SF:;\x20HttpOnly\r\n\r\n<!DOCTYPE\x20HTML\x20PUBLIC\x20\"-//W3C//DTD\x20HT
+2025-06-01 12:14:31,841 [nmap] SF:ML\x204\.01\x20Transitional//EN\"\x20\"http://www\.w3\.org/TR/html4/tra
+2025-06-01 12:14:31,841 [nmap] SF:nsitional\.dtd\">\n<html\x20xmlns=\"http://www\.w3\.org/1999/xhtml\">\n
+2025-06-01 12:14:31,842 [nmap] SF:<head>\n<meta\x20http-equiv=\"Content-Type\"\x20content=\"text/html;\x2
+2025-06-01 12:14:31,842 [nmap] SF:0charset=utf-8\"\x20/>\n<meta\x20http-equiv=\"X-UA-Compatible\"\x20cont
+2025-06-01 12:14:31,842 [nmap] SF:ent=\"IE=edge\">\n<link\x20rel=\"shortcut\x20icon\"\x20href=\"/img/favi
+2025-06-01 12:14:31,842 [nmap] SF:con\.ico\"\x20/>\n<title>&#90;&#88;&#72;&#78;&#32;&#72;&#50;&#")%r(HTTP
+2025-06-01 12:14:31,843 [nmap] SF:Options,58A,"HTTP/1\.1\x20501\x20Not\x20Implemented\r\nServer:\x20ZTE\x
+2025-06-01 12:14:31,843 [nmap] SF:20web\x20server\x201\.0\x20ZTE\x20corp\x202015\.\r\nAccept-Ranges:\x20b
+2025-06-01 12:14:31,843 [nmap] SF:ytes\r\nConnection:\x20close\r\nX-Frame-Options:\x20SAMEORIGIN\r\nConte
+2025-06-01 12:14:31,843 [nmap] SF:nt-Type:\x20text/html;\x20charset=iso-8859-1\r\nX-Content-Type-Options:
+2025-06-01 12:14:31,843 [nmap] SF:\x20nosniff\r\nCache-Control:\x20no-cache,no-store\r\n\r\n\x20\x20\x20\
+2025-06-01 12:14:31,843 [nmap] SF:x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+2025-06-01 12:14:31,843 [nmap] SF:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2
+2025-06-01 12:14:31,843 [nmap] SF:0\x20\x20\x20\x20\x20\x20\x20<html>\n\x20\x20\x20\x20\x20\x20\x20\x20\x
+2025-06-01 12:14:31,844 [nmap] SF:20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+2025-06-01 12:14:31,844 [nmap] SF:x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+2025-06-01 12:14:31,844 [nmap] SF:\x20\x20<head><title>501\x20Not\x20Implemented</title></head>\n\x20\x20
+2025-06-01 12:14:31,844 [nmap] SF:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2
+2025-06-01 12:14:31,844 [nmap] SF:0\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x
+2025-06-01 12:14:31,844 [nmap] SF:20\x20\x20\x20\x20\x20\x20\x20\x20<body\x20bgcolor=\"#FFFFFF\"\x20text=
+2025-06-01 12:14:31,845 [nmap] SF:\"#000000\"\x20link=\"#2020ff\"\x20vlink=\"#4040cc\">\n\x20\x20\x20\x20
+2025-06-01 12:14:31,845 [nmap] SF:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2
+2025-06-01 12:14:31,845 [nmap] SF:0\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x
+2025-06-01 12:14:31,845 [nmap] SF:20\x20\x20\x20\x20\x20\x20<h2>501\x20Not\x20Implemented</h2>\nThe\x20re
+2025-06-01 12:14:31,845 [nmap] SF:quested\x20method\x20is\x20not\x20implemented\x20by\x20this\x20server\.
+2025-06-01 12:14:31,846 [nmap] SF:\n<div\x20style=\"display:none\">\n<ajax_response_xml_root>\n<IF_ERRORS
+2025-06-01 12:14:31,846 [nmap] SF:TR>SessionTimeout</IF_ERRORSTR>\n<IF_ERRORPARAM>SUCC</IF_ERRORPARAM>\n<
+2025-06-01 12:14:31,846 [nmap] SF:IF_ERRORTYPE>SUCC</IF_ERRORTYPE>\n</ajax_response_xml_root>\n<span>Padd
+2025-06-01 12:14:31,846 [nmap] SF:ing\x20so\x20that\x20MSIE\x20deigns\x20to\x20show\x20this\x20error\x20i
+2025-06-01 12:14:31,847 [nmap] SF:nste");
+2025-06-01 12:14:31,847 [nmap] ==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+2025-06-01 12:14:31,847 [nmap] SF-Port443-TCP:V=7.80%T=SSL%I=7%D=6/1%Time=683C1935%P=x86_64-pc-linux-gnu%
+2025-06-01 12:14:31,847 [nmap] SF:r(GetRequest,4206,"HTTP/1\.0\x20200\x20OK\r\nServer:\x20ZTE\x20web\x20s
+2025-06-01 12:14:31,847 [nmap] SF:erver\x201\.0\x20ZTE\x20corp\x202015\.\r\nAccept-Ranges:\x20bytes\r\nCo
+2025-06-01 12:14:31,847 [nmap] SF:nnection:\x20close\r\nX-Frame-Options:\x20SAMEORIGIN\r\nCache-Control:\
+2025-06-01 12:14:31,848 [nmap] SF:x20no-cache,no-store\r\nContent-Length:\x20128491\r\nSet-Cookie:\x20_TE
+2025-06-01 12:14:31,848 [nmap] SF:STCOOKIESUPPORT=1;\x20PATH=/;\x20HttpOnly\r\nContent-Type:\x20text/html
+2025-06-01 12:14:31,848 [nmap] SF:;\x20charset=utf-8\r\nX-Content-Type-Options:\x20nosniff\r\nContent-Sec
+2025-06-01 12:14:31,848 [nmap] SF:urity-Policy:\x20default-src\x20'self'\x20'unsafe-inline'\x20'unsafe-ev
+2025-06-01 12:14:31,849 [nmap] SF:al';img-src\x20'self'\x20data:;\r\nX-XSS-Protection:\x201;\x20mode=bloc
+2025-06-01 12:14:31,849 [nmap] SF:k\r\nSet-Cookie:\x20SID=;expires=Thu,\x2001-Jan-1970\x2000:00:00\x20GMT
+2025-06-01 12:14:31,849 [nmap] SF:;path=/;\x20HttpOnly\r\n\r\n<!DOCTYPE\x20HTML\x20PUBLIC\x20\"-//W3C//DT
+2025-06-01 12:14:31,849 [nmap] SF:D\x20HTML\x204\.01\x20Transitional//EN\"\x20\"http://www\.w3\.org/TR/ht
+2025-06-01 12:14:31,849 [nmap] SF:ml4/transitional\.dtd\">\n<html\x20xmlns=\"http://www\.w3\.org/1999/xht
+2025-06-01 12:14:31,851 [nmap] SF:ml\">\n<head>\n<meta\x20http-equiv=\"Content-Type\"\x20content=\"text/h
+2025-06-01 12:14:31,851 [nmap] SF:tml;\x20charset=utf-8\"\x20/>\n<meta\x20http-equiv=\"X-UA-Compatible\"\
+2025-06-01 12:14:31,851 [nmap] SF:x20content=\"IE=edge\">\n<link\x20rel=\"shortcut\x20icon\"\x20href=\"/i
+2025-06-01 12:14:31,851 [nmap] SF:mg/favicon\.ico\"\x20/>\n<title>&#90;&#88;&#72;&#78;&#32;&#72;&#50;&#")
+2025-06-01 12:14:31,852 [nmap] SF:%r(HTTPOptions,58A,"HTTP/1\.1\x20501\x20Not\x20Implemented\r\nServer:\x
+2025-06-01 12:14:31,852 [nmap] SF:20ZTE\x20web\x20server\x201\.0\x20ZTE\x20corp\x202015\.\r\nAccept-Range
+2025-06-01 12:14:31,852 [nmap] SF:s:\x20bytes\r\nConnection:\x20close\r\nX-Frame-Options:\x20SAMEORIGIN\r
+2025-06-01 12:14:31,852 [nmap] SF:\nContent-Type:\x20text/html;\x20charset=iso-8859-1\r\nX-Content-Type-O
+2025-06-01 12:14:31,852 [nmap] SF:ptions:\x20nosniff\r\nCache-Control:\x20no-cache,no-store\r\n\r\n\x20\x
+2025-06-01 12:14:31,852 [nmap] SF:20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+2025-06-01 12:14:31,852 [nmap] SF:x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+2025-06-01 12:14:31,853 [nmap] SF:\x20\x20\x20\x20\x20\x20\x20\x20\x20<html>\n\x20\x20\x20\x20\x20\x20\x2
+2025-06-01 12:14:31,853 [nmap] SF:0\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x
+2025-06-01 12:14:31,853 [nmap] SF:20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\
+2025-06-01 12:14:31,853 [nmap] SF:x20\x20\x20\x20<head><title>501\x20Not\x20Implemented</title></head>\n\
+2025-06-01 12:14:31,853 [nmap] SF:x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+2025-06-01 12:14:31,853 [nmap] SF:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2
+2025-06-01 12:14:31,853 [nmap] SF:0\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<body\x20bgcolor=\"#FFFFFF\"\x
+2025-06-01 12:14:31,853 [nmap] SF:20text=\"#000000\"\x20link=\"#2020ff\"\x20vlink=\"#4040cc\">\n\x20\x20\
+2025-06-01 12:14:31,854 [nmap] SF:x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20
+2025-06-01 12:14:31,854 [nmap] SF:\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2
+2025-06-01 12:14:31,854 [nmap] SF:0\x20\x20\x20\x20\x20\x20\x20\x20<h2>501\x20Not\x20Implemented</h2>\nTh
+2025-06-01 12:14:31,854 [nmap] SF:e\x20requested\x20method\x20is\x20not\x20implemented\x20by\x20this\x20s
+2025-06-01 12:14:31,854 [nmap] SF:erver\.\n<div\x20style=\"display:none\">\n<ajax_response_xml_root>\n<IF
+2025-06-01 12:14:31,854 [nmap] SF:_ERRORSTR>SessionTimeout</IF_ERRORSTR>\n<IF_ERRORPARAM>SUCC</IF_ERRORPA
+2025-06-01 12:14:31,854 [nmap] SF:RAM>\n<IF_ERRORTYPE>SUCC</IF_ERRORTYPE>\n</ajax_response_xml_root>\n<sp
+2025-06-01 12:14:31,854 [nmap] SF:an>Padding\x20so\x20that\x20MSIE\x20deigns\x20to\x20show\x20this\x20err
+2025-06-01 12:14:31,854 [nmap] SF:or\x20inste");
+2025-06-01 12:14:31,854 [nmap] Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+2025-06-01 12:14:31,854 [nmap] 
+2025-06-01 12:14:31,854 [nmap] Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+2025-06-01 12:14:31,854 [nmap] Nmap done: 256 IP addresses (33 hosts up) scanned in 613.99 seconds
+2025-06-01 12:14:31,855 [octapus] Finished nmap
+2025-06-01 12:14:31,861 [nmap] XML parse error: 'NoneType' object has no attribute 'text'
+2025-06-01 12:14:31,861 [octapus] Full dynamic scan sequence completed
+2025-06-01 12:15:08,651 127.0.0.1 - - [01/Jun/2025 12:15:08] "GET /socket.io/?EIO=4&transport=websocket&sid=Jg_e2r8bQAL6S1bYAAAG HTTP/1.1" 200 -
+2025-06-01 12:15:13,703 127.0.0.1 - - [01/Jun/2025 12:15:13] "GET /logs HTTP/1.1" 200 -
+2025-06-01 12:15:13,742 127.0.0.1 - - [01/Jun/2025 12:15:13] "GET /socket.io/?EIO=4&transport=polling&t=PSgnXFD HTTP/1.1" 200 -
+2025-06-01 12:15:13,743 127.0.0.1 - - [01/Jun/2025 12:15:13] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 12:15:13,762 New WebSocket client connected
+2025-06-01 12:15:13,763 127.0.0.1 - - [01/Jun/2025 12:15:13] "POST /socket.io/?EIO=4&transport=polling&t=PSgnXFR&sid=5z02ig9ItPDxZU9sAAAI HTTP/1.1" 200 -
+2025-06-01 12:15:13,763 127.0.0.1 - - [01/Jun/2025 12:15:13] "GET /socket.io/?EIO=4&transport=polling&t=PSgnXFS&sid=5z02ig9ItPDxZU9sAAAI HTTP/1.1" 200 -
+2025-06-01 12:15:13,766 127.0.0.1 - - [01/Jun/2025 12:15:13] "GET /socket.io/?EIO=4&transport=polling&t=PSgnXFb&sid=5z02ig9ItPDxZU9sAAAI HTTP/1.1" 200 -
+2025-06-01 12:16:43,784 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 12:16:43,785 [33mPress CTRL+C to quit[0m
+2025-06-01 12:16:45,349 127.0.0.1 - - [01/Jun/2025 12:16:45] "GET / HTTP/1.1" 200 -
+2025-06-01 12:18:13,430 127.0.0.1 - - [01/Jun/2025 12:18:13] "GET / HTTP/1.1" 200 -
+2025-06-01 12:18:27,988 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 12:18:27,988 [33mPress CTRL+C to quit[0m
+2025-06-01 12:18:29,925 127.0.0.1 - - [01/Jun/2025 12:18:29] "GET / HTTP/1.1" 200 -
+2025-06-01 12:22:59,922 127.0.0.1 - - [01/Jun/2025 12:22:59] "GET /logs HTTP/1.1" 200 -
+2025-06-01 12:22:59,961 127.0.0.1 - - [01/Jun/2025 12:22:59] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 12:22:59,961 127.0.0.1 - - [01/Jun/2025 12:22:59] "GET /socket.io/?EIO=4&transport=polling&t=PSgpJ3o HTTP/1.1" 200 -
+2025-06-01 12:22:59,980 New WebSocket client connected
+2025-06-01 12:22:59,980 127.0.0.1 - - [01/Jun/2025 12:22:59] "POST /socket.io/?EIO=4&transport=polling&t=PSgpJ42&sid=0E_sfuc7KcGCeKyiAAAA HTTP/1.1" 200 -
+2025-06-01 12:22:59,980 127.0.0.1 - - [01/Jun/2025 12:22:59] "GET /socket.io/?EIO=4&transport=polling&t=PSgpJ42.0&sid=0E_sfuc7KcGCeKyiAAAA HTTP/1.1" 200 -
+2025-06-01 12:22:59,984 127.0.0.1 - - [01/Jun/2025 12:22:59] "GET /socket.io/?EIO=4&transport=polling&t=PSgpJ4F&sid=0E_sfuc7KcGCeKyiAAAA HTTP/1.1" 200 -
+2025-06-01 12:23:04,938 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 12:23:04,938 [33mPress CTRL+C to quit[0m
+2025-06-01 12:23:06,544 127.0.0.1 - - [01/Jun/2025 12:23:06] "GET /logs HTTP/1.1" 200 -
+2025-06-01 12:23:06,569 127.0.0.1 - - [01/Jun/2025 12:23:06] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 12:23:06,570 127.0.0.1 - - [01/Jun/2025 12:23:06] "GET /socket.io/?EIO=4&transport=polling&t=PSgpKh5 HTTP/1.1" 200 -
+2025-06-01 12:23:06,572 127.0.0.1 - - [01/Jun/2025 12:23:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 12:23:06,586 New WebSocket client connected
+2025-06-01 12:23:06,587 127.0.0.1 - - [01/Jun/2025 12:23:06] "POST /socket.io/?EIO=4&transport=polling&t=PSgpKhJ&sid=MQdb6BkIHpNk4fIzAAAA HTTP/1.1" 200 -
+2025-06-01 12:23:06,587 127.0.0.1 - - [01/Jun/2025 12:23:06] "GET /socket.io/?EIO=4&transport=polling&t=PSgpKhK&sid=MQdb6BkIHpNk4fIzAAAA HTTP/1.1" 200 -
+2025-06-01 12:23:07,044 127.0.0.1 - - [01/Jun/2025 12:23:07] "GET /socket.io/?EIO=4&transport=polling&t=PSgpKoY&sid=MQdb6BkIHpNk4fIzAAAA HTTP/1.1" 200 -
+2025-06-01 12:28:51,909 127.0.0.1 - - [01/Jun/2025 12:28:51] "GET /socket.io/?EIO=4&transport=websocket&sid=MQdb6BkIHpNk4fIzAAAA HTTP/1.1" 200 -
+2025-06-01 12:28:51,921 127.0.0.1 - - [01/Jun/2025 12:28:51] "GET / HTTP/1.1" 200 -
+2025-06-01 12:31:20,646 127.0.0.1 - - [01/Jun/2025 12:31:20] "GET / HTTP/1.1" 200 -
+2025-06-01 12:31:27,132 127.0.0.1 - - [01/Jun/2025 12:31:27] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 12:31:27,170 127.0.0.1 - - [01/Jun/2025 12:31:27] "GET /socket.io/?EIO=4&transport=polling&t=PSgrEuz HTTP/1.1" 200 -
+2025-06-01 12:31:27,171 127.0.0.1 - - [01/Jun/2025 12:31:27] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 12:31:27,186 New WebSocket client connected
+2025-06-01 12:31:27,186 127.0.0.1 - - [01/Jun/2025 12:31:27] "POST /socket.io/?EIO=4&transport=polling&t=PSgrEvA&sid=MBHXT93wjy2Fks5iAAAC HTTP/1.1" 200 -
+2025-06-01 12:31:27,186 127.0.0.1 - - [01/Jun/2025 12:31:27] "GET /socket.io/?EIO=4&transport=polling&t=PSgrEvA.0&sid=MBHXT93wjy2Fks5iAAAC HTTP/1.1" 200 -
+2025-06-01 12:31:27,190 127.0.0.1 - - [01/Jun/2025 12:31:27] "GET /socket.io/?EIO=4&transport=polling&t=PSgrEvL&sid=MBHXT93wjy2Fks5iAAAC HTTP/1.1" 200 -
+2025-06-01 12:31:28,410 127.0.0.1 - - [01/Jun/2025 12:31:28] "GET /socket.io/?EIO=4&transport=websocket&sid=MBHXT93wjy2Fks5iAAAC HTTP/1.1" 200 -
+2025-06-01 12:31:30,722 127.0.0.1 - - [01/Jun/2025 12:31:30] "GET /logs HTTP/1.1" 200 -
+2025-06-01 12:31:30,765 127.0.0.1 - - [01/Jun/2025 12:31:30] "GET /socket.io/?EIO=4&transport=polling&t=PSgrFn2 HTTP/1.1" 200 -
+2025-06-01 12:31:30,767 127.0.0.1 - - [01/Jun/2025 12:31:30] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 12:31:30,783 New WebSocket client connected
+2025-06-01 12:31:30,784 127.0.0.1 - - [01/Jun/2025 12:31:30] "POST /socket.io/?EIO=4&transport=polling&t=PSgrFnM&sid=9eJC1V81eqNCCd3KAAAE HTTP/1.1" 200 -
+2025-06-01 12:31:30,785 127.0.0.1 - - [01/Jun/2025 12:31:30] "GET /socket.io/?EIO=4&transport=polling&t=PSgrFnM.0&sid=9eJC1V81eqNCCd3KAAAE HTTP/1.1" 200 -
+2025-06-01 12:31:31,260 127.0.0.1 - - [01/Jun/2025 12:31:31] "GET /socket.io/?EIO=4&transport=polling&t=PSgrFux&sid=9eJC1V81eqNCCd3KAAAE HTTP/1.1" 200 -
+2025-06-01 12:31:32,342 127.0.0.1 - - [01/Jun/2025 12:31:32] "GET /socket.io/?EIO=4&transport=websocket&sid=9eJC1V81eqNCCd3KAAAE HTTP/1.1" 200 -
+2025-06-01 12:31:33,453 127.0.0.1 - - [01/Jun/2025 12:31:33] "GET /help HTTP/1.1" 200 -
+2025-06-01 12:31:36,846 127.0.0.1 - - [01/Jun/2025 12:31:36] "GET /settings HTTP/1.1" 200 -
+2025-06-01 12:33:32,572 127.0.0.1 - - [01/Jun/2025 12:33:32] "GET /settings HTTP/1.1" 200 -
+2025-06-01 12:36:04,093 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 12:36:04,093 [33mPress CTRL+C to quit[0m
+2025-06-01 12:36:06,232 127.0.0.1 - - [01/Jun/2025 12:36:06] "GET /settings HTTP/1.1" 200 -
+2025-06-01 12:36:06,263 127.0.0.1 - - [01/Jun/2025 12:36:06] "GET /api/settings HTTP/1.1" 200 -
+2025-06-01 12:36:06,265 127.0.0.1 - - [01/Jun/2025 12:36:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 12:36:06,936 127.0.0.1 - - [01/Jun/2025 12:36:06] "[36mGET /settings HTTP/1.1[0m" 304 -
+2025-06-01 12:36:06,958 127.0.0.1 - - [01/Jun/2025 12:36:06] "GET /api/settings HTTP/1.1" 200 -
+2025-06-01 12:36:07,656 127.0.0.1 - - [01/Jun/2025 12:36:07] "GET / HTTP/1.1" 200 -

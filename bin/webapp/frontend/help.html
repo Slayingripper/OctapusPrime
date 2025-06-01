@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Octapus – Help</title>
+  <style>
+    /* ===== Global Dark Mode ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      background: #0d0d0d;
+      color: #e6e6e6;
+      font-family: "Roboto Mono", monospace;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    a {
+      text-decoration: none;
+      color: #39ff14;
+      font-size: 14px;
+      padding: 16px;
+      display: inline-block;
+      text-shadow: 0 0 4px #39ff14;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1 {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 28px;
+      color: #39ff14;
+      text-shadow: 0 0 8px #39ff14;
+    }
+    p {
+      margin: 24px auto;
+      max-width: 600px;
+      text-align: center;
+      line-height: 1.4;
+      color: #bbb;
+      font-size: 15px;
+    }
+    ul {
+      margin: 24px auto;
+      max-width: 600px;
+      list-style: none;
+      padding-left: 0;
+      color: #bbb;
+      font-size: 15px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    li::before {
+      content: "• ";
+      color: #39ff14;
+    }
+  </style>
+</head>
+<body>
+  <a href="/">← Back to Home</a>
+  <h1>Octapus – Help</h1>
+  <p>
+    Welcome to Octapus Help. Below are quick pointers to get you started:
+  </p>
+  <ul>
+    <li><strong>Dashboard:</strong> Drag-and-drop tools, adjust arguments, then start/stop scans.</li>
+    <li><strong>Scenario:</strong> Build custom “if-this-then-that” scan sequences.</li>
+    <li><strong>Settings:</strong> Configure defaults and alert thresholds.</li>
+    <li><strong>Logs:</strong> View live tool output and historical scan data.</li>
+    <li><strong>Updates:</strong> Check for new Octapus versions and news.</li>
+    <li><strong>Demo:</strong> See a preconfigured example scenario in action.</li>
+  </ul>
+</body>
+</html>

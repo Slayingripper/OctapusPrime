@@ -1,31 +1,40 @@
-# server.py (placed in webapp/ folder)
 #!/usr/bin/env python3
 import os
 import sys
 import logging
 import threading
+import json
 from queue import Queue
 from pathlib import Path
 from flask import Flask, send_from_directory, jsonify, request
 from flask_socketio import SocketIO
 
-# Determine base directory (two levels up from this script)
-HERE = Path(__file__).resolve().parent
-BIN  = HERE.parent  # where octapus_controller.py lives
-BASE_DIR = BIN
-LOG_DIR = BASE_DIR / "logs"
+# -----------------------------------------------------
+# 1) Determine BASE_DIR and various subdirectories
+# -----------------------------------------------------
+HERE = Path(__file__).resolve().parent               # .../bin/webapp
+BIN  = HERE.parent                                   # .../bin
+BASE_DIR = BIN.parent                                # project root, e.g. /opt/octapus
+FRONTEND_DIR = BASE_DIR / "frontend"
+LOG_DIR  = HERE / "logs" # Changed from BASE_DIR / "logs"
 SCENARIO_DIR = BASE_DIR / "scenarios"
+OCTAPUS_LOG_FILE = LOG_DIR / "octapus.log"
+SETTINGS_FILE = BASE_DIR / "settings.json" # Path for storing settings
 
-# Ensure scenario directory exists
-if not SCENARIO_DIR.exists():
-    SCENARIO_DIR.mkdir(parents=True, exist_ok=True)
+# Ensure logs and scenarios directories exist
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+SCENARIO_DIR.mkdir(parents=True, exist_ok=True)
+
+# Ensure the logs folder and log file exist
+if not OCTAPUS_LOG_FILE.exists():
+    OCTAPUS_LOG_FILE.write_text("")  # create empty log if missing
 
 # -----------------------------------------------------
 # Make sure we can import from octapus_controller
 # -----------------------------------------------------
 sys.path.insert(0, str(BIN))
 
-from octapus_controller import log_queue, start_scan_thread, get_local_cidr
+from octapus_controller import log_queue, start_scan_thread, start_scenario_thread, get_local_cidr
 
 # -----------------------------------------------------
 # Configuration
@@ -56,15 +65,54 @@ except Exception:
 app = Flask(__name__, static_folder=str(FRONTEND_DIR), template_folder=str(FRONTEND_DIR))
 socketio = SocketIO(app, async_mode="threading")
 
-
 # -----------------------------------------------------
 # Routes & WebSocket handlers
 # -----------------------------------------------------
+
 @app.route("/", methods=["GET"])
-def index():
-    """Serve index.html from the frontend directory."""
+def landing():
+    """Serve landing.html as the landing page."""
+    return send_from_directory(str(FRONTEND_DIR), "landing.html")
+
+@app.route("/dashboard", methods=["GET"])
+def dashboard():
+    """Serve the main dashboard/index page."""
     return send_from_directory(str(FRONTEND_DIR), "index.html")
 
+@app.route("/scenario_maker", methods=["GET"])
+def scenario_maker():
+    """Serve the scenario maker page."""
+    return send_from_directory(str(FRONTEND_DIR), "scenario.html")
+
+@app.route("/settings", methods=["GET"])
+def settings_page():
+    """Serve a placeholder settings page (must create settings.html)."""
+    return send_from_directory(str(FRONTEND_DIR), "settings.html")
+
+@app.route("/logs", methods=["GET"])
+def logs_page():
+    """Serve a placeholder logs page (must create logs.html)."""
+    return send_from_directory(str(FRONTEND_DIR), "logs.html")
+
+@app.route("/help", methods=["GET"])
+def help_page():
+    """Serve a placeholder help page (must create help.html)."""
+    return send_from_directory(str(FRONTEND_DIR), "help.html")
+
+@app.route("/about", methods=["GET"])
+def about_page():
+    """Serve a placeholder about page (must create about.html)."""
+    return send_from_directory(str(FRONTEND_DIR), "about.html")
+
+@app.route("/updates", methods=["GET"])
+def updates_page():
+    """Serve a placeholder updates page (must create updates.html)."""
+    return send_from_directory(str(FRONTEND_DIR), "updates.html")
+
+@app.route("/demo", methods=["GET"])
+def demo_page():
+    """Serve a placeholder demo page (must create demo.html)."""
+    return send_from_directory(str(FRONTEND_DIR), "demo.html")
 
 @app.route("/local_cidr", methods=["GET"])
 def local_cidr():
@@ -77,33 +125,14 @@ def local_cidr():
     else:
         return jsonify(error="Unable to detect local network"), 500
 
-
 @app.route("/start", methods=["POST"])
 def start_scan():
     """
     Expects JSON:
       { "scripts": [ { "tool": "...", "args": [...] }, ... ] }
-    Or:
-      { "scenario": "<name>" }
     """
     payload = request.get_json(force=True)
-
-    # If a scenario is requested, load it
-    if "scenario" in payload:
-        name = payload["scenario"]
-        path = SCENARIO_DIR / f"{name}.json"
-        if not path.exists():
-            return jsonify(status="error", message="Scenario not found"), 404
-        try:
-            import json
-            with open(path) as f:
-                data = json.load(f)
-            scripts = data.get("scripts", [])
-        except Exception as e:
-            return jsonify(status="error", message=f"Failed to load scenario: {e}"), 500
-    else:
-        scripts = payload.get("scripts", [])
-
+    scripts = payload.get("scripts", [])
     if not isinstance(scripts, list) or not scripts:
         return jsonify(status="error", message="No scripts provided"), 400
 
@@ -114,41 +143,59 @@ def start_scan():
     logging.info(f"HTTP /start received. Scheduled dynamic scan: {scripts}")
     return jsonify(status="scan started")
 
-
-@app.route("/stop", methods=["POST"])
-def stop_scan():
+@app.route("/start_scenario", methods=["POST"])
+def start_scenario():
     """
-    Stub for cancellation logic.
+    Expects JSON:
+      {
+        "steps": [
+          {
+            "tool": "nmap",
+            "args": ["-sV", "192.168.1.0/24"],
+            "condition": { "type": "always" }
+          },
+          ...
+        ]
+      }
     """
-    logging.info("HTTP /stop received (stub).")
-    return jsonify(status="stopped")
+    payload = request.get_json(force=True)
+    steps = payload.get("steps", [])
+    if not isinstance(steps, list) or not steps:
+        return jsonify(status="error", message="No steps provided"), 400
 
+    t = threading.Thread(target=start_scenario_thread, args=(steps,), daemon=True)
+    t.start()
+
+    logging.info(f"HTTP /start_scenario received. Steps: {steps}")
+    return jsonify(status="scenario started")
 
 @app.route("/save_scenario", methods=["POST"])
 def save_scenario():
     """
     Save named scenario. Expects JSON:
-      { "name": "my_scenario", "scripts": [ ... ] }
+      {
+        "name": "my_scenario",
+        "steps": [ {tool, args, condition}, ... ]
+      }
     """
     payload = request.get_json(force=True)
     name = payload.get("name", "").strip()
-    scripts = payload.get("scripts", [])
+    steps = payload.get("steps", [])
     if not name:
         return jsonify(status="error", message="Scenario name required"), 400
-    if not isinstance(scripts, list) or not scripts:
-        return jsonify(status="error", message="No scripts provided"), 400
+    if not isinstance(steps, list) or not steps:
+        return jsonify(status="error", message="No steps provided"), 400
 
     import json
     sanitized = "".join(c for c in name if c.isalnum() or c in ("-", "_")).rstrip()
     path = SCENARIO_DIR / f"{sanitized}.json"
     try:
         with open(path, "w") as f:
-            json.dump({"name": sanitized, "scripts": scripts}, f, indent=2)
+            json.dump({"name": sanitized, "steps": steps}, f, indent=2)
     except Exception as e:
         return jsonify(status="error", message=f"Failed to save: {e}"), 500
 
     return jsonify(status="saved", name=sanitized)
-
 
 @app.route("/list_scenarios", methods=["GET"])
 def list_scenarios():
@@ -158,11 +205,10 @@ def list_scenarios():
     files = [f.stem for f in SCENARIO_DIR.glob("*.json")]
     return jsonify(scenarios=files)
 
-
 @app.route("/load_scenario/<name>", methods=["GET"])
 def load_scenario(name):
     """
-    Load scenario by name; returns JSON { name, scripts }.
+    Load scenario by name; returns JSON { name, steps }.
     """
     path = SCENARIO_DIR / f"{name}.json"
     if not path.exists():
@@ -174,7 +220,6 @@ def load_scenario(name):
         return jsonify(data)
     except Exception as e:
         return jsonify(status="error", message=f"Failed to load: {e}"), 500
-
 
 @socketio.on("connect")
 def on_connect():
@@ -190,6 +235,72 @@ def on_connect():
 
     socketio.start_background_task(send_logs)
 
+# -----------------------------------------------------
+# New endpoint: Fetch historical lines from octapus.log
+@app.route("/fetch_logs", methods=["GET"])
+def fetch_logs():
+    """
+    Reads the entire octapus.log file and returns a JSON array of lines.
+    """
+    try:
+        # Read all lines from octapus.log
+        with open(OCTAPUS_LOG_FILE, "r") as f:
+            raw_lines = f.readlines()
+        # Strip newline characters
+        lines = [ln.rstrip("\n") for ln in raw_lines]
+        return jsonify(lines=lines)
+    except Exception as e:
+        return jsonify(status="error", message=f"Could not read logs: {e}"), 500
+
+# -----------------------------------------------------
+# API Endpoints for Settings
+# -----------------------------------------------------
+DEFAULT_SETTINGS = {
+    "networkInterface": "eth0",
+    "nmapScanType": "intense",
+    "logVerbosity": "info"
+}
+
+@app.route("/api/settings", methods=["GET"])
+def get_settings():
+    """
+    Load settings from SETTINGS_FILE.
+    Returns default settings if file doesn't exist or is invalid.
+    """
+    if not SETTINGS_FILE.exists():
+        return jsonify(status="success", data=DEFAULT_SETTINGS)
+    try:
+        with open(SETTINGS_FILE, "r") as f:
+            settings_data = json.load(f)
+        # You might want to merge with defaults to ensure all keys are present
+        # current_settings = {**DEFAULT_SETTINGS, **settings_data} 
+        return jsonify(status="success", data=settings_data)
+    except Exception as e:
+        logging.error(f"Failed to load settings: {e}")
+        # Fallback to default settings on error
+        return jsonify(status="success", data=DEFAULT_SETTINGS, message=f"Error loading settings, defaults returned: {e}")
+
+@app.route("/api/settings", methods=["POST"])
+def save_settings():
+    """
+    Save settings to SETTINGS_FILE.
+    Expects JSON payload with settings.
+    """
+    try:
+        new_settings = request.get_json(force=True)
+        if not isinstance(new_settings, dict):
+            return jsonify(status="error", message="Invalid settings format, expected a JSON object."), 400
+        
+        # Optional: Validate specific settings keys/values here if needed
+        # For example, ensure nmapScanType is one of the allowed values
+
+        with open(SETTINGS_FILE, "w") as f:
+            json.dump(new_settings, f, indent=2)
+        logging.info(f"Settings saved: {new_settings}")
+        return jsonify(status="success", message="Settings saved successfully.")
+    except Exception as e:
+        logging.error(f"Failed to save settings: {e}")
+        return jsonify(status="error", message=f"Failed to save settings: {e}"), 500
 
 # -----------------------------------------------------
 # Main entrypoint

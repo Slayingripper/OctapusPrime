@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Octapus – Settings</title>
+  <style>
+    /* ===== Global Dark Mode ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      background: #0d0d0d;
+      color: #e6e6e6;
+      font-family: "Roboto Mono", monospace;
+      display: flex;
+      flex-direction: column;
+      /* Allow scrolling if content overflows */
+      overflow-y: auto;
+    }
+    a {
+      text-decoration: none;
+      color: #39ff14;
+      font-size: 14px;
+      padding: 16px;
+      display: inline-block;
+      text-shadow: 0 0 4px #39ff14;
+      /* Position top-left */
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1 {
+      margin-top: 60px; /* Adjusted margin */
+      text-align: center;
+      font-size: 28px;
+      color: #39ff14;
+      text-shadow: 0 0 8px #39ff14;
+      margin-bottom: 30px; /* Added margin below h1 */
+    }
+
+    /* ===== Settings Container ===== */
+    .settings-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto; /* Centered */
+      padding: 20px;
+      background-color: #1a1a1a; /* Slightly lighter than body */
+      border-radius: 8px;
+      border: 1px solid #333;
+    }
+
+    /* ===== Form Group Styling ===== */
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #bbb;
+      font-size: 14px;
+    }
+    .form-group input[type="text"],
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      background: #0d0d0d;
+      color: #e6e6e6;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-family: "Roboto Mono", monospace;
+      font-size: 14px;
+    }
+    .form-group input[type="text"]:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #39ff14;
+      box-shadow: 0 0 8px #39ff14;
+    }
+
+    /* ===== Save Button Styling ===== */
+    .save-button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background-color: #39ff14;
+      color: #0d0d0d;
+      border: none;
+      border-radius: 4px;
+      font-family: "Roboto Mono", monospace;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: center;
+      text-shadow: none;
+      transition: background-color 0.2s, box-shadow 0.2s;
+    }
+    .save-button:hover {
+      background-color: #28cc0a;
+      box-shadow: 0 0 12px #39ff14;
+    }
+
+    /* ===== Status Message Styling ===== */
+    .status-message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      text-align: center;
+    }
+    .status-message.success {
+      background-color: rgba(57, 255, 20, 0.1);
+      color: #39ff14;
+      border: 1px solid #39ff14;
+    }
+    .status-message.error {
+      background-color: rgba(255, 20, 20, 0.1);
+      color: #ff1414;
+      border: 1px solid #ff1414;
+    }
+  </style>
+</head>
+<body>
+  <a href="/">← Back to Home</a>
+  <h1>Octapus – Settings</h1>
+
+  <div class="settings-container">
+    <form id="settings-form">
+      <div class="form-group">
+        <label for="network-interface">Default Network Interface:</label>
+        <input type="text" id="network-interface" name="networkInterface" placeholder="e.g., eth0, wlan0">
+      </div>
+
+      <div class="form-group">
+        <label for="nmap-scan-type">Default Nmap Scan Type:</label>
+        <select id="nmap-scan-type" name="nmapScanType">
+          <option value="quick">Quick Scan (-T4 -F)</option>
+          <option value="intense">Intense Scan (-T4 -A -v)</option>
+          <option value="stealth">Stealth Scan (-sS)</option>
+          <option value="full">Full TCP Scan (-sT -p-)</option>
+          <option value="custom">Custom (Specify in Scenario)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="log-verbosity">Log Verbosity:</label>
+        <select id="log-verbosity" name="logVerbosity">
+          <option value="info">Info</option>
+          <option value="debug">Debug</option>
+          <option value="warning">Warning</option>
+          <option value="error">Error</option>
+        </select>
+      </div>
+      
+      <!-- Add more settings groups here as needed -->
+
+      <button type="submit" class="save-button">Save Settings</button>
+    </form>
+    <div id="status-message" class="status-message" style="display: none;"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const settingsForm = document.getElementById("settings-form");
+      const statusMessageDiv = document.getElementById("status-message");
+
+      // Function to load current settings from backend
+      async function loadSettings() {
+        try {
+          const response = await fetch('/api/settings');
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const result = await response.json();
+          if (result.status === "success" && result.data) {
+            populateForm(result.data);
+          } else {
+            showStatus(result.message || "Failed to load settings.", "error");
+          }
+        } catch (err) {
+          showStatus("Error connecting to server to load settings: " + err.message, "error");
+          console.error("Load settings error:", err);
+        }
+      }
+      
+      settingsForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        statusMessageDiv.style.display = "none"; // Hide previous message
+
+        const formData = new FormData(settingsForm);
+        const settings = {};
+        formData.forEach((value, key) => {
+          settings[key] = value;
+        });
+
+        console.log("Saving settings:", settings);
+
+        try {
+          const response = await fetch('/api/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(settings)
+          });
+          const result = await response.json();
+          if (response.ok && result.status === "success") {
+            showStatus(result.message || "Settings saved successfully!", "success");
+          } else {
+            showStatus(result.message || "Failed to save settings.", "error");
+          }
+        } catch (err) {
+          showStatus("Error connecting to server to save settings: " + err.message, "error");
+          console.error("Save settings error:", err);
+        }
+
+        setTimeout(() => { 
+          if (statusMessageDiv.classList.contains('success')) { // Only auto-hide success messages
+            statusMessageDiv.style.display = "none";
+          }
+        }, 3000);
+      });
+
+      function showStatus(message, type) {
+        statusMessageDiv.textContent = message;
+        statusMessageDiv.className = `status-message ${type}`; // 'success' or 'error'
+        statusMessageDiv.style.display = "block";
+      }
+
+      // Function to populate form with loaded settings
+      function populateForm(data) {
+        if(data.networkInterface !== undefined) document.getElementById('network-interface').value = data.networkInterface;
+        if(data.nmapScanType !== undefined) document.getElementById('nmap-scan-type').value = data.nmapScanType;
+        if(data.logVerbosity !== undefined) document.getElementById('log-verbosity').value = data.logVerbosity;
+        // Add more fields here if you add more settings
+      }
+
+      // Load settings when the page is ready
+      loadSettings();
+    });
+  </script>
+</body>
+</html>

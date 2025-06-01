@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Octapus Scenario Maker - Dark Mode</title>
+  <style>
+    /* ===== Global Dark Mode Styles ===== */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Roboto Mono", monospace;
+      background: #0d0d0d;
+      color: #e6e6e6;
+      overflow: hidden;
+    }
+
+    /* ===== "Back Home" Link ===== */
+    #home-link {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-size: 14px;
+      color: #39ff14;
+      text-decoration: none;
+      text-shadow: 0 0 4px #39ff14;
+    }
+    #home-link:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      padding: 8px 16px;
+      transition: background 0.2s;
+      font-family: inherit;
+      color: #e6e6e6;
+      background: #1a1a1a;
+    }
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ===== Container Layout ===== */
+    #container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    /* ===== Header ===== */
+    #header {
+      flex: 0 0 auto;
+      padding: 16px;
+      background: #141414;
+      border-bottom: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #header h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #39ff14;
+      text-shadow: 0 0 8px #39ff14;
+    }
+    #header button {
+      margin-left: 8px;
+    }
+
+    /* ===== Steps Table ===== */
+    #steps-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px 12px;
+      border: 1px solid #333;
+    }
+    th {
+      background: #262626;
+      color: #39ff14;
+      text-align: left;
+    }
+    td {
+      background: #1a1a1a;
+    }
+    select, input[type="text"] {
+      background: #0d0d0d;
+      color: #e6e6e6;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 13px;
+    }
+    .remove-step {
+      background: #ff0033;
+    }
+    .remove-step:hover {
+      background: #e6002e;
+    }
+
+    /* ===== Footer ===== */
+    #footer {
+      flex: 0 0 auto;
+      padding: 16px;
+      background: #141414;
+      border-top: 1px solid #333;
+      display: flex;
+      align-items: center;
+    }
+    #scenario-name {
+      flex: 1;
+      margin-right: 8px;
+      padding: 6px 10px;
+      background: #0d0d0d;
+      color: #e6e6e6;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Back to Landing Link -->
+  <a id="home-link" href="/">← Back to Home</a>
+
+  <div id="container">
+    <!-- Header with buttons -->
+    <div id="header">
+      <h2>Scenario Maker</h2>
+      <div>
+        <button id="add-step-btn">Add Step</button>
+        <button id="save-scenario-btn">Save Scenario</button>
+        <button id="run-scenario-btn">Run Scenario</button>
+      </div>
+    </div>
+
+    <!-- Steps Table -->
+    <div id="steps-container">
+      <table id="steps-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tool</th>
+            <th>Arguments</th>
+            <th>Condition Type</th>
+            <th>Condition Value</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows inserted dynamically -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer for scenario name -->
+    <div id="footer">
+      <input type="text" id="scenario-name" placeholder="Scenario name..." />
+    </div>
+  </div>
+
+  <!-- Socket.IO client for live logs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
+  <script>
+    // (Same JavaScript logic as before, plus ability to navigate back via the “← Back to Home” link)
+    const tools = [
+      "nmap", "masscan", "gobuster", "nikto", "sqlmap", "hydra",
+      "sslscan", "nbtscan", "dnsenum", "john", "hashcat", "dirb",
+      "ldapsearch", "snmp-check", "theharvester", "dirsearch",
+      "amass", "enum4linux", "trivy", "wpscan", "gobuster-dns",
+      "ffuf", "subfinder", "eyewitness", "gitleaks"
+    ];
+
+    const stepsTableBody = document.querySelector("#steps-table tbody");
+    const addStepBtn = document.getElementById("add-step-btn");
+    const saveScenarioBtn = document.getElementById("save-scenario-btn");
+    const runScenarioBtn = document.getElementById("run-scenario-btn");
+    const scenarioNameInput = document.getElementById("scenario-name");
+
+    function createStepRow(index, step = null) {
+      const tr = document.createElement("tr");
+      tr.dataset.index = index;
+
+      // Step number
+      const tdIndex = document.createElement("td");
+      tdIndex.textContent = index + 1;
+      tr.appendChild(tdIndex);
+
+      // Tool selector
+      const tdTool = document.createElement("td");
+      const selectTool = document.createElement("select");
+      selectTool.style.width = "100%";
+      tools.forEach(t => {
+        const opt = document.createElement("option");
+        opt.value = t;
+        opt.textContent = t;
+        selectTool.appendChild(opt);
+      });
+      if (step && step.tool) selectTool.value = step.tool;
+      tdTool.appendChild(selectTool);
+      tr.appendChild(tdTool);
+
+      // Arguments input
+      const tdArgs = document.createElement("td");
+      const inputArgs = document.createElement("input");
+      inputArgs.type = "text";
+      inputArgs.placeholder = "e.g. -sV 192.168.1.0/24";
+      inputArgs.style.width = "100%";
+      if (step && step.args) inputArgs.value = step.args.join(" ");
+      tdArgs.appendChild(inputArgs);
+      tr.appendChild(tdArgs);
+
+      // Condition type selector
+      const tdCondType = document.createElement("td");
+      const selectCondType = document.createElement("select");
+      selectCondType.style.width = "100%";
+      ["always", "prev_contains"].forEach(ct => {
+        const opt = document.createElement("option");
+        opt.value = ct;
+        opt.textContent = ct === "always" ? "Always" : "If previous output contains";
+        selectCondType.appendChild(opt);
+      });
+      if (step && step.condition) selectCondType.value = step.condition.type;
+      tdCondType.appendChild(selectCondType);
+      tr.appendChild(tdCondType);
+
+      // Condition value input
+      const tdCondValue = document.createElement("td");
+      const inputCondValue = document.createElement("input");
+      inputCondValue.type = "text";
+      inputCondValue.placeholder = "Enter keyword";
+      inputCondValue.style.width = "100%";
+      if (step && step.condition && step.condition.value) {
+        inputCondValue.value = step.condition.value;
+      }
+      if ((!step) || (step.condition && step.condition.type === "always")) {
+        inputCondValue.disabled = true;
+      }
+      selectCondType.addEventListener("change", () => {
+        inputCondValue.disabled = selectCondType.value === "always";
+        if (selectCondType.value === "always") inputCondValue.value = "";
+      });
+      tdCondValue.appendChild(inputCondValue);
+      tr.appendChild(tdCondValue);
+
+      // Remove button
+      const tdRemove = document.createElement("td");
+      const removeBtn = document.createElement("button");
+      removeBtn.className = "remove-step";
+      removeBtn.textContent = "✕";
+      removeBtn.addEventListener("click", () => {
+        tr.remove();
+        updateRowNumbers();
+      });
+      tdRemove.appendChild(removeBtn);
+      tr.appendChild(tdRemove);
+
+      return tr;
+    }
+
+    function updateRowNumbers() {
+      const rows = Array.from(stepsTableBody.children);
+      rows.forEach((row, idx) => {
+        row.dataset.index = idx;
+        row.children[0].textContent = idx + 1;
+      });
+    }
+
+    addStepBtn.addEventListener("click", () => {
+      const newIndex = stepsTableBody.children.length;
+      const newRow = createStepRow(newIndex);
+      stepsTableBody.appendChild(newRow);
+    });
+
+    saveScenarioBtn.addEventListener("click", () => {
+      const name = scenarioNameInput.value.trim();
+      if (!name) {
+        alert("Enter a name for the scenario.");
+        return;
+      }
+      const steps = [];
+      Array.from(stepsTableBody.children).forEach(row => {
+        const tool = row.querySelector("select:nth-of-type(1)").value;
+        const argsText = row.querySelector("input[type='text']").value.trim();
+        const args = argsText ? argsText.split(/\s+/) : [];
+        const condType = row.querySelector("select:nth-of-type(2)").value;
+        const condValue = row.querySelectorAll("input[type='text']")[1].value.trim();
+        const stepObj = {
+          tool,
+          args,
+          condition: { type: condType }
+        };
+        if (condType === "prev_contains" && condValue) {
+          stepObj.condition.value = condValue;
+        }
+        steps.push(stepObj);
+      });
+      fetch("/save_scenario", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, steps })
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.status === "saved") {
+          alert(`Scenario "${data.name}" saved.`);
+        } else {
+          alert(`Error: ${data.message}`);
+        }
+      })
+      .catch(err => console.error(err));
+    });
+
+    runScenarioBtn.addEventListener("click", () => {
+      const steps = [];
+      Array.from(stepsTableBody.children).forEach(row => {
+        const tool = row.querySelector("select:nth-of-type(1)").value;
+        const argsText = row.querySelector("input[type='text']").value.trim();
+        const args = argsText ? argsText.split(/\s+/) : [];
+        const condType = row.querySelector("select:nth-of-type(2)").value;
+        const condValue = row.querySelectorAll("input[type='text']")[1].value.trim();
+        const stepObj = {
+          tool,
+          args,
+          condition: { type: condType }
+        };
+        if (condType === "prev_contains" && condValue) {
+          stepObj.condition.value = condValue;
+        }
+        steps.push(stepObj);
+      });
+      if (!steps.length) {
+        alert("Add at least one step to run.");
+        return;
+      }
+      // Clear existing logs in UI (if any)
+      const event = new CustomEvent("clearAllLogs");
+      window.dispatchEvent(event);
+
+      fetch("/start_scenario", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ steps })
+      })
+      .then(resp => resp.json())
+      .then(data => {
+        if (data.status === "scenario started") {
+          alert("Scenario execution started.");
+        } else {
+          alert(`Error: ${data.message}`);
+        }
+      })
+      .catch(err => console.error(err));
+    });
+
+    // If loading an existing scenario:
+    function loadScenario(name) {
+      fetch(`/load_scenario/${name}`)
+        .then(resp => resp.json())
+        .then(data => {
+          if (data.status && data.status === "error") {
+            alert(`Error: ${data.message}`);
+            return;
+          }
+          // Clear table
+          stepsTableBody.innerHTML = "";
+          data.steps.forEach((step, idx) => {
+            const row = createStepRow(idx, step);
+            stepsTableBody.appendChild(row);
+          });
+        })
+        .catch(err => console.error(err));
+    }
+
+    // Optionally, you could add a dropdown to select and load scenarios:
+    // (not shown here, but similar to index.html)
+
+    // Optionally, integrate WebSocket log streaming similar to main page
+  </script>
+</body>
+</html>

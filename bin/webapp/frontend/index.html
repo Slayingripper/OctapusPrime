@@ -1,9 +1,8 @@
-<!-- index.html (placed in webapp/frontend/) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Octapus Scan Designer - Dark Mode</title>
+  <title>Octapus Dashboard - Dark Mode</title>
   <style>
     /* ===== Global Dark Mode Styles ===== */
     html, body {
@@ -14,6 +13,20 @@
       background: #0d0d0d;
       color: #e6e6e6;
       overflow: hidden;
+    }
+
+    /* ===== "Back Home" Link ===== */
+    #home-link {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-size: 14px;
+      color: #39ff14;
+      text-decoration: none;
+      text-shadow: 0 0 4px #39ff14;
+    }
+    #home-link:hover {
+      text-decoration: underline;
     }
 
     button {
@@ -322,6 +335,9 @@
   </style>
 </head>
 <body>
+  <!-- Back to Landing Link -->
+  <a id="home-link" href="/">← Back to Home</a>
+
   <div id="container">
     <!-- ===== Left Sidebar: Tool Palette with Arguments ===== -->
     <div id="palette">
@@ -375,6 +391,162 @@
           <div class="arg-chip" draggable="true" data-arg="-l root">-l root</div>
           <div class="arg-chip" draggable="true" data-arg="-P /usr/share/wordlists/rockyou.txt">-P rockyou.txt</div>
           <div class="arg-chip" draggable="true" data-arg="-t 4">-t 4</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="sslscan">
+        SSLScan
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="--no-failed">--no-failed</div>
+          <div class="arg-chip" draggable="true" data-arg="--show-supported">--show-supported</div>
+          <div class="arg-chip" draggable="true" data-arg="--reuse">--reuse</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="dirsearch">
+        Dirsearch
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-u http://target/">-u target</div>
+          <div class="arg-chip" draggable="true" data-arg="-e php,html,js">-e php,html,js</div>
+          <div class="arg-chip" draggable="true" data-arg="-x 400,403">-x 400,403</div>
+          <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="enum4linux">
+        Enum4Linux
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-a">-a</div>
+          <div class="arg-chip" draggable="true" data-arg="-u user">-u user</div>
+          <div class="arg-chip" draggable="true" data-arg="-o output.txt">-o output.txt</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="nbtscan">
+        NBTSCAN
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-s :">-s :</div>
+          <div class="arg-chip" draggable="true" data-arg="-v">-v</div>
+          <div class="arg-chip" draggable="true" data-arg="-r">-r</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="theharvester">
+        TheHarvester
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-d example.com">-d domain</div>
+          <div class="arg-chip" draggable="true" data-arg="-b google">-b google</div>
+          <div class="arg-chip" draggable="true" data-arg="-l 100">-l limit</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="wpscan">
+        WPScan
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="--url http://target/">--url target</div>
+          <div class="arg-chip" draggable="true" data-arg="--enumerate vp">--enumerate vp</div>
+          <div class="arg-chip" draggable="true" data-arg="--threads 10">--threads 10</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="ffuf">
+        FFUF
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-u http://target/FUZZ">-u FUZZ</div>
+          <div class="arg-chip" draggable="true" data-arg="-w /usr/share/wordlists/common.txt">-w common.txt</div>
+          <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
+          <div class="arg-chip" draggable="true" data-arg="-mc 200,204,301">-mc 200,204,301</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="amass">
+        AMASS
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="enum -d example.com">enum -d</div>
+          <div class="arg-chip" draggable="true" data-arg="-o amass_out.txt">-o output</div>
+          <div class="arg-chip" draggable="true" data-arg="-src">-src</div>
+          <div class="arg-chip" draggable="true" data-arg="-passive">-passive</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="dnsenum">
+        DNSenum
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="--enum example.com">--enum</div>
+          <div class="arg-chip" draggable="true" data-arg="--threads 5">--threads 5</div>
+          <div class="arg-chip" draggable="true" data-arg="--dnsserver 8.8.8.8">--dnsserver 8.8.8.8</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="eyewitness">
+        EyeWitness
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-f targets.txt">-f targets</div>
+          <div class="arg-chip" draggable="true" data-arg="-d output/">-d output</div>
+          <div class="arg-chip" draggable="true" data-arg="--no-prompt">--no-prompt</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="gitleaks">
+        Gitleaks
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="detect">detect</div>
+          <div class="arg-chip" draggable="true" data-arg="--repo-path .">--repo-path</div>
+          <div class="arg-chip" draggable="true" data-arg="--report gitleaks_report.json">--report</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="trivy">
+        Trivy
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="image ubuntu:latest">image</div>
+          <div class="arg-chip" draggable="true" data-arg="--severity HIGH,CRITICAL">--severity</div>
+          <div class="arg-chip" draggable="true" data-arg="--ignore-unfixed">--ignore-unfixed</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="john">
+        John
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="--wordlist=/usr/share/wordlists/rockyou.txt">--wordlist</div>
+          <div class="arg-chip" draggable="true" data-arg="--format=raw-md5">--format</div>
+          <div class="arg-chip" draggable="true" data-arg="hashes.txt">hashes.txt</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="hashcat">
+        Hashcat
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-m 0">-m 0</div>
+          <div class="arg-chip" draggable="true" data-arg="-a 0">-a 0</div>
+          <div class="arg-chip" draggable="true" data-arg="hashes.txt wordlist.txt">hashes wordlist</div>
+          <div class="arg-chip" draggable="true" data-arg="--force">--force</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="subfinder">
+        Subfinder
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-d example.com">-d domain</div>
+          <div class="arg-chip" draggable="true" data-arg="-silent">-silent</div>
+          <div class="arg-chip" draggable="true" data-arg="-o subdomains.txt">-o output</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="snmp-check">
+        SNMP-Check
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-t 192.168.1.1">-t target</div>
+          <div class="arg-chip" draggable="true" data-arg="-c public">-c community</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="gobuster-dns">
+        Gobuster DNS
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="dns -d example.com">dns -d</div>
+          <div class="arg-chip" draggable="true" data-arg="-w /usr/share/wordlists/dns.txt">-w dns-list</div>
+          <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="dirb">
+        Dirb
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="http://target/">URL</div>
+          <div class="arg-chip" draggable="true" data-arg="/usr/share/wordlists/dirb/common.txt">wordlist</div>
+          <div class="arg-chip" draggable="true" data-arg="-r">-r</div>
+        </div>
+      </div>
+      <div class="tool-card" draggable="true" data-tool="ldapsearch">
+        Ldapsearch
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-x -h 192.168.1.1">-x -h host</div>
+          <div class="arg-chip" draggable="true" data-arg="-b dc=example,dc=com">-b base</div>
+          <div class="arg-chip" draggable="true" data-arg="-D 'cn=admin,dc=example,dc=com'">-D binddn</div>
+          <div class="arg-chip" draggable="true" data-arg="-W">-W</div>
         </div>
       </div>
     </div> <!-- /palette -->

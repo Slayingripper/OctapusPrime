@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Octapus Landing Page</title>
+  <style>
+    /* ===== Global Dark Mode ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      background: #0d0d0d;
+      color: #e6e6e6;
+      font-family: "Roboto Mono", monospace;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ===== Container ===== */
+    #landing-container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+    }
+
+    /* ===== Circle (Octopus Body) ===== */
+    .octopus-body {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      margin-top: -100px;
+      margin-left: -100px;
+      background: #39ff14;
+      border-radius: 50%;
+      box-shadow: 0 0 16px #39ff14;
+      z-index: 2;
+    }
+    .octopus-eye {
+      position: absolute;
+      width: 24px;
+      height: 32px;
+      background: #0d0d0d;
+      border-radius: 50%;
+      top: 60px;
+      z-index: 3;
+    }
+    .eye-left {
+      left: 60px;
+    }
+    .eye-right {
+      right: 60px;
+    }
+    .octopus-eye::after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 12px;
+      height: 12px;
+      background: #e6e6e6;
+      border-radius: 50%;
+    }
+
+    /* ===== Tentacle Base Style ===== */
+    .tentacle {
+      position: absolute;
+      width: 18px;
+      height: 100px;
+      background: #39ff14;
+      border-radius: 10px 10px 0 0;
+      transform-origin: bottom center;
+      box-shadow: 0 0 12px #39ff14;
+      opacity: 0.9;
+      transition: opacity 0.2s, box-shadow 0.2s;
+      z-index: 1;
+    }
+    .tentacle:hover {
+      opacity: 1;
+      box-shadow: 0 0 24px #39ff14;
+    }
+
+    /* ===== Tentacle Positions & Rotations ===== */
+    /* Computed for a 400×400 container, body radius=100, tentacle length=100 */
+    /* 1. Dashboard at 180° (bottom-center) */
+    .tentacle-1 {
+      left: 291px; /* 200 + 100*cos(0°) - 9 */
+      top: 100px;  /* 200 + 100*sin(0°) - 100 */
+      transform: rotate(180deg);
+    }
+    /* 2. Scenario at 225° (bottom-left) */
+    .tentacle-2 {
+      left: 262px; /* ≈200 + 100*cos(45°) - 9 */
+      top: 171px;  /* ≈200 + 100*sin(45°) - 100 */
+      transform: rotate(225deg);
+    }
+    /* 3. Settings at 270° (left-center) */
+    .tentacle-3 {
+      left: 191px; /* 200 + 100*cos(90°) - 9 */
+      top: 200px;  /* 200 + 100*sin(90°) - 100 */
+      transform: rotate(270deg);
+    }
+    /* 4. Logs at 315° (top-left) */
+    .tentacle-4 {
+      left: 120px; /* ≈200 + 100*cos(135°) - 9 */
+      top: 171px;  /* ≈200 + 100*sin(135°) - 100 */
+      transform: rotate(315deg);
+    }
+    /* 5. Help at 0° (top-center) */
+    .tentacle-5 {
+      left: 91px; /* 200 + 100*cos(180°) - 9 */
+      top: 100px; /* 200 + 100*sin(180°) - 100 */
+      transform: rotate(0deg);
+    }
+    /* 6. About at 45° (top-right) */
+    .tentacle-6 {
+      left: 120px; /* ≈200 + 100*cos(225°) - 9 */
+      top: 29px;   /* ≈200 + 100*sin(225°) - 100 */
+      transform: rotate(45deg);
+    }
+    /* 7. Updates at 90° (right-center) */
+    .tentacle-7 {
+      left: 191px; /* 200 + 100*cos(270°) - 9 */
+      top: 0px;    /* 200 + 100*sin(270°) - 100 */
+      transform: rotate(90deg);
+    }
+    /* 8. Demo at 135° (bottom-right) */
+    .tentacle-8 {
+      left: 262px; /* ≈200 + 100*cos(315°) - 9 */
+      top: 29px;   /* ≈200 + 100*sin(315°) - 100 */
+      transform: rotate(135deg);
+    }
+
+    /* ===== Labels for Each Tentacle ===== */
+    .label {
+      position: absolute;
+      font-size: 13px;
+      color: #39ff14;
+      text-shadow: 0 0 4px #39ff14;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      z-index: 4;
+    }
+    /* Updated label positions to align with tentacle tips */
+    .label-1 { left: 300px; top: 330px; } /* Dashboard */
+    .label-2 { left: 179px; top: 363px; } /* Scenario */
+    .label-3 { left: 70px;  top: 300px; } /* Settings */
+    .label-4 { left: 37px;  top: 179px; } /* Logs */
+    .label-5 { left: 100px; top: 70px;  } /* Help */
+    .label-6 { left: 221px; top: 37px;  } /* About */
+    .label-7 { left: 330px; top: 100px; } /* Updates */
+    .label-8 { left: 363px; top: 221px; } /* Demo */
+  </style>
+</head>
+<body>
+  <div id="landing-container">
+    <!-- Octopus Body and Eyes -->
+    <div class="octopus-body">
+      <div class="octopus-eye eye-left"></div>
+      <div class="octopus-eye eye-right"></div>
+    </div>
+
+    <!-- Tentacle Links -->
+    <a href="/dashboard" class="tentacle tentacle-1"></a>
+    <a href="/scenario_maker" class="tentacle tentacle-2"></a>
+    <a href="/settings" class="tentacle tentacle-3"></a>
+    <a href="/logs" class="tentacle tentacle-4"></a>
+    <a href="/help" class="tentacle tentacle-5"></a>
+    <a href="/about" class="tentacle tentacle-6"></a>
+    <a href="/updates" class="tentacle tentacle-7"></a>
+    <a href="/demo" class="tentacle tentacle-8"></a>
+
+    <!-- Labels -->
+    <div class="label label-1">Dashboard</div>
+    <div class="label label-2">Scenario</div>
+    <div class="label label-3">Settings</div>
+    <div class="label label-4">Logs</div>
+    <div class="label label-5">Help</div>
+    <div class="label label-6">About</div>
+    <div class="label label-7">Updates</div>
+    <div class="label label-8">Demo</div>
+  </div>
+</body>
+</html>
+<script>
+  // Optional: Add interactivity or animations here
+  document.querySelectorAll('.tentacle').forEach(tentacle => {
+    tentacle.addEventListener('mouseover', () => {
+      tentacle.style.transform += ' scale(1.1)';
+    });
+    tentacle.addEventListener('mouseout', () => {
+      tentacle.style.transform = tentacle.style.transform.replace(' scale(1.1)', '');
+    });
+  });

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Octapus – Logs</title>
+  <style>
+    /* ===== Global Dark Mode ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      background: #0d0d0d;
+      color: #e6e6e6;
+      font-family: "Roboto Mono", monospace;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    a {
+      text-decoration: none;
+      color: #39ff14;
+      font-size: 14px;
+      padding: 16px;
+      display: inline-block;
+      text-shadow: 0 0 4px #39ff14;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== Page Heading ===== */
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      color: #39ff14;
+      text-shadow: 0 0 8px #39ff14;
+      margin-bottom: 8px;
+    }
+
+    /* ===== Filter Container ===== */
+    #filter-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    #filter-container label {
+      margin-right: 8px;
+      font-size: 14px;
+      color: #bbb;
+    }
+    #search-input {
+      width: 300px;
+      padding: 6px 8px;
+      background: #1a1a1a;
+      color: #e6e6e6;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-family: "Roboto Mono", monospace;
+      font-size: 14px;
+    }
+
+    /* ===== Log Display Area ===== */
+    #logs-container {
+      flex: 1;
+      margin: 0 16px 16px 16px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 4px;
+      overflow-y: auto;
+      padding: 12px;
+    }
+    #logs {
+      white-space: pre-wrap;
+      font-family: "Roboto Mono", monospace;
+      font-size: 13px;
+      line-height: 1.4em;
+      color: #00e600;
+    }
+    .log-line {
+      display: block;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Back to Home -->
+  <a href="/">← Back to Home</a>
+
+  <!-- Page Title -->
+  <h1>Octapus – Logs</h1>
+
+  <!-- Search / Filter -->
+  <div id="filter-container">
+    <label for="search-input">Search logs:</label>
+    <input type="text" id="search-input" placeholder="Type to filter..." />
+  </div>
+
+  <!-- Scrollable Logs Area -->
+  <div id="logs-container">
+    <div id="logs">
+      <!-- Each log line (wrapped in <span class="log-line">) will go here -->
+    </div>
+  </div>
+
+  <!-- Socket.IO client for live log streaming -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const logsDiv = document.getElementById("logs");
+      const searchInput = document.getElementById("search-input");
+
+      // 1) Fetch historical logs once on page load:
+      fetch("/fetch_logs")
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === "error") {
+            logsDiv.innerHTML = `<span class="log-line">Error: ${data.message}</span>`;
+            return;
+          }
+          data.lines.forEach(line => {
+            appendLogLine(line);
+          });
+          // Scroll to bottom after initial load
+          logsDiv.parentElement.scrollTop = logsDiv.parentElement.scrollHeight;
+        })
+        .catch(err => {
+          appendLogLine(`Could not fetch logs: ${err}`);
+        });
+
+      // 2) Listen for live log events via WebSocket:
+      const socket = io();
+      socket.on("log", msg => {
+        // msg = { tool: "...", line: "..." }
+        // We will prefix each line with [tool]
+        const combined = `[${msg.tool}] ${msg.line}`;
+        appendLogLine(combined);
+      });
+
+      // 3) Append a single line to #logs, wrapped in span.log-line
+      function appendLogLine(text) {
+        const span = document.createElement("span");
+        span.className = "log-line";
+        span.textContent = text;
+        logsDiv.appendChild(span);
+        // Auto-scroll to bottom if already scrolled near bottom
+        const parent = logsDiv.parentElement;
+        const nearBottom = parent.scrollHeight - parent.scrollTop - parent.clientHeight < 50;
+        if (nearBottom) {
+          parent.scrollTop = parent.scrollHeight;
+        }
+      }
+
+      // 4) Filter functionality: hide lines that do not contain the search term
+      searchInput.addEventListener("input", () => {
+        const query = searchInput.value.trim().toLowerCase();
+        const lines = logsDiv.querySelectorAll(".log-line");
+        lines.forEach(span => {
+          const text = span.textContent.toLowerCase();
+          if (query.length === 0 || text.includes(query)) {
+            span.classList.remove("hidden");
+          } else {
+            span.classList.add("hidden");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

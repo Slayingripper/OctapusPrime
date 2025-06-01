@@ -12,7 +12,7 @@ from queue import Queue
 from threading import Thread
 from pathlib import Path
 
-# Determine base directory (where this script lives, two levels up)
+# Determine base directory (where this script lives)
 BASE_DIR = Path(__file__).resolve().parent
 LOG_DIR = BASE_DIR / "logs"
 SCENARIO_DIR = BASE_DIR / "scenarios"
@@ -43,7 +43,6 @@ except Exception:
         format="%(asctime)s %(message)s",
     )
 
-
 # GPIOZero imports deferred to runtime
 def setup_gpio():
     """Initialize GPIO button and LED; returns (button, led)."""
@@ -59,7 +58,6 @@ def setup_gpio():
         return None, None
     return button, led
 
-
 def log_and_queue(tool, message):
     """Log to file/console and enqueue message for web UI."""
     logging.info(f"[{tool}] {message}")
@@ -67,7 +65,6 @@ def log_and_queue(tool, message):
         log_queue.put_nowait({"tool": tool, "line": message})
     except Exception:
         pass
-
 
 def get_local_cidr():
     """
@@ -77,7 +74,6 @@ def get_local_cidr():
     """
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        # Doesn't send data; just triggers OS to assign a source IP
         s.connect(("8.8.8.8", 80))
         local_ip = s.getsockname()[0]
         s.close()
@@ -86,7 +82,6 @@ def get_local_cidr():
     except Exception as e:
         log_and_queue("octapus", f"Failed to detect local CIDR: {e}")
         return None
-
 
 def parse_nmap_xml(xml_path):
     """
@@ -128,10 +123,10 @@ def parse_nmap_xml(xml_path):
         log_and_queue("nmap", f"XML parse error: {e}")
     return results
 
-
-async def run_script(tool, cmd_args):
+async def run_script(tool, cmd_args, capture_output=None):
     """
     Execute the given CLI command and stream output lines.
+    If capture_output is not None, capture lines in a list and return them.
     """
     log_and_queue("octapus", f"Starting {tool}: {' '.join(cmd_args)}")
     proc = await asyncio.create_subprocess_exec(
@@ -139,15 +134,18 @@ async def run_script(tool, cmd_args):
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     )
+    captured = [] if capture_output is not None else None
     while True:
         line = await proc.stdout.readline()
         if not line:
             break
         text = line.decode(errors="ignore").rstrip()
         log_and_queue(tool, text)
+        if capture_output is not None:
+            captured.append(text)
     await proc.wait()
     log_and_queue("octapus", f"Finished {tool}")
-
+    return captured
 
 async def dynamic_scan_sequence(initial_scripts, led):
     """
@@ -202,7 +200,6 @@ async def dynamic_scan_sequence(initial_scripts, led):
                 os.remove(xml_path)
             except OSError:
                 pass
-
         else:
             await run_script(tool, [tool] + args)
 
@@ -212,6 +209,56 @@ async def dynamic_scan_sequence(initial_scripts, led):
         led.off()
     log_and_queue("octapus", "Full dynamic scan sequence completed")
 
+async def scenario_scan_sequence(steps, led):
+    """
+    Run a user-defined scenario with conditional steps.
+    Each step: {
+      'tool': 'nmap',
+      'args': ['-sV', '192.168.1.0/24'],
+      'condition': { 'type': 'always' }
+      OR
+               { 'type': 'prev_contains', 'value': '<substring>' }
+    }
+    If condition is 'always', run unconditionally. If 'prev_contains', only run
+    if previous step's captured output lines contain the given substring.
+    """
+    if led:
+        led.blink(on_time=0.2, off_time=0.2)
+
+    prev_output = []  # capture lines from previous tool
+    for step in steps:
+        tool = step.get("tool")
+        args = step.get("args", [])
+        cond = step.get("condition", {"type": "always"})
+
+        should_run = False
+        if cond.get("type") == "always":
+            should_run = True
+        elif cond.get("type") == "prev_contains":
+            keyword = cond.get("value", "")
+            if any(keyword in line for line in prev_output):
+                should_run = True
+
+        if not should_run:
+            log_and_queue("octapus", f"Skipping {tool} due to condition: {cond}")
+            prev_output = []
+            continue
+
+        if tool == "nmap":
+            xml_path = str(Path("/tmp") / f"octapus_nmap_{os.getpid()}.xml")
+            cmd = ["nmap"] + args + ["-oX", xml_path]
+            await run_script(tool, cmd)
+            prev_output = await run_script(tool, cmd, capture_output=[])
+            try:
+                os.remove(xml_path)
+            except OSError:
+                pass
+        else:
+            prev_output = await run_script(tool, [tool] + args, capture_output=[])
+
+    if led:
+        led.off()
+    log_and_queue("octapus", "Scenario execution completed")
 
 def start_scan_thread(scripts):
     """
@@ -225,6 +272,16 @@ def start_scan_thread(scripts):
         led = None
     asyncio.run(dynamic_scan_sequence(scripts, led))
 
+def start_scenario_thread(steps):
+    """
+    Helper to launch scenario_scan_sequence(...) in its own asyncio event loop.
+    """
+    try:
+        from gpiozero import LED
+        led = LED(LED_PIN)
+    except Exception:
+        led = None
+    asyncio.run(scenario_scan_sequence(steps, led))
 
 async def controller():
     """
@@ -243,7 +300,6 @@ async def controller():
         await asyncio.Event().wait()
     else:
         log_and_queue("octapus", "GPIO not available; cannot run controller.")
-
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "scan":
