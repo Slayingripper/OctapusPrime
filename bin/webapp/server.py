@@ -200,25 +200,45 @@ def save_scenario():
 @app.route("/list_scenarios", methods=["GET"])
 def list_scenarios():
     """
-    Return a list of saved scenario names.
+    Return a JSON list of all saved scenario names (without .json extension).
     """
-    files = [f.stem for f in SCENARIO_DIR.glob("*.json")]
-    return jsonify(scenarios=files)
+    names = []
+    for file in SCENARIO_DIR.glob("*.json"):
+        names.append(file.stem)
+    return jsonify(scenarios=names)  # Changed from 'names' to 'scenarios'
 
 @app.route("/load_scenario/<name>", methods=["GET"])
 def load_scenario(name):
     """
-    Load scenario by name; returns JSON { name, steps }.
+    Load scenario by name; returns JSON { scripts: [...] }.
     """
     path = SCENARIO_DIR / f"{name}.json"
     if not path.exists():
         return jsonify(status="error", message="Scenario not found"), 404
     try:
-        import json
-        with open(path) as f:
+        with open(path, "r") as f:
             data = json.load(f)
-        return jsonify(data)
+        
+        # The frontend expects { scripts: [...] } format
+        # but your save format might be { name: "...", steps: [...] }
+        # Convert steps to scripts format if needed
+        if "steps" in data:
+            scripts = []
+            for step in data["steps"]:
+                # Convert step format to script format
+                script = {
+                    "tool": step.get("tool", ""),
+                    "args": step.get("args", [])
+                }
+                scripts.append(script)
+            return jsonify(scripts=scripts)
+        elif "scripts" in data:
+            return jsonify(scripts=data["scripts"])
+        else:
+            return jsonify(status="error", message="Invalid scenario format"), 400
+            
     except Exception as e:
+        logging.error(f"Failed to load scenario {name}: {e}")
         return jsonify(status="error", message=f"Failed to load: {e}"), 500
 
 @socketio.on("connect")

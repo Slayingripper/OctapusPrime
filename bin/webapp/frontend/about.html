@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Octapus – About</title>
+  <style>
+    /* ===== Global Dark Mode ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      background: #0d0d0d;
+      color: #e6e6e6;
+      font-family: "Roboto Mono", monospace;
+      display: flex;
+      flex-direction: column;
+      /* Allow vertical scrolling */
+      overflow-y: auto;
+    }
+    a {
+      text-decoration: none;
+      color: #39ff14;
+      font-size: 14px;
+      padding: 16px;
+      display: inline-block;
+      text-shadow: 0 0 4px #39ff14;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    h1 {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 28px;
+      color: #39ff14;
+      text-shadow: 0 0 8px #39ff14;
+    }
+    .content {
+      margin: 24px auto;
+      max-width: 700px;
+      line-height: 1.6;
+      color: #bbb;
+      font-size: 15px;
+      text-align: left;
+      padding-bottom: 40px; /* extra padding for scrolling comfort */
+    }
+    .content ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .content li::before {
+      content: "• ";
+      color: #39ff14;
+    }
+  </style>
+</head>
+<body>
+  <a href="/">← Back to Home</a>
+  <h1>Octapus – About</h1>
+  <div class="content">
+    <p>
+      <strong>Octapus</strong> is an open‐source, dark‐mode web interface and automation suite designed for network reconnaissance, vulnerability scanning, and penetration testing. It bundles CLI tools into customizable workflows you can trigger by pressing a physical button or via the web UI. Live logs, saved scenarios, and drag‐and‐drop configuration make it easy to orchestrate complex attack chains.
+    </p>
+
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Dynamic Scan Sequences:</strong> Build “if‐this‐then‐that” workflows involving Nmap, Masscan, Gobuster, Nikto, SQLmap, Hydra, and more.</li>
+      <li><strong>Live Streaming Logs:</strong> All tool output is streamed in real time to the Logs page via WebSockets.</li>
+      <li><strong>Scenario Saver:</strong> Save your custom scan pipelines and reload them later with one click.</li>
+      <li><strong>API & Button Trigger:</strong> Launch scans via HTTP API or a GPIO‐connected physical button on a NeoPi.</li>
+      <li><strong>Dark Mode UI:</strong> Hacker‐style, animated interface with drag‐and‐drop parameter fields for each tool.</li>
+    </ul>
+
+    <h2>Architecture</h2>
+    <ul>
+      <li><strong>Frontend:</strong> Static HTML/CSS/JavaScript pages served by Flask. Dark‐mode styling and WebSocket client for log updates.</li>
+      <li><strong>Backend:</strong> Flask + Flask-SocketIO (with Eventlet). Python‐based controller enqueues CLI commands, writes to <code>octapus.log</code>, and emits log events.</li>
+      <li><strong>Tools:</strong> Relies solely on CLI scanners—Nmap, Masscan, Gobuster, Nikto, SQLmap, Hydra, and others—without a heavy web UI for each tool.</li>
+      <li><strong>Persistence:</strong> Scenarios saved as JSON under <code>scenarios/</code>. Logs written to <code>logs/octapus.log</code>.</li>
+    </ul>
+
+    <h2>How It Works</h2>
+    <ol>
+      <li>User selects or builds a scan sequence on the Dashboard or Scenario page.</li>
+      <li>Clicking “Start” (or pressing the hardware button) sends a POST to <code>/start</code> with a JSON array of steps.</li>
+      <li>The backend spawns a background thread that runs each CLI tool in order. Every line of output is:
+        <ul>
+          <li>Appended to <code>octapus.log</code>.</li>
+          <li>Pushed into a <em>log queue</em>, which a background task emits over WebSocket.</li>
+        </ul>
+      </li>
+      <li>Logs page listens for new <code>"log"</code> events via Socket.IO and updates in real time.</li>
+      <li>User can save favorite workflows as JSON. Load them later to rerun identical sequences.</li>
+    </ol>
+
+    <h2>Installation & Requirements</h2>
+    <ul>
+      <li>Linux‐based system (Debian, Ubuntu, DietPi, etc.).</li>
+      <li>Python 3.9+ and pip. Creates its own virtual environment under <code>venv/</code>.</li>
+      <li>Required packages:
+        <ul>
+          <li><code>Flask</code>, <code>Flask-SocketIO</code>, <code>eventlet</code></li>
+          <li>GPIOZero (for physical button integration on Raspberry Pi/NeoPi).</li>
+        </ul>
+      </li>
+      <li>CLI tools installed:
+        <ul>
+          <li><code>nmap</code>, <code>masscan</code></li>
+          <li><code>gobuster</code>, <code>nikto</code>, <code>sqlmap</code></li>
+          <li><code>hydra</code>, <code>openssl</code>, etc.</li>
+        </ul>
+      </li>
+      <li>Run <code>pip install -r requirements.txt</code> in the project root.</li>
+      <li>Ensure <code>logs/</code> and <code>scenarios/</code> directories exist with write permissions.</li>
+    </ul>
+
+    <p style="margin-top: 24px; text-align: center; color: #777; font-size: 13px;">
+      © 2025 Octapus
+    </p>
+  </div>
+</body>
+</html>

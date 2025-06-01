@@ -1,0 +1,13 @@
+{
+  "name": "Quick Network Discovery",
+  "steps": [
+    {
+      "tool": "nmap",
+      "args": ["-sn", "192.168.1.0/24"]
+    },
+    {
+      "tool": "masscan",
+      "args": ["-p1-1024", "192.168.1.0/24"]
+    }
+  ]
+}

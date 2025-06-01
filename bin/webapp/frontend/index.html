@@ -45,6 +45,140 @@
       cursor: not-allowed;
     }
 
+    /* ===== Tooltip Styles ===== */
+    .tooltip {
+      position: relative;
+    }
+    .tooltip::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1a1a1a;
+      color: #39ff14;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      white-space: normal; /* Allow text wrapping */
+      max-width: 300px; /* Limit maximum width */
+      width: max-content;
+      z-index: 1000;
+      border: 1px solid #39ff14;
+      box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      pointer-events: none;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #39ff14;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      pointer-events: none;
+    }
+    .tooltip:hover::before,
+    .tooltip:hover::after {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* Responsive tooltip positioning */
+    @media (max-width: 768px) {
+      .tooltip::before {
+        max-width: 250px;
+        font-size: 10px;
+      }
+    }
+
+    /* ===== Command Modal Styles ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+    .modal-content {
+      background-color: #1a1a1a;
+      margin: 5% auto;
+      padding: 20px;
+      border: 2px solid #39ff14;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80%;
+      overflow-y: auto;
+      color: #e6e6e6;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
+    }
+    .modal-title {
+      color: #39ff14;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .close-btn {
+      background: #ff0033;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .close-btn:hover {
+      background: #e6002e;
+    }
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .command-item {
+      background: #262626;
+      border: 1px solid #444;
+      border-radius: 4px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 12px;
+    }
+    .command-item:hover {
+      background: #333;
+      border-color: #39ff14;
+      box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
+    }
+    .command-item .cmd {
+      color: #39ff14;
+      font-weight: bold;
+    }
+    .command-item .desc {
+      color: #bbb;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
     /* ===== Container Layout ===== */
     #container {
       display: flex;
@@ -216,16 +350,19 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 1px 6px rgba(0,0,0,0.5);
+      gap: 8px;
     }
     .scheduled-item .tool-info {
       display: flex;
       align-items: center;
+      flex: 1;
+      gap: 8px;
     }
     .scheduled-item .tool-label {
       font-weight: 600;
       color: #39ff14;
-      margin-right: 8px;
-      min-width: 60px;
+      min-width: 80px;
+      flex-shrink: 0;
     }
     .scheduled-item input {
       flex: 1;
@@ -235,6 +372,8 @@
       border-radius: 4px;
       background: #0d0d0d;
       color: #e6e6e6;
+      min-width: 300px;
+      width: 100%;
     }
     .scheduled-item .remove-btn {
       background: #ff0033;
@@ -338,218 +477,242 @@
   <!-- Back to Landing Link -->
   <a id="home-link" href="/">← Back to Home</a>
 
+  <!-- Command Modal -->
+  <div id="command-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title">Tool Commands</span>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="modal-body">
+        <!-- Commands will be populated here -->
+      </div>
+    </div>
+  </div>
+
   <div id="container">
     <!-- ===== Left Sidebar: Tool Palette with Arguments ===== -->
     <div id="palette">
       <h3>Tools</h3>
-      <div class="tool-card" draggable="true" data-tool="nmap">
+      
+      <div class="tool-card tooltip" draggable="true" data-tool="nmap" data-tooltip="Network exploration tool and security scanner">
         Nmap
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-sV">-sV</div>
           <div class="arg-chip" draggable="true" data-arg="-A">-A</div>
           <div class="arg-chip" draggable="true" data-arg="-O">-O</div>
           <div class="arg-chip" draggable="true" data-arg="-T4">-T4</div>
-          <div class="arg-chip" draggable="true" data-arg="-p 80,443">-p 80,443</div>
+          <div class="arg-chip" draggable="true" data-arg="-p 1-1000">-p 1-1000</div>
+          <div class="arg-chip" draggable="true" data-arg="-sS">-sS</div>
+          <div class="arg-chip" draggable="true" data-arg="-sU">-sU</div>
+          <div class="arg-chip" draggable="true" data-arg="--script vuln">--script vuln</div>
+          <div class="arg-chip" draggable="true" data-arg="-oN output.txt">-oN output</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="masscan">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="masscan" data-tooltip="Fast port scanner for large networks">
         Masscan
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-p1-65535">-p1-65535</div>
           <div class="arg-chip" draggable="true" data-arg="--rate 1000">--rate 1000</div>
           <div class="arg-chip" draggable="true" data-arg="--ping">--ping</div>
+          <div class="arg-chip" draggable="true" data-arg="-e eth0">-e eth0</div>
+          <div class="arg-chip" draggable="true" data-arg="--banners">--banners</div>
+          <div class="arg-chip" draggable="true" data-arg="-oX output.xml">-oX output</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="gobuster">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="gobuster" data-tooltip="Directory/file & DNS busting tool">
         Gobuster
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="dir -u http://target">dir</div>
           <div class="arg-chip" draggable="true" data-arg="-w /usr/share/wordlists/dirb/common.txt">-w common.txt</div>
-          <div class="arg-chip" draggable="true" data-arg="-x php,txt">-x php,txt</div>
+          <div class="arg-chip" draggable="true" data-arg="-x php,txt,html">-x php,txt,html</div>
           <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
+          <div class="arg-chip" draggable="true" data-arg="-s 200,204,301,302">-s 200,204,301</div>
+          <div class="arg-chip" draggable="true" data-arg="-k">-k</div>
+          <div class="arg-chip" draggable="true" data-arg="-r">-r</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="nikto">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="nikto" data-tooltip="Web vulnerability scanner">
         Nikto
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-h http://target">-h target</div>
           <div class="arg-chip" draggable="true" data-arg="-Tuning x">-Tuning x</div>
           <div class="arg-chip" draggable="true" data-arg="-Display V">-Display V</div>
+          <div class="arg-chip" draggable="true" data-arg="-ssl">-ssl</div>
+          <div class="arg-chip" draggable="true" data-arg="-port 443">-port 443</div>
+          <div class="arg-chip" draggable="true" data-arg="-output nikto.txt">-output nikto.txt</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="sqlmap">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="sqlmap" data-tooltip="Automatic SQL injection and database takeover tool">
         SQLmap
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-u http://target?id=1">-u target</div>
           <div class="arg-chip" draggable="true" data-arg="--batch">--batch</div>
           <div class="arg-chip" draggable="true" data-arg="--level 5">--level 5</div>
+          <div class="arg-chip" draggable="true" data-arg="--risk 3">--risk 3</div>
+          <div class="arg-chip" draggable="true" data-arg="--dbs">--dbs</div>
+          <div class="arg-chip" draggable="true" data-arg="--tables">--tables</div>
+          <div class="arg-chip" draggable="true" data-arg="--dump">--dump</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="hydra">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="hydra" data-tooltip="Login cracker supporting numerous protocols">
         Hydra
         <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-l root">-l root</div>
+          <div class="arg-chip" draggable="true" data-arg="-l admin">-l admin</div>
           <div class="arg-chip" draggable="true" data-arg="-P /usr/share/wordlists/rockyou.txt">-P rockyou.txt</div>
           <div class="arg-chip" draggable="true" data-arg="-t 4">-t 4</div>
+          <div class="arg-chip" draggable="true" data-arg="ssh://target">ssh://target</div>
+          <div class="arg-chip" draggable="true" data-arg="ftp://target">ftp://target</div>
+          <div class="arg-chip" draggable="true" data-arg="-f">-f</div>
+          <div class="arg-chip" draggable="true" data-arg="-V">-V</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="sslscan">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="sslscan" data-tooltip="SSL/TLS configuration scanner">
         SSLScan
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="--no-failed">--no-failed</div>
           <div class="arg-chip" draggable="true" data-arg="--show-supported">--show-supported</div>
           <div class="arg-chip" draggable="true" data-arg="--reuse">--reuse</div>
+          <div class="arg-chip" draggable="true" data-arg="--xml=ssl.xml">--xml=ssl.xml</div>
+          <div class="arg-chip" draggable="true" data-arg="--ipv4">--ipv4</div>
+          <div class="arg-chip" draggable="true" data-arg="--ipv6">--ipv6</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="dirsearch">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="dirsearch" data-tooltip="Web path discovery tool">
         Dirsearch
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-u http://target/">-u target</div>
-          <div class="arg-chip" draggable="true" data-arg="-e php,html,js">-e php,html,js</div>
-          <div class="arg-chip" draggable="true" data-arg="-x 400,403">-x 400,403</div>
+          <div class="arg-chip" draggable="true" data-arg="-e php,html,js,txt">-e php,html,js</div>
+          <div class="arg-chip" draggable="true" data-arg="-x 400,403,404">-x 400,403</div>
           <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
+          <div class="arg-chip" draggable="true" data-arg="--recursive">--recursive</div>
+          <div class="arg-chip" draggable="true" data-arg="--random-agent">--random-agent</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="enum4linux">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="enum4linux" data-tooltip="SMB enumeration tool for Linux">
         Enum4Linux
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-a">-a</div>
           <div class="arg-chip" draggable="true" data-arg="-u user">-u user</div>
-          <div class="arg-chip" draggable="true" data-arg="-o output.txt">-o output.txt</div>
+          <div class="arg-chip" draggable="true" data-arg="-p password">-p password</div>
+          <div class="arg-chip" draggable="true" data-arg="-S">-S</div>
+          <div class="arg-chip" draggable="true" data-arg="-U">-U</div>
+          <div class="arg-chip" draggable="true" data-arg="-G">-G</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="nbtscan">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="nbtscan" data-tooltip="NetBIOS name network scanner">
         NBTSCAN
         <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-s :">-s :</div>
-          <div class="arg-chip" draggable="true" data-arg="-v">-v</div>
           <div class="arg-chip" draggable="true" data-arg="-r">-r</div>
+          <div class="arg-chip" draggable="true" data-arg="-v">-v</div>
+          <div class="arg-chip" draggable="true" data-arg="-s :">-s :</div>
+          <div class="arg-chip" draggable="true" data-arg="-h">-h</div>
+          <div class="arg-chip" draggable="true" data-arg="-m">-m</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="theharvester">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="theharvester" data-tooltip="E-mail, subdomain and people names harvester">
         TheHarvester
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-d example.com">-d domain</div>
           <div class="arg-chip" draggable="true" data-arg="-b google">-b google</div>
-          <div class="arg-chip" draggable="true" data-arg="-l 100">-l limit</div>
+          <div class="arg-chip" draggable="true" data-arg="-b bing">-b bing</div>
+          <div class="arg-chip" draggable="true" data-arg="-l 500">-l 500</div>
+          <div class="arg-chip" draggable="true" data-arg="-f results.xml">-f results</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="wpscan">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="wpscan" data-tooltip="WordPress security scanner">
         WPScan
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="--url http://target/">--url target</div>
-          <div class="arg-chip" draggable="true" data-arg="--enumerate vp">--enumerate vp</div>
-          <div class="arg-chip" draggable="true" data-arg="--threads 10">--threads 10</div>
+          <div class="arg-chip" draggable="true" data-arg="--enumerate p">--enumerate p</div>
+          <div class="arg-chip" draggable="true" data-arg="--enumerate u">--enumerate u</div>
+          <div class="arg-chip" draggable="true" data-arg="--enumerate t">--enumerate t</div>
+          <div class="arg-chip" draggable="true" data-arg="--api-token TOKEN">--api-token</div>
+          <div class="arg-chip" draggable="true" data-arg="--force">--force</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="ffuf">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="ffuf" data-tooltip="Fast web fuzzer written in Go">
         FFUF
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-u http://target/FUZZ">-u FUZZ</div>
           <div class="arg-chip" draggable="true" data-arg="-w /usr/share/wordlists/common.txt">-w common.txt</div>
-          <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
-          <div class="arg-chip" draggable="true" data-arg="-mc 200,204,301">-mc 200,204,301</div>
+          <div class="arg-chip" draggable="true" data-arg="-t 100">-t 100</div>
+          <div class="arg-chip" draggable="true" data-arg="-mc 200,204,301,302">-mc 200,204,301</div>
+          <div class="arg-chip" draggable="true" data-arg="-fc 404">-fc 404</div>
+          <div class="arg-chip" draggable="true" data-arg="-o ffuf.json">-o ffuf.json</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="amass">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="amass" data-tooltip="In-depth DNS enumeration and network mapping">
         AMASS
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="enum -d example.com">enum -d</div>
-          <div class="arg-chip" draggable="true" data-arg="-o amass_out.txt">-o output</div>
-          <div class="arg-chip" draggable="true" data-arg="-src">-src</div>
+          <div class="arg-chip" draggable="true" data-arg="-active">-active</div>
           <div class="arg-chip" draggable="true" data-arg="-passive">-passive</div>
+          <div class="arg-chip" draggable="true" data-arg="-brute">-brute</div>
+          <div class="arg-chip" draggable="true" data-arg="-o amass.txt">-o amass.txt</div>
+          <div class="arg-chip" draggable="true" data-arg="-ip">-ip</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="dnsenum">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="dnsenum" data-tooltip="DNS enumeration tool">
         DNSenum
         <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="--enum example.com">--enum</div>
+          <div class="arg-chip" draggable="true" data-arg="example.com">domain</div>
           <div class="arg-chip" draggable="true" data-arg="--threads 5">--threads 5</div>
           <div class="arg-chip" draggable="true" data-arg="--dnsserver 8.8.8.8">--dnsserver 8.8.8.8</div>
+          <div class="arg-chip" draggable="true" data-arg="--enum">--enum</div>
+          <div class="arg-chip" draggable="true" data-arg="-f dns.txt">-f dns.txt</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="eyewitness">
-        EyeWitness
+
+      <div class="tool-card tooltip" draggable="true" data-tool="subfinder" data-tooltip="Subdomain discovery tool">
+        Subfinder
         <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-f targets.txt">-f targets</div>
-          <div class="arg-chip" draggable="true" data-arg="-d output/">-d output</div>
-          <div class="arg-chip" draggable="true" data-arg="--no-prompt">--no-prompt</div>
+          <div class="arg-chip" draggable="true" data-arg="-d example.com">-d domain</div>
+          <div class="arg-chip" draggable="true" data-arg="-silent">-silent</div>
+          <div class="arg-chip" draggable="true" data-arg="-o subdomains.txt">-o output</div>
+          <div class="arg-chip" draggable="true" data-arg="-all">-all</div>
+          <div class="arg-chip" draggable="true" data-arg="-t 10">-t 10</div>
+          <div class="arg-chip" draggable="true" data-arg="-v">-v</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="gitleaks">
-        Gitleaks
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="detect">detect</div>
-          <div class="arg-chip" draggable="true" data-arg="--repo-path .">--repo-path</div>
-          <div class="arg-chip" draggable="true" data-arg="--report gitleaks_report.json">--report</div>
-        </div>
-      </div>
-      <div class="tool-card" draggable="true" data-tool="trivy">
-        Trivy
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="image ubuntu:latest">image</div>
-          <div class="arg-chip" draggable="true" data-arg="--severity HIGH,CRITICAL">--severity</div>
-          <div class="arg-chip" draggable="true" data-arg="--ignore-unfixed">--ignore-unfixed</div>
-        </div>
-      </div>
-      <div class="tool-card" draggable="true" data-tool="john">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="john" data-tooltip="Password cracker">
         John
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="--wordlist=/usr/share/wordlists/rockyou.txt">--wordlist</div>
           <div class="arg-chip" draggable="true" data-arg="--format=raw-md5">--format</div>
           <div class="arg-chip" draggable="true" data-arg="hashes.txt">hashes.txt</div>
+          <div class="arg-chip" draggable="true" data-arg="--rules">--rules</div>
+          <div class="arg-chip" draggable="true" data-arg="--show">--show</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="hashcat">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="hashcat" data-tooltip="Advanced password recovery">
         Hashcat
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-m 0">-m 0</div>
           <div class="arg-chip" draggable="true" data-arg="-a 0">-a 0</div>
           <div class="arg-chip" draggable="true" data-arg="hashes.txt wordlist.txt">hashes wordlist</div>
           <div class="arg-chip" draggable="true" data-arg="--force">--force</div>
+          <div class="arg-chip" draggable="true" data-arg="-O">-O</div>
+          <div class="arg-chip" draggable="true" data-arg="--show">--show</div>
         </div>
       </div>
-      <div class="tool-card" draggable="true" data-tool="subfinder">
-        Subfinder
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-d example.com">-d domain</div>
-          <div class="arg-chip" draggable="true" data-arg="-silent">-silent</div>
-          <div class="arg-chip" draggable="true" data-arg="-o subdomains.txt">-o output</div>
-        </div>
-      </div>
-      <div class="tool-card" draggable="true" data-tool="snmp-check">
-        SNMP-Check
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-t 192.168.1.1">-t target</div>
-          <div class="arg-chip" draggable="true" data-arg="-c public">-c community</div>
-        </div>
-      </div>
-      <div class="tool-card" draggable="true" data-tool="gobuster-dns">
-        Gobuster DNS
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="dns -d example.com">dns -d</div>
-          <div class="arg-chip" draggable="true" data-arg="-w /usr/share/wordlists/dns.txt">-w dns-list</div>
-          <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
-        </div>
-      </div>
-      <div class="tool-card" draggable="true" data-tool="dirb">
-        Dirb
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="http://target/">URL</div>
-          <div class="arg-chip" draggable="true" data-arg="/usr/share/wordlists/dirb/common.txt">wordlist</div>
-          <div class="arg-chip" draggable="true" data-arg="-r">-r</div>
-        </div>
-      </div>
-      <div class="tool-card" draggable="true" data-tool="ldapsearch">
-        Ldapsearch
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-x -h 192.168.1.1">-x -h host</div>
-          <div class="arg-chip" draggable="true" data-arg="-b dc=example,dc=com">-b base</div>
-          <div class="arg-chip" draggable="true" data-arg="-D 'cn=admin,dc=example,dc=com'">-D binddn</div>
-          <div class="arg-chip" draggable="true" data-arg="-W">-W</div>
-        </div>
-      </div>
-    </div> <!-- /palette -->
+    </div>
 
     <!-- ===== Main Content: Dropzone, Controls, Output ===== -->
     <div id="main">
@@ -563,7 +726,7 @@
         </div>
       </div>
 
-      <!-- Scenario Save/Load ===== -->
+      <!-- Scenario Save/Load -->
       <div id="scenario-controls">
         <input type="text" id="scenario-name" placeholder="Scenario name ..." />
         <button id="save-scenario-btn">Save Scenario</button>
@@ -572,21 +735,473 @@
         </select>
       </div>
 
-      <!-- Drop Zone ===== -->
+      <!-- Drop Zone -->
       <div id="dropzone">
-        <p class="placeholder">Drag a tool here to add it.</p>
+        <p class="placeholder">Drag a tool here to add it. Double-click tools to see all commands.</p>
       </div>
 
-      <!-- Output Area ===== -->
+      <!-- Output Area -->
       <div id="output-container">
         <!-- Dynamically created output cards appear here -->
       </div>
-    </div> <!-- /main -->
-  </div> <!-- /container -->
+    </div>
+  </div>
 
   <!-- Socket.IO client for live logs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
   <script>
+    // Command database for each tool
+    const toolCommands = {
+      nmap: [
+        { cmd: "-sV", desc: "Version detection" },
+        { cmd: "-A", desc: "Aggressive scan (OS detection, version detection, script scanning)" },
+        { cmd: "-O", desc: "OS detection" },
+        { cmd: "-sS", desc: "TCP SYN scan (stealth)" },
+        { cmd: "-sU", desc: "UDP scan" },
+        { cmd: "-sC", desc: "Default script scan" },
+        { cmd: "-T4", desc: "Timing template (aggressive)" },
+        { cmd: "-T1", desc: "Timing template (slow/stealthy)" },
+        { cmd: "-p 1-1000", desc: "Scan ports 1-1000" },
+        { cmd: "-p-", desc: "Scan all 65535 ports" },
+        { cmd: "-p 80,443,8080", desc: "Scan specific ports" },
+        { cmd: "--top-ports 1000", desc: "Scan top 1000 ports" },
+        { cmd: "--script vuln", desc: "Vulnerability detection scripts" },
+        { cmd: "--script auth", desc: "Authentication bypass scripts" },
+        { cmd: "--script discovery", desc: "Discovery scripts" },
+        { cmd: "--script exploit", desc: "Exploitation scripts" },
+        { cmd: "-sn", desc: "Ping scan (no port scan)" },
+        { cmd: "-Pn", desc: "Skip host discovery" },
+        { cmd: "-oN output.txt", desc: "Normal output to file" },
+        { cmd: "-oX output.xml", desc: "XML output to file" },
+        { cmd: "-oG output.gnmap", desc: "Grepable output" },
+        { cmd: "-v", desc: "Verbose output" },
+        { cmd: "-vv", desc: "Very verbose output" },
+        { cmd: "--reason", desc: "Show reason for port state" },
+        { cmd: "-f", desc: "Fragment packets" },
+        { cmd: "-D RND:10", desc: "Decoy scan with 10 random IPs" }
+      ],
+      masscan: [
+        { cmd: "-p1-65535", desc: "Scan all 65535 ports" },
+        { cmd: "-p80,443,8080", desc: "Scan specific ports" },
+        { cmd: "--rate 1000", desc: "Set packet transmission rate" },
+        { cmd: "--rate 10000", desc: "Fast scan (10k packets/sec)" },
+        { cmd: "--ping", desc: "ICMP ping sweep" },
+        { cmd: "-e eth0", desc: "Specify network interface" },
+        { cmd: "--banners", desc: "Grab service banners" },
+        { cmd: "--source-port 40000", desc: "Use specific source port" },
+        { cmd: "--max-rate 100000", desc: "Maximum transmission rate" },
+        { cmd: "-oX output.xml", desc: "XML output format" },
+        { cmd: "-oJ output.json", desc: "JSON output format" },
+        { cmd: "--excludefile exclude.txt", desc: "Exclude IPs from file" },
+        { cmd: "--include-file include.txt", desc: "Include IPs from file" },
+        { cmd: "--top-ports 100", desc: "Scan top 100 ports" },
+        { cmd: "--wait 0", desc: "Don't wait for responses" },
+        { cmd: "--offline", desc: "Don't transmit packets" }
+      ],
+      gobuster: [
+        { cmd: "dir -u http://target", desc: "Directory enumeration mode" },
+        { cmd: "dns -d domain.com", desc: "DNS subdomain enumeration" },
+        { cmd: "vhost -u http://target", desc: "Virtual host enumeration" },
+        { cmd: "-w /usr/share/wordlists/dirb/common.txt", desc: "Common wordlist" },
+        { cmd: "-w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt", desc: "Medium wordlist" },
+        { cmd: "-x php,txt,html,js,css", desc: "File extensions to search" },
+        { cmd: "-x asp,aspx,jsp,do", desc: "Web app extensions" },
+        { cmd: "-t 50", desc: "Number of concurrent threads" },
+        { cmd: "-t 10", desc: "Slower scan (10 threads)" },
+        { cmd: "-s 200,204,301,302,307", desc: "HTTP status codes to show" },
+        { cmd: "-b 404,403", desc: "HTTP status codes to hide" },
+        { cmd: "-k", desc: "Skip SSL certificate verification" },
+        { cmd: "-r", desc: "Follow redirects" },
+        { cmd: "-f", desc: "Append / to directory names" },
+        { cmd: "-e", desc: "Show extended output" },
+        { cmd: "-q", desc: "Quiet mode" },
+        { cmd: "-o output.txt", desc: "Save output to file" },
+        { cmd: "-a 'Mozilla/5.0'", desc: "Set User-Agent string" },
+        { cmd: "--timeout 10s", desc: "HTTP request timeout" }
+      ],
+      nikto: [
+        { cmd: "-h http://target", desc: "Target host/URL" },
+        { cmd: "-h https://target:8443", desc: "HTTPS target with custom port" },
+        { cmd: "-Tuning x", desc: "All scan types" },
+        { cmd: "-Tuning 1", desc: "Interesting files" },
+        { cmd: "-Tuning 2", desc: "Misconfiguration" },
+        { cmd: "-Tuning 3", desc: "Information disclosure" },
+        { cmd: "-Tuning 4", desc: "Injection attacks" },
+        { cmd: "-Tuning 5", desc: "Remote file retrieval" },
+        { cmd: "-Tuning 6", desc: "Denial of service" },
+        { cmd: "-Display V", desc: "Verbose display" },
+        { cmd: "-Display 1", desc: "Show redirects" },
+        { cmd: "-Display 2", desc: "Show cookies" },
+        { cmd: "-ssl", desc: "Force SSL/HTTPS" },
+        { cmd: "-port 443,8443", desc: "Specify ports" },
+        { cmd: "-timeout 10", desc: "Request timeout" },
+        { cmd: "-output nikto.txt", desc: "Save output to file" },
+        { cmd: "-Format txt", desc: "Text output format" },
+        { cmd: "-Format xml", desc: "XML output format" },
+        { cmd: "-useragent 'Custom Agent'", desc: "Custom User-Agent" },
+        { cmd: "-id user:pass", desc: "HTTP authentication" }
+      ],
+      sqlmap: [
+        { cmd: "-u 'http://target?id=1'", desc: "Target URL with parameter" },
+        { cmd: "-r request.txt", desc: "Load request from file" },
+        { cmd: "--data 'id=1&name=test'", desc: "POST data" },
+        { cmd: "--cookie 'PHPSESSID=abc123'", desc: "HTTP cookies" },
+        { cmd: "--batch", desc: "Non-interactive mode" },
+        { cmd: "--level 5", desc: "Test level (1-5)" },
+        { cmd: "--risk 3", desc: "Risk level (1-3)" },
+        { cmd: "--dbs", desc: "Enumerate databases" },
+        { cmd: "--tables", desc: "Enumerate tables" },
+        { cmd: "--columns", desc: "Enumerate columns" },
+        { cmd: "--dump", desc: "Dump table data" },
+        { cmd: "--dump-all", desc: "Dump all databases" },
+        { cmd: "-D database", desc: "Target specific database" },
+        { cmd: "-T table", desc: "Target specific table" },
+        { cmd: "-C column", desc: "Target specific column" },
+        { cmd: "--os-shell", desc: "Interactive OS shell" },
+        { cmd: "--sql-shell", desc: "Interactive SQL shell" },
+        { cmd: "--technique B", desc: "Boolean-based blind" },
+        { cmd: "--technique T", desc: "Time-based blind" },
+        { cmd: "--technique U", desc: "Union query" },
+        { cmd: "--random-agent", desc: "Random User-Agent" },
+        { cmd: "--threads 5", desc: "Number of threads" },
+        { cmd: "--delay 1", desc: "Delay between requests" }
+      ],
+      hydra: [
+        { cmd: "-l admin", desc: "Single username" },
+        { cmd: "-L users.txt", desc: "Username list from file" },
+        { cmd: "-p password", desc: "Single password" },
+        { cmd: "-P /usr/share/wordlists/rockyou.txt", desc: "Password list (rockyou)" },
+        { cmd: "-P /usr/share/wordlists/fasttrack.txt", desc: "Password list (fasttrack)" },
+        { cmd: "-t 4", desc: "Number of parallel tasks" },
+        { cmd: "-t 16", desc: "Aggressive parallel tasks" },
+        { cmd: "ssh://target", desc: "SSH brute force" },
+        { cmd: "ftp://target", desc: "FTP brute force" },
+        { cmd: "http-post-form://target/login.php", desc: "HTTP POST form" },
+        { cmd: "http-get://target/admin", desc: "HTTP Basic Auth" },
+        { cmd: "rdp://target", desc: "RDP brute force" },
+        { cmd: "smb://target", desc: "SMB brute force" },
+        { cmd: "-f", desc: "Stop after first success" },
+        { cmd: "-F", desc: "Stop after first success per host" },
+        { cmd: "-V", desc: "Verbose output" },
+        { cmd: "-v", desc: "Show login attempts" },
+        { cmd: "-s 2222", desc: "Custom port" },
+        { cmd: "-o results.txt", desc: "Save output to file" },
+        { cmd: "-R", desc: "Restore previous session" },
+        { cmd: "-I", desc: "Ignore restore file" }
+      ],
+      sslscan: [
+        { cmd: "--targets=target", desc: "Single target" },
+        { cmd: "--no-failed", desc: "Hide failed cipher tests" },
+        { cmd: "--show-supported", desc: "Show supported ciphers only" },
+        { cmd: "--show-client-cas", desc: "Show client certificate CAs" },
+        { cmd: "--show-ciphers", desc: "Show cipher details" },
+        { cmd: "--show-certificate", desc: "Show certificate details" },
+        { cmd: "--check-certs", desc: "Check certificate chain" },
+        { cmd: "--pk", desc: "Show public key details" },
+        { cmd: "--bugs", desc: "Test for SSL bugs" },
+        { cmd: "--heartbleed", desc: "Test for Heartbleed" },
+        { cmd: "--reuse", desc: "Test SSL session reuse" },
+        { cmd: "--compression", desc: "Test SSL compression" },
+        { cmd: "--renegotiation", desc: "Test renegotiation" },
+        { cmd: "--starttls-smtp", desc: "SMTP STARTTLS" },
+        { cmd: "--starttls-pop3", desc: "POP3 STARTTLS" },
+        { cmd: "--starttls-imap", desc: "IMAP STARTTLS" },
+        { cmd: "--starttls-ftp", desc: "FTP STARTTLS" },
+        { cmd: "--xml=ssl.xml", desc: "XML output file" },
+        { cmd: "--ipv4", desc: "Force IPv4" },
+        { cmd: "--ipv6", desc: "Force IPv6" }
+      ],
+      dirsearch: [
+        { cmd: "-u http://target/", desc: "Target URL" },
+        { cmd: "-u https://target:8443/", desc: "HTTPS with custom port" },
+        { cmd: "-e php,html,js,txt,xml", desc: "File extensions" },
+        { cmd: "-e asp,aspx,jsp,do", desc: "Web app extensions" },
+        { cmd: "-w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt", desc: "Custom wordlist" },
+        { cmd: "-x 400,403,404,500", desc: "Exclude status codes" },
+        { cmd: "-i 200,301,302", desc: "Include status codes" },
+        { cmd: "-t 50", desc: "Number of threads" },
+        { cmd: "-t 10", desc: "Slower scan" },
+        { cmd: "--recursive", desc: "Recursive directory search" },
+        { cmd: "--deep-recursive", desc: "Deep recursive search" },
+        { cmd: "--force-recursive", desc: "Force recursive on all dirs" },
+        { cmd: "--subdirs=admin,backup", desc: "Scan subdirectories" },
+        { cmd: "--random-agent", desc: "Random User-Agent" },
+        { cmd: "--user-agent='Custom'", desc: "Custom User-Agent" },
+        { cmd: "--cookie='session=123'", desc: "HTTP cookies" },
+        { cmd: "--header='Authorization: Bearer token'", desc: "Custom headers" },
+        { cmd: "--timeout=30", desc: "Request timeout" },
+        { cmd: "--delay=1", desc: "Delay between requests" },
+        { cmd: "-o report.txt", desc: "Save output to file" }
+      ],
+      enum4linux: [
+        { cmd: "-a", desc: "All simple enumeration" },
+        { cmd: "-U", desc: "Get userlist" },
+        { cmd: "-M", desc: "Get machine list" },
+        { cmd: "-N", desc: "Get namelist dump" },
+        { cmd: "-S", desc: "Get sharelist" },
+        { cmd: "-P", desc: "Get password policy" },
+        { cmd: "-G", desc: "Get group and member list" },
+        { cmd: "-d", desc: "Dictionary attack" },
+        { cmd: "-u user", desc: "Specify username" },
+        { cmd: "-p password", desc: "Specify password" },
+        { cmd: "-k user", desc: "User to authenticate with" },
+        { cmd: "-l", desc: "Get limited info via LDAP" },
+        { cmd: "-r", desc: "Enumerate via RPC" },
+        { cmd: "-R 500-550", desc: "RID cycling range" },
+        { cmd: "-s /usr/share/enum4linux/share-list.txt", desc: "Share list file" },
+        { cmd: "-v", desc: "Verbose output" },
+        { cmd: "-w workgroup", desc: "Specify workgroup" },
+        { cmd: "-o", desc: "Get OS information" }
+      ],
+      nbtscan: [
+        { cmd: "-r", desc: "Use local port 137 for scans" },
+        { cmd: "-v", desc: "Verbose output" },
+        { cmd: "-s :", desc: "Separator character" },
+        { cmd: "-h", desc: "Print human readable names" },
+        { cmd: "-m", desc: "Include MAC address" },
+        { cmd: "-T timeout", desc: "Timeout in seconds" },
+        { cmd: "-f filename", desc: "Read targets from file" },
+        { cmd: "-q", desc: "Suppress banner" },
+        { cmd: "-n", desc: "Turn off inverse name lookup" },
+        { cmd: "-p port", desc: "Use custom port" },
+        { cmd: "192.168.1.0/24", desc: "Scan network range" },
+        { cmd: "192.168.1.1-254", desc: "Scan IP range" }
+      ],
+      theharvester: [
+        { cmd: "-d example.com", desc: "Target domain" },
+        { cmd: "-b google", desc: "Google search engine" },
+        { cmd: "-b bing", desc: "Bing search engine" },
+        { cmd: "-b linkedin", desc: "LinkedIn search" },
+        { cmd: "-b twitter", desc: "Twitter search" },
+        { cmd: "-b all", desc: "All search engines" },
+        { cmd: "-l 500", desc: "Limit results to 500" },
+        { cmd: "-l 100", desc: "Limit results to 100" },
+        { cmd: "-s 100", desc: "Start at result 100" },
+        { cmd: "-f results.xml", desc: "Save to XML file" },
+        { cmd: "-f results.html", desc: "Save to HTML file" },
+        { cmd: "-n", desc: "Perform DNS reverse lookup" },
+        { cmd: "-c", desc: "Perform DNS brute force" },
+        { cmd: "-t", desc: "Perform DNS TLD expansion" },
+        { cmd: "-e dns.txt", desc: "DNS brute force wordlist" },
+        { cmd: "-v", desc: "Verify hostnames via DNS" },
+        { cmd: "-p", desc: "Perform port scan" }
+      ],
+      wpscan: [
+        { cmd: "--url http://target/", desc: "WordPress target URL" },
+        { cmd: "--url https://target/wp/", desc: "WordPress in subdirectory" },
+        { cmd: "--enumerate p", desc: "Enumerate plugins" },
+        { cmd: "--enumerate t", desc: "Enumerate themes" },
+        { cmd: "--enumerate u", desc: "Enumerate users" },
+        { cmd: "--enumerate vp", desc: "Vulnerable plugins" },
+        { cmd: "--enumerate vt", desc: "Vulnerable themes" },
+        { cmd: "--enumerate cb", desc: "Config backups" },
+        { cmd: "--enumerate dbe", desc: "Database exports" },
+        { cmd: "--passwords /usr/share/wordlists/rockyou.txt", desc: "Password attack" },
+        { cmd: "--usernames admin,user", desc: "Specific usernames" },
+        { cmd: "--api-token TOKEN", desc: "WPScan API token" },
+        { cmd: "--force", desc: "Force scan even if not WordPress" },
+        { cmd: "--update", desc: "Update vulnerability database" },
+        { cmd: "--random-user-agent", desc: "Random User-Agent" },
+        { cmd: "--throttle 500", desc: "Milliseconds between requests" },
+        { cmd: "--max-threads 5", desc: "Maximum threads" },
+        { cmd: "-o wpscan.txt", desc: "Output to file" },
+        { cmd: "--format cli", desc: "CLI output format" },
+        { cmd: "--format json", desc: "JSON output format" }
+      ],
+      ffuf: [
+        { cmd: "-u http://target/FUZZ", desc: "URL with FUZZ keyword" },
+        { cmd: "-u http://FUZZ.target.com/", desc: "Subdomain fuzzing" },
+        { cmd: "-u http://target/FUZZ.php", desc: "File extension fuzzing" },
+        { cmd: "-w /usr/share/wordlists/dirb/common.txt", desc: "Common wordlist" },
+        { cmd: "-w /usr/share/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt", desc: "Medium wordlist" },
+        { cmd: "-w subdomains.txt:FUZZ", desc: "Custom wordlist with keyword" },
+        { cmd: "-t 100", desc: "Number of threads" },
+        { cmd: "-t 25", desc: "Slower scan" },
+        { cmd: "-rate 100", desc: "Requests per second" },
+        { cmd: "-mc 200,204,301,302,307", desc: "Match HTTP codes" },
+        { cmd: "-fc 404,403", desc: "Filter HTTP codes" },
+        { cmd: "-ms 1000", desc: "Match response size" },
+        { cmd: "-fs 1337", desc: "Filter response size" },
+        { cmd: "-mr 'admin'", desc: "Match response text" },
+        { cmd: "-fr 'not found'", desc: "Filter response text" },
+        { cmd: "-H 'Authorization: Bearer token'", desc: "Custom headers" },
+        { cmd: "-b 'session=abc123'", desc: "HTTP cookies" },
+        { cmd: "-d 'user=admin&pass=FUZZ'", desc: "POST data fuzzing" },
+        { cmd: "-recursion", desc: "Recursive fuzzing" },
+        { cmd: "-recursion-depth 2", desc: "Recursion depth" },
+        { cmd: "-o ffuf.json", desc: "JSON output" },
+        { cmd: "-of html", desc: "HTML output format" },
+        { cmd: "-s", desc: "Silent mode" },
+        { cmd: "-v", desc: "Verbose output" }
+      ],
+      amass: [
+        { cmd: "enum -d example.com", desc: "Basic domain enumeration" },
+        { cmd: "enum -d example.com -active", desc: "Active reconnaissance" },
+        { cmd: "enum -d example.com -passive", desc: "Passive reconnaissance only" },
+        { cmd: "enum -d example.com -brute", desc: "Brute force subdomains" },
+        { cmd: "enum -df domains.txt", desc: "Multiple domains from file" },
+        { cmd: "enum -d example.com -src", desc: "Show data sources" },
+        { cmd: "enum -d example.com -ip", desc: "Show IP addresses" },
+        { cmd: "enum -d example.com -dir /tmp/amass", desc: "Output directory" },
+        { cmd: "enum -d example.com -config config.ini", desc: "Configuration file" },
+        { cmd: "enum -d example.com -o amass.txt", desc: "Output to file" },
+        { cmd: "enum -d example.com -json amass.json", desc: "JSON output" },
+        { cmd: "enum -d example.com -timeout 30", desc: "DNS timeout" },
+        { cmd: "enum -d example.com -max-dns-queries 1000", desc: "Max DNS queries" },
+        { cmd: "viz -d3 -d example.com", desc: "D3.js visualization" },
+        { cmd: "viz -gexf -d example.com", desc: "GEXF file output" },
+        { cmd: "db -names", desc: "Show database names" },
+        { cmd: "db -d example.com -show", desc: "Show database contents" }
+      ],
+      dnsenum: [
+        { cmd: "example.com", desc: "Basic domain enumeration" },
+        { cmd: "--threads 5", desc: "Number of threads" },
+        { cmd: "--threads 10", desc: "More aggressive threading" },
+        { cmd: "--dnsserver 8.8.8.8", desc: "Custom DNS server" },
+        { cmd: "--dnsserver 1.1.1.1", desc: "Cloudflare DNS" },
+        { cmd: "--enum", desc: "Shortcut for common enums" },
+        { cmd: "--subfile subdomains.txt", desc: "Subdomain wordlist" },
+        { cmd: "--timeout 10", desc: "Timeout in seconds" },
+        { cmd: "--retry 3", desc: "Number of retries" },
+        { cmd: "-p", desc: "Pages of Google results" },
+        { cmd: "-s 15", desc: "Scrape Google results" },
+        { cmd: "-f dns.txt", desc: "Output file" },
+        { cmd: "-u a,mx,ns", desc: "Update zone data" },
+        { cmd: "-r", desc: "Enable reverse lookup" },
+        { cmd: "-d", desc: "Calculate C class ranges" },
+        { cmd: "-o", desc: "Show nslookup info" },
+        { cmd: "-w", desc: "Enable whois queries" },
+        { cmd: "-v", desc: "Verbose output" }
+      ],
+      subfinder: [
+        { cmd: "-d example.com", desc: "Target domain" },
+        { cmd: "-dL domains.txt", desc: "Multiple domains from file" },
+        { cmd: "-silent", desc: "Silent mode (results only)" },
+        { cmd: "-v", desc: "Verbose output" },
+        { cmd: "-o subdomains.txt", desc: "Output to file" },
+        { cmd: "-oJ", desc: "JSON output" },
+        { cmd: "-all", desc: "Use all sources" },
+        { cmd: "-sources", desc: "List available sources" },
+        { cmd: "-exclude-sources source1,source2", desc: "Exclude specific sources" },
+        { cmd: "-max-time 10", desc: "Maximum enumeration time" },
+        { cmd: "-t 10", desc: "Number of concurrent goroutines" },
+        { cmd: "-timeout 30", desc: "HTTP timeout" },
+        { cmd: "-nW", desc: "Remove wildcard responses" },
+        { cmd: "-rL resolvers.txt", desc: "Custom DNS resolvers" },
+        { cmd: "-config config.yaml", desc: "Configuration file" },
+        { cmd: "-recursive", desc: "Recursive subdomain discovery" },
+        { cmd: "-active", desc: "Active DNS resolution" }
+      ],
+      john: [
+        { cmd: "--wordlist=/usr/share/wordlists/rockyou.txt", desc: "Use rockyou wordlist" },
+        { cmd: "--wordlist=/usr/share/wordlists/fasttrack.txt", desc: "Use fasttrack wordlist" },
+        { cmd: "--format=raw-md5", desc: "MD5 hash format" },
+        { cmd: "--format=raw-sha1", desc: "SHA1 hash format" },
+        { cmd: "--format=bcrypt", desc: "bcrypt hash format" },
+        { cmd: "--format=NT", desc: "Windows NTLM format" },
+        { cmd: "hashes.txt", desc: "Hash file" },
+        { cmd: "--rules", desc: "Apply word mangling rules" },
+        { cmd: "--rules=wordlist", desc: "Specific rule set" },
+        { cmd: "--incremental", desc: "Incremental mode (brute force)" },
+        { cmd: "--incremental=alpha", desc: "Alpha incremental mode" },
+        { cmd: "--show", desc: "Show cracked passwords" },
+        { cmd: "--show=left", desc: "Show uncracked hashes" },
+        { cmd: "--session=name", desc: "Named session" },
+        { cmd: "--restore=name", desc: "Restore session" },
+        { cmd: "--fork=4", desc: "Parallel processing" },
+        { cmd: "--max-run-time=3600", desc: "Maximum runtime (seconds)" },
+        { cmd: "--progress-every=30", desc: "Progress interval" }
+      ],
+      hashcat: [
+        { cmd: "-m 0", desc: "MD5 hash mode" },
+        { cmd: "-m 100", desc: "SHA1 hash mode" },
+        { cmd: "-m 1400", desc: "SHA256 hash mode" },
+        { cmd: "-m 1000", desc: "NTLM hash mode" },
+        { cmd: "-m 3200", desc: "bcrypt hash mode" },
+        { cmd: "-a 0", desc: "Dictionary attack" },
+        { cmd: "-a 1", desc: "Combination attack" },
+        { cmd: "-a 3", desc: "Brute force attack" },
+        { cmd: "hashes.txt wordlist.txt", desc: "Hash and wordlist files" },
+        { cmd: "hashes.txt /usr/share/wordlists/rockyou.txt", desc: "Use rockyou wordlist" },
+        { cmd: "--force", desc: "Ignore warnings" },
+        { cmd: "-O", desc: "Optimized kernels" },
+        { cmd: "-w 3", desc: "Workload profile (high)" },
+        { cmd: "-w 1", desc: "Workload profile (low)" },
+        { cmd: "--show", desc: "Show cracked passwords" },
+        { cmd: "--left", desc: "Show uncracked hashes" },
+        { cmd: "-r rules/best64.rule", desc: "Apply rules" },
+        { cmd: "--increment", desc: "Incremental mode" },
+        { cmd: "--increment-min=4", desc: "Minimum length" },
+        { cmd: "--increment-max=8", desc: "Maximum length" },
+        { cmd: "-o cracked.txt", desc: "Output file" },
+        { cmd: "--outfile-format=2", desc: "Output format (hash:plain)" },
+        { cmd: "--status", desc: "Show status" },
+        { cmd: "--status-timer=60", desc: "Status interval" }
+      ]
+    };
+
+    // Modal functions
+    function showCommandModal(toolName) {
+      const modal = document.getElementById('command-modal');
+      const title = document.getElementById('modal-title');
+      const body = document.getElementById('modal-body');
+      
+      title.textContent = `${toolName.toUpperCase()} Commands`;
+      
+      const commands = toolCommands[toolName] || [];
+      if (commands.length === 0) {
+        body.innerHTML = '<p>No commands available for this tool yet.</p>';
+      } else {
+        const grid = document.createElement('div');
+        grid.className = 'command-grid';
+        
+        commands.forEach(command => {
+          const item = document.createElement('div');
+          item.className = 'command-item';
+          item.innerHTML = `
+            <div class="cmd">${command.cmd}</div>
+            <div class="desc">${command.desc}</div>
+          `;
+          item.addEventListener('click', () => {
+            addCommandToTool(toolName, command.cmd);
+            closeModal();
+          });
+          grid.appendChild(item);
+        });
+        
+        body.innerHTML = '';
+        body.appendChild(grid);
+      }
+      
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('command-modal').style.display = 'none';
+    }
+
+    function addCommandToTool(toolName, command) {
+      let existingItem = document.querySelector(`.scheduled-item[data-tool="${toolName}"]`);
+      if (!existingItem) {
+        addScheduledTool(toolName);
+        existingItem = document.querySelector(`.scheduled-item[data-tool="${toolName}"]`);
+      }
+      
+      const input = existingItem.querySelector('input');
+      const current = input.value.trim();
+      if (!current.includes(command)) {
+        input.value = current ? `${current} ${command}` : command;
+      }
+    }
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('command-modal');
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
     // ======== WebSocket / Live Logs Setup ========
     const socket = io();
     const outputCards = {};
@@ -610,6 +1225,11 @@
     const placeholder = dropzone.querySelector('.placeholder');
 
     toolCards.forEach(card => {
+      // Double-click to show command modal
+      card.addEventListener('dblclick', () => {
+        showCommandModal(card.dataset.tool);
+      });
+
       // Dragging the tool card
       card.addEventListener('dragstart', e => {
         e.dataTransfer.setData('text/plain', card.dataset.tool);

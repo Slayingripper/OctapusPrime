@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Octapus Landing Page</title>
+  <title>Octapus Prime – Landing</title>
   <style>
     /* ===== Global Dark Mode ===== */
     * {
@@ -32,173 +32,290 @@
       height: 400px;
     }
 
-    /* ===== Circle (Octopus Body) ===== */
-    .octopus-body {
+    /* ===== Shield Background ===== */
+    .shield-outline {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 200px;
-      height: 200px;
-      margin-top: -100px;
-      margin-left: -100px;
-      background: #39ff14;
-      border-radius: 50%;
-      box-shadow: 0 0 16px #39ff14;
-      z-index: 2;
-    }
-    .octopus-eye {
-      position: absolute;
-      width: 24px;
-      height: 32px;
-      background: #0d0d0d;
-      border-radius: 50%;
-      top: 60px;
-      z-index: 3;
-    }
-    .eye-left {
-      left: 60px;
-    }
-    .eye-right {
-      right: 60px;
-    }
-    .octopus-eye::after {
-      content: "";
-      position: absolute;
-      top: 6px;
-      left: 6px;
-      width: 12px;
-      height: 12px;
-      background: #e6e6e6;
-      border-radius: 50%;
-    }
-
-    /* ===== Tentacle Base Style ===== */
-    .tentacle {
-      position: absolute;
-      width: 18px;
-      height: 100px;
-      background: #39ff14;
-      border-radius: 10px 10px 0 0;
-      transform-origin: bottom center;
-      box-shadow: 0 0 12px #39ff14;
-      opacity: 0.9;
-      transition: opacity 0.2s, box-shadow 0.2s;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 350px;
+      border: 3px solid #39ff14;
+      border-radius: 150px 150px 0 0;
+      clip-path: polygon(0% 0%, 100% 0%, 85% 80%, 50% 100%, 15% 80%);
+      box-shadow: 0 0 20px #39ff14;
       z-index: 1;
     }
-    .tentacle:hover {
-      opacity: 1;
-      box-shadow: 0 0 24px #39ff14;
-    }
 
-    /* ===== Tentacle Positions & Rotations ===== */
-    /* Computed for a 400×400 container, body radius=100, tentacle length=100 */
-    /* 1. Dashboard at 180° (bottom-center) */
-    .tentacle-1 {
-      left: 291px; /* 200 + 100*cos(0°) - 9 */
-      top: 100px;  /* 200 + 100*sin(0°) - 100 */
-      transform: rotate(180deg);
-    }
-    /* 2. Scenario at 225° (bottom-left) */
-    .tentacle-2 {
-      left: 262px; /* ≈200 + 100*cos(45°) - 9 */
-      top: 171px;  /* ≈200 + 100*sin(45°) - 100 */
-      transform: rotate(225deg);
-    }
-    /* 3. Settings at 270° (left-center) */
-    .tentacle-3 {
-      left: 191px; /* 200 + 100*cos(90°) - 9 */
-      top: 200px;  /* 200 + 100*sin(90°) - 100 */
-      transform: rotate(270deg);
-    }
-    /* 4. Logs at 315° (top-left) */
-    .tentacle-4 {
-      left: 120px; /* ≈200 + 100*cos(135°) - 9 */
-      top: 171px;  /* ≈200 + 100*sin(135°) - 100 */
-      transform: rotate(315deg);
-    }
-    /* 5. Help at 0° (top-center) */
-    .tentacle-5 {
-      left: 91px; /* 200 + 100*cos(180°) - 9 */
-      top: 100px; /* 200 + 100*sin(180°) - 100 */
-      transform: rotate(0deg);
-    }
-    /* 6. About at 45° (top-right) */
-    .tentacle-6 {
-      left: 120px; /* ≈200 + 100*cos(225°) - 9 */
-      top: 29px;   /* ≈200 + 100*sin(225°) - 100 */
-      transform: rotate(45deg);
-    }
-    /* 7. Updates at 90° (right-center) */
-    .tentacle-7 {
-      left: 191px; /* 200 + 100*cos(270°) - 9 */
-      top: 0px;    /* 200 + 100*sin(270°) - 100 */
-      transform: rotate(90deg);
-    }
-    /* 8. Demo at 135° (bottom-right) */
-    .tentacle-8 {
-      left: 262px; /* ≈200 + 100*cos(315°) - 9 */
-      top: 29px;   /* ≈200 + 100*sin(315°) - 100 */
-      transform: rotate(135deg);
-    }
-
-    /* ===== Labels for Each Tentacle ===== */
-    .label {
+    /* ===== Octopus Head (More Realistic) ===== */
+    .octopus-head {
       position: absolute;
-      font-size: 13px;
-      color: #39ff14;
-      text-shadow: 0 0 4px #39ff14;
-      transform: translate(-50%, -50%);
-      white-space: nowrap;
-      z-index: 4;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -65%);
+      width: 140px;
+      height: 120px;
+      background: #39ff14;
+      /* More octopus-like bulbous shape */
+      border-radius: 70px 70px 30px 30px / 60px 60px 40px 40px;
+      box-shadow: 0 0 25px #39ff14;
+      z-index: 3;
+      position: relative;
     }
-    /* Updated label positions to align with tentacle tips */
-    .label-1 { left: 300px; top: 330px; } /* Dashboard */
-    .label-2 { left: 179px; top: 363px; } /* Scenario */
-    .label-3 { left: 70px;  top: 300px; } /* Settings */
-    .label-4 { left: 37px;  top: 179px; } /* Logs */
-    .label-5 { left: 100px; top: 70px;  } /* Help */
-    .label-6 { left: 221px; top: 37px;  } /* About */
-    .label-7 { left: 330px; top: 100px; } /* Updates */
-    .label-8 { left: 363px; top: 221px; } /* Demo */
+
+    /* Octopus mantle bulge on top */
+    .octopus-head::before {
+      content: "";
+      position: absolute;
+      top: -15px;
+      left: 15px;
+      width: 110px;
+      height: 80px;
+      background: #39ff14;
+      border-radius: 55px 55px 25px 25px / 40px 40px 20px 20px;
+      box-shadow: 0 0 20px #39ff14;
+      z-index: -1;
+    }
+
+    /* Side fins/flaps typical of octopus */
+    .octopus-head::after {
+      content: "";
+      position: absolute;
+      bottom: 10px;
+      left: -10px;
+      width: 160px;
+      height: 40px;
+      background: linear-gradient(90deg, transparent, #39ff14 20%, #39ff14 80%, transparent);
+      border-radius: 20px;
+      opacity: 0.6;
+      z-index: -1;
+    }
+
+    /* Octopus Eyes - More realistic positioning */
+    .cyber-eye {
+      position: absolute;
+      width: 24px;
+      height: 30px;
+      background: #0d0d0d;
+      top: 35px;
+      z-index: 4;
+      border-radius: 50% 50% 40% 40%;
+      border: 2px solid #39ff14;
+      box-shadow: inset 0 0 8px rgba(57, 255, 20, 0.3);
+    }
+    .eye-left {
+      left: 30px;
+      transform: rotate(-10deg);
+    }
+    .eye-right {
+      right: 30px;
+      transform: rotate(10deg);
+    }
+    .cyber-eye::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      background: #39ff14;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #39ff14;
+    }
+
+    /* Add texture lines to head */
+    .head-texture {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      height: 60px;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 3px,
+        rgba(13, 13, 13, 0.2) 3px,
+        rgba(13, 13, 13, 0.2) 5px
+      );
+      border-radius: 50px;
+      z-index: 2;
+      opacity: 0.5;
+    }
+
+    /* ===== Circuit Board Tentacles ===== */
+    .circuit-tentacle {
+      position: absolute;
+      z-index: 2;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .circuit-tentacle:hover {
+      filter: brightness(1.3);
+    }
+
+    /* Circuit paths - curved like octopus tentacles */
+    .circuit-path {
+      stroke: #39ff14;
+      stroke-width: 6;
+      fill: none;
+      filter: drop-shadow(0 0 8px #39ff14);
+      transition: all 0.3s ease;
+      stroke-linecap: round;
+    }
+
+    .circuit-tentacle:hover .circuit-path {
+      stroke-width: 8;
+      filter: drop-shadow(0 0 15px #39ff14);
+    }
+
+    /* Circuit nodes/dots */
+    .circuit-node {
+      fill: #39ff14;
+      filter: drop-shadow(0 0 4px #39ff14);
+      transition: all 0.3s ease;
+    }
+
+    .circuit-tentacle:hover .circuit-node {
+      r: 6;
+      filter: drop-shadow(0 0 8px #39ff14);
+    }
+
+    /* SVG text labels */
+    .circuit-label {
+      fill: #39ff14;
+      font-family: "Roboto Mono", monospace;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #39ff14;
+      transition: all 0.3s ease;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+    }
+
+    .circuit-tentacle:hover .circuit-label {
+      fill: #ffffff;
+      font-size: 12px;
+      filter: drop-shadow(0 0 12px #39ff14);
+    }
   </style>
 </head>
 <body>
   <div id="landing-container">
-    <!-- Octopus Body and Eyes -->
-    <div class="octopus-body">
-      <div class="octopus-eye eye-left"></div>
-      <div class="octopus-eye eye-right"></div>
+    <!-- Shield Outline -->
+    <div class="shield-outline"></div>
+    
+    <!-- More Realistic Octopus Head -->
+    <div class="octopus-head">
+      <div class="head-texture"></div>
+      <div class="cyber-eye eye-left"></div>
+      <div class="cyber-eye eye-right"></div>
     </div>
 
-    <!-- Tentacle Links -->
-    <a href="/dashboard" class="tentacle tentacle-1"></a>
-    <a href="/scenario_maker" class="tentacle tentacle-2"></a>
-    <a href="/settings" class="tentacle tentacle-3"></a>
-    <a href="/logs" class="tentacle tentacle-4"></a>
-    <a href="/help" class="tentacle tentacle-5"></a>
-    <a href="/about" class="tentacle tentacle-6"></a>
-    <a href="/updates" class="tentacle tentacle-7"></a>
-    <a href="/demo" class="tentacle tentacle-8"></a>
+    <!-- Circuit Board Tentacles as SVG with more organic curves -->
+    <svg width="400" height="400" style="position: absolute; top: 0; left: 0; z-index: 2;">
+      <!-- Tentacle 1 - Dashboard (curved like real tentacle) -->
+      <a href="/dashboard" class="circuit-tentacle">
+        <path class="circuit-path" d="M 200 180 Q 230 160 260 150 Q 290 140 320 155"/>
+        <circle class="circuit-node" cx="200" cy="180" r="4"/>
+        <circle class="circuit-node" cx="230" cy="160" r="3"/>
+        <circle class="circuit-node" cx="260" cy="150" r="3"/>
+        <circle class="circuit-node" cx="290" cy="140" r="3"/>
+        <circle class="circuit-node" cx="320" cy="155" r="5"/>
+        <text class="circuit-label" x="340" y="150">DASHBOARD</text>
+      </a>
 
-    <!-- Labels -->
-    <div class="label label-1">Dashboard</div>
-    <div class="label label-2">Scenario</div>
-    <div class="label label-3">Settings</div>
-    <div class="label label-4">Logs</div>
-    <div class="label label-5">Help</div>
-    <div class="label label-6">About</div>
-    <div class="label label-7">Updates</div>
-    <div class="label label-8">Demo</div>
+      <!-- Tentacle 2 - Scenario -->
+      <a href="/scenario_maker" class="circuit-tentacle">
+        <path class="circuit-path" d="M 210 200 Q 240 210 270 225 Q 300 240 320 260"/>
+        <circle class="circuit-node" cx="210" cy="200" r="4"/>
+        <circle class="circuit-node" cx="240" cy="210" r="3"/>
+        <circle class="circuit-node" cx="270" cy="225" r="3"/>
+        <circle class="circuit-node" cx="300" cy="240" r="3"/>
+        <circle class="circuit-node" cx="320" cy="260" r="5"/>
+        <text class="circuit-label" x="340" y="270">SCENARIO</text>
+      </a>
+
+      <!-- Tentacle 3 - Settings -->
+      <a href="/settings" class="circuit-tentacle">
+        <path class="circuit-path" d="M 200 220 Q 210 250 220 280 Q 230 310 240 330"/>
+        <circle class="circuit-node" cx="200" cy="220" r="4"/>
+        <circle class="circuit-node" cx="210" cy="250" r="3"/>
+        <circle class="circuit-node" cx="220" cy="280" r="3"/>
+        <circle class="circuit-node" cx="230" cy="310" r="3"/>
+        <circle class="circuit-node" cx="240" cy="330" r="5"/>
+        <text class="circuit-label" x="250" y="345">SETTINGS</text>
+      </a>
+
+      <!-- Tentacle 4 - Logs -->
+      <a href="/logs" class="circuit-tentacle">
+        <path class="circuit-path" d="M 190 220 Q 180 250 170 280 Q 160 310 150 330"/>
+        <circle class="circuit-node" cx="190" cy="220" r="4"/>
+        <circle class="circuit-node" cx="180" cy="250" r="3"/>
+        <circle class="circuit-node" cx="170" cy="280" r="3"/>
+        <circle class="circuit-node" cx="160" cy="310" r="3"/>
+        <circle class="circuit-node" cx="150" cy="330" r="5"/>
+        <text class="circuit-label" x="130" y="345">LOGS</text>
+      </a>
+
+      <!-- Tentacle 5 - Help -->
+      <a href="/help" class="circuit-tentacle">
+        <path class="circuit-path" d="M 190 200 Q 160 210 130 225 Q 100 240 80 260"/>
+        <circle class="circuit-node" cx="190" cy="200" r="4"/>
+        <circle class="circuit-node" cx="160" cy="210" r="3"/>
+        <circle class="circuit-node" cx="130" cy="225" r="3"/>
+        <circle class="circuit-node" cx="100" cy="240" r="3"/>
+        <circle class="circuit-node" cx="80" cy="260" r="5"/>
+        <text class="circuit-label" x="60" y="270">HELP</text>
+      </a>
+
+      <!-- Tentacle 6 - About -->
+      <a href="/about" class="circuit-tentacle">
+        <path class="circuit-path" d="M 200 180 Q 170 160 140 150 Q 110 140 80 155"/>
+        <circle class="circuit-node" cx="200" cy="180" r="4"/>
+        <circle class="circuit-node" cx="170" cy="160" r="3"/>
+        <circle class="circuit-node" cx="140" cy="150" r="3"/>
+        <circle class="circuit-node" cx="110" cy="140" r="3"/>
+        <circle class="circuit-node" cx="80" cy="155" r="5"/>
+        <text class="circuit-label" x="60" y="150">ABOUT</text>
+      </a>
+
+      <!-- Tentacle 7 - Updates -->
+      <a href="/updates" class="circuit-tentacle">
+        <path class="circuit-path" d="M 190 160 Q 170 130 150 110 Q 130 90 120 80"/>
+        <circle class="circuit-node" cx="190" cy="160" r="4"/>
+        <circle class="circuit-node" cx="170" cy="130" r="3"/>
+        <circle class="circuit-node" cx="150" cy="110" r="3"/>
+        <circle class="circuit-node" cx="130" cy="90" r="3"/>
+        <circle class="circuit-node" cx="120" cy="80" r="5"/>
+        <text class="circuit-label" x="110" y="65">UPDATES</text>
+      </a>
+
+      <!-- Tentacle 8 - Demo -->
+      <a href="/demo" class="circuit-tentacle">
+        <path class="circuit-path" d="M 210 160 Q 230 130 250 110 Q 270 90 280 80"/>
+        <circle class="circuit-node" cx="210" cy="160" r="4"/>
+        <circle class="circuit-node" cx="230" cy="130" r="3"/>
+        <circle class="circuit-node" cx="250" cy="110" r="3"/>
+        <circle class="circuit-node" cx="270" cy="90" r="3"/>
+        <circle class="circuit-node" cx="280" cy="80" r="5"/>
+        <text class="circuit-label" x="290" y="65">DEMO</text>
+      </a>
+    </svg>
   </div>
+
+  <script>
+    // Add pulse animation to the octopus head
+    const head = document.querySelector('.octopus-head');
+    setInterval(() => {
+      head.style.boxShadow = '0 0 40px #39ff14';
+      setTimeout(() => {
+        head.style.boxShadow = '0 0 25px #39ff14';
+      }, 500);
+    }, 2000);
+  </script>
 </body>
 </html>
-<script>
-  // Optional: Add interactivity or animations here
-  document.querySelectorAll('.tentacle').forEach(tentacle => {
-    tentacle.addEventListener('mouseover', () => {
-      tentacle.style.transform += ' scale(1.1)';
-    });
-    tentacle.addEventListener('mouseout', () => {
-      tentacle.style.transform = tentacle.style.transform.replace(' scale(1.1)', '');
-    });
-  });

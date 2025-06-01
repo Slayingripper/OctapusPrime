@@ -1738,3 +1738,387 @@
 2025-06-01 12:36:06,936 127.0.0.1 - - [01/Jun/2025 12:36:06] "[36mGET /settings HTTP/1.1[0m" 304 -
 2025-06-01 12:36:06,958 127.0.0.1 - - [01/Jun/2025 12:36:06] "GET /api/settings HTTP/1.1" 200 -
 2025-06-01 12:36:07,656 127.0.0.1 - - [01/Jun/2025 12:36:07] "GET / HTTP/1.1" 200 -
+2025-06-01 14:43:50,789 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 14:43:50,789 [33mPress CTRL+C to quit[0m
+2025-06-01 14:44:00,209 127.0.0.1 - - [01/Jun/2025 14:44:00] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 14:44:00,225 127.0.0.1 - - [01/Jun/2025 14:44:00] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 14:44:16,046 127.0.0.1 - - [01/Jun/2025 14:44:16] "GET / HTTP/1.1" 200 -
+2025-06-01 14:44:19,569 127.0.0.1 - - [01/Jun/2025 14:44:19] "GET /updates HTTP/1.1" 200 -
+2025-06-01 14:44:20,755 127.0.0.1 - - [01/Jun/2025 14:44:20] "GET / HTTP/1.1" 200 -
+2025-06-01 14:44:23,924 127.0.0.1 - - [01/Jun/2025 14:44:23] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 14:44:25,213 127.0.0.1 - - [01/Jun/2025 14:44:25] "GET / HTTP/1.1" 200 -
+2025-06-01 14:44:26,973 127.0.0.1 - - [01/Jun/2025 14:44:26] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 14:44:27,009 127.0.0.1 - - [01/Jun/2025 14:44:27] "GET /socket.io/?EIO=4&transport=polling&t=PShJh5- HTTP/1.1" 200 -
+2025-06-01 14:44:27,010 127.0.0.1 - - [01/Jun/2025 14:44:27] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 14:44:27,033 New WebSocket client connected
+2025-06-01 14:44:27,033 127.0.0.1 - - [01/Jun/2025 14:44:27] "POST /socket.io/?EIO=4&transport=polling&t=PShJh6H&sid=wtv7R1nkX_tr44S6AAAA HTTP/1.1" 200 -
+2025-06-01 14:44:27,034 127.0.0.1 - - [01/Jun/2025 14:44:27] "GET /socket.io/?EIO=4&transport=polling&t=PShJh6H.0&sid=wtv7R1nkX_tr44S6AAAA HTTP/1.1" 200 -
+2025-06-01 14:44:27,039 127.0.0.1 - - [01/Jun/2025 14:44:27] "GET /socket.io/?EIO=4&transport=polling&t=PShJh6U&sid=wtv7R1nkX_tr44S6AAAA HTTP/1.1" 200 -
+2025-06-01 15:27:48,312 127.0.0.1 - - [01/Jun/2025 15:27:48] "GET /socket.io/?EIO=4&transport=websocket&sid=wtv7R1nkX_tr44S6AAAA HTTP/1.1" 200 -
+2025-06-01 15:27:48,329 127.0.0.1 - - [01/Jun/2025 15:27:48] "GET / HTTP/1.1" 200 -
+2025-06-01 15:31:01,599 127.0.0.1 - - [01/Jun/2025 15:31:01] "GET / HTTP/1.1" 200 -
+2025-06-01 15:31:03,893 127.0.0.1 - - [01/Jun/2025 15:31:03] "GET / HTTP/1.1" 200 -
+2025-06-01 15:31:12,829 127.0.0.1 - - [01/Jun/2025 15:31:12] "GET /updates HTTP/1.1" 200 -
+2025-06-01 15:31:16,092 127.0.0.1 - - [01/Jun/2025 15:31:16] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 15:31:16,130 127.0.0.1 - - [01/Jun/2025 15:31:16] "GET /socket.io/?EIO=4&transport=polling&t=PShUOwU HTTP/1.1" 200 -
+2025-06-01 15:31:16,132 127.0.0.1 - - [01/Jun/2025 15:31:16] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 15:31:16,153 New WebSocket client connected
+2025-06-01 15:31:16,154 127.0.0.1 - - [01/Jun/2025 15:31:16] "POST /socket.io/?EIO=4&transport=polling&t=PShUOwn&sid=ldwm-GCpM24aaXUoAAAC HTTP/1.1" 200 -
+2025-06-01 15:31:16,154 127.0.0.1 - - [01/Jun/2025 15:31:16] "GET /socket.io/?EIO=4&transport=polling&t=PShUOwn.0&sid=ldwm-GCpM24aaXUoAAAC HTTP/1.1" 200 -
+2025-06-01 15:31:16,159 127.0.0.1 - - [01/Jun/2025 15:31:16] "GET /socket.io/?EIO=4&transport=polling&t=PShUOw-&sid=ldwm-GCpM24aaXUoAAAC HTTP/1.1" 200 -
+2025-06-01 15:31:17,484 127.0.0.1 - - [01/Jun/2025 15:31:17] "GET /socket.io/?EIO=4&transport=websocket&sid=ldwm-GCpM24aaXUoAAAC HTTP/1.1" 200 -
+2025-06-01 15:33:25,097 127.0.0.1 - - [01/Jun/2025 15:33:25] "GET / HTTP/1.1" 200 -
+2025-06-01 15:37:39,159 127.0.0.1 - - [01/Jun/2025 15:37:39] "GET / HTTP/1.1" 200 -
+2025-06-01 15:37:43,411 127.0.0.1 - - [01/Jun/2025 15:37:43] "GET /updates HTTP/1.1" 200 -
+2025-06-01 15:37:44,991 127.0.0.1 - - [01/Jun/2025 15:37:44] "GET / HTTP/1.1" 200 -
+2025-06-01 15:37:47,093 127.0.0.1 - - [01/Jun/2025 15:37:47] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 15:37:47,128 127.0.0.1 - - [01/Jun/2025 15:37:47] "GET /socket.io/?EIO=4&transport=polling&t=PShVuNp HTTP/1.1" 200 -
+2025-06-01 15:37:47,129 127.0.0.1 - - [01/Jun/2025 15:37:47] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 15:37:47,146 New WebSocket client connected
+2025-06-01 15:37:47,147 127.0.0.1 - - [01/Jun/2025 15:37:47] "POST /socket.io/?EIO=4&transport=polling&t=PShVuO2&sid=-SG_QgFRIAIpaShBAAAE HTTP/1.1" 200 -
+2025-06-01 15:37:47,147 127.0.0.1 - - [01/Jun/2025 15:37:47] "GET /socket.io/?EIO=4&transport=polling&t=PShVuO2.0&sid=-SG_QgFRIAIpaShBAAAE HTTP/1.1" 200 -
+2025-06-01 15:37:47,152 127.0.0.1 - - [01/Jun/2025 15:37:47] "GET /socket.io/?EIO=4&transport=polling&t=PShVuOF&sid=-SG_QgFRIAIpaShBAAAE HTTP/1.1" 200 -
+2025-06-01 15:37:48,807 127.0.0.1 - - [01/Jun/2025 15:37:48] "GET /socket.io/?EIO=4&transport=websocket&sid=-SG_QgFRIAIpaShBAAAE HTTP/1.1" 200 -
+2025-06-01 15:40:19,934 127.0.0.1 - - [01/Jun/2025 15:40:19] "GET / HTTP/1.1" 200 -
+2025-06-01 15:40:27,998 127.0.0.1 - - [01/Jun/2025 15:40:27] "GET /settings HTTP/1.1" 200 -
+2025-06-01 15:40:28,029 127.0.0.1 - - [01/Jun/2025 15:40:28] "GET /api/settings HTTP/1.1" 200 -
+2025-06-01 15:40:29,774 127.0.0.1 - - [01/Jun/2025 15:40:29] "GET / HTTP/1.1" 200 -
+2025-06-01 15:40:32,525 127.0.0.1 - - [01/Jun/2025 15:40:32] "GET /logs HTTP/1.1" 200 -
+2025-06-01 15:40:32,575 127.0.0.1 - - [01/Jun/2025 15:40:32] "GET /socket.io/?EIO=4&transport=polling&t=PShWWmv HTTP/1.1" 200 -
+2025-06-01 15:40:32,577 127.0.0.1 - - [01/Jun/2025 15:40:32] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 15:40:32,598 New WebSocket client connected
+2025-06-01 15:40:32,598 127.0.0.1 - - [01/Jun/2025 15:40:32] "POST /socket.io/?EIO=4&transport=polling&t=PShWWnD&sid=bMmFZvRx6uNKY35pAAAG HTTP/1.1" 200 -
+2025-06-01 15:40:32,599 127.0.0.1 - - [01/Jun/2025 15:40:32] "GET /socket.io/?EIO=4&transport=polling&t=PShWWnE&sid=bMmFZvRx6uNKY35pAAAG HTTP/1.1" 200 -
+2025-06-01 15:40:33,093 127.0.0.1 - - [01/Jun/2025 15:40:33] "GET /socket.io/?EIO=4&transport=polling&t=PShWWv2&sid=bMmFZvRx6uNKY35pAAAG HTTP/1.1" 200 -
+2025-06-01 15:40:34,500 127.0.0.1 - - [01/Jun/2025 15:40:34] "GET /socket.io/?EIO=4&transport=websocket&sid=bMmFZvRx6uNKY35pAAAG HTTP/1.1" 200 -
+2025-06-01 15:40:35,649 127.0.0.1 - - [01/Jun/2025 15:40:35] "GET /help HTTP/1.1" 200 -
+2025-06-01 15:40:38,705 127.0.0.1 - - [01/Jun/2025 15:40:38] "[33mGET /about HTTP/1.1[0m" 404 -
+2025-06-01 15:42:51,520 127.0.0.1 - - [01/Jun/2025 15:42:51] "GET /about HTTP/1.1" 200 -
+2025-06-01 15:42:57,191 127.0.0.1 - - [01/Jun/2025 15:42:57] "GET /about HTTP/1.1" 200 -
+2025-06-01 15:42:58,432 127.0.0.1 - - [01/Jun/2025 15:42:58] "[36mGET /about HTTP/1.1[0m" 304 -
+2025-06-01 15:43:04,656 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 15:43:04,656 [33mPress CTRL+C to quit[0m
+2025-06-01 15:43:06,345 127.0.0.1 - - [01/Jun/2025 15:43:06] "GET /about HTTP/1.1" 200 -
+2025-06-01 15:49:38,919 127.0.0.1 - - [01/Jun/2025 15:49:38] "GET /about HTTP/1.1" 200 -
+2025-06-01 15:49:48,196 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 15:49:48,196 [33mPress CTRL+C to quit[0m
+2025-06-01 15:49:50,114 127.0.0.1 - - [01/Jun/2025 15:49:50] "GET /about HTTP/1.1" 200 -
+2025-06-01 15:49:59,252 127.0.0.1 - - [01/Jun/2025 15:49:59] "GET / HTTP/1.1" 200 -
+2025-06-01 15:50:04,823 127.0.0.1 - - [01/Jun/2025 15:50:04] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 15:50:04,861 127.0.0.1 - - [01/Jun/2025 15:50:04] "GET /socket.io/?EIO=4&transport=polling&t=PShYiUv HTTP/1.1" 200 -
+2025-06-01 15:50:04,863 127.0.0.1 - - [01/Jun/2025 15:50:04] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 15:50:04,883 New WebSocket client connected
+2025-06-01 15:50:04,884 127.0.0.1 - - [01/Jun/2025 15:50:04] "POST /socket.io/?EIO=4&transport=polling&t=PShYiVA&sid=rGhjBUK1VLY1iRLzAAAA HTTP/1.1" 200 -
+2025-06-01 15:50:04,884 127.0.0.1 - - [01/Jun/2025 15:50:04] "GET /socket.io/?EIO=4&transport=polling&t=PShYiVA.0&sid=rGhjBUK1VLY1iRLzAAAA HTTP/1.1" 200 -
+2025-06-01 15:50:04,889 127.0.0.1 - - [01/Jun/2025 15:50:04] "GET /socket.io/?EIO=4&transport=polling&t=PShYiVO&sid=rGhjBUK1VLY1iRLzAAAA HTTP/1.1" 200 -
+2025-06-01 15:50:07,009 127.0.0.1 - - [01/Jun/2025 15:50:07] "GET /socket.io/?EIO=4&transport=websocket&sid=rGhjBUK1VLY1iRLzAAAA HTTP/1.1" 200 -
+2025-06-01 15:50:07,014 127.0.0.1 - - [01/Jun/2025 15:50:07] "GET / HTTP/1.1" 200 -
+2025-06-01 15:50:09,662 127.0.0.1 - - [01/Jun/2025 15:50:09] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 15:50:10,723 127.0.0.1 - - [01/Jun/2025 15:50:10] "GET / HTTP/1.1" 200 -
+2025-06-01 15:50:12,231 127.0.0.1 - - [01/Jun/2025 15:50:12] "GET /settings HTTP/1.1" 200 -
+2025-06-01 15:50:16,662 127.0.0.1 - - [01/Jun/2025 15:50:16] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 15:50:19,128 127.0.0.1 - - [01/Jun/2025 15:50:19] "[36mGET /settings HTTP/1.1[0m" 304 -
+2025-06-01 15:50:20,279 127.0.0.1 - - [01/Jun/2025 15:50:20] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 15:50:22,162 127.0.0.1 - - [01/Jun/2025 15:50:22] "GET /logs HTTP/1.1" 200 -
+2025-06-01 15:50:22,196 127.0.0.1 - - [01/Jun/2025 15:50:22] "GET /socket.io/?EIO=4&transport=polling&t=PShYmjl HTTP/1.1" 200 -
+2025-06-01 15:50:22,199 127.0.0.1 - - [01/Jun/2025 15:50:22] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 15:50:22,213 New WebSocket client connected
+2025-06-01 15:50:22,213 127.0.0.1 - - [01/Jun/2025 15:50:22] "POST /socket.io/?EIO=4&transport=polling&t=PShYmj-&sid=fagG02GNLSjTq7haAAAC HTTP/1.1" 200 -
+2025-06-01 15:50:22,213 127.0.0.1 - - [01/Jun/2025 15:50:22] "GET /socket.io/?EIO=4&transport=polling&t=PShYmj_&sid=fagG02GNLSjTq7haAAAC HTTP/1.1" 200 -
+2025-06-01 15:50:22,735 127.0.0.1 - - [01/Jun/2025 15:50:22] "GET /socket.io/?EIO=4&transport=polling&t=PShYmsD&sid=fagG02GNLSjTq7haAAAC HTTP/1.1" 200 -
+2025-06-01 15:50:23,133 127.0.0.1 - - [01/Jun/2025 15:50:23] "GET /socket.io/?EIO=4&transport=websocket&sid=fagG02GNLSjTq7haAAAC HTTP/1.1" 200 -
+2025-06-01 15:50:23,138 127.0.0.1 - - [01/Jun/2025 15:50:23] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-01 15:50:24,496 127.0.0.1 - - [01/Jun/2025 15:50:24] "GET /help HTTP/1.1" 200 -
+2025-06-01 15:50:25,573 127.0.0.1 - - [01/Jun/2025 15:50:25] "GET / HTTP/1.1" 200 -
+2025-06-01 15:50:27,809 127.0.0.1 - - [01/Jun/2025 15:50:27] "GET /about HTTP/1.1" 200 -
+2025-06-01 15:50:29,641 127.0.0.1 - - [01/Jun/2025 15:50:29] "GET / HTTP/1.1" 200 -
+2025-06-01 15:50:58,087 127.0.0.1 - - [01/Jun/2025 15:50:58] "GET /settings HTTP/1.1" 200 -
+2025-06-01 15:51:25,739 127.0.0.1 - - [01/Jun/2025 15:51:25] "GET /settings HTTP/1.1" 200 -
+2025-06-01 15:51:25,762 127.0.0.1 - - [01/Jun/2025 15:51:25] "GET /api/settings HTTP/1.1" 200 -
+2025-06-01 15:51:27,392 127.0.0.1 - - [01/Jun/2025 15:51:27] "GET / HTTP/1.1" 200 -
+2025-06-01 15:51:29,203 127.0.0.1 - - [01/Jun/2025 15:51:29] "GET /about HTTP/1.1" 200 -
+2025-06-01 15:52:04,556 127.0.0.1 - - [01/Jun/2025 15:52:04] "GET /about HTTP/1.1" 200 -
+2025-06-01 15:52:09,663 127.0.0.1 - - [01/Jun/2025 15:52:09] "GET / HTTP/1.1" 200 -
+2025-06-01 17:17:55,314 127.0.0.1 - - [01/Jun/2025 17:17:55] "GET /logs HTTP/1.1" 200 -
+2025-06-01 17:17:55,350 127.0.0.1 - - [01/Jun/2025 17:17:55] "GET /socket.io/?EIO=4&transport=polling&t=PShspEK HTTP/1.1" 200 -
+2025-06-01 17:17:55,368 New WebSocket client connected
+2025-06-01 17:17:55,368 127.0.0.1 - - [01/Jun/2025 17:17:55] "POST /socket.io/?EIO=4&transport=polling&t=PShspEW&sid=wKQ2yqXwnR_sMj2WAAAE HTTP/1.1" 200 -
+2025-06-01 17:17:55,369 127.0.0.1 - - [01/Jun/2025 17:17:55] "GET /socket.io/?EIO=4&transport=polling&t=PShspEX&sid=wKQ2yqXwnR_sMj2WAAAE HTTP/1.1" 200 -
+2025-06-01 17:17:55,865 127.0.0.1 - - [01/Jun/2025 17:17:55] "GET /socket.io/?EIO=4&transport=polling&t=PShspMN&sid=wKQ2yqXwnR_sMj2WAAAE HTTP/1.1" 200 -
+2025-06-01 17:17:57,154 127.0.0.1 - - [01/Jun/2025 17:17:57] "GET /socket.io/?EIO=4&transport=websocket&sid=wKQ2yqXwnR_sMj2WAAAE HTTP/1.1" 200 -
+2025-06-01 17:17:57,161 127.0.0.1 - - [01/Jun/2025 17:17:57] "GET / HTTP/1.1" 200 -
+2025-06-01 17:21:09,841 127.0.0.1 - - [01/Jun/2025 17:21:09] "GET / HTTP/1.1" 200 -
+2025-06-01 17:21:33,226 127.0.0.1 - - [01/Jun/2025 17:21:33] "GET / HTTP/1.1" 200 -
+2025-06-01 17:21:40,084 127.0.0.1 - - [01/Jun/2025 17:21:40] "GET / HTTP/1.1" 200 -
+2025-06-01 17:22:11,093 127.0.0.1 - - [01/Jun/2025 17:22:11] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 17:22:13,499 127.0.0.1 - - [01/Jun/2025 17:22:13] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 17:22:20,308 127.0.0.1 - - [01/Jun/2025 17:22:20] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:22:20,354 127.0.0.1 - - [01/Jun/2025 17:22:20] "GET /socket.io/?EIO=4&transport=polling&t=PShtpwy HTTP/1.1" 200 -
+2025-06-01 17:22:20,356 127.0.0.1 - - [01/Jun/2025 17:22:20] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:22:20,374 New WebSocket client connected
+2025-06-01 17:22:20,375 127.0.0.1 - - [01/Jun/2025 17:22:20] "POST /socket.io/?EIO=4&transport=polling&t=PShtpxD&sid=WsGVdoVznTXk0fSzAAAG HTTP/1.1" 200 -
+2025-06-01 17:22:20,375 127.0.0.1 - - [01/Jun/2025 17:22:20] "GET /socket.io/?EIO=4&transport=polling&t=PShtpxD.0&sid=WsGVdoVznTXk0fSzAAAG HTTP/1.1" 200 -
+2025-06-01 17:22:20,380 127.0.0.1 - - [01/Jun/2025 17:22:20] "GET /socket.io/?EIO=4&transport=polling&t=PShtpxQ&sid=WsGVdoVznTXk0fSzAAAG HTTP/1.1" 200 -
+2025-06-01 17:23:00,347 127.0.0.1 - - [01/Jun/2025 17:23:00] "GET /socket.io/?EIO=4&transport=websocket&sid=WsGVdoVznTXk0fSzAAAG HTTP/1.1" 200 -
+2025-06-01 17:23:00,359 127.0.0.1 - - [01/Jun/2025 17:23:00] "GET / HTTP/1.1" 200 -
+2025-06-01 17:24:11,353 127.0.0.1 - - [01/Jun/2025 17:24:11] "GET / HTTP/1.1" 200 -
+2025-06-01 17:24:16,353 127.0.0.1 - - [01/Jun/2025 17:24:16] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:24:16,396 127.0.0.1 - - [01/Jun/2025 17:24:16] "GET /socket.io/?EIO=4&transport=polling&t=PShuGG7 HTTP/1.1" 200 -
+2025-06-01 17:24:16,398 127.0.0.1 - - [01/Jun/2025 17:24:16] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:24:16,423 New WebSocket client connected
+2025-06-01 17:24:16,423 127.0.0.1 - - [01/Jun/2025 17:24:16] "POST /socket.io/?EIO=4&transport=polling&t=PShuGGW&sid=e1M5wETbQTcsHUmxAAAI HTTP/1.1" 200 -
+2025-06-01 17:24:16,423 127.0.0.1 - - [01/Jun/2025 17:24:16] "GET /socket.io/?EIO=4&transport=polling&t=PShuGGW.0&sid=e1M5wETbQTcsHUmxAAAI HTTP/1.1" 200 -
+2025-06-01 17:24:16,428 127.0.0.1 - - [01/Jun/2025 17:24:16] "GET /socket.io/?EIO=4&transport=polling&t=PShuGGh&sid=e1M5wETbQTcsHUmxAAAI HTTP/1.1" 200 -
+2025-06-01 17:24:20,150 127.0.0.1 - - [01/Jun/2025 17:24:20] "GET /local_cidr HTTP/1.1" 200 -
+2025-06-01 17:25:07,970 127.0.0.1 - - [01/Jun/2025 17:25:07] "GET /socket.io/?EIO=4&transport=websocket&sid=e1M5wETbQTcsHUmxAAAI HTTP/1.1" 200 -
+2025-06-01 17:25:07,985 127.0.0.1 - - [01/Jun/2025 17:25:07] "GET / HTTP/1.1" 200 -
+2025-06-01 17:25:11,573 127.0.0.1 - - [01/Jun/2025 17:25:11] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 17:25:16,545 127.0.0.1 - - [01/Jun/2025 17:25:16] "GET / HTTP/1.1" 200 -
+2025-06-01 17:25:30,019 127.0.0.1 - - [01/Jun/2025 17:25:30] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 17:25:43,513 127.0.0.1 - - [01/Jun/2025 17:25:43] "GET / HTTP/1.1" 200 -
+2025-06-01 17:25:46,018 127.0.0.1 - - [01/Jun/2025 17:25:46] "GET /settings HTTP/1.1" 200 -
+2025-06-01 17:25:46,054 127.0.0.1 - - [01/Jun/2025 17:25:46] "GET /api/settings HTTP/1.1" 200 -
+2025-06-01 17:25:51,967 127.0.0.1 - - [01/Jun/2025 17:25:51] "GET / HTTP/1.1" 200 -
+2025-06-01 17:25:53,691 127.0.0.1 - - [01/Jun/2025 17:25:53] "GET /logs HTTP/1.1" 200 -
+2025-06-01 17:25:53,725 127.0.0.1 - - [01/Jun/2025 17:25:53] "GET /socket.io/?EIO=4&transport=polling&t=PShue0w HTTP/1.1" 200 -
+2025-06-01 17:25:53,727 127.0.0.1 - - [01/Jun/2025 17:25:53] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-01 17:25:53,743 New WebSocket client connected
+2025-06-01 17:25:53,744 127.0.0.1 - - [01/Jun/2025 17:25:53] "POST /socket.io/?EIO=4&transport=polling&t=PShue19&sid=xaX-R7gVZQZaR58qAAAK HTTP/1.1" 200 -
+2025-06-01 17:25:53,744 127.0.0.1 - - [01/Jun/2025 17:25:53] "GET /socket.io/?EIO=4&transport=polling&t=PShue19.0&sid=xaX-R7gVZQZaR58qAAAK HTTP/1.1" 200 -
+2025-06-01 17:25:54,308 127.0.0.1 - - [01/Jun/2025 17:25:54] "GET /socket.io/?EIO=4&transport=polling&t=PShue9_&sid=xaX-R7gVZQZaR58qAAAK HTTP/1.1" 200 -
+2025-06-01 17:25:54,312 127.0.0.1 - - [01/Jun/2025 17:25:54] "GET /socket.io/?EIO=4&transport=polling&t=PShueA7&sid=xaX-R7gVZQZaR58qAAAK HTTP/1.1" 200 -
+2025-06-01 17:26:06,501 127.0.0.1 - - [01/Jun/2025 17:26:06] "GET /socket.io/?EIO=4&transport=websocket&sid=xaX-R7gVZQZaR58qAAAK HTTP/1.1" 200 -
+2025-06-01 17:26:06,506 127.0.0.1 - - [01/Jun/2025 17:26:06] "GET / HTTP/1.1" 200 -
+2025-06-01 17:26:09,286 127.0.0.1 - - [01/Jun/2025 17:26:09] "GET /help HTTP/1.1" 200 -
+2025-06-01 17:26:11,455 127.0.0.1 - - [01/Jun/2025 17:26:11] "GET / HTTP/1.1" 200 -
+2025-06-01 17:26:12,814 127.0.0.1 - - [01/Jun/2025 17:26:12] "GET /about HTTP/1.1" 200 -
+2025-06-01 17:26:15,020 127.0.0.1 - - [01/Jun/2025 17:26:15] "GET / HTTP/1.1" 200 -
+2025-06-01 17:26:16,902 127.0.0.1 - - [01/Jun/2025 17:26:16] "GET /updates HTTP/1.1" 200 -
+2025-06-01 17:26:18,315 127.0.0.1 - - [01/Jun/2025 17:26:18] "GET / HTTP/1.1" 200 -
+2025-06-01 17:26:22,029 127.0.0.1 - - [01/Jun/2025 17:26:22] "GET /demo HTTP/1.1" 200 -
+2025-06-01 17:26:26,711 127.0.0.1 - - [01/Jun/2025 17:26:26] "GET / HTTP/1.1" 200 -
+2025-06-01 17:26:40,092 127.0.0.1 - - [01/Jun/2025 17:26:40] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:26:40,130 127.0.0.1 - - [01/Jun/2025 17:26:40] "GET /socket.io/?EIO=4&transport=polling&t=PShupM0 HTTP/1.1" 200 -
+2025-06-01 17:26:40,132 127.0.0.1 - - [01/Jun/2025 17:26:40] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:26:40,151 New WebSocket client connected
+2025-06-01 17:26:40,153 127.0.0.1 - - [01/Jun/2025 17:26:40] "POST /socket.io/?EIO=4&transport=polling&t=PShupMF&sid=Lr-X3OBl74hDJkoqAAAM HTTP/1.1" 200 -
+2025-06-01 17:26:40,153 127.0.0.1 - - [01/Jun/2025 17:26:40] "GET /socket.io/?EIO=4&transport=polling&t=PShupMF.0&sid=Lr-X3OBl74hDJkoqAAAM HTTP/1.1" 200 -
+2025-06-01 17:26:40,157 127.0.0.1 - - [01/Jun/2025 17:26:40] "GET /socket.io/?EIO=4&transport=polling&t=PShupMR&sid=Lr-X3OBl74hDJkoqAAAM HTTP/1.1" 200 -
+2025-06-01 17:26:45,837 127.0.0.1 - - [01/Jun/2025 17:26:45] "GET /socket.io/?EIO=4&transport=websocket&sid=Lr-X3OBl74hDJkoqAAAM HTTP/1.1" 200 -
+2025-06-01 17:26:45,843 127.0.0.1 - - [01/Jun/2025 17:26:45] "GET / HTTP/1.1" 200 -
+2025-06-01 17:26:50,872 127.0.0.1 - - [01/Jun/2025 17:26:50] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:26:50,911 127.0.0.1 - - [01/Jun/2025 17:26:50] "GET /socket.io/?EIO=4&transport=polling&t=PShur-T HTTP/1.1" 200 -
+2025-06-01 17:26:50,914 127.0.0.1 - - [01/Jun/2025 17:26:50] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:26:50,938 New WebSocket client connected
+2025-06-01 17:26:50,938 127.0.0.1 - - [01/Jun/2025 17:26:50] "POST /socket.io/?EIO=4&transport=polling&t=PShur-m&sid=Vc5njhkLzBfWybvWAAAO HTTP/1.1" 200 -
+2025-06-01 17:26:50,938 127.0.0.1 - - [01/Jun/2025 17:26:50] "GET /socket.io/?EIO=4&transport=polling&t=PShur-m.0&sid=Vc5njhkLzBfWybvWAAAO HTTP/1.1" 200 -
+2025-06-01 17:26:50,943 127.0.0.1 - - [01/Jun/2025 17:26:50] "GET /socket.io/?EIO=4&transport=polling&t=PShur--&sid=Vc5njhkLzBfWybvWAAAO HTTP/1.1" 200 -
+2025-06-01 17:27:51,719 HTTP /start received. Scheduled dynamic scan: [{'tool': 'dirb', 'args': ['http://5b4anu.com/', '/usr/share/wordlists/dirb/common.txt', '-r']}]
+2025-06-01 17:27:51,719 127.0.0.1 - - [01/Jun/2025 17:27:51] "POST /start HTTP/1.1" 200 -
+2025-06-01 17:27:51,735 [octapus] Starting dirb: dirb http://5b4anu.com/ /usr/share/wordlists/dirb/common.txt -r
+2025-06-01 17:27:51,739 [dirb] 
+2025-06-01 17:27:51,739 [dirb] -----------------
+2025-06-01 17:27:51,739 [dirb] DIRB v2.22
+2025-06-01 17:27:51,739 [dirb] By The Dark Raver
+2025-06-01 17:27:51,739 [dirb] -----------------
+2025-06-01 17:27:51,739 [dirb] 
+2025-06-01 17:27:51,739 [dirb] START_TIME: Sun Jun  1 17:27:51 2025
+2025-06-01 17:27:51,739 [dirb] URL_BASE: http://5b4anu.com/
+2025-06-01 17:27:51,739 [dirb] WORDLIST_FILES: /usr/share/wordlists/dirb/common.txt
+2025-06-01 17:27:51,739 [dirb] OPTION: Not Recursive
+2025-06-01 17:27:51,739 [dirb] 
+2025-06-01 17:27:51,739 [dirb] -----------------
+2025-06-01 17:27:51,739 [dirb] 
+2025-06-01 17:27:51,739 [dirb] *** Generating Wordlist...
+2025-06-01 17:27:51,739 [dirb] (!) FATAL: Error opening wordlist file: /usr/share/wordlists/dirb/common.txt
+2025-06-01 17:27:51,740 [octapus] Finished dirb
+2025-06-01 17:27:51,740 [octapus] Full dynamic scan sequence completed
+2025-06-01 17:28:08,337 127.0.0.1 - - [01/Jun/2025 17:28:08] "GET /socket.io/?EIO=4&transport=websocket&sid=Vc5njhkLzBfWybvWAAAO HTTP/1.1" 200 -
+2025-06-01 17:28:08,350 127.0.0.1 - - [01/Jun/2025 17:28:08] "GET / HTTP/1.1" 200 -
+2025-06-01 17:28:08,399 127.0.0.1 - - [01/Jun/2025 17:28:08] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 17:28:25,000 127.0.0.1 - - [01/Jun/2025 17:28:25] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:28:25,060 127.0.0.1 - - [01/Jun/2025 17:28:25] "GET /socket.io/?EIO=4&transport=polling&t=PShvCzW HTTP/1.1" 200 -
+2025-06-01 17:28:25,062 127.0.0.1 - - [01/Jun/2025 17:28:25] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:28:25,082 New WebSocket client connected
+2025-06-01 17:28:25,083 127.0.0.1 - - [01/Jun/2025 17:28:25] "POST /socket.io/?EIO=4&transport=polling&t=PShvCzp&sid=AQ6Qb7XCqJuRRdhEAAAQ HTTP/1.1" 200 -
+2025-06-01 17:28:25,083 127.0.0.1 - - [01/Jun/2025 17:28:25] "GET /socket.io/?EIO=4&transport=polling&t=PShvCzp.0&sid=AQ6Qb7XCqJuRRdhEAAAQ HTTP/1.1" 200 -
+2025-06-01 17:28:25,088 127.0.0.1 - - [01/Jun/2025 17:28:25] "GET /socket.io/?EIO=4&transport=polling&t=PShvCz_&sid=AQ6Qb7XCqJuRRdhEAAAQ HTTP/1.1" 200 -
+2025-06-01 17:32:04,115 127.0.0.1 - - [01/Jun/2025 17:32:04] "GET /socket.io/?EIO=4&transport=websocket&sid=AQ6Qb7XCqJuRRdhEAAAQ HTTP/1.1" 200 -
+2025-06-01 17:32:04,123 127.0.0.1 - - [01/Jun/2025 17:32:04] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:32:04,157 127.0.0.1 - - [01/Jun/2025 17:32:04] "GET /socket.io/?EIO=4&transport=polling&t=PShw2Sw HTTP/1.1" 200 -
+2025-06-01 17:32:04,159 127.0.0.1 - - [01/Jun/2025 17:32:04] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:32:04,181 New WebSocket client connected
+2025-06-01 17:32:04,182 127.0.0.1 - - [01/Jun/2025 17:32:04] "POST /socket.io/?EIO=4&transport=polling&t=PShw2TD&sid=0EXsx-YeKWdaSi3HAAAS HTTP/1.1" 200 -
+2025-06-01 17:32:04,182 127.0.0.1 - - [01/Jun/2025 17:32:04] "GET /socket.io/?EIO=4&transport=polling&t=PShw2TE&sid=0EXsx-YeKWdaSi3HAAAS HTTP/1.1" 200 -
+2025-06-01 17:32:04,187 127.0.0.1 - - [01/Jun/2025 17:32:04] "GET /socket.io/?EIO=4&transport=polling&t=PShw2TP&sid=0EXsx-YeKWdaSi3HAAAS HTTP/1.1" 200 -
+2025-06-01 17:32:06,494 127.0.0.1 - - [01/Jun/2025 17:32:06] "GET /socket.io/?EIO=4&transport=websocket&sid=0EXsx-YeKWdaSi3HAAAS HTTP/1.1" 200 -
+2025-06-01 17:32:06,503 127.0.0.1 - - [01/Jun/2025 17:32:06] "GET / HTTP/1.1" 200 -
+2025-06-01 17:32:12,624 127.0.0.1 - - [01/Jun/2025 17:32:12] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 17:32:18,626 127.0.0.1 - - [01/Jun/2025 17:32:18] "GET / HTTP/1.1" 200 -
+2025-06-01 17:32:20,812 127.0.0.1 - - [01/Jun/2025 17:32:20] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:32:20,868 127.0.0.1 - - [01/Jun/2025 17:32:20] "GET /socket.io/?EIO=4&transport=polling&t=PShw6X- HTTP/1.1" 200 -
+2025-06-01 17:32:20,869 127.0.0.1 - - [01/Jun/2025 17:32:20] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:32:20,894 New WebSocket client connected
+2025-06-01 17:32:20,895 127.0.0.1 - - [01/Jun/2025 17:32:20] "POST /socket.io/?EIO=4&transport=polling&t=PShw6YM&sid=hUpY7jjTzbVqoAoIAAAU HTTP/1.1" 200 -
+2025-06-01 17:32:20,895 127.0.0.1 - - [01/Jun/2025 17:32:20] "GET /socket.io/?EIO=4&transport=polling&t=PShw6YM.0&sid=hUpY7jjTzbVqoAoIAAAU HTTP/1.1" 200 -
+2025-06-01 17:32:20,901 127.0.0.1 - - [01/Jun/2025 17:32:20] "GET /socket.io/?EIO=4&transport=polling&t=PShw6YY&sid=hUpY7jjTzbVqoAoIAAAU HTTP/1.1" 200 -
+2025-06-01 17:32:36,170 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 17:32:36,170 [33mPress CTRL+C to quit[0m
+2025-06-01 17:32:36,455 127.0.0.1 - - [01/Jun/2025 17:32:36] "GET /socket.io/?EIO=4&transport=polling&t=PShwALZ HTTP/1.1" 200 -
+2025-06-01 17:32:36,459 New WebSocket client connected
+2025-06-01 17:32:36,460 127.0.0.1 - - [01/Jun/2025 17:32:36] "POST /socket.io/?EIO=4&transport=polling&t=PShwALf&sid=Nm4jI3JkZGcZIPQxAAAA HTTP/1.1" 200 -
+2025-06-01 17:32:36,460 127.0.0.1 - - [01/Jun/2025 17:32:36] "GET /socket.io/?EIO=4&transport=polling&t=PShwALf.0&sid=Nm4jI3JkZGcZIPQxAAAA HTTP/1.1" 200 -
+2025-06-01 17:32:36,464 127.0.0.1 - - [01/Jun/2025 17:32:36] "GET /socket.io/?EIO=4&transport=polling&t=PShwALl&sid=Nm4jI3JkZGcZIPQxAAAA HTTP/1.1" 200 -
+2025-06-01 17:32:38,366 127.0.0.1 - - [01/Jun/2025 17:32:38] "GET /socket.io/?EIO=4&transport=websocket&sid=Nm4jI3JkZGcZIPQxAAAA HTTP/1.1" 200 -
+2025-06-01 17:32:38,376 127.0.0.1 - - [01/Jun/2025 17:32:38] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:32:38,406 127.0.0.1 - - [01/Jun/2025 17:32:38] "GET /socket.io/?EIO=4&transport=polling&t=PShwAq2 HTTP/1.1" 200 -
+2025-06-01 17:32:38,407 127.0.0.1 - - [01/Jun/2025 17:32:38] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:32:38,432 New WebSocket client connected
+2025-06-01 17:32:38,433 127.0.0.1 - - [01/Jun/2025 17:32:38] "POST /socket.io/?EIO=4&transport=polling&t=PShwAqL&sid=M0PvUCCubvSd-YFdAAAC HTTP/1.1" 200 -
+2025-06-01 17:32:38,433 127.0.0.1 - - [01/Jun/2025 17:32:38] "GET /socket.io/?EIO=4&transport=polling&t=PShwAqL.0&sid=M0PvUCCubvSd-YFdAAAC HTTP/1.1" 200 -
+2025-06-01 17:32:38,439 127.0.0.1 - - [01/Jun/2025 17:32:38] "GET /socket.io/?EIO=4&transport=polling&t=PShwAqb&sid=M0PvUCCubvSd-YFdAAAC HTTP/1.1" 200 -
+2025-06-01 17:32:57,354 127.0.0.1 - - [01/Jun/2025 17:32:57] "[31m[1mPOST /save_scenario HTTP/1.1[0m" 400 -
+2025-06-01 17:33:07,907 127.0.0.1 - - [01/Jun/2025 17:33:07] "GET /socket.io/?EIO=4&transport=websocket&sid=M0PvUCCubvSd-YFdAAAC HTTP/1.1" 200 -
+2025-06-01 17:33:07,917 127.0.0.1 - - [01/Jun/2025 17:33:07] "GET / HTTP/1.1" 200 -
+2025-06-01 17:33:09,496 127.0.0.1 - - [01/Jun/2025 17:33:09] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 17:33:58,186 127.0.0.1 - - [01/Jun/2025 17:33:58] "GET / HTTP/1.1" 200 -
+2025-06-01 17:34:00,173 127.0.0.1 - - [01/Jun/2025 17:34:00] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:34:00,216 127.0.0.1 - - [01/Jun/2025 17:34:00] "GET /socket.io/?EIO=4&transport=polling&t=PShwUoK HTTP/1.1" 200 -
+2025-06-01 17:34:00,218 127.0.0.1 - - [01/Jun/2025 17:34:00] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:34:00,241 New WebSocket client connected
+2025-06-01 17:34:00,241 127.0.0.1 - - [01/Jun/2025 17:34:00] "POST /socket.io/?EIO=4&transport=polling&t=PShwUoc&sid=6iNoHp6-dTJo0N1GAAAE HTTP/1.1" 200 -
+2025-06-01 17:34:00,241 127.0.0.1 - - [01/Jun/2025 17:34:00] "GET /socket.io/?EIO=4&transport=polling&t=PShwUoc.0&sid=6iNoHp6-dTJo0N1GAAAE HTTP/1.1" 200 -
+2025-06-01 17:34:00,245 127.0.0.1 - - [01/Jun/2025 17:34:00] "GET /socket.io/?EIO=4&transport=polling&t=PShwUoq&sid=6iNoHp6-dTJo0N1GAAAE HTTP/1.1" 200 -
+2025-06-01 17:34:45,565 127.0.0.1 - - [01/Jun/2025 17:34:45] "GET /local_cidr HTTP/1.1" 200 -
+2025-06-01 17:35:01,948 HTTP /start received. Scheduled dynamic scan: [{'tool': 'masscan', 'args': ['-p1-65535']}]
+2025-06-01 17:35:01,949 127.0.0.1 - - [01/Jun/2025 17:35:01] "POST /start HTTP/1.1" 200 -
+2025-06-01 17:35:01,966 [octapus] Starting masscan: masscan -p1-65535
+2025-06-01 17:35:01,969 [masscan] FAIL: target IP address list empty
+2025-06-01 17:35:01,969 [masscan]  [hint] try something like "--range 10.0.0.0/8"
+2025-06-01 17:35:01,969 [masscan]  [hint] try something like "--range 192.168.0.100-192.168.0.200"
+2025-06-01 17:35:01,970 [octapus] Finished masscan
+2025-06-01 17:35:01,970 [octapus] Full dynamic scan sequence completed
+2025-06-01 17:35:21,457 HTTP /start received. Scheduled dynamic scan: [{'tool': 'masscan', 'args': ['-p1-65535', '--range', '192.168.10.0/24']}]
+2025-06-01 17:35:21,458 127.0.0.1 - - [01/Jun/2025 17:35:21] "POST /start HTTP/1.1" 200 -
+2025-06-01 17:35:21,459 [octapus] Starting masscan: masscan -p1-65535 --range 192.168.10.0/24
+2025-06-01 17:35:21,463 [masscan] [-] FAIL: permission denied
+2025-06-01 17:35:21,463 [masscan]     [hint] need to sudo or run as root or something
+2025-06-01 17:35:21,463 [masscan] [-] if:eno1:init: failed
+2025-06-01 17:35:21,463 [octapus] Finished masscan
+2025-06-01 17:35:21,463 [octapus] Full dynamic scan sequence completed
+2025-06-01 17:35:44,003 127.0.0.1 - - [01/Jun/2025 17:35:44] "GET /socket.io/?EIO=4&transport=websocket&sid=6iNoHp6-dTJo0N1GAAAE HTTP/1.1" 200 -
+2025-06-01 17:35:44,018 127.0.0.1 - - [01/Jun/2025 17:35:44] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:35:44,073 127.0.0.1 - - [01/Jun/2025 17:35:44] "GET /socket.io/?EIO=4&transport=polling&t=PShwu96 HTTP/1.1" 200 -
+2025-06-01 17:35:44,075 127.0.0.1 - - [01/Jun/2025 17:35:44] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:35:44,098 New WebSocket client connected
+2025-06-01 17:35:44,100 127.0.0.1 - - [01/Jun/2025 17:35:44] "POST /socket.io/?EIO=4&transport=polling&t=PShwu9Q&sid=SuNYqibOkFWC_kQcAAAG HTTP/1.1" 200 -
+2025-06-01 17:35:44,100 127.0.0.1 - - [01/Jun/2025 17:35:44] "GET /socket.io/?EIO=4&transport=polling&t=PShwu9R&sid=SuNYqibOkFWC_kQcAAAG HTTP/1.1" 200 -
+2025-06-01 17:35:44,105 127.0.0.1 - - [01/Jun/2025 17:35:44] "GET /socket.io/?EIO=4&transport=polling&t=PShwu9e&sid=SuNYqibOkFWC_kQcAAAG HTTP/1.1" 200 -
+2025-06-01 17:35:46,067 127.0.0.1 - - [01/Jun/2025 17:35:46] "GET /socket.io/?EIO=4&transport=websocket&sid=SuNYqibOkFWC_kQcAAAG HTTP/1.1" 200 -
+2025-06-01 17:35:46,076 127.0.0.1 - - [01/Jun/2025 17:35:46] "GET / HTTP/1.1" 200 -
+2025-06-01 17:35:48,270 127.0.0.1 - - [01/Jun/2025 17:35:48] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 17:35:49,435 127.0.0.1 - - [01/Jun/2025 17:35:49] "GET /scenario_maker HTTP/1.1" 200 -
+2025-06-01 17:35:52,124 127.0.0.1 - - [01/Jun/2025 17:35:52] "GET / HTTP/1.1" 200 -
+2025-06-01 17:35:53,596 127.0.0.1 - - [01/Jun/2025 17:35:53] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:35:53,632 127.0.0.1 - - [01/Jun/2025 17:35:53] "GET /socket.io/?EIO=4&transport=polling&t=PShwwUT HTTP/1.1" 200 -
+2025-06-01 17:35:53,636 127.0.0.1 - - [01/Jun/2025 17:35:53] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:35:53,655 New WebSocket client connected
+2025-06-01 17:35:53,656 127.0.0.1 - - [01/Jun/2025 17:35:53] "POST /socket.io/?EIO=4&transport=polling&t=PShwwUl&sid=812BCQWL2-a0JTOdAAAI HTTP/1.1" 200 -
+2025-06-01 17:35:53,656 127.0.0.1 - - [01/Jun/2025 17:35:53] "GET /socket.io/?EIO=4&transport=polling&t=PShwwUm&sid=812BCQWL2-a0JTOdAAAI HTTP/1.1" 200 -
+2025-06-01 17:35:53,661 127.0.0.1 - - [01/Jun/2025 17:35:53] "GET /socket.io/?EIO=4&transport=polling&t=PShwwUy&sid=812BCQWL2-a0JTOdAAAI HTTP/1.1" 200 -
+2025-06-01 17:36:01,615 127.0.0.1 - - [01/Jun/2025 17:36:01] "GET /socket.io/?EIO=4&transport=websocket&sid=812BCQWL2-a0JTOdAAAI HTTP/1.1" 200 -
+2025-06-01 17:36:01,621 127.0.0.1 - - [01/Jun/2025 17:36:01] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:36:01,646 127.0.0.1 - - [01/Jun/2025 17:36:01] "GET /socket.io/?EIO=4&transport=polling&t=PShwyRh HTTP/1.1" 200 -
+2025-06-01 17:36:01,648 127.0.0.1 - - [01/Jun/2025 17:36:01] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:36:01,668 New WebSocket client connected
+2025-06-01 17:36:01,669 127.0.0.1 - - [01/Jun/2025 17:36:01] "POST /socket.io/?EIO=4&transport=polling&t=PShwyRx&sid=IFjLNFrsYY7Cj-6vAAAK HTTP/1.1" 200 -
+2025-06-01 17:36:01,669 127.0.0.1 - - [01/Jun/2025 17:36:01] "GET /socket.io/?EIO=4&transport=polling&t=PShwyRx.0&sid=IFjLNFrsYY7Cj-6vAAAK HTTP/1.1" 200 -
+2025-06-01 17:36:01,673 127.0.0.1 - - [01/Jun/2025 17:36:01] "GET /socket.io/?EIO=4&transport=polling&t=PShwyS8&sid=IFjLNFrsYY7Cj-6vAAAK HTTP/1.1" 200 -
+2025-06-01 17:36:03,447 127.0.0.1 - - [01/Jun/2025 17:36:03] "GET /load_scenario/web_audit HTTP/1.1" 200 -
+2025-06-01 17:36:43,940 127.0.0.1 - - [01/Jun/2025 17:36:43] "GET /socket.io/?EIO=4&transport=websocket&sid=IFjLNFrsYY7Cj-6vAAAK HTTP/1.1" 200 -
+2025-06-01 17:36:43,951 127.0.0.1 - - [01/Jun/2025 17:36:43] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:36:43,992 127.0.0.1 - - [01/Jun/2025 17:36:43] "GET /socket.io/?EIO=4&transport=polling&t=PShx6nL HTTP/1.1" 200 -
+2025-06-01 17:36:43,994 127.0.0.1 - - [01/Jun/2025 17:36:43] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:36:44,018 New WebSocket client connected
+2025-06-01 17:36:44,018 127.0.0.1 - - [01/Jun/2025 17:36:44] "POST /socket.io/?EIO=4&transport=polling&t=PShx6nd&sid=YNRx708SbhwF1FeYAAAM HTTP/1.1" 200 -
+2025-06-01 17:36:44,019 127.0.0.1 - - [01/Jun/2025 17:36:44] "GET /socket.io/?EIO=4&transport=polling&t=PShx6nd.0&sid=YNRx708SbhwF1FeYAAAM HTTP/1.1" 200 -
+2025-06-01 17:36:44,025 127.0.0.1 - - [01/Jun/2025 17:36:44] "GET /socket.io/?EIO=4&transport=polling&t=PShx6nt&sid=YNRx708SbhwF1FeYAAAM HTTP/1.1" 200 -
+2025-06-01 17:36:47,413 127.0.0.1 - - [01/Jun/2025 17:36:47] "GET /load_scenario/quick_discovery HTTP/1.1" 200 -
+2025-06-01 17:37:05,100 127.0.0.1 - - [01/Jun/2025 17:37:05] "GET /socket.io/?EIO=4&transport=websocket&sid=YNRx708SbhwF1FeYAAAM HTTP/1.1" 200 -
+2025-06-01 17:37:05,107 127.0.0.1 - - [01/Jun/2025 17:37:05] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:37:05,132 127.0.0.1 - - [01/Jun/2025 17:37:05] "GET /socket.io/?EIO=4&transport=polling&t=PShxBxf HTTP/1.1" 200 -
+2025-06-01 17:37:05,134 127.0.0.1 - - [01/Jun/2025 17:37:05] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:37:05,159 New WebSocket client connected
+2025-06-01 17:37:05,159 127.0.0.1 - - [01/Jun/2025 17:37:05] "POST /socket.io/?EIO=4&transport=polling&t=PShxBx-&sid=zsdUvdTwEHAFdv-hAAAO HTTP/1.1" 200 -
+2025-06-01 17:37:05,160 127.0.0.1 - - [01/Jun/2025 17:37:05] "GET /socket.io/?EIO=4&transport=polling&t=PShxBx_&sid=zsdUvdTwEHAFdv-hAAAO HTTP/1.1" 200 -
+2025-06-01 17:37:05,164 127.0.0.1 - - [01/Jun/2025 17:37:05] "GET /socket.io/?EIO=4&transport=polling&t=PShxByA&sid=zsdUvdTwEHAFdv-hAAAO HTTP/1.1" 200 -
+2025-06-01 17:37:07,572 127.0.0.1 - - [01/Jun/2025 17:37:07] "GET /load_scenario/quick_discovery HTTP/1.1" 200 -
+2025-06-01 17:37:10,048 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 17:37:10,048 [33mPress CTRL+C to quit[0m
+2025-06-01 17:37:10,264 127.0.0.1 - - [01/Jun/2025 17:37:10] "GET /socket.io/?EIO=4&transport=polling&t=PShxDBq HTTP/1.1" 200 -
+2025-06-01 17:37:10,269 New WebSocket client connected
+2025-06-01 17:37:10,269 127.0.0.1 - - [01/Jun/2025 17:37:10] "POST /socket.io/?EIO=4&transport=polling&t=PShxDBx&sid=w0XXksIFJIWWRgluAAAA HTTP/1.1" 200 -
+2025-06-01 17:37:10,269 127.0.0.1 - - [01/Jun/2025 17:37:10] "GET /socket.io/?EIO=4&transport=polling&t=PShxDBx.0&sid=w0XXksIFJIWWRgluAAAA HTTP/1.1" 200 -
+2025-06-01 17:37:10,273 127.0.0.1 - - [01/Jun/2025 17:37:10] "GET /socket.io/?EIO=4&transport=polling&t=PShxDC0&sid=w0XXksIFJIWWRgluAAAA HTTP/1.1" 200 -
+2025-06-01 17:37:11,994 127.0.0.1 - - [01/Jun/2025 17:37:11] "GET /socket.io/?EIO=4&transport=websocket&sid=w0XXksIFJIWWRgluAAAA HTTP/1.1" 200 -
+2025-06-01 17:37:12,000 127.0.0.1 - - [01/Jun/2025 17:37:12] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:37:12,025 127.0.0.1 - - [01/Jun/2025 17:37:12] "GET /socket.io/?EIO=4&transport=polling&t=PShxDdN HTTP/1.1" 200 -
+2025-06-01 17:37:12,026 127.0.0.1 - - [01/Jun/2025 17:37:12] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:37:12,055 New WebSocket client connected
+2025-06-01 17:37:12,056 127.0.0.1 - - [01/Jun/2025 17:37:12] "POST /socket.io/?EIO=4&transport=polling&t=PShxDdg&sid=9gsK9eDxO1e4OwDNAAAC HTTP/1.1" 200 -
+2025-06-01 17:37:12,056 127.0.0.1 - - [01/Jun/2025 17:37:12] "GET /socket.io/?EIO=4&transport=polling&t=PShxDdg.0&sid=9gsK9eDxO1e4OwDNAAAC HTTP/1.1" 200 -
+2025-06-01 17:37:12,062 127.0.0.1 - - [01/Jun/2025 17:37:12] "GET /socket.io/?EIO=4&transport=polling&t=PShxDdz&sid=9gsK9eDxO1e4OwDNAAAC HTTP/1.1" 200 -
+2025-06-01 17:37:14,439 127.0.0.1 - - [01/Jun/2025 17:37:14] "GET /load_scenario/quick_discovery HTTP/1.1" 200 -
+2025-06-01 17:37:17,322 127.0.0.1 - - [01/Jun/2025 17:37:17] "GET /load_scenario/full_bruteforce HTTP/1.1" 200 -
+2025-06-01 17:37:21,160 127.0.0.1 - - [01/Jun/2025 17:37:21] "GET /load_scenario/test HTTP/1.1" 200 -
+2025-06-01 17:37:25,077 127.0.0.1 - - [01/Jun/2025 17:37:25] "GET /load_scenario/web_audit HTTP/1.1" 200 -
+2025-06-01 17:40:34,373 127.0.0.1 - - [01/Jun/2025 17:40:34] "GET /socket.io/?EIO=4&transport=websocket&sid=9gsK9eDxO1e4OwDNAAAC HTTP/1.1" 200 -
+2025-06-01 17:40:34,383 127.0.0.1 - - [01/Jun/2025 17:40:34] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 17:40:34,431 127.0.0.1 - - [01/Jun/2025 17:40:34] "GET /socket.io/?EIO=4&transport=polling&t=PShx_1y HTTP/1.1" 200 -
+2025-06-01 17:40:34,433 127.0.0.1 - - [01/Jun/2025 17:40:34] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 17:40:34,461 New WebSocket client connected
+2025-06-01 17:40:34,461 127.0.0.1 - - [01/Jun/2025 17:40:34] "POST /socket.io/?EIO=4&transport=polling&t=PShx_2D&sid=2w8qtoZuo-yFgoN1AAAE HTTP/1.1" 200 -
+2025-06-01 17:40:34,462 127.0.0.1 - - [01/Jun/2025 17:40:34] "GET /socket.io/?EIO=4&transport=polling&t=PShx_2D.0&sid=2w8qtoZuo-yFgoN1AAAE HTTP/1.1" 200 -
+2025-06-01 17:40:34,468 127.0.0.1 - - [01/Jun/2025 17:40:34] "GET /socket.io/?EIO=4&transport=polling&t=PShx_2X&sid=2w8qtoZuo-yFgoN1AAAE HTTP/1.1" 200 -
+2025-06-01 20:16:16,952 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.10.146:8080
+2025-06-01 20:16:16,952 [33mPress CTRL+C to quit[0m
+2025-06-01 20:16:17,812 127.0.0.1 - - [01/Jun/2025 20:16:17] "GET /socket.io/?EIO=4&transport=polling&t=PSiVe8E HTTP/1.1" 200 -
+2025-06-01 20:16:17,817 New WebSocket client connected
+2025-06-01 20:16:17,818 127.0.0.1 - - [01/Jun/2025 20:16:17] "POST /socket.io/?EIO=4&transport=polling&t=PSiVe8M&sid=DycHgkhkwmfguT3AAAAA HTTP/1.1" 200 -
+2025-06-01 20:16:17,818 127.0.0.1 - - [01/Jun/2025 20:16:17] "GET /socket.io/?EIO=4&transport=polling&t=PSiVe8M.0&sid=DycHgkhkwmfguT3AAAAA HTTP/1.1" 200 -
+2025-06-01 20:16:17,822 127.0.0.1 - - [01/Jun/2025 20:16:17] "GET /socket.io/?EIO=4&transport=polling&t=PSiVe8T&sid=DycHgkhkwmfguT3AAAAA HTTP/1.1" 200 -
+2025-06-01 20:16:31,586 127.0.0.1 - - [01/Jun/2025 20:16:31] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 20:16:31,647 127.0.0.1 - - [01/Jun/2025 20:16:31] "GET /socket.io/?EIO=4&transport=polling&t=PSiVhWS HTTP/1.1" 200 -
+2025-06-01 20:16:31,647 127.0.0.1 - - [01/Jun/2025 20:16:31] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 20:16:31,658 New WebSocket client connected
+2025-06-01 20:16:31,659 127.0.0.1 - - [01/Jun/2025 20:16:31] "POST /socket.io/?EIO=4&transport=polling&t=PSiVhWZ&sid=eLqpyi55LLVjRNUWAAAC HTTP/1.1" 200 -
+2025-06-01 20:16:31,659 127.0.0.1 - - [01/Jun/2025 20:16:31] "GET /socket.io/?EIO=4&transport=polling&t=PSiVhWa&sid=eLqpyi55LLVjRNUWAAAC HTTP/1.1" 200 -
+2025-06-01 20:16:31,664 127.0.0.1 - - [01/Jun/2025 20:16:31] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-01 20:16:31,665 127.0.0.1 - - [01/Jun/2025 20:16:31] "GET /socket.io/?EIO=4&transport=polling&t=PSiVhWl&sid=eLqpyi55LLVjRNUWAAAC HTTP/1.1" 200 -
+2025-06-01 20:17:57,073 127.0.0.1 - - [01/Jun/2025 20:17:57] "GET /load_scenario/test HTTP/1.1" 200 -
+2025-06-01 20:28:16,542 127.0.0.1 - - [01/Jun/2025 20:28:16] "GET /socket.io/?EIO=4&transport=websocket&sid=eLqpyi55LLVjRNUWAAAC HTTP/1.1" 200 -
+2025-06-01 20:28:16,554 127.0.0.1 - - [01/Jun/2025 20:28:16] "GET /dashboard HTTP/1.1" 200 -
+2025-06-01 20:28:16,601 127.0.0.1 - - [01/Jun/2025 20:28:16] "GET /socket.io/?EIO=4&transport=polling&t=PSiYNdN HTTP/1.1" 200 -
+2025-06-01 20:28:16,602 127.0.0.1 - - [01/Jun/2025 20:28:16] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-01 20:28:16,630 New WebSocket client connected
+2025-06-01 20:28:16,630 127.0.0.1 - - [01/Jun/2025 20:28:16] "POST /socket.io/?EIO=4&transport=polling&t=PSiYNdf&sid=o6MKNFiD0733y7SwAAAE HTTP/1.1" 200 -
+2025-06-01 20:28:16,632 127.0.0.1 - - [01/Jun/2025 20:28:16] "GET /socket.io/?EIO=4&transport=polling&t=PSiYNdf.0&sid=o6MKNFiD0733y7SwAAAE HTTP/1.1" 200 -
+2025-06-01 20:28:16,635 127.0.0.1 - - [01/Jun/2025 20:28:16] "GET /socket.io/?EIO=4&transport=polling&t=PSiYNdv&sid=o6MKNFiD0733y7SwAAAE HTTP/1.1" 200 -
