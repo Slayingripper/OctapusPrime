@@ -92,10 +92,23 @@ class GPIOManager:
                         platform_info["model"] = "Raspberry Pi"
                         
                 elif "allwinner" in cpuinfo or "sun" in cpuinfo:
-                    platform_info["platform"] = "orange_pi"
-                    platform_info["model"] = "Orange Pi"
-                    platform_info["recommended_lib"] = "libgpiod"
-                    
+                    # Check if it's specifically a Nano Pi
+                    if os.path.exists("/proc/device-tree/model"):
+                        with open("/proc/device-tree/model", "r") as f:
+                            model = f.read().strip('\x00').lower()
+                        if "nanopi" in model or "friendlyarm" in model:
+                            platform_info["platform"] = "nano_pi"
+                            platform_info["model"] = "Nano Pi"
+                            platform_info["recommended_lib"] = "OPi.GPIO"
+                        else:
+                            platform_info["platform"] = "orange_pi"
+                            platform_info["model"] = "Orange Pi"
+                            platform_info["recommended_lib"] = "OPi.GPIO"
+                    else:
+                        platform_info["platform"] = "orange_pi"
+                        platform_info["model"] = "Orange Pi"
+                        platform_info["recommended_lib"] = "OPi.GPIO"
+                        
                 elif "odroid" in cpuinfo or "amlogic" in cpuinfo:
                     platform_info["platform"] = "odroid"
                     platform_info["model"] = "Odroid"
@@ -105,7 +118,7 @@ class GPIOManager:
                     platform_info["platform"] = "rock_pi"
                     platform_info["model"] = "Rock Pi"
                     platform_info["recommended_lib"] = "libgpiod"
-            
+        
             # Check for device tree model (more reliable on some boards)
             if os.path.exists("/proc/device-tree/model"):
                 with open("/proc/device-tree/model", "r") as f:
@@ -114,7 +127,7 @@ class GPIOManager:
                 if "friendlyarm" in model or "nanopi" in model:
                     platform_info["platform"] = "nano_pi"
                     platform_info["model"] = "Nano Pi"
-                    platform_info["recommended_lib"] = "libgpiod"
+                    platform_info["recommended_lib"] = "OPi.GPIO"
                     
         except Exception as e:
             logging.warning(f"Platform detection failed: {e}")
@@ -138,6 +151,13 @@ class GPIOManager:
             libraries["RPi.GPIO"] = True
         except ImportError:
             libraries["RPi.GPIO"] = False
+        
+        # Test OPi.GPIO (for Orange Pi and Nano Pi)
+        try:
+            import OPi.GPIO
+            libraries["OPi.GPIO"] = True
+        except ImportError:
+            libraries["OPi.GPIO"] = False
         
         # Test wiringpi
         try:
@@ -180,6 +200,8 @@ class GPIOManager:
                 return self._setup_gpiozero(button_pin, led_pin)
             elif lib_name == "RPi.GPIO":
                 return self._setup_rpi_gpio(button_pin, led_pin)
+            elif lib_name == "OPi.GPIO":
+                return self._setup_opi_gpio(button_pin, led_pin)
             elif lib_name == "libgpiod":
                 return self._setup_libgpiod(button_pin, led_pin)
             elif lib_name == "lgpio":
@@ -282,6 +304,81 @@ class GPIOManager:
         led = RPiLED(led_pin, self.config["led_active_high"])
         
         logging.info(f"GPIO setup successful with RPi.GPIO: Button={button_pin}, LED={led_pin}")
+        return button, led
+    
+    def _setup_opi_gpio(self, button_pin: int, led_pin: int) -> Tuple[Any, Any]:
+        """Setup GPIO using OPi.GPIO library for Orange Pi and Nano Pi."""
+        import OPi.GPIO as GPIO
+        import time
+        
+        # Set the board mode - you might need to adjust this based on your specific Nano Pi model
+        GPIO.setmode(GPIO.BOARD)  # or GPIO.BCM depending on your preference
+        
+        # Setup pins
+        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP if self.config["button_pull_up"] else GPIO.PUD_DOWN)
+        GPIO.setup(led_pin, GPIO.OUT)
+        
+        # Create wrapper classes to match gpiozero interface
+        class OPiButton:
+            def __init__(self, pin, bounce_time):
+                self.pin = pin
+                self.bounce_time = bounce_time
+                self._when_pressed = None
+                self._last_press = 0
+            
+            @property
+            def when_pressed(self):
+                return self._when_pressed
+            
+            @when_pressed.setter
+            def when_pressed(self, callback):
+                self._when_pressed = callback
+                if callback:
+                    def edge_callback(channel):
+                        current_time = time.time()
+                        if current_time - self._last_press > self.bounce_time:
+                            self._last_press = current_time
+                            callback()
+                    
+                    GPIO.add_event_detect(self.pin, GPIO.FALLING, callback=edge_callback, bouncetime=int(self.bounce_time * 1000))
+        
+        class OPiLED:
+            def __init__(self, pin, active_high=True):
+                self.pin = pin
+                self.active_high = active_high
+                self._blinking = False
+                self._blink_thread = None
+            
+            def on(self):
+                GPIO.output(self.pin, GPIO.HIGH if self.active_high else GPIO.LOW)
+            
+            def off(self):
+                GPIO.output(self.pin, GPIO.LOW if self.active_high else GPIO.HIGH)
+                self._blinking = False
+            
+            def blink(self, on_time=1, off_time=1):
+                self._blinking = True
+                
+                def _blink():
+                    while self._blinking:
+                        self.on()
+                        time.sleep(on_time)
+                        if self._blinking:
+                            self.off()
+                            time.sleep(off_time)
+                
+                if self._blink_thread and self._blink_thread.is_alive():
+                    self._blinking = False
+                    self._blink_thread.join()
+                
+                import threading
+                self._blink_thread = threading.Thread(target=_blink, daemon=True)
+                self._blink_thread.start()
+        
+        button = OPiButton(button_pin, self.config["button_bounce_time"])
+        led = OPiLED(led_pin, self.config["led_active_high"])
+        
+        logging.info(f"GPIO setup successful with OPi.GPIO: Button={button_pin}, LED={led_pin}")
         return button, led
     
     def _setup_libgpiod(self, button_pin: int, led_pin: int) -> Tuple[Any, Any]:

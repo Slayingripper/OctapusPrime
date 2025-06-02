@@ -337,11 +337,14 @@
           <label for="gpio-library">GPIO Library:</label>
           <select id="gpio-library">
             <option value="auto">Auto-detect</option>
-            <option value="gpiozero">gpiozero</option>
-            <option value="RPi.GPIO">RPi.GPIO</option>
-            <option value="libgpiod">libgpiod</option>
-            <option value="lgpio">lgpio</option>
+            <option value="gpiozero">gpiozero (Raspberry Pi)</option>
+            <option value="RPi.GPIO">RPi.GPIO (Raspberry Pi)</option>
+            <option value="OPi.GPIO">OPi.GPIO (Orange Pi / Nano Pi)</option>
+            <option value="libgpiod">libgpiod (Generic Linux)</option>
+            <option value="lgpio">lgpio (Modern Raspberry Pi)</option>
+            <option value="wiringpi">wiringpi (Legacy)</option>
           </select>
+          <small>Select the GPIO library for your platform</small>
         </div>
       </div>
       
@@ -461,6 +464,13 @@
         document.getElementById('platform-name').textContent = platformInfo.platform || 'Unknown';
         document.getElementById('platform-model').textContent = platformInfo.model || 'Unknown';
         document.getElementById('recommended-lib').textContent = platformInfo.recommended_lib || 'gpiozero';
+        
+        // Add platform-specific recommendations
+        if (platformInfo.platform === 'nano_pi') {
+          showAlert('Nano Pi detected! OPi.GPIO library is recommended for best compatibility.', 'success');
+        } else if (platformInfo.platform === 'orange_pi') {
+          showAlert('Orange Pi detected! OPi.GPIO library is recommended for best compatibility.', 'success');
+        }
         
         // Update library status
         updateLibraryStatus(data.available_libraries);

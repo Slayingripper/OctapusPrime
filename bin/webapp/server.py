@@ -445,6 +445,11 @@ def update_gpio_config():
             if field not in new_config:
                 return jsonify({"status": "error", "message": f"Missing field: {field}"}), 400
         
+        # Validate GPIO library
+        valid_libraries = ["auto", "gpiozero", "RPi.GPIO", "OPi.GPIO", "libgpiod", "lgpio", "wiringpi"]
+        if new_config["gpio_library"] not in valid_libraries:
+            return jsonify({"status": "error", "message": f"Invalid GPIO library. Must be one of: {', '.join(valid_libraries)}"}), 400
+        
         # Validate pin numbers
         if not (0 <= new_config["button_pin"] <= 40):
             return jsonify({"status": "error", "message": "Button pin must be between 0-40"}), 400
