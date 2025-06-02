@@ -2,6 +2,8 @@
 import os
 import logging
 import json
+import subprocess
+
 from pathlib import Path
 from typing import Optional, Tuple, Dict, Any
 
@@ -191,7 +193,33 @@ class GPIOManager:
         except Exception as e:
             logging.error(f"GPIO setup failed with {lib_name}: {e}")
             return None, None
-    
+
+    def monitor_gpio_pin(self, pin: int, callback):
+        """
+        Set up a macchanger button
+        """
+        try:
+            available = self.get_available_libraries()
+            use_lib = self.config["gpio_library"]
+            if self.config["manual_override"]:
+                lib_name = use_lib
+            else:
+                lib_name = self.platform_info["recommended_lib"]
+            
+            if lib_name == "gpiozero" or (lib_name == "auto" and available.get("gpiozero")):
+                from gpiozero import Button
+                button = Button(pin, pull_up=True, bounce_time=0.1)
+                button.when_pressed = callback
+                logging.info(f"Monitoring GPIO {pin} with gpiozero")
+                return button
+            
+            logging.error(f"GPIO library '{lib_name}' not supported for monitoring GPIO {pin}")
+            return None
+        
+        except Exception as e:
+            logging.error(f"Failed to monitor GPIO {pin}: {e}")
+            return None
+        
     def _setup_gpiozero(self, button_pin: int, led_pin: int) -> Tuple[Any, Any]:
         """Setup GPIO using gpiozero library."""
         # Check if we need to apply the lgpio patch for newer kernels

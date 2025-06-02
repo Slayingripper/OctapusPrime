@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Octapus Dashboard - Dark Mode</title>
   <style>
     /* ===== Global Dark Mode Styles ===== */
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       height: 100%;
@@ -25,6 +27,7 @@
       text-decoration: none;
       text-shadow: 0 0 4px #39ff14;
     }
+
     #home-link:hover {
       text-decoration: underline;
     }
@@ -40,6 +43,7 @@
       color: #e6e6e6;
       background: #1a1a1a;
     }
+
     button:disabled {
       opacity: 0.4;
       cursor: not-allowed;
@@ -49,6 +53,7 @@
     .tooltip {
       position: relative;
     }
+
     .tooltip::before {
       content: attr(data-tooltip);
       position: absolute;
@@ -60,8 +65,10 @@
       padding: 8px 12px;
       border-radius: 4px;
       font-size: 11px;
-      white-space: normal; /* Allow text wrapping */
-      max-width: 300px; /* Limit maximum width */
+      white-space: normal;
+      /* Allow text wrapping */
+      max-width: 300px;
+      /* Limit maximum width */
       width: max-content;
       z-index: 1000;
       border: 1px solid #39ff14;
@@ -73,6 +80,7 @@
       text-align: center;
       line-height: 1.3;
     }
+
     .tooltip::after {
       content: "";
       position: absolute;
@@ -86,12 +94,13 @@
       transition: opacity 0.3s, visibility 0.3s;
       pointer-events: none;
     }
+
     .tooltip:hover::before,
     .tooltip:hover::after {
       opacity: 1;
       visibility: visible;
     }
-    
+
     /* Responsive tooltip positioning */
     @media (max-width: 768px) {
       .tooltip::before {
@@ -111,6 +120,7 @@
       height: 100%;
       background-color: rgba(0, 0, 0, 0.8);
     }
+
     .modal-content {
       background-color: #1a1a1a;
       margin: 5% auto;
@@ -124,6 +134,7 @@
       color: #e6e6e6;
       box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
     }
+
     .modal-header {
       display: flex;
       justify-content: space-between;
@@ -132,11 +143,13 @@
       border-bottom: 1px solid #333;
       padding-bottom: 10px;
     }
+
     .modal-title {
       color: #39ff14;
       font-size: 20px;
       font-weight: bold;
     }
+
     .close-btn {
       background: #ff0033;
       color: white;
@@ -146,15 +159,18 @@
       cursor: pointer;
       font-size: 16px;
     }
+
     .close-btn:hover {
       background: #e6002e;
     }
+
     .command-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 12px;
       margin-top: 15px;
     }
+
     .command-item {
       background: #262626;
       border: 1px solid #444;
@@ -164,15 +180,18 @@
       transition: all 0.2s;
       font-size: 12px;
     }
+
     .command-item:hover {
       background: #333;
       border-color: #39ff14;
       box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
     }
+
     .command-item .cmd {
       color: #39ff14;
       font-weight: bold;
     }
+
     .command-item .desc {
       color: #bbb;
       font-size: 11px;
@@ -196,12 +215,14 @@
       box-sizing: border-box;
       overflow-y: auto;
     }
+
     #palette h3 {
       margin: 0 0 12px 0;
       font-size: 20px;
       color: #39ff14;
       text-shadow: 0 0 8px #39ff14;
     }
+
     .tool-card {
       user-select: none;
       background: #1f1f1f;
@@ -215,20 +236,24 @@
       transition: background 0.2s, box-shadow 0.2s;
       position: relative;
     }
+
     .tool-card:hover {
       background: #272727;
       box-shadow: 0 0 8px #39ff14;
     }
+
     .tool-card:active {
       background: #333;
       box-shadow: 0 0 12px #39ff14;
     }
+
     .arg-palette {
       margin-top: 4px;
       display: flex;
       flex-wrap: wrap;
       gap: 4px;
     }
+
     .arg-chip {
       background: #2d2d2d;
       border: 1px solid #444;
@@ -238,6 +263,7 @@
       color: #e6e6e6;
       cursor: grab;
     }
+
     .arg-chip:hover {
       background: #3a3a3a;
     }
@@ -250,44 +276,53 @@
       padding: 16px;
       box-sizing: border-box;
     }
+
     #header {
       flex: 0 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     #header h2 {
       margin: 0;
       font-size: 24px;
       color: #39ff14;
       text-shadow: 0 0 8px #39ff14;
     }
+
     #controls {
       flex: 0 0 auto;
     }
+
     #controls button#use-cidr-btn {
       background: #444;
       color: #e6e6e6;
       margin-right: 8px;
     }
+
     #controls button#use-cidr-btn:hover {
       background: #555;
     }
+
     #controls button#start-btn {
       background: #39ff14;
       color: #0d0d0d;
       box-shadow: 0 0 8px #39ff14;
     }
+
     #controls button#start-btn:hover {
       background: #2ecc71;
       box-shadow: 0 0 12px #39ff14;
     }
+
     #controls button#stop-btn {
       background: #ff0033;
       color: #f0f0f0;
       margin-left: 8px;
       box-shadow: 0 0 8px #ff0033;
     }
+
     #controls button#stop-btn:hover {
       background: #e6002e;
       box-shadow: 0 0 12px #ff0033;
@@ -300,6 +335,7 @@
       gap: 8px;
       align-items: center;
     }
+
     #scenario-controls input[type="text"] {
       padding: 6px 10px;
       background: #0d0d0d;
@@ -309,6 +345,7 @@
       font-size: 13px;
       flex: 1;
     }
+
     #scenario-controls select {
       background: #1a1a1a;
       color: #e6e6e6;
@@ -330,16 +367,19 @@
       transition: background 0.2s, border-color 0.2s;
       position: relative;
     }
+
     #dropzone.dragover {
       background: #272727;
       border-color: #39ff14;
     }
+
     #dropzone .placeholder {
       text-align: center;
       color: #777;
       margin-top: 60px;
       font-style: italic;
     }
+
     .scheduled-item {
       background: #262626;
       border: 1px solid #333;
@@ -349,21 +389,24 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.5);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
       gap: 8px;
     }
+
     .scheduled-item .tool-info {
       display: flex;
       align-items: center;
       flex: 1;
       gap: 8px;
     }
+
     .scheduled-item .tool-label {
       font-weight: 600;
       color: #39ff14;
       min-width: 80px;
       flex-shrink: 0;
     }
+
     .scheduled-item input {
       flex: 1;
       padding: 6px 10px;
@@ -375,6 +418,7 @@
       min-width: 300px;
       width: 100%;
     }
+
     .scheduled-item .remove-btn {
       background: #ff0033;
       color: #f0f0f0;
@@ -383,6 +427,7 @@
       border-radius: 4px;
       font-size: 12px;
     }
+
     .scheduled-item .remove-btn:hover {
       background: #e6002e;
     }
@@ -393,18 +438,28 @@
       margin-top: 16px;
       overflow-y: auto;
     }
+
     .output-card {
       background: #1a1a1a;
       border: 1px solid #333;
       border-radius: 4px;
       margin-bottom: 16px;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.5);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
       animation: fadeIn 0.3s ease-out;
     }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
+
     .output-header {
       background: #262626;
       padding: 10px 14px;
@@ -415,10 +470,12 @@
       cursor: pointer;
       user-select: none;
     }
+
     .output-header .title {
       font-weight: 600;
       color: #39ff14;
     }
+
     .output-header .toggle-btn {
       background: none;
       border: none;
@@ -426,10 +483,12 @@
       color: #888;
       transition: transform 0.2s;
     }
+
     .output-header.expanded .toggle-btn {
       transform: rotate(90deg);
       color: #39ff14;
     }
+
     .output-body {
       max-height: 0;
       overflow-y: auto;
@@ -441,10 +500,12 @@
       color: #00e600;
       border-top: 1px solid #333;
     }
+
     .output-body.expanded {
       padding: 8px 14px;
       max-height: 300px;
     }
+
     .output-line {
       white-space: pre-wrap;
       margin: 0;
@@ -458,6 +519,7 @@
     .output-body::-webkit-scrollbar {
       width: 6px;
     }
+
     #palette::-webkit-scrollbar-thumb,
     #dropzone::-webkit-scrollbar-thumb,
     #output-container::-webkit-scrollbar-thumb,
@@ -465,6 +527,7 @@
       background-color: #333;
       border-radius: 3px;
     }
+
     #palette::-webkit-scrollbar-track,
     #dropzone::-webkit-scrollbar-track,
     #output-container::-webkit-scrollbar-track,
@@ -473,6 +536,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Back to Landing Link -->
   <a id="home-link" href="/">← Back to Home</a>
@@ -494,8 +558,9 @@
     <!-- ===== Left Sidebar: Tool Palette with Arguments ===== -->
     <div id="palette">
       <h3>Tools</h3>
-      
-      <div class="tool-card tooltip" draggable="true" data-tool="nmap" data-tooltip="Network exploration tool and security scanner">
+
+      <div class="tool-card tooltip" draggable="true" data-tool="nmap"
+        data-tooltip="Network exploration tool and security scanner">
         Nmap
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-sV">-sV</div>
@@ -510,7 +575,8 @@
         </div>
       </div>
 
-      <div class="tool-card tooltip" draggable="true" data-tool="masscan" data-tooltip="Fast port scanner for large networks">
+      <div class="tool-card tooltip" draggable="true" data-tool="masscan"
+        data-tooltip="Fast port scanner for large networks">
         Masscan
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-p1-65535">-p1-65535</div>
@@ -522,7 +588,8 @@
         </div>
       </div>
 
-      <div class="tool-card tooltip" draggable="true" data-tool="gobuster" data-tooltip="Directory/file & DNS busting tool">
+      <div class="tool-card tooltip" draggable="true" data-tool="gobuster"
+        data-tooltip="Directory/file & DNS busting tool">
         Gobuster
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="dir -u http://target">dir</div>
@@ -547,7 +614,8 @@
         </div>
       </div>
 
-      <div class="tool-card tooltip" draggable="true" data-tool="sqlmap" data-tooltip="Automatic SQL injection and database takeover tool">
+      <div class="tool-card tooltip" draggable="true" data-tool="sqlmap"
+        data-tooltip="Automatic SQL injection and database takeover tool">
         SQLmap
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-u http://target?id=1">-u target</div>
@@ -560,7 +628,8 @@
         </div>
       </div>
 
-      <div class="tool-card tooltip" draggable="true" data-tool="hydra" data-tooltip="Login cracker supporting numerous protocols">
+      <div class="tool-card tooltip" draggable="true" data-tool="hydra"
+        data-tooltip="Login cracker supporting numerous protocols">
         Hydra
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-l admin">-l admin</div>
@@ -597,7 +666,8 @@
         </div>
       </div>
 
-      <div class="tool-card tooltip" draggable="true" data-tool="enum4linux" data-tooltip="SMB enumeration tool for Linux">
+      <div class="tool-card tooltip" draggable="true" data-tool="enum4linux"
+        data-tooltip="SMB enumeration tool for Linux">
         Enum4Linux
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-a">-a</div>
@@ -620,7 +690,8 @@
         </div>
       </div>
 
-      <div class="tool-card tooltip" draggable="true" data-tool="theharvester" data-tooltip="E-mail, subdomain and people names harvester">
+      <div class="tool-card tooltip" draggable="true" data-tool="theharvester"
+        data-tooltip="E-mail, subdomain and people names harvester">
         TheHarvester
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="-d example.com">-d domain</div>
@@ -655,7 +726,8 @@
         </div>
       </div>
 
-      <div class="tool-card tooltip" draggable="true" data-tool="amass" data-tooltip="In-depth DNS enumeration and network mapping">
+      <div class="tool-card tooltip" draggable="true" data-tool="amass"
+        data-tooltip="In-depth DNS enumeration and network mapping">
         AMASS
         <div class="arg-palette">
           <div class="arg-chip" draggable="true" data-arg="enum -d example.com">enum -d</div>
@@ -712,6 +784,20 @@
           <div class="arg-chip" draggable="true" data-arg="--show">--show</div>
         </div>
       </div>
+
+      <div class="tool-card tooltip" draggable="true" data-tool="macchanger" data-tooltip="Change MAC address easily">
+        <br>
+        Macchanger
+        <br>
+        <div class="arg-palette">
+          <div class="arg-chip" draggable="true" data-arg="-r">-r (random MAC)</div>
+          <div class="arg-chip" draggable="true" data-arg="-m XX:XX:XX:XX:XX:XX">-m (set specific MAC)</div>
+          <div class="arg-chip" draggable="true" data-arg="-s">-s (show MAC)</div>
+          <div class="arg-chip" draggable="true" data-arg="-a">-a (random MAC of same kind)</div>
+          <div class="arg-chip" draggable="true" data-arg="eth0">eth0 (example interface)</div>
+        </div>
+      </div>
+
     </div>
 
     <!-- ===== Main Content: Dropzone, Controls, Output ===== -->
@@ -1137,6 +1223,19 @@
         { cmd: "--outfile-format=2", desc: "Output format (hash:plain)" },
         { cmd: "--status", desc: "Show status" },
         { cmd: "--status-timer=60", desc: "Status interval" }
+      ],
+      macchanger: [
+        { cmd: "Usage: macchanger [options] device", desc: "Command usage" },
+        { cmd: "-r", desc: "Set a random MAC address" },
+        { cmd: "-m XX:XX:XX:XX:XX:XX", desc: "Set a specific MAC address" },
+        { cmd: "-s", desc: "Show the current MAC address" },
+        { cmd: "-l", desc: "List known vendors" },
+        { cmd: "-e", desc: "Set MAC to match vendor" },
+        { cmd: "-a", desc: "Set random MAC of same vendor type" },
+        { cmd: "-A", desc: "Set random MAC of any vendor type" },
+        { cmd: "-p", desc: "Preserve current MAC address" },
+        { cmd: "-u", desc: "Restore the original MAC address" },
+        { cmd: "eth0", desc: "Example network interface" }
       ]
     };
 
@@ -1145,16 +1244,16 @@
       const modal = document.getElementById('command-modal');
       const title = document.getElementById('modal-title');
       const body = document.getElementById('modal-body');
-      
+
       title.textContent = `${toolName.toUpperCase()} Commands`;
-      
+
       const commands = toolCommands[toolName] || [];
       if (commands.length === 0) {
         body.innerHTML = '<p>No commands available for this tool yet.</p>';
       } else {
         const grid = document.createElement('div');
         grid.className = 'command-grid';
-        
+
         commands.forEach(command => {
           const item = document.createElement('div');
           item.className = 'command-item';
@@ -1168,11 +1267,11 @@
           });
           grid.appendChild(item);
         });
-        
+
         body.innerHTML = '';
         body.appendChild(grid);
       }
-      
+
       modal.style.display = 'block';
     }
 
@@ -1186,7 +1285,7 @@
         addScheduledTool(toolName);
         existingItem = document.querySelector(`.scheduled-item[data-tool="${toolName}"]`);
       }
-      
+
       const input = existingItem.querySelector('input');
       const current = input.value.trim();
       if (!current.includes(command)) {
@@ -1262,7 +1361,7 @@
         data = JSON.parse(e.dataTransfer.getData('application/json'));
         const { tool, arg } = data;
         const existingItem = Array.from(document.querySelectorAll('.scheduled-item'))
-                              .find(it => it.dataset.tool === tool);
+          .find(it => it.dataset.tool === tool);
         if (existingItem) {
           const input = existingItem.querySelector('input');
           const current = input.value.trim();
@@ -1382,17 +1481,17 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ scripts })
       })
-      .then(resp => {
-        if (!resp.ok) {
-          return resp.json().then(j => {
-            console.error(j);
-            alert('Error: ' + j.message);
-          });
-        }
-      })
-      .catch(err => {
-        console.error('Fetch error:', err);
-      });
+        .then(resp => {
+          if (!resp.ok) {
+            return resp.json().then(j => {
+              console.error(j);
+              alert('Error: ' + j.message);
+            });
+          }
+        })
+        .catch(err => {
+          console.error('Fetch error:', err);
+        });
     });
 
     document.getElementById('stop-btn').addEventListener('click', () => {
@@ -1463,16 +1562,16 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, scripts })
       })
-      .then(resp => resp.json())
-      .then(data => {
-        if (data.status === 'saved') {
-          alert(`Scenario "${data.name}" saved.`);
-          refreshScenarioList();
-        } else {
-          alert(`Error: ${data.message}`);
-        }
-      })
-      .catch(err => console.error(err));
+        .then(resp => resp.json())
+        .then(data => {
+          if (data.status === 'saved') {
+            alert(`Scenario "${data.name}" saved.`);
+            refreshScenarioList();
+          } else {
+            alert(`Error: ${data.message}`);
+          }
+        })
+        .catch(err => console.error(err));
     });
 
     document.getElementById('scenario-list').addEventListener('change', e => {
@@ -1505,4 +1604,5 @@
     refreshScenarioList();
   </script>
 </body>
+
 </html>

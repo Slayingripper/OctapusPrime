@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import subprocess
 import sys
 import logging
 import threading
@@ -115,6 +116,31 @@ def get_cidr_for_interface(interface_name):
     except Exception as e:
         logging.error(f"Failed to get CIDR for interface {interface_name}: {e}")
         return get_local_cidr()
+
+def get_preferred_interface():
+    interfaces = get_available_interfaces()
+    for iface, details in interfaces.items():
+        if details['status'] == 'up' and not details['ip'].startswith("127."):
+            return iface
+    return None
+
+def macchanger_randomize():
+    iface = get_preferred_interface()
+    if not iface:
+        logging.error("No suitable network interface found to run macchanger.")
+        return
+    logging.info(f"Running macchanger on interface {iface}")
+    try:
+        subprocess.run(["sudo", "macchanger", "-r", iface], check=True)
+        logging.info(f"macchanger completed on {iface}")
+    except subprocess.CalledProcessError as e:
+        logging.error(f"macchanger failed: {e}")
+
+def on_gpio23_pressed():
+    logging.info("GPIO 23 pressed! Running macchanger...")
+    macchanger_randomize()
+
+gpio_manager.monitor_gpio_pin(23, on_gpio23_pressed)
 
 # -----------------------------------------------------
 # Routes & WebSocket handlers
