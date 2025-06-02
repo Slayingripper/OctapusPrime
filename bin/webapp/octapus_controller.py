@@ -11,11 +11,22 @@ import xml.etree.ElementTree as ET
 from queue import Queue
 from threading import Thread
 from pathlib import Path
+import gpiozero.pins.lgpio
+import lgpio
 
 # Determine base directory (where this script lives)
 BASE_DIR = Path(__file__).resolve().parent
 LOG_DIR = BASE_DIR / "logs"
 SCENARIO_DIR = BASE_DIR / "scenarios"
+
+def __patched_init(self, chip=None):
+    gpiozero.pins.lgpio.LGPIOFactory.__bases__[0].__init__(self)
+    chip = 0  # You can change the chip number if needed
+    self._handle = lgpio.gpiochip_open(chip)
+    self._chip = chip
+    self.pin_class = gpiozero.pins.lgpio.LGPIOPin
+
+gpiozero.pins.lgpio.LGPIOFactory.__init__ = __patched_init
 
 # --- Configuration ---
 BUTTON_PIN = 17

@@ -2167,3 +2167,340 @@
 2025-06-01 20:44:55,032 127.0.0.1 - - [01/Jun/2025 20:44:55] "GET /settings HTTP/1.1" 200 -
 2025-06-01 20:44:55,092 127.0.0.1 - - [01/Jun/2025 20:44:55] "GET /api/settings HTTP/1.1" 200 -
 2025-06-01 20:45:02,158 127.0.0.1 - - [01/Jun/2025 20:45:02] "GET / HTTP/1.1" 200 -
+2025-06-02 14:04:20,523 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-02 14:04:20,523 [33mPress CTRL+C to quit[0m
+2025-06-02 14:05:35,060 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:05:49,413 127.0.0.1 - - [02/Jun/2025 14:05:49] "GET / HTTP/1.1" 200 -
+2025-06-02 14:05:49,533 127.0.0.1 - - [02/Jun/2025 14:05:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-02 14:05:56,452 127.0.0.1 - - [02/Jun/2025 14:05:56] "GET /dashboard HTTP/1.1" 200 -
+2025-06-02 14:05:56,655 127.0.0.1 - - [02/Jun/2025 14:05:56] "GET /socket.io/?EIO=4&transport=polling&t=PSmzfWf HTTP/1.1" 200 -
+2025-06-02 14:05:56,660 127.0.0.1 - - [02/Jun/2025 14:05:56] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-02 14:05:56,673 New WebSocket client connected
+2025-06-02 14:05:56,674 127.0.0.1 - - [02/Jun/2025 14:05:56] "POST /socket.io/?EIO=4&transport=polling&t=PSmzfWv&sid=OQq5wFKphJJWowyYAAAA HTTP/1.1" 200 -
+2025-06-02 14:05:56,676 127.0.0.1 - - [02/Jun/2025 14:05:56] "GET /socket.io/?EIO=4&transport=polling&t=PSmzfWx&sid=OQq5wFKphJJWowyYAAAA HTTP/1.1" 200 -
+2025-06-02 14:05:56,684 127.0.0.1 - - [02/Jun/2025 14:05:56] "GET /socket.io/?EIO=4&transport=polling&t=PSmzfX9&sid=OQq5wFKphJJWowyYAAAA HTTP/1.1" 200 -
+2025-06-02 14:08:29,174 127.0.0.1 - - [02/Jun/2025 14:08:29] "GET / HTTP/1.1" 200 -
+2025-06-02 14:08:47,774 127.0.0.1 - - [02/Jun/2025 14:08:47] "GET /load_scenario/web_audit HTTP/1.1" 200 -
+2025-06-02 14:08:48,620 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.1.10']}, {'tool': 'gobuster', 'args': ['dir', '-u', 'http://192.168.1.10', '-w', '/usr/share/wordlists/dirb/common.txt']}, {'tool': 'nikto', 'args': ['-h', 'http://192.168.1.10']}, {'tool': 'sqlmap', 'args': ['-u', 'http://192.168.1.10/login.php?user=admin&pass=123', '--batch']}]
+2025-06-02 14:08:48,620 127.0.0.1 - - [02/Jun/2025 14:08:48] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:08:48,621 [octapus] Starting nmap: nmap -sV 192.168.1.10 -oX /tmp/octapus_nmap_4237.xml
+2025-06-02 14:08:55,455 127.0.0.1 - - [02/Jun/2025 14:08:55] "[33mPOST /stop HTTP/1.1[0m" 404 -
+2025-06-02 14:08:59,383 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.1.10']}, {'tool': 'gobuster', 'args': ['dir', '-u', 'http://192.168.1.10', '-w', '/usr/share/wordlists/dirb/common.txt']}, {'tool': 'nikto', 'args': ['-h', 'http://192.168.1.10']}, {'tool': 'sqlmap', 'args': ['-u', 'http://192.168.1.10/login.php?user=admin&pass=123', '--batch']}]
+2025-06-02 14:08:59,384 127.0.0.1 - - [02/Jun/2025 14:08:59] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:08:59,386 [octapus] Starting nmap: nmap -sV 192.168.1.10 -oX /tmp/octapus_nmap_4237.xml
+2025-06-02 14:09:01,917 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.1.10']}, {'tool': 'gobuster', 'args': ['dir', '-u', 'http://192.168.1.10', '-w', '/usr/share/wordlists/dirb/common.txt']}, {'tool': 'nikto', 'args': ['-h', 'http://192.168.1.10']}, {'tool': 'sqlmap', 'args': ['-u', 'http://192.168.1.10/login.php?user=admin&pass=123', '--batch']}]
+2025-06-02 14:09:01,918 127.0.0.1 - - [02/Jun/2025 14:09:01] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:09:01,918 [octapus] Starting nmap: nmap -sV 192.168.1.10 -oX /tmp/octapus_nmap_4237.xml
+2025-06-02 14:09:08,441 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.1.10']}, {'tool': 'gobuster', 'args': ['dir', '-u', 'http://192.168.1.10', '-w', '/usr/share/wordlists/dirb/common.txt']}, {'tool': 'nikto', 'args': ['-h', 'http://192.168.1.10']}, {'tool': 'sqlmap', 'args': ['-u', 'http://192.168.1.10/login.php?user=admin&pass=123', '--batch']}]
+2025-06-02 14:09:08,441 127.0.0.1 - - [02/Jun/2025 14:09:08] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:09:08,442 [octapus] Starting nmap: nmap -sV 192.168.1.10 -oX /tmp/octapus_nmap_4237.xml
+2025-06-02 14:09:13,321 127.0.0.1 - - [02/Jun/2025 14:09:13] "GET /socket.io/?EIO=4&transport=websocket&sid=OQq5wFKphJJWowyYAAAA HTTP/1.1" 200 -
+2025-06-02 14:09:58,126 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-02 14:09:58,126 [33mPress CTRL+C to quit[0m
+2025-06-02 14:10:00,824 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:10:05,128 127.0.0.1 - - [02/Jun/2025 14:10:05] "[36mGET /dashboard HTTP/1.1[0m" 304 -
+2025-06-02 14:10:05,258 127.0.0.1 - - [02/Jun/2025 14:10:05] "GET /socket.io/?EIO=4&transport=polling&t=PSm-cCc HTTP/1.1" 200 -
+2025-06-02 14:10:05,261 127.0.0.1 - - [02/Jun/2025 14:10:05] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-02 14:10:05,272 New WebSocket client connected
+2025-06-02 14:10:05,274 127.0.0.1 - - [02/Jun/2025 14:10:05] "POST /socket.io/?EIO=4&transport=polling&t=PSm-cDE&sid=0xH-hzzKCCcK3sj8AAAA HTTP/1.1" 200 -
+2025-06-02 14:10:05,275 127.0.0.1 - - [02/Jun/2025 14:10:05] "GET /socket.io/?EIO=4&transport=polling&t=PSm-cDH&sid=0xH-hzzKCCcK3sj8AAAA HTTP/1.1" 200 -
+2025-06-02 14:10:05,287 127.0.0.1 - - [02/Jun/2025 14:10:05] "GET /socket.io/?EIO=4&transport=polling&t=PSm-cDZ&sid=0xH-hzzKCCcK3sj8AAAA HTTP/1.1" 200 -
+2025-06-02 14:10:09,102 127.0.0.1 - - [02/Jun/2025 14:10:09] "GET /load_scenario/test HTTP/1.1" 200 -
+2025-06-02 14:10:11,117 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.10.0/24']}, {'tool': 'gobuster', 'args': []}, {'tool': 'nikto', 'args': []}, {'tool': 'sqlmap', 'args': []}, {'tool': 'hydra', 'args': []}]
+2025-06-02 14:10:11,118 127.0.0.1 - - [02/Jun/2025 14:10:11] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:10:11,119 [octapus] Starting nmap: nmap -sV 192.168.10.0/24 -oX /tmp/octapus_nmap_4524.xml
+2025-06-02 14:10:14,719 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.10.0/24']}, {'tool': 'gobuster', 'args': []}, {'tool': 'nikto', 'args': []}, {'tool': 'sqlmap', 'args': []}, {'tool': 'hydra', 'args': []}]
+2025-06-02 14:10:14,720 127.0.0.1 - - [02/Jun/2025 14:10:14] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:10:14,720 [octapus] Starting nmap: nmap -sV 192.168.10.0/24 -oX /tmp/octapus_nmap_4524.xml
+2025-06-02 14:11:03,374 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-02 14:11:03,374 [33mPress CTRL+C to quit[0m
+2025-06-02 14:11:04,815 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.10.0/24']}, {'tool': 'gobuster', 'args': []}, {'tool': 'nikto', 'args': []}, {'tool': 'sqlmap', 'args': []}, {'tool': 'hydra', 'args': []}]
+2025-06-02 14:11:04,816 127.0.0.1 - - [02/Jun/2025 14:11:04] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:11:04,817 [octapus] Starting nmap: nmap -sV 192.168.10.0/24 -oX /tmp/octapus_nmap_4683.xml
+2025-06-02 14:11:04,853 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 14:11 UTC
+2025-06-02 14:11:05,608 127.0.0.1 - - [02/Jun/2025 14:11:05] "GET /socket.io/?EIO=4&transport=polling&t=PSm-qy3 HTTP/1.1" 200 -
+2025-06-02 14:11:05,622 New WebSocket client connected
+2025-06-02 14:11:05,623 127.0.0.1 - - [02/Jun/2025 14:11:05] "POST /socket.io/?EIO=4&transport=polling&t=PSm-qyB&sid=pAFdfq6U4yzgEHVhAAAA HTTP/1.1" 200 -
+2025-06-02 14:11:05,627 127.0.0.1 - - [02/Jun/2025 14:11:05] "GET /socket.io/?EIO=4&transport=polling&t=PSm-qyE&sid=pAFdfq6U4yzgEHVhAAAA HTTP/1.1" 200 -
+2025-06-02 14:11:05,643 127.0.0.1 - - [02/Jun/2025 14:11:05] "GET /socket.io/?EIO=4&transport=polling&t=PSm-qyc&sid=pAFdfq6U4yzgEHVhAAAA HTTP/1.1" 200 -
+2025-06-02 14:11:13,950 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:13:25,505 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-02 14:13:25,505 [33mPress CTRL+C to quit[0m
+2025-06-02 14:13:25,700 127.0.0.1 - - [02/Jun/2025 14:13:25] "GET /socket.io/?EIO=4&transport=polling&t=PSm_N91 HTTP/1.1" 200 -
+2025-06-02 14:13:25,709 New WebSocket client connected
+2025-06-02 14:13:25,712 127.0.0.1 - - [02/Jun/2025 14:13:25] "GET /socket.io/?EIO=4&transport=polling&t=PSm_N99&sid=S8k9TFSILGsNskyaAAAA HTTP/1.1" 200 -
+2025-06-02 14:13:25,713 127.0.0.1 - - [02/Jun/2025 14:13:25] "POST /socket.io/?EIO=4&transport=polling&t=PSm_N98&sid=S8k9TFSILGsNskyaAAAA HTTP/1.1" 200 -
+2025-06-02 14:14:22,621 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-02 14:14:22,621 [33mPress CTRL+C to quit[0m
+2025-06-02 14:14:22,897 127.0.0.1 - - [02/Jun/2025 14:14:22] "GET /socket.io/?EIO=4&transport=polling&t=PSm_b6k HTTP/1.1" 200 -
+2025-06-02 14:14:22,903 New WebSocket client connected
+2025-06-02 14:14:22,905 127.0.0.1 - - [02/Jun/2025 14:14:22] "POST /socket.io/?EIO=4&transport=polling&t=PSm_b6q&sid=Bc5RekUKW1eMfycqAAAA HTTP/1.1" 200 -
+2025-06-02 14:14:22,906 127.0.0.1 - - [02/Jun/2025 14:14:22] "GET /socket.io/?EIO=4&transport=polling&t=PSm_b6r&sid=Bc5RekUKW1eMfycqAAAA HTTP/1.1" 200 -
+2025-06-02 14:14:22,911 127.0.0.1 - - [02/Jun/2025 14:14:22] "GET /socket.io/?EIO=4&transport=polling&t=PSm_b6z&sid=Bc5RekUKW1eMfycqAAAA HTTP/1.1" 200 -
+2025-06-02 14:14:22,917 127.0.0.1 - - [02/Jun/2025 14:14:22] "GET /socket.io/?EIO=4&transport=polling&t=PSm_b72&sid=Bc5RekUKW1eMfycqAAAA HTTP/1.1" 200 -
+2025-06-02 14:14:30,981 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.10.0/24']}, {'tool': 'gobuster', 'args': []}, {'tool': 'nikto', 'args': []}, {'tool': 'sqlmap', 'args': []}, {'tool': 'hydra', 'args': []}]
+2025-06-02 14:14:30,982 127.0.0.1 - - [02/Jun/2025 14:14:30] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:14:30,983 [octapus] Starting nmap: nmap -sV 192.168.10.0/24 -oX /tmp/octapus_nmap_4834.xml
+2025-06-02 14:14:31,044 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 14:14 UTC
+2025-06-02 14:16:02,036 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:16:02,036 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:16:27,632 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:16:27,632 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:16:55,535 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:16:55,535 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:17:24,700 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:17:24,700 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:17:56,788 [nmap] Nmap done: 256 IP addresses (0 hosts up) scanned in 205.80 seconds
+2025-06-02 14:17:56,833 [octapus] Finished nmap
+2025-06-02 14:17:56,834 [octapus] Starting gobuster: gobuster
+2025-06-02 14:18:25,059 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:18:25,059 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:19:19,764 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:19:19,764 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:24:02,359 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-02 14:24:02,360 [33mPress CTRL+C to quit[0m
+2025-06-02 14:24:36,941 127.0.0.1 - - [02/Jun/2025 14:24:36] "GET /socket.io/?EIO=4&transport=polling&t=PSn1x11 HTTP/1.1" 200 -
+2025-06-02 14:24:36,959 New WebSocket client connected
+2025-06-02 14:24:36,964 127.0.0.1 - - [02/Jun/2025 14:24:36] "POST /socket.io/?EIO=4&transport=polling&t=PSn1x1N&sid=gSMUwvzmEqQHHkBQAAAA HTTP/1.1" 200 -
+2025-06-02 14:24:36,999 127.0.0.1 - - [02/Jun/2025 14:24:36] "GET /socket.io/?EIO=4&transport=polling&t=PSn1x1Z&sid=gSMUwvzmEqQHHkBQAAAA HTTP/1.1" 200 -
+2025-06-02 14:24:37,009 127.0.0.1 - - [02/Jun/2025 14:24:37] "GET /socket.io/?EIO=4&transport=polling&t=PSn1x2B&sid=gSMUwvzmEqQHHkBQAAAA HTTP/1.1" 200 -
+2025-06-02 14:24:37,020 127.0.0.1 - - [02/Jun/2025 14:24:37] "GET /socket.io/?EIO=4&transport=polling&t=PSn1x2L&sid=gSMUwvzmEqQHHkBQAAAA HTTP/1.1" 200 -
+2025-06-02 14:24:40,619 127.0.0.1 - - [02/Jun/2025 14:24:40] "GET /load_scenario/full_bruteforce HTTP/1.1" 200 -
+2025-06-02 14:24:42,373 127.0.0.1 - - [02/Jun/2025 14:24:42] "GET /load_scenario/quick_discovery HTTP/1.1" 200 -
+2025-06-02 14:24:45,649 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sn', '192.168.1.0/24']}]
+2025-06-02 14:24:45,649 127.0.0.1 - - [02/Jun/2025 14:24:45] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:24:45,688 [octapus] Starting nmap: nmap -sn 192.168.1.0/24 -oX /tmp/octapus_nmap_1847.xml
+2025-06-02 14:24:45,728 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 14:24 UTC
+2025-06-02 14:25:18,363 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:25:18,363 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:25:56,282 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:25:56,282 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:28:10,254 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sn', '192.168.1.0/24']}]
+2025-06-02 14:28:10,255 [octapus] Starting nmap: nmap -sn 192.168.1.0/24 -oX /tmp/octapus_nmap_1847.xml
+2025-06-02 14:28:10,255 127.0.0.1 - - [02/Jun/2025 14:28:10] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:28:10,266 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 14:28 UTC
+2025-06-02 14:28:11,967 [nmap] Nmap done: 256 IP addresses (0 hosts up) scanned in 206.24 seconds
+2025-06-02 14:28:11,977 [octapus] Finished nmap
+2025-06-02 14:28:11,977 [octapus] Full dynamic scan sequence completed
+2025-06-02 14:28:15,799 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sn', '192.168.1.0/24']}]
+2025-06-02 14:28:15,800 127.0.0.1 - - [02/Jun/2025 14:28:15] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:28:15,800 [octapus] Starting nmap: nmap -sn 192.168.1.0/24 -oX /tmp/octapus_nmap_1847.xml
+2025-06-02 14:28:15,819 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 14:28 UTC
+2025-06-02 14:28:22,701 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:28:22,702 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:31:36,571 [nmap] Nmap done: 256 IP addresses (0 hosts up) scanned in 206.31 seconds
+2025-06-02 14:31:36,572 [octapus] Finished nmap
+2025-06-02 14:31:36,572 [nmap] XML parse error: no element found: line 6, column 0
+2025-06-02 14:31:36,572 [octapus] Full dynamic scan sequence completed
+2025-06-02 14:31:42,147 [nmap] Nmap done: 256 IP addresses (0 hosts up) scanned in 206.33 seconds
+2025-06-02 14:31:42,148 [octapus] Finished nmap
+2025-06-02 14:31:42,148 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_1847.xml'
+2025-06-02 14:31:42,148 [octapus] Full dynamic scan sequence completed
+2025-06-02 14:33:28,659 GPIO setup failed: Unable to load any default pin factory!
+2025-06-02 14:33:28,659 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:33:55,786 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:33:55,787 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:54:42,924 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sn', '192.168.1.0/24']}]
+2025-06-02 14:54:42,925 127.0.0.1 - - [02/Jun/2025 14:54:42] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:54:42,925 [octapus] Starting nmap: nmap -sn 192.168.1.0/24 -oX /tmp/octapus_nmap_1847.xml
+2025-06-02 14:54:42,933 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 14:54 UTC
+2025-06-02 14:54:50,462 GPIO setup failed: Cannot determine SOC peripheral base address
+2025-06-02 14:54:50,463 [octapus] GPIO not available; cannot run controller.
+2025-06-02 14:56:30,788 [octapus] Controller started; awaiting button press
+2025-06-02 14:57:10,555 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sn', '192.168.1.0/24']}]
+2025-06-02 14:57:10,556 127.0.0.1 - - [02/Jun/2025 14:57:10] "POST /start HTTP/1.1" 200 -
+2025-06-02 14:57:10,555 [octapus] Starting nmap: nmap -sn 192.168.1.0/24 -oX /tmp/octapus_nmap_1847.xml
+2025-06-02 14:57:10,567 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 14:57 UTC
+2025-06-02 14:58:09,175 [nmap] Nmap done: 256 IP addresses (0 hosts up) scanned in 206.24 seconds
+2025-06-02 14:58:09,176 [octapus] Finished nmap
+2025-06-02 14:58:09,177 [octapus] Full dynamic scan sequence completed
+2025-06-02 15:00:35,935 [nmap] Nmap done: 256 IP addresses (0 hosts up) scanned in 205.37 seconds
+2025-06-02 15:00:35,935 [octapus] Finished nmap
+2025-06-02 15:00:35,936 [nmap] XML parse error: [Errno 2] No such file or directory: '/tmp/octapus_nmap_1847.xml'
+2025-06-02 15:00:35,936 [octapus] Full dynamic scan sequence completed
+2025-06-02 15:17:51,662 [octapus] Controller started; awaiting button press
+2025-06-02 15:17:53,731 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:17:53,791 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:17 UTC
+2025-06-02 15:18:04,783 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:18:04,836 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:18 UTC
+2025-06-02 15:18:06,189 127.0.0.1 - - [02/Jun/2025 15:18:06] "[33mPOST /stop HTTP/1.1[0m" 404 -
+2025-06-02 15:18:06,467 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:07,411 127.0.0.1 - - [02/Jun/2025 15:18:07] "GET /socket.io/?EIO=4&transport=websocket&sid=gSMUwvzmEqQHHkBQAAAA HTTP/1.1" 200 -
+2025-06-02 15:18:07,443 127.0.0.1 - - [02/Jun/2025 15:18:07] "[36mGET /dashboard HTTP/1.1[0m" 304 -
+2025-06-02 15:18:07,532 127.0.0.1 - - [02/Jun/2025 15:18:07] "GET /socket.io/?EIO=4&transport=polling&t=PSnEAsd HTTP/1.1" 200 -
+2025-06-02 15:18:07,539 127.0.0.1 - - [02/Jun/2025 15:18:07] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-02 15:18:07,565 New WebSocket client connected
+2025-06-02 15:18:07,566 127.0.0.1 - - [02/Jun/2025 15:18:07] "POST /socket.io/?EIO=4&transport=polling&t=PSnEAso&sid=wRjU6tzxuXkDSfzBAAAC HTTP/1.1" 200 -
+2025-06-02 15:18:07,570 127.0.0.1 - - [02/Jun/2025 15:18:07] "GET /socket.io/?EIO=4&transport=polling&t=PSnEAss&sid=wRjU6tzxuXkDSfzBAAAC HTTP/1.1" 200 -
+2025-06-02 15:18:07,586 127.0.0.1 - - [02/Jun/2025 15:18:07] "GET /socket.io/?EIO=4&transport=polling&t=PSnEAtP&sid=wRjU6tzxuXkDSfzBAAAC HTTP/1.1" 200 -
+2025-06-02 15:18:07,595 127.0.0.1 - - [02/Jun/2025 15:18:07] "GET /socket.io/?EIO=4&transport=polling&t=PSnEAtb&sid=wRjU6tzxuXkDSfzBAAAC HTTP/1.1" 200 -
+2025-06-02 15:18:10,189 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,189 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,189 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,189 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,189 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,189 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,189 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,189 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,192 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,198 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,301 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:18:10,350 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:18 UTC
+2025-06-02 15:18:10,595 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,595 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,595 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,595 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,595 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,595 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,595 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,595 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,595 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,620 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,628 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:10,631 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:18:13,749 127.0.0.1 - - [02/Jun/2025 15:18:13] "GET /load_scenario/quick_discovery HTTP/1.1" 200 -
+2025-06-02 15:18:15,042 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:18:15,095 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:18 UTC
+2025-06-02 15:18:20,161 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:18:20,195 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:18 UTC
+2025-06-02 15:19:21,199 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:21,249 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:23,474 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sn', '192.168.1.0/24']}, {'tool': 'masscan', 'args': ['-p1-1024', '192.168.1.0/24']}]
+2025-06-02 15:19:23,474 127.0.0.1 - - [02/Jun/2025 15:19:23] "POST /start HTTP/1.1" 200 -
+2025-06-02 15:19:23,475 [octapus] Starting nmap: nmap -sn 192.168.1.0/24 -oX /tmp/octapus_nmap_1847.xml
+2025-06-02 15:19:23,483 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:24,487 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:24,541 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:25,694 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:25,756 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:26,338 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:26,399 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:26,807 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:26,862 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:27,107 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:27,177 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:27,442 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:27,510 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:29,753 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:29,788 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:30,053 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:30,093 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:30,432 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:30,467 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:31,212 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:31,248 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:32,459 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:19:32,495 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:19 UTC
+2025-06-02 15:19:51,037 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:19:51,316 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:19:54,684 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:19:56,246 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:20:04,700 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-02 15:20:04,700 [33mPress CTRL+C to quit[0m
+2025-06-02 15:20:07,601 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:07,654 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:08,323 127.0.0.1 - - [02/Jun/2025 15:20:08] "GET /socket.io/?EIO=4&transport=polling&t=PSnEeL_ HTTP/1.1" 200 -
+2025-06-02 15:20:08,331 New WebSocket client connected
+2025-06-02 15:20:08,332 127.0.0.1 - - [02/Jun/2025 15:20:08] "POST /socket.io/?EIO=4&transport=polling&t=PSnEeM6&sid=TJVFry8VJxjkKbFeAAAA HTTP/1.1" 200 -
+2025-06-02 15:20:08,335 127.0.0.1 - - [02/Jun/2025 15:20:08] "GET /socket.io/?EIO=4&transport=polling&t=PSnEeM8&sid=TJVFry8VJxjkKbFeAAAA HTTP/1.1" 200 -
+2025-06-02 15:20:08,341 127.0.0.1 - - [02/Jun/2025 15:20:08] "GET /socket.io/?EIO=4&transport=polling&t=PSnEeMI&sid=TJVFry8VJxjkKbFeAAAA HTTP/1.1" 200 -
+2025-06-02 15:20:08,347 127.0.0.1 - - [02/Jun/2025 15:20:08] "GET /socket.io/?EIO=4&transport=polling&t=PSnEeMO&sid=TJVFry8VJxjkKbFeAAAA HTTP/1.1" 200 -
+2025-06-02 15:20:09,172 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:20:11,710 127.0.0.1 - - [02/Jun/2025 15:20:11] "GET /socket.io/?EIO=4&transport=websocket&sid=TJVFry8VJxjkKbFeAAAA HTTP/1.1" 200 -
+2025-06-02 15:20:11,734 127.0.0.1 - - [02/Jun/2025 15:20:11] "[36mGET /dashboard HTTP/1.1[0m" 304 -
+2025-06-02 15:20:11,819 127.0.0.1 - - [02/Jun/2025 15:20:11] "GET /socket.io/?EIO=4&transport=polling&t=PSnEfCb HTTP/1.1" 200 -
+2025-06-02 15:20:11,843 127.0.0.1 - - [02/Jun/2025 15:20:11] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-02 15:20:11,851 New WebSocket client connected
+2025-06-02 15:20:11,856 127.0.0.1 - - [02/Jun/2025 15:20:11] "POST /socket.io/?EIO=4&transport=polling&t=PSnEfCp&sid=7ct20g1RkNETh_oeAAAC HTTP/1.1" 200 -
+2025-06-02 15:20:11,858 127.0.0.1 - - [02/Jun/2025 15:20:11] "GET /socket.io/?EIO=4&transport=polling&t=PSnEfCr&sid=7ct20g1RkNETh_oeAAAC HTTP/1.1" 200 -
+2025-06-02 15:20:11,873 127.0.0.1 - - [02/Jun/2025 15:20:11] "GET /socket.io/?EIO=4&transport=polling&t=PSnEfDQ&sid=7ct20g1RkNETh_oeAAAC HTTP/1.1" 200 -
+2025-06-02 15:20:13,513 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:13,579 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:14,941 127.0.0.1 - - [02/Jun/2025 15:20:14] "GET /socket.io/?EIO=4&transport=websocket&sid=7ct20g1RkNETh_oeAAAC HTTP/1.1" 200 -
+2025-06-02 15:20:14,946 127.0.0.1 - - [02/Jun/2025 15:20:14] "[36mGET / HTTP/1.1[0m" 304 -
+2025-06-02 15:20:19,000 127.0.0.1 - - [02/Jun/2025 15:20:19] "[36mGET /dashboard HTTP/1.1[0m" 304 -
+2025-06-02 15:20:19,109 127.0.0.1 - - [02/Jun/2025 15:20:19] "GET /socket.io/?EIO=4&transport=polling&t=PSnEg-R HTTP/1.1" 200 -
+2025-06-02 15:20:19,127 127.0.0.1 - - [02/Jun/2025 15:20:19] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-02 15:20:19,138 New WebSocket client connected
+2025-06-02 15:20:19,140 127.0.0.1 - - [02/Jun/2025 15:20:19] "POST /socket.io/?EIO=4&transport=polling&t=PSnEg-s&sid=2FyfMp33WEpgIlRyAAAE HTTP/1.1" 200 -
+2025-06-02 15:20:19,140 127.0.0.1 - - [02/Jun/2025 15:20:19] "GET /socket.io/?EIO=4&transport=polling&t=PSnEg-u&sid=2FyfMp33WEpgIlRyAAAE HTTP/1.1" 200 -
+2025-06-02 15:20:19,151 127.0.0.1 - - [02/Jun/2025 15:20:19] "GET /socket.io/?EIO=4&transport=polling&t=PSnEg_B&sid=2FyfMp33WEpgIlRyAAAE HTTP/1.1" 200 -
+2025-06-02 15:20:20,196 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:20,247 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:22,348 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:22,388 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:22,953 127.0.0.1 - - [02/Jun/2025 15:20:22] "GET /local_cidr HTTP/1.1" 200 -
+2025-06-02 15:20:23,499 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:23,537 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:24,636 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:24,674 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:27,336 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:27,390 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:27,678 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:27,733 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:27,995 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:28,055 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:39,888 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:20:39,888 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:20:39,889 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:20:39,889 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:20:39,889 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:20:39,889 [nmap] RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+2025-06-02 15:20:46,478 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:46,532 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:20:47,708 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_3858.xml
+2025-06-02 15:20:47,762 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:20 UTC
+2025-06-02 15:22:20,001 [octapus] Controller started; awaiting button press
+2025-06-02 15:26:27,227 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.0.0/24']}]
+2025-06-02 15:26:27,227 127.0.0.1 - - [02/Jun/2025 15:26:27] "POST /start HTTP/1.1" 200 -
+2025-06-02 15:26:27,229 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_4020.xml
+2025-06-02 15:26:27,280 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:26 UTC
+2025-06-02 15:30:23,892 [nmap] WARNING: Service 192.168.0.1:5000 had already soft-matched upnp, but now soft-matched rtsp; ignoring second value
+2025-06-02 15:30:34,139 [nmap] WARNING: Service 192.168.0.1:5000 had already soft-matched upnp, but now soft-matched sip; ignoring second value
+2025-06-02 15:33:30,963 127.0.0.1 - - [02/Jun/2025 15:33:30] "[33mPOST /stop HTTP/1.1[0m" 404 -
+2025-06-02 15:47:14,819 [octapus] Controller started; awaiting button press
+2025-06-02 15:47:16,811 [octapus] Starting nmap: nmap -sV 192.168.0.0/24 -oX /tmp/octapus_nmap_2254.xml
+2025-06-02 15:47:16,880 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:47 UTC
+2025-06-02 15:47:18,829 [octapus] Finished nmap
+2025-06-02 15:47:18,829 [nmap] XML parse error: no element found: line 99, column 0
+2025-06-02 15:47:18,830 [octapus] Starting masscan: masscan 192.168.0.0/24 -p1-65535 --rate=1000
+2025-06-02 15:48:00,183 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-02 15:48:00,183 [33mPress CTRL+C to quit[0m
+2025-06-02 15:48:03,840 127.0.0.1 - - [02/Jun/2025 15:48:03] "GET /dashboard HTTP/1.1" 200 -
+2025-06-02 15:48:03,912 127.0.0.1 - - [02/Jun/2025 15:48:03] "GET /socket.io/?EIO=4&transport=polling&t=PSnL1R4 HTTP/1.1" 200 -
+2025-06-02 15:48:03,918 127.0.0.1 - - [02/Jun/2025 15:48:03] "GET /list_scenarios HTTP/1.1" 200 -
+2025-06-02 15:48:03,925 127.0.0.1 - - [02/Jun/2025 15:48:03] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-06-02 15:48:03,939 New WebSocket client connected
+2025-06-02 15:48:03,940 127.0.0.1 - - [02/Jun/2025 15:48:03] "POST /socket.io/?EIO=4&transport=polling&t=PSnL1RM&sid=bk2esgbqzj9_9iDgAAAA HTTP/1.1" 200 -
+2025-06-02 15:48:03,940 127.0.0.1 - - [02/Jun/2025 15:48:03] "GET /socket.io/?EIO=4&transport=polling&t=PSnL1RO&sid=bk2esgbqzj9_9iDgAAAA HTTP/1.1" 200 -
+2025-06-02 15:48:03,961 127.0.0.1 - - [02/Jun/2025 15:48:03] "GET /socket.io/?EIO=4&transport=polling&t=PSnL1Rj&sid=bk2esgbqzj9_9iDgAAAA HTTP/1.1" 200 -
+2025-06-02 15:48:10,276 127.0.0.1 - - [02/Jun/2025 15:48:10] "GET /load_scenario/full_bruteforce HTTP/1.1" 200 -
+2025-06-02 15:48:12,466 HTTP /start received. Scheduled dynamic scan: [{'tool': 'nmap', 'args': ['-sV', '192.168.1.0/24']}, {'tool': 'gobuster', 'args': ['dir', '-u', 'http://192.168.1.254', '-w', '/usr/share/wordlists/dirb/big.txt']}, {'tool': 'nikto', 'args': ['-h', 'http://192.168.1.254']}, {'tool': 'hydra', 'args': ['-L', '/usr/share/wordlists/users.txt', '-P', '/usr/share/wordlists/passwords.txt', 'ftp://192.168.1.254']}]
+2025-06-02 15:48:12,466 127.0.0.1 - - [02/Jun/2025 15:48:12] "POST /start HTTP/1.1" 200 -
+2025-06-02 15:48:12,468 [octapus] Starting nmap: nmap -sV 192.168.1.0/24 -oX /tmp/octapus_nmap_2338.xml
+2025-06-02 15:48:12,522 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:48 UTC
+2025-06-02 15:48:14,368 127.0.0.1 - - [02/Jun/2025 15:48:14] "GET /socket.io/?EIO=4&transport=websocket&sid=bk2esgbqzj9_9iDgAAAA HTTP/1.1" 200 -
