@@ -4,9 +4,11 @@ import sys
 import logging
 import threading
 import json
+import netifaces
+import ipaddress
 from queue import Queue
 from pathlib import Path
-from flask import Flask, send_from_directory, jsonify, request
+from flask import Flask, send_from_directory, jsonify, request, send_file
 from flask_socketio import SocketIO
 
 # -----------------------------------------------------
@@ -35,6 +37,7 @@ if not OCTAPUS_LOG_FILE.exists():
 sys.path.insert(0, str(BIN))
 
 from octapus_controller import log_queue, start_scan_thread, start_scenario_thread, get_local_cidr
+from gpio_manager import gpio_manager
 
 # -----------------------------------------------------
 # Configuration
@@ -64,6 +67,54 @@ except Exception:
 # -----------------------------------------------------
 app = Flask(__name__, static_folder=str(FRONTEND_DIR), template_folder=str(FRONTEND_DIR))
 socketio = SocketIO(app, async_mode="threading")
+
+# -----------------------------------------------------
+# Network Interface Helper Functions
+# -----------------------------------------------------
+def get_available_interfaces():
+    """Get all available network interfaces with their IP addresses."""
+    interfaces = {}
+    try:
+        for iface in netifaces.interfaces():
+            addrs = netifaces.ifaddresses(iface)
+            if netifaces.AF_INET in addrs:
+                for addr_info in addrs[netifaces.AF_INET]:
+                    ip = addr_info.get('addr')
+                    netmask = addr_info.get('netmask')
+                    if ip and ip != '127.0.0.1':  # Skip localhost
+                        try:
+                            # Calculate network CIDR
+                            network = ipaddress.IPv4Network(f"{ip}/{netmask}", strict=False)
+                            interfaces[iface] = {
+                                'ip': ip,
+                                'netmask': netmask,
+                                'network': str(network),
+                                'status': 'up' if iface in netifaces.interfaces() else 'down'
+                            }
+                        except Exception:
+                            interfaces[iface] = {
+                                'ip': ip,
+                                'netmask': netmask,
+                                'network': f"{ip}/24",  # fallback
+                                'status': 'up'
+                            }
+    except Exception as e:
+        logging.error(f"Failed to get network interfaces: {e}")
+    
+    return interfaces
+
+def get_cidr_for_interface(interface_name):
+    """Get the CIDR notation for a specific network interface."""
+    try:
+        interfaces = get_available_interfaces()
+        if interface_name in interfaces:
+            return interfaces[interface_name]['network']
+        else:
+            # Fallback to auto-detection
+            return get_local_cidr()
+    except Exception as e:
+        logging.error(f"Failed to get CIDR for interface {interface_name}: {e}")
+        return get_local_cidr()
 
 # -----------------------------------------------------
 # Routes & WebSocket handlers
@@ -118,12 +169,36 @@ def demo_page():
 def local_cidr():
     """
     Return local network CIDR as JSON: { "cidr": "192.168.1.0/24" }
+    Uses the configured network interface if available.
     """
+    try:
+        # Try to get settings to see if user has configured a specific interface
+        if SETTINGS_FILE.exists():
+            with open(SETTINGS_FILE, "r") as f:
+                settings = json.load(f)
+                interface_name = settings.get("networkInterface", "auto")
+                
+                if interface_name != "auto":
+                    cidr = get_cidr_for_interface(interface_name)
+                    if cidr:
+                        return jsonify(cidr=cidr, interface=interface_name)
+    except Exception as e:
+        logging.warning(f"Failed to use configured interface: {e}")
+    
+    # Fallback to auto-detection
     cidr = get_local_cidr()
     if cidr:
-        return jsonify(cidr=cidr)
+        return jsonify(cidr=cidr, interface="auto")
     else:
         return jsonify(error="Unable to detect local network"), 500
+
+@app.route("/network_interfaces", methods=["GET"])
+def network_interfaces():
+    """
+    Return available network interfaces with their IP information.
+    """
+    interfaces = get_available_interfaces()
+    return jsonify(interfaces=interfaces)
 
 @app.route("/start", methods=["POST"])
 def start_scan():
@@ -276,9 +351,14 @@ def fetch_logs():
 # API Endpoints for Settings
 # -----------------------------------------------------
 DEFAULT_SETTINGS = {
-    "networkInterface": "eth0",
+    "networkInterface": "auto",
+    "customCIDR": "",
     "nmapScanType": "intense",
-    "logVerbosity": "info"
+    "logVerbosity": "info",
+    "autoDetectNetwork": True,
+    "defaultScanPorts": "1-1000",
+    "masscanRate": "1000",
+    "threadCount": "10"
 }
 
 @app.route("/api/settings", methods=["GET"])
@@ -292,9 +372,9 @@ def get_settings():
     try:
         with open(SETTINGS_FILE, "r") as f:
             settings_data = json.load(f)
-        # You might want to merge with defaults to ensure all keys are present
-        # current_settings = {**DEFAULT_SETTINGS, **settings_data} 
-        return jsonify(status="success", data=settings_data)
+        # Merge with defaults to ensure all keys are present
+        current_settings = {**DEFAULT_SETTINGS, **settings_data} 
+        return jsonify(status="success", data=current_settings)
     except Exception as e:
         logging.error(f"Failed to load settings: {e}")
         # Fallback to default settings on error
@@ -311,8 +391,27 @@ def save_settings():
         if not isinstance(new_settings, dict):
             return jsonify(status="error", message="Invalid settings format, expected a JSON object."), 400
         
-        # Optional: Validate specific settings keys/values here if needed
-        # For example, ensure nmapScanType is one of the allowed values
+        # Validate specific settings
+        valid_scan_types = ["intense", "quick", "comprehensive", "stealth", "custom"]
+        if "nmapScanType" in new_settings and new_settings["nmapScanType"] not in valid_scan_types:
+            return jsonify(status="error", message=f"Invalid scan type. Must be one of: {', '.join(valid_scan_types)}"), 400
+        
+        valid_log_levels = ["debug", "info", "warning", "error"]
+        if "logVerbosity" in new_settings and new_settings["logVerbosity"] not in valid_log_levels:
+            return jsonify(status="error", message=f"Invalid log level. Must be one of: {', '.join(valid_log_levels)}"), 400
+        
+        # Validate network interface if not auto
+        if "networkInterface" in new_settings and new_settings["networkInterface"] != "auto":
+            available_interfaces = get_available_interfaces()
+            if new_settings["networkInterface"] not in available_interfaces:
+                return jsonify(status="error", message=f"Invalid network interface. Available interfaces: {', '.join(available_interfaces.keys())}"), 400
+        
+        # Validate custom CIDR if provided
+        if "customCIDR" in new_settings and new_settings["customCIDR"]:
+            try:
+                ipaddress.IPv4Network(new_settings["customCIDR"], strict=False)
+            except ValueError:
+                return jsonify(status="error", message="Invalid CIDR format. Use format like 192.168.1.0/24"), 400
 
         with open(SETTINGS_FILE, "w") as f:
             json.dump(new_settings, f, indent=2)
@@ -321,6 +420,81 @@ def save_settings():
     except Exception as e:
         logging.error(f"Failed to save settings: {e}")
         return jsonify(status="error", message=f"Failed to save settings: {e}"), 500
+
+# -----------------------------------------------------
+# GPIO Configuration Endpoints
+# -----------------------------------------------------
+@app.route("/gpio_config", methods=["GET"])
+def get_gpio_config():
+    """Get current GPIO configuration and platform info."""
+    return jsonify({
+        "config": gpio_manager.config,
+        "platform_info": gpio_manager.platform_info,
+        "available_libraries": gpio_manager.get_available_libraries()
+    })
+
+@app.route("/gpio_config", methods=["POST"])
+def update_gpio_config():
+    """Update GPIO configuration."""
+    try:
+        new_config = request.get_json(force=True)
+        
+        # Validate configuration
+        required_fields = ["button_pin", "led_pin", "gpio_library", "manual_override"]
+        for field in required_fields:
+            if field not in new_config:
+                return jsonify({"status": "error", "message": f"Missing field: {field}"}), 400
+        
+        # Validate pin numbers
+        if not (0 <= new_config["button_pin"] <= 40):
+            return jsonify({"status": "error", "message": "Button pin must be between 0-40"}), 400
+        if not (0 <= new_config["led_pin"] <= 40):
+            return jsonify({"status": "error", "message": "LED pin must be between 0-40"}), 400
+        if new_config["button_pin"] == new_config["led_pin"]:
+            return jsonify({"status": "error", "message": "Button and LED pins must be different"}), 400
+        
+        # Save configuration
+        if gpio_manager.save_config(new_config):
+            logging.info(f"GPIO configuration updated: {new_config}")
+            return jsonify({"status": "saved", "message": "GPIO configuration updated successfully"})
+        else:
+            return jsonify({"status": "error", "message": "Failed to save configuration"}), 500
+            
+    except Exception as e:
+        logging.error(f"Failed to update GPIO config: {e}")
+        return jsonify({"status": "error", "message": f"Invalid configuration: {e}"}), 400
+
+@app.route("/gpio_test", methods=["POST"])
+def test_gpio():
+    """Test GPIO configuration without saving."""
+    try:
+        test_config = request.get_json(force=True)
+        
+        # Temporarily update config
+        original_config = gpio_manager.config.copy()
+        gpio_manager.config.update(test_config)
+        
+        try:
+            button, led = gpio_manager.setup_gpio()
+            if button and led:
+                # Test LED briefly
+                led.on()
+                import time
+                time.sleep(0.5)
+                led.off()
+                
+                result = {"status": "success", "message": "GPIO test successful"}
+            else:
+                result = {"status": "error", "message": "GPIO initialization failed"}
+        finally:
+            # Restore original config
+            gpio_manager.config = original_config
+        
+        return jsonify(result)
+        
+    except Exception as e:
+        logging.error(f"GPIO test failed: {e}")
+        return jsonify({"status": "error", "message": f"GPIO test failed: {e}"}), 500
 
 # -----------------------------------------------------
 # Main entrypoint

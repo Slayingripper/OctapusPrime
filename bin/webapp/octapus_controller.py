@@ -8,30 +8,60 @@ import sys
 import ipaddress
 import socket
 import xml.etree.ElementTree as ET
+import platform
 from queue import Queue
 from threading import Thread
 from pathlib import Path
-import gpiozero.pins.lgpio
-import lgpio
 
 # Determine base directory (where this script lives)
 BASE_DIR = Path(__file__).resolve().parent
 LOG_DIR = BASE_DIR / "logs"
 SCENARIO_DIR = BASE_DIR / "scenarios"
 
-def __patched_init(self, chip=None):
-    gpiozero.pins.lgpio.LGPIOFactory.__bases__[0].__init__(self)
-    chip = 0  # You can change the chip number if needed
-    self._handle = lgpio.gpiochip_open(chip)
-    self._chip = chip
-    self.pin_class = gpiozero.pins.lgpio.LGPIOPin
+# Kernel version check for Raspberry Pi 6.6.45+ patch
+def needs_lgpio_patch():
+    """Check if we need the lgpio patch for newer Raspberry Pi kernels."""
+    try:
+        kernel_version = platform.release()
+        # Parse kernel version (e.g., "6.6.45-v8+" -> [6, 6, 45])
+        version_parts = kernel_version.split('-')[0].split('.')
+        if len(version_parts) >= 3:
+            major, minor, patch = map(int, version_parts[:3])
+            # Check if kernel is 6.6.45 or greater
+            if (major > 6) or (major == 6 and minor > 6) or (major == 6 and minor == 6 and patch >= 45):
+                return True
+    except (ValueError, IndexError):
+        pass
+    return False
 
-gpiozero.pins.lgpio.LGPIOFactory.__init__ = __patched_init
+# Apply lgpio patch for newer Raspberry Pi kernels if needed
+if needs_lgpio_patch():
+    try:
+        import gpiozero.pins.lgpio
+        import lgpio
+        
+        def __patched_init(self, chip=None):
+            gpiozero.pins.lgpio.LGPIOFactory.__bases__[0].__init__(self)
+            chip = 0  # You can change the chip number if needed
+            self._handle = lgpio.gpiochip_open(chip)
+            self._chip = chip
+            self.pin_class = gpiozero.pins.lgpio.LGPIOPin
+
+        gpiozero.pins.lgpio.LGPIOFactory.__init__ = __patched_init
+        logging.info(f"Applied lgpio patch for kernel {platform.release()}")
+    except ImportError:
+        logging.warning("lgpio patch needed but libraries not available")
+
+# Import GPIO manager after potential patching
+try:
+    from gpio_manager import gpio_manager
+    GPIO_AVAILABLE = True
+except ImportError:
+    logging.warning("gpio_manager not available, using fallback GPIO setup")
+    GPIO_AVAILABLE = False
 
 # --- Configuration ---
-BUTTON_PIN = 17
-LED_PIN    = 27
-LOG_FILE   = LOG_DIR / "octapus.log"
+LOG_FILE = LOG_DIR / "octapus.log"
 
 # Shared thread-safe queue for real-time log streaming
 log_queue = Queue()
@@ -54,20 +84,43 @@ except Exception:
         format="%(asctime)s %(message)s",
     )
 
-# GPIOZero imports deferred to runtime
 def setup_gpio():
     """Initialize GPIO button and LED; returns (button, led)."""
+    if GPIO_AVAILABLE:
+        # Use the new GPIO manager
+        button, led = gpio_manager.setup_gpio()
+        if button and led:
+            logging.info(f"GPIO setup successful via gpio_manager on {gpio_manager.platform_info['model']}")
+            logging.info(f"Using {gpio_manager.config.get('gpio_library', 'auto')} library")
+            logging.info(f"Button: GPIO{gpio_manager.config['button_pin']}, LED: GPIO{gpio_manager.config['led_pin']}")
+            return button, led
+        else:
+            logging.warning("GPIO manager setup failed, trying fallback")
+    
+    # Fallback to original setup method
     try:
         from gpiozero import Button, LED
-    except (ImportError, RuntimeError):
+        
+        # Use default pins if gpio_manager not available
+        if GPIO_AVAILABLE:
+            button_pin = gpio_manager.config.get('button_pin', 17)
+            led_pin = gpio_manager.config.get('led_pin', 27)
+            pull_up = gpio_manager.config.get('button_pull_up', True)
+            bounce_time = gpio_manager.config.get('button_bounce_time', 0.1)
+            active_high = gpio_manager.config.get('led_active_high', True)
+        else:
+            button_pin, led_pin = 17, 27
+            pull_up, bounce_time, active_high = True, 0.1, True
+            
+        button = Button(button_pin, pull_up=pull_up, bounce_time=bounce_time)
+        led = LED(led_pin, active_high=active_high)
+        
+        logging.info(f"GPIO fallback setup successful: Button=GPIO{button_pin}, LED=GPIO{led_pin}")
+        return button, led
+        
+    except (ImportError, RuntimeError) as e:
+        logging.warning(f"GPIO fallback setup failed: {e}")
         return None, None
-    try:
-        button = Button(BUTTON_PIN, pull_up=True, bounce_time=0.1)
-        led = LED(LED_PIN)
-    except Exception as e:
-        logging.warning(f"GPIO setup failed: {e}")
-        return None, None
-    return button, led
 
 def log_and_queue(tool, message):
     """Log to file/console and enqueue message for web UI."""
@@ -276,22 +329,14 @@ def start_scan_thread(scripts):
     Helper to launch dynamic_scan_sequence(...) in its own asyncio event loop.
     This function runs in a separate Thread so it does not block Flask.
     """
-    try:
-        from gpiozero import LED
-        led = LED(LED_PIN)
-    except Exception:
-        led = None
+    button, led = setup_gpio()
     asyncio.run(dynamic_scan_sequence(scripts, led))
 
 def start_scenario_thread(steps):
     """
     Helper to launch scenario_scan_sequence(...) in its own asyncio event loop.
     """
-    try:
-        from gpiozero import LED
-        led = LED(LED_PIN)
-    except Exception:
-        led = None
+    button, led = setup_gpio()
     asyncio.run(scenario_scan_sequence(steps, led))
 
 async def controller():
@@ -307,7 +352,18 @@ async def controller():
     button, led = setup_gpio()
     if button:
         button.when_pressed = lambda: Thread(target=start_scan_thread, args=(default_scripts,), daemon=True).start()
-        log_and_queue("octapus", "Controller started; awaiting button press")
+        
+        # Log detailed GPIO information
+        if GPIO_AVAILABLE:
+            platform_info = gpio_manager.platform_info
+            config = gpio_manager.config
+            log_and_queue("octapus", f"Controller started on {platform_info['model']} (kernel {platform.release()})")
+            log_and_queue("octapus", f"GPIO Library: {config.get('gpio_library', 'auto')} {'(manual override)' if config.get('manual_override') else '(auto-detected)'}")
+            log_and_queue("octapus", f"Button: GPIO{config['button_pin']}, LED: GPIO{config['led_pin']}")
+        else:
+            log_and_queue("octapus", f"Controller started with fallback GPIO (kernel {platform.release()})")
+            
+        log_and_queue("octapus", "Awaiting button press...")
         await asyncio.Event().wait()
     else:
         log_and_queue("octapus", "GPIO not available; cannot run controller.")
