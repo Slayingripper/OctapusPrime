@@ -9,6 +9,8 @@ import ipaddress
 import socket
 import xml.etree.ElementTree as ET
 import platform
+import threading
+
 from queue import Queue
 from threading import Thread
 from pathlib import Path
@@ -104,8 +106,10 @@ def setup_gpio():
         # Use default pins if gpio_manager not available
         if GPIO_AVAILABLE:
             button_pin = gpio_manager.config.get('button_pin', 17)
+            macchanger_pin = gpio_manager.config.get('macchanger_pin', 23)
             led_pin = gpio_manager.config.get('led_pin', 27)
             pull_up = gpio_manager.config.get('button_pull_up', True)
+            pull_up = gpio_manager.config.get('macchanger_pull_up', True)
             bounce_time = gpio_manager.config.get('button_bounce_time', 0.1)
             active_high = gpio_manager.config.get('led_active_high', True)
         else:
@@ -353,7 +357,6 @@ async def controller():
     if button:
         button.when_pressed = lambda: Thread(target=start_scan_thread, args=(default_scripts,), daemon=True).start()
         
-        # Log detailed GPIO information
         if GPIO_AVAILABLE:
             platform_info = gpio_manager.platform_info
             config = gpio_manager.config
@@ -367,6 +370,59 @@ async def controller():
         await asyncio.Event().wait()
     else:
         log_and_queue("octapus", "GPIO not available; cannot run controller.")
+
+def run_macchanger(interface="eth0"):
+    """
+    Run macchanger to randomize MAC address on given interface.
+    Logs output to logger and queue.
+    """
+    try:
+        logging.info(f"Running macchanger on {interface}...")
+        # macchanger -r randomly changes MAC
+        result = subprocess.run(
+            ["macchanger", "-r", interface],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        output = result.stdout.strip()
+        logging.info(f"[macchanger] {output}")
+        log_queue.put_nowait({"tool": "macchanger", "line": output})
+    except subprocess.CalledProcessError as e:
+        err = e.stderr.strip() if e.stderr else str(e)
+        logging.error(f"macchanger failed: {err}")
+        log_queue.put_nowait({"tool": "macchanger", "line": f"Error: {err}"})
+    except Exception as e:
+        logging.error(f"macchanger unexpected error: {e}")
+        log_queue.put_nowait({"tool": "macchanger", "line": f"Exception: {e}"})
+
+def setup_macchanger_gpio(interface="eth0"):
+    """
+    Setup GPIO pin 23 for running macchanger on press.
+    Uses gpio_manager if available, otherwise gpiozero.
+    """
+    macchanger_pin = 23
+    if GPIO_AVAILABLE:
+        try:
+            pin = gpio_manager.setup_input_pin(macchanger_pin, pull_up=True)
+            def on_macchanger_pin_pressed():
+                threading.Thread(target=run_macchanger, args=(interface,), daemon=True).start()
+            pin.when_pressed = on_macchanger_pin_pressed
+            logging.info(f"macchanger GPIO pin {macchanger_pin} setup via gpio_manager")
+            return pin
+        except Exception as e:
+            logging.warning(f"Failed to setup macchanger pin with gpio_manager: {e}")
+    
+    # Fallback using gpiozero directly
+    try:
+        from gpiozero import Button
+        macchanger_button = Button(macchanger_pin, pull_up=True)
+        macchanger_button.when_pressed = lambda: threading.Thread(target=run_macchanger, args=(interface,), daemon=True).start()
+        logging.info(f"macchanger GPIO pin {macchanger_pin} setup via gpiozero")
+        return macchanger_button
+    except Exception as e:
+        logging.warning(f"Failed to setup macchanger pin via gpiozero fallback: {e}")
+        return None
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "scan":

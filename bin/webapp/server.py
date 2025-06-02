@@ -117,31 +117,6 @@ def get_cidr_for_interface(interface_name):
         logging.error(f"Failed to get CIDR for interface {interface_name}: {e}")
         return get_local_cidr()
 
-def get_preferred_interface():
-    interfaces = get_available_interfaces()
-    for iface, details in interfaces.items():
-        if details['status'] == 'up' and not details['ip'].startswith("127."):
-            return iface
-    return None
-
-def macchanger_randomize():
-    iface = get_preferred_interface()
-    if not iface:
-        logging.error("No suitable network interface found to run macchanger.")
-        return
-    logging.info(f"Running macchanger on interface {iface}")
-    try:
-        subprocess.run(["sudo", "macchanger", "-r", iface], check=True)
-        logging.info(f"macchanger completed on {iface}")
-    except subprocess.CalledProcessError as e:
-        logging.error(f"macchanger failed: {e}")
-
-def on_gpio23_pressed():
-    logging.info("GPIO 23 pressed! Running macchanger...")
-    macchanger_randomize()
-
-gpio_manager.monitor_gpio_pin(23, on_gpio23_pressed)
-
 # -----------------------------------------------------
 # Routes & WebSocket handlers
 # -----------------------------------------------------
@@ -466,7 +441,7 @@ def update_gpio_config():
         new_config = request.get_json(force=True)
         
         # Validate configuration
-        required_fields = ["button_pin", "led_pin", "gpio_library", "manual_override"]
+        required_fields = ["button_pin", "led_pin", "macchanger", "gpio_library", "manual_override"]
         for field in required_fields:
             if field not in new_config:
                 return jsonify({"status": "error", "message": f"Missing field: {field}"}), 400
@@ -476,8 +451,10 @@ def update_gpio_config():
             return jsonify({"status": "error", "message": "Button pin must be between 0-40"}), 400
         if not (0 <= new_config["led_pin"] <= 40):
             return jsonify({"status": "error", "message": "LED pin must be between 0-40"}), 400
-        if new_config["button_pin"] == new_config["led_pin"]:
-            return jsonify({"status": "error", "message": "Button and LED pins must be different"}), 400
+        if not (0 <= new_config["macchanger_pin"] <= 40):
+            return jsonify({"status": "error", "message": "Macchanger button pin must be between 0-40"}), 400
+        if new_config["button_pin"] == new_config["led_pin"] or new_config["button_pin"] == new_config["macchanger_pin"] or new_config["macchanger_pin"] == new_config["led_pin"] :
+            return jsonify({"status": "error", "message": "Button, LED and Macchanger pins must be different"}), 400
         
         # Save configuration
         if gpio_manager.save_config(new_config):
@@ -501,8 +478,8 @@ def test_gpio():
         gpio_manager.config.update(test_config)
         
         try:
-            button, led = gpio_manager.setup_gpio()
-            if button and led:
+            button, led, macchanger = gpio_manager.setup_gpio()
+            if button and led and macchanger:
                 # Test LED briefly
                 led.on()
                 import time
