@@ -2504,3 +2504,267 @@
 2025-06-02 15:48:12,468 [octapus] Starting nmap: nmap -sV 192.168.1.0/24 -oX /tmp/octapus_nmap_2338.xml
 2025-06-02 15:48:12,522 [nmap] Starting Nmap 7.93 ( https://nmap.org ) at 2025-06-02 15:48 UTC
 2025-06-02 15:48:14,368 127.0.0.1 - - [02/Jun/2025 15:48:14] "GET /socket.io/?EIO=4&transport=websocket&sid=bk2esgbqzj9_9iDgAAAA HTTP/1.1" 200 -
+2025-06-03 16:57:08,319 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 16:57:08,319 [33mPress CTRL+C to quit[0m
+2025-06-03 16:57:12,280 127.0.0.1 - - [03/Jun/2025 16:57:12] "GET /socket.io/?EIO=4&transport=polling&t=PSskRzL HTTP/1.1" 200 -
+2025-06-03 16:57:12,289 New WebSocket client connected
+2025-06-03 16:57:12,290 127.0.0.1 - - [03/Jun/2025 16:57:12] "POST /socket.io/?EIO=4&transport=polling&t=PSskRzR&sid=Q9oHAKtXbQm6K2HeAAAA HTTP/1.1" 200 -
+2025-06-03 16:57:12,290 127.0.0.1 - - [03/Jun/2025 16:57:12] "GET /socket.io/?EIO=4&transport=polling&t=PSskRzS&sid=Q9oHAKtXbQm6K2HeAAAA HTTP/1.1" 200 -
+2025-06-03 16:57:12,297 127.0.0.1 - - [03/Jun/2025 16:57:12] "GET /socket.io/?EIO=4&transport=polling&t=PSskRzd&sid=Q9oHAKtXbQm6K2HeAAAA HTTP/1.1" 200 -
+2025-06-03 16:57:16,840 HTTP /start received. Scheduled dynamic scan: [{'tool': 'macchanger', 'args': ['-s', 'eth0']}]
+2025-06-03 16:57:16,843 127.0.0.1 - - [03/Jun/2025 16:57:16] "POST /start HTTP/1.1" 200 -
+2025-06-03 16:57:16,845 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 16:57:17,511 HTTP /start received. Scheduled dynamic scan: [{'tool': 'macchanger', 'args': ['-s', 'eth0']}]
+2025-06-03 16:57:17,512 127.0.0.1 - - [03/Jun/2025 16:57:17] "POST /start HTTP/1.1" 200 -
+2025-06-03 16:57:17,513 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 16:57:46,693 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 16:57:46,694 [33mPress CTRL+C to quit[0m
+2025-06-03 16:57:48,199 127.0.0.1 - - [03/Jun/2025 16:57:48] "GET /socket.io/?EIO=4&transport=polling&t=PSskakZ HTTP/1.1" 200 -
+2025-06-03 16:57:48,207 New WebSocket client connected
+2025-06-03 16:57:48,209 127.0.0.1 - - [03/Jun/2025 16:57:48] "POST /socket.io/?EIO=4&transport=polling&t=PSskakf&sid=_FQpsH2vZ4sBrxjJAAAA HTTP/1.1" 200 -
+2025-06-03 16:57:48,209 127.0.0.1 - - [03/Jun/2025 16:57:48] "GET /socket.io/?EIO=4&transport=polling&t=PSskakh&sid=_FQpsH2vZ4sBrxjJAAAA HTTP/1.1" 200 -
+2025-06-03 16:57:48,218 127.0.0.1 - - [03/Jun/2025 16:57:48] "GET /socket.io/?EIO=4&transport=polling&t=PSskaku&sid=_FQpsH2vZ4sBrxjJAAAA HTTP/1.1" 200 -
+2025-06-03 16:57:50,817 HTTP /start received. Scheduled dynamic scan: [{'tool': 'macchanger', 'args': ['-s', 'eth0']}]
+2025-06-03 16:57:50,818 127.0.0.1 - - [03/Jun/2025 16:57:50] "POST /start HTTP/1.1" 200 -
+2025-06-03 16:57:50,821 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 16:57:50,821 GPIO setup successful via gpio_manager on Raspberry Pi
+2025-06-03 16:57:50,821 Using auto library
+2025-06-03 16:57:50,821 Button: GPIO17, LED: GPIO27
+2025-06-03 16:57:50,922 [octapus] Starting macchanger: macchanger -s eth0
+2025-06-03 16:57:50,928 [macchanger] Current MAC:   2c:cf:67:ed:37:f7 (unknown)
+2025-06-03 16:57:50,929 [macchanger] Permanent MAC: 2c:cf:67:00:c5:46 (unknown)
+2025-06-03 16:57:50,929 [octapus] Finished macchanger
+2025-06-03 16:57:50,930 [octapus] Full dynamic scan sequence completed
+2025-06-03 17:08:26,724 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:08:26,724 [33mPress CTRL+C to quit[0m
+2025-06-03 17:08:51,318 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:08:51,319 GPIO initialized successfully
+2025-06-03 17:08:51,820 GPIO setup and monitoring started
+2025-06-03 17:08:51,925 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:08:51,925 [33mPress CTRL+C to quit[0m
+2025-06-03 17:08:54,232 127.0.0.1 - - [03/Jun/2025 17:08:54] "GET /socket.io/?EIO=4&transport=polling&t=PSsn7LK HTTP/1.1" 200 -
+2025-06-03 17:08:54,239 New WebSocket client connected
+2025-06-03 17:08:54,241 127.0.0.1 - - [03/Jun/2025 17:08:54] "POST /socket.io/?EIO=4&transport=polling&t=PSsn7LQ&sid=QiwZq1tJB95WXrulAAAA HTTP/1.1" 200 -
+2025-06-03 17:08:54,243 127.0.0.1 - - [03/Jun/2025 17:08:54] "GET /socket.io/?EIO=4&transport=polling&t=PSsn7LS&sid=QiwZq1tJB95WXrulAAAA HTTP/1.1" 200 -
+2025-06-03 17:08:54,249 127.0.0.1 - - [03/Jun/2025 17:08:54] "GET /socket.io/?EIO=4&transport=polling&t=PSsn7Lc&sid=QiwZq1tJB95WXrulAAAA HTTP/1.1" 200 -
+2025-06-03 17:09:01,573 HTTP /start received. Scheduled dynamic scan: [{'tool': 'macchanger', 'args': ['-s', 'eth0']}]
+2025-06-03 17:09:01,575 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:09:01,576 127.0.0.1 - - [03/Jun/2025 17:09:01] "POST /start HTTP/1.1" 200 -
+2025-06-03 17:09:01,576 GPIO setup successful via gpio_manager on Raspberry Pi
+2025-06-03 17:09:01,576 Using auto library
+2025-06-03 17:09:01,576 Button: GPIO17, LED: GPIO27
+2025-06-03 17:09:01,675 [octapus] Starting macchanger: macchanger -s eth0
+2025-06-03 17:09:01,682 [macchanger] Current MAC:   2c:cf:67:ed:37:f7 (unknown)
+2025-06-03 17:09:01,683 [macchanger] Permanent MAC: 2c:cf:67:00:c5:46 (unknown)
+2025-06-03 17:09:01,683 [octapus] Finished macchanger
+2025-06-03 17:09:01,684 [octapus] Full dynamic scan sequence completed
+2025-06-03 17:09:05,107 HTTP /start received. Scheduled dynamic scan: [{'tool': 'macchanger', 'args': ['-s', 'eth0']}]
+2025-06-03 17:09:05,108 127.0.0.1 - - [03/Jun/2025 17:09:05] "POST /start HTTP/1.1" 200 -
+2025-06-03 17:09:05,108 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:09:05,109 GPIO setup successful via gpio_manager on Raspberry Pi
+2025-06-03 17:09:05,109 Using auto library
+2025-06-03 17:09:05,109 Button: GPIO17, LED: GPIO27
+2025-06-03 17:09:05,209 [octapus] Starting macchanger: macchanger -s eth0
+2025-06-03 17:09:05,216 [macchanger] Current MAC:   2c:cf:67:ed:37:f7 (unknown)
+2025-06-03 17:09:05,216 [macchanger] Permanent MAC: 2c:cf:67:00:c5:46 (unknown)
+2025-06-03 17:09:05,217 [octapus] Finished macchanger
+2025-06-03 17:09:05,217 [octapus] Full dynamic scan sequence completed
+2025-06-03 17:20:42,499 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:20:42,499 GPIO initialized successfully
+2025-06-03 17:20:43,001 GPIO setup and monitoring started
+2025-06-03 17:20:43,105 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:20:43,105 [33mPress CTRL+C to quit[0m
+2025-06-03 17:20:47,211 127.0.0.1 - - [03/Jun/2025 17:20:47] "GET /socket.io/?EIO=4&transport=polling&t=PSsprPe HTTP/1.1" 200 -
+2025-06-03 17:20:47,218 New WebSocket client connected
+2025-06-03 17:20:47,219 127.0.0.1 - - [03/Jun/2025 17:20:47] "POST /socket.io/?EIO=4&transport=polling&t=PSsprPk&sid=xBGr16IqxaYnB2PEAAAA HTTP/1.1" 200 -
+2025-06-03 17:20:47,221 127.0.0.1 - - [03/Jun/2025 17:20:47] "GET /socket.io/?EIO=4&transport=polling&t=PSsprPl&sid=xBGr16IqxaYnB2PEAAAA HTTP/1.1" 200 -
+2025-06-03 17:20:47,229 127.0.0.1 - - [03/Jun/2025 17:20:47] "GET /socket.io/?EIO=4&transport=polling&t=PSsprPw&sid=xBGr16IqxaYnB2PEAAAA HTTP/1.1" 200 -
+2025-06-03 17:20:55,493 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:20:55,493 GPIO initialized successfully
+2025-06-03 17:20:55,995 GPIO setup and monitoring started
+2025-06-03 17:20:56,099 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:20:56,099 [33mPress CTRL+C to quit[0m
+2025-06-03 17:20:56,130 127.0.0.1 - - [03/Jun/2025 17:20:56] "GET /socket.io/?EIO=4&transport=polling&t=PSspta- HTTP/1.1" 200 -
+2025-06-03 17:20:56,140 New WebSocket client connected
+2025-06-03 17:20:56,141 127.0.0.1 - - [03/Jun/2025 17:20:56] "POST /socket.io/?EIO=4&transport=polling&t=PSsptb5&sid=2Bb7L439mhbB2ab9AAAA HTTP/1.1" 200 -
+2025-06-03 17:20:56,141 127.0.0.1 - - [03/Jun/2025 17:20:56] "GET /socket.io/?EIO=4&transport=polling&t=PSsptb6&sid=2Bb7L439mhbB2ab9AAAA HTTP/1.1" 200 -
+2025-06-03 17:20:56,150 127.0.0.1 - - [03/Jun/2025 17:20:56] "GET /socket.io/?EIO=4&transport=polling&t=PSsptbI&sid=2Bb7L439mhbB2ab9AAAA HTTP/1.1" 200 -
+2025-06-03 17:21:07,292 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:21:07,292 GPIO initialized successfully
+2025-06-03 17:21:07,793 GPIO setup and monitoring started
+2025-06-03 17:21:07,897 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:21:07,897 [33mPress CTRL+C to quit[0m
+2025-06-03 17:21:10,327 127.0.0.1 - - [03/Jun/2025 17:21:10] "GET /socket.io/?EIO=4&transport=polling&t=PSspx2q HTTP/1.1" 200 -
+2025-06-03 17:21:10,334 New WebSocket client connected
+2025-06-03 17:21:10,335 127.0.0.1 - - [03/Jun/2025 17:21:10] "POST /socket.io/?EIO=4&transport=polling&t=PSspx2v&sid=PvKJDEvJCT_TUUsIAAAA HTTP/1.1" 200 -
+2025-06-03 17:21:10,336 127.0.0.1 - - [03/Jun/2025 17:21:10] "GET /socket.io/?EIO=4&transport=polling&t=PSspx2w&sid=PvKJDEvJCT_TUUsIAAAA HTTP/1.1" 200 -
+2025-06-03 17:21:10,341 127.0.0.1 - - [03/Jun/2025 17:21:10] "GET /socket.io/?EIO=4&transport=polling&t=PSspx33&sid=PvKJDEvJCT_TUUsIAAAA HTTP/1.1" 200 -
+2025-06-03 17:22:47,648 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:22:47,648 GPIO initialized successfully
+2025-06-03 17:22:47,752 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:22:47,753 [33mPress CTRL+C to quit[0m
+2025-06-03 17:23:28,640 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:23:28,640 GPIO initialized successfully
+2025-06-03 17:23:28,743 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:23:28,743 [33mPress CTRL+C to quit[0m
+2025-06-03 17:23:31,049 127.0.0.1 - - [03/Jun/2025 17:23:31] "GET /socket.io/?EIO=4&transport=polling&t=PSsqTPZ HTTP/1.1" 200 -
+2025-06-03 17:23:31,055 New WebSocket client connected
+2025-06-03 17:23:31,056 127.0.0.1 - - [03/Jun/2025 17:23:31] "POST /socket.io/?EIO=4&transport=polling&t=PSsqTPh&sid=CSnl2rqW0azypi-lAAAA HTTP/1.1" 200 -
+2025-06-03 17:23:31,057 127.0.0.1 - - [03/Jun/2025 17:23:31] "GET /socket.io/?EIO=4&transport=polling&t=PSsqTPi&sid=CSnl2rqW0azypi-lAAAA HTTP/1.1" 200 -
+2025-06-03 17:23:31,065 127.0.0.1 - - [03/Jun/2025 17:23:31] "GET /socket.io/?EIO=4&transport=polling&t=PSsqTPt&sid=CSnl2rqW0azypi-lAAAA HTTP/1.1" 200 -
+2025-06-03 17:24:41,384 127.0.0.1 - - [03/Jun/2025 17:24:41] "GET /socket.io/?EIO=4&transport=websocket&sid=CSnl2rqW0azypi-lAAAA HTTP/1.1" 200 -
+2025-06-03 17:24:41,398 127.0.0.1 - - [03/Jun/2025 17:24:41] "GET /logs HTTP/1.1" 200 -
+2025-06-03 17:24:41,499 127.0.0.1 - - [03/Jun/2025 17:24:41] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-03 17:24:41,504 127.0.0.1 - - [03/Jun/2025 17:24:41] "GET /socket.io/?EIO=4&transport=polling&t=PSsqkcN HTTP/1.1" 200 -
+2025-06-03 17:24:45,885 New WebSocket client connected
+2025-06-03 17:24:45,886 127.0.0.1 - - [03/Jun/2025 17:24:45] "POST /socket.io/?EIO=4&transport=polling&t=PSsqlgr&sid=wXCrLtEK1Qv2p5lPAAAC HTTP/1.1" 200 -
+2025-06-03 17:24:45,888 127.0.0.1 - - [03/Jun/2025 17:24:45] "GET /socket.io/?EIO=4&transport=polling&t=PSsqlgt&sid=wXCrLtEK1Qv2p5lPAAAC HTTP/1.1" 200 -
+2025-06-03 17:24:45,897 127.0.0.1 - - [03/Jun/2025 17:24:45] "GET /socket.io/?EIO=4&transport=polling&t=PSsqlh5&sid=wXCrLtEK1Qv2p5lPAAAC HTTP/1.1" 200 -
+2025-06-03 17:25:04,650 127.0.0.1 - - [03/Jun/2025 17:25:04] "GET /socket.io/?EIO=4&transport=websocket&sid=wXCrLtEK1Qv2p5lPAAAC HTTP/1.1" 200 -
+2025-06-03 17:25:04,658 127.0.0.1 - - [03/Jun/2025 17:25:04] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-03 17:25:11,667 127.0.0.1 - - [03/Jun/2025 17:25:11] "GET /logs HTTP/1.1" 200 -
+2025-06-03 17:25:11,801 127.0.0.1 - - [03/Jun/2025 17:25:11] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-03 17:25:11,805 127.0.0.1 - - [03/Jun/2025 17:25:11] "GET /socket.io/?EIO=4&transport=polling&t=PSsqr_o HTTP/1.1" 200 -
+2025-06-03 17:25:17,289 New WebSocket client connected
+2025-06-03 17:25:17,291 127.0.0.1 - - [03/Jun/2025 17:25:17] "POST /socket.io/?EIO=4&transport=polling&t=PSsqtLT&sid=W_00iUnK4Od5989NAAAE HTTP/1.1" 200 -
+2025-06-03 17:25:17,291 127.0.0.1 - - [03/Jun/2025 17:25:17] "GET /socket.io/?EIO=4&transport=polling&t=PSsqtLW&sid=W_00iUnK4Od5989NAAAE HTTP/1.1" 200 -
+2025-06-03 17:25:17,318 127.0.0.1 - - [03/Jun/2025 17:25:17] "GET /socket.io/?EIO=4&transport=websocket&sid=W_00iUnK4Od5989NAAAE HTTP/1.1" 200 -
+2025-06-03 17:25:53,912 127.0.0.1 - - [03/Jun/2025 17:25:53] "[36mGET /logs HTTP/1.1[0m" 304 -
+2025-06-03 17:25:54,051 127.0.0.1 - - [03/Jun/2025 17:25:54] "GET /fetch_logs HTTP/1.1" 200 -
+2025-06-03 17:25:54,055 127.0.0.1 - - [03/Jun/2025 17:25:54] "GET /socket.io/?EIO=4&transport=polling&t=PSsr0Jz HTTP/1.1" 200 -
+2025-06-03 17:25:59,489 New WebSocket client connected
+2025-06-03 17:25:59,490 127.0.0.1 - - [03/Jun/2025 17:25:59] "POST /socket.io/?EIO=4&transport=polling&t=PSsr1eu&sid=ABBhvOiqYuEyJVhiAAAG HTTP/1.1" 200 -
+2025-06-03 17:25:59,491 127.0.0.1 - - [03/Jun/2025 17:25:59] "GET /socket.io/?EIO=4&transport=polling&t=PSsr1ew&sid=ABBhvOiqYuEyJVhiAAAG HTTP/1.1" 200 -
+2025-06-03 17:25:59,504 127.0.0.1 - - [03/Jun/2025 17:25:59] "GET /socket.io/?EIO=4&transport=polling&t=PSsr1fD&sid=ABBhvOiqYuEyJVhiAAAG HTTP/1.1" 200 -
+2025-06-03 17:26:29,279 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:26:29,279 GPIO initialized successfully
+2025-06-03 17:26:29,385 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:26:29,385 [33mPress CTRL+C to quit[0m
+2025-06-03 17:26:30,339 127.0.0.1 - - [03/Jun/2025 17:26:30] "GET /socket.io/?EIO=4&transport=polling&t=PSsr9A_ HTTP/1.1" 200 -
+2025-06-03 17:26:30,347 New WebSocket client connected
+2025-06-03 17:26:30,348 127.0.0.1 - - [03/Jun/2025 17:26:30] "POST /socket.io/?EIO=4&transport=polling&t=PSsr9B5&sid=JZltzLECwCpJ5QZSAAAA HTTP/1.1" 200 -
+2025-06-03 17:26:30,349 127.0.0.1 - - [03/Jun/2025 17:26:30] "GET /socket.io/?EIO=4&transport=polling&t=PSsr9B7&sid=JZltzLECwCpJ5QZSAAAA HTTP/1.1" 200 -
+2025-06-03 17:26:30,357 127.0.0.1 - - [03/Jun/2025 17:26:30] "GET /socket.io/?EIO=4&transport=polling&t=PSsr9BI&sid=JZltzLECwCpJ5QZSAAAA HTTP/1.1" 200 -
+2025-06-03 17:26:42,936 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:26:42,936 GPIO initialized successfully
+2025-06-03 17:26:43,040 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:26:43,041 [33mPress CTRL+C to quit[0m
+2025-06-03 17:26:45,562 127.0.0.1 - - [03/Jun/2025 17:26:45] "GET /socket.io/?EIO=4&transport=polling&t=PSsrCut HTTP/1.1" 200 -
+2025-06-03 17:26:45,569 New WebSocket client connected
+2025-06-03 17:26:45,569 127.0.0.1 - - [03/Jun/2025 17:26:45] "POST /socket.io/?EIO=4&transport=polling&t=PSsrCuy&sid=6yWmbEHXYHz8rScfAAAA HTTP/1.1" 200 -
+2025-06-03 17:26:45,570 127.0.0.1 - - [03/Jun/2025 17:26:45] "GET /socket.io/?EIO=4&transport=polling&t=PSsrCuy.0&sid=6yWmbEHXYHz8rScfAAAA HTTP/1.1" 200 -
+2025-06-03 17:26:45,577 127.0.0.1 - - [03/Jun/2025 17:26:45] "GET /socket.io/?EIO=4&transport=polling&t=PSsrCv5&sid=6yWmbEHXYHz8rScfAAAA HTTP/1.1" 200 -
+2025-06-03 17:26:49,516 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:26:49,516 GPIO initialized successfully
+2025-06-03 17:26:49,622 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:26:49,622 [33mPress CTRL+C to quit[0m
+2025-06-03 17:26:53,171 127.0.0.1 - - [03/Jun/2025 17:26:53] "GET /socket.io/?EIO=4&transport=polling&t=PSsrEll HTTP/1.1" 200 -
+2025-06-03 17:26:53,180 New WebSocket client connected
+2025-06-03 17:26:53,182 127.0.0.1 - - [03/Jun/2025 17:26:53] "GET /socket.io/?EIO=4&transport=polling&t=PSsrEls&sid=K1wrRKn1s4fg3LgxAAAA HTTP/1.1" 200 -
+2025-06-03 17:26:53,182 127.0.0.1 - - [03/Jun/2025 17:26:53] "POST /socket.io/?EIO=4&transport=polling&t=PSsrElr&sid=K1wrRKn1s4fg3LgxAAAA HTTP/1.1" 200 -
+2025-06-03 17:35:26,968 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:35:26,968 GPIO initialized successfully
+2025-06-03 17:35:27,073 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:35:27,073 [33mPress CTRL+C to quit[0m
+2025-06-03 17:35:28,835 127.0.0.1 - - [03/Jun/2025 17:35:28] "GET /socket.io/?EIO=4&transport=polling&t=PSstCf0 HTTP/1.1" 200 -
+2025-06-03 17:35:28,842 New WebSocket client connected
+2025-06-03 17:35:28,843 127.0.0.1 - - [03/Jun/2025 17:35:28] "POST /socket.io/?EIO=4&transport=polling&t=PSstCf5&sid=4go7LihuRsyeLjGHAAAA HTTP/1.1" 200 -
+2025-06-03 17:35:28,844 127.0.0.1 - - [03/Jun/2025 17:35:28] "GET /socket.io/?EIO=4&transport=polling&t=PSstCf7&sid=4go7LihuRsyeLjGHAAAA HTTP/1.1" 200 -
+2025-06-03 17:35:28,851 127.0.0.1 - - [03/Jun/2025 17:35:28] "GET /socket.io/?EIO=4&transport=polling&t=PSstCfF&sid=4go7LihuRsyeLjGHAAAA HTTP/1.1" 200 -
+2025-06-03 17:35:28,856 127.0.0.1 - - [03/Jun/2025 17:35:28] "GET /socket.io/?EIO=4&transport=polling&t=PSstCfM&sid=4go7LihuRsyeLjGHAAAA HTTP/1.1" 200 -
+2025-06-03 17:36:25,816 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:36:25,816 GPIO initialized successfully
+2025-06-03 17:36:25,919 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:36:25,920 [33mPress CTRL+C to quit[0m
+2025-06-03 17:37:48,040 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:37:48,040 GPIO initialized successfully
+2025-06-03 17:37:48,146 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:37:48,146 [33mPress CTRL+C to quit[0m
+2025-06-03 17:40:13,028 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:40:13,528 GPIO initialized successfully
+2025-06-03 17:40:13,634 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:40:13,634 [33mPress CTRL+C to quit[0m
+2025-06-03 17:40:17,455 127.0.0.1 - - [03/Jun/2025 17:40:17] "GET /socket.io/?EIO=4&transport=polling&t=PSsuJ6h HTTP/1.1" 200 -
+2025-06-03 17:40:17,461 New WebSocket client connected
+2025-06-03 17:40:17,462 127.0.0.1 - - [03/Jun/2025 17:40:17] "POST /socket.io/?EIO=4&transport=polling&t=PSsuJ6n&sid=hoFhc22Q3UM1xy7PAAAA HTTP/1.1" 200 -
+2025-06-03 17:40:17,465 127.0.0.1 - - [03/Jun/2025 17:40:17] "GET /socket.io/?EIO=4&transport=polling&t=PSsuJ6o&sid=hoFhc22Q3UM1xy7PAAAA HTTP/1.1" 200 -
+2025-06-03 17:40:17,470 127.0.0.1 - - [03/Jun/2025 17:40:17] "GET /socket.io/?EIO=4&transport=polling&t=PSsuJ6y&sid=hoFhc22Q3UM1xy7PAAAA HTTP/1.1" 200 -
+2025-06-03 17:40:25,724 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:40:26,224 GPIO initialized successfully
+2025-06-03 17:40:26,331 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:40:26,331 [33mPress CTRL+C to quit[0m
+2025-06-03 17:40:52,671 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:40:53,172 GPIO initialized successfully
+2025-06-03 17:40:53,275 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:40:53,276 [33mPress CTRL+C to quit[0m
+2025-06-03 17:40:57,737 127.0.0.1 - - [03/Jun/2025 17:40:57] "GET /socket.io/?EIO=4&transport=polling&t=PSsuSy3 HTTP/1.1" 200 -
+2025-06-03 17:40:57,744 New WebSocket client connected
+2025-06-03 17:40:57,745 127.0.0.1 - - [03/Jun/2025 17:40:57] "POST /socket.io/?EIO=4&transport=polling&t=PSsuSyC&sid=V2w9Wz7atj_6ACJiAAAA HTTP/1.1" 200 -
+2025-06-03 17:40:57,746 127.0.0.1 - - [03/Jun/2025 17:40:57] "GET /socket.io/?EIO=4&transport=polling&t=PSsuSyD&sid=V2w9Wz7atj_6ACJiAAAA HTTP/1.1" 200 -
+2025-06-03 17:40:57,754 127.0.0.1 - - [03/Jun/2025 17:40:57] "GET /socket.io/?EIO=4&transport=polling&t=PSsuSyM&sid=V2w9Wz7atj_6ACJiAAAA HTTP/1.1" 200 -
+2025-06-03 17:41:15,678 GPIO setup successful with gpiozero: Button=17, LED=27, MACCHANGER=23
+2025-06-03 17:41:16,178 GPIO initialized successfully
+2025-06-03 17:41:16,281 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.48:8080
+2025-06-03 17:41:16,282 [33mPress CTRL+C to quit[0m
+2025-06-03 17:41:17,815 127.0.0.1 - - [03/Jun/2025 17:41:17] "GET /socket.io/?EIO=4&transport=polling&t=PSsuXro HTTP/1.1" 200 -
+2025-06-03 17:41:17,822 New WebSocket client connected
+2025-06-03 17:41:17,823 127.0.0.1 - - [03/Jun/2025 17:41:17] "POST /socket.io/?EIO=4&transport=polling&t=PSsuXrw&sid=s_cr1B9BPADbeMoLAAAA HTTP/1.1" 200 -
+2025-06-03 17:41:17,824 127.0.0.1 - - [03/Jun/2025 17:41:17] "GET /socket.io/?EIO=4&transport=polling&t=PSsuXrx&sid=s_cr1B9BPADbeMoLAAAA HTTP/1.1" 200 -
+2025-06-03 17:41:17,831 127.0.0.1 - - [03/Jun/2025 17:41:17] "GET /socket.io/?EIO=4&transport=polling&t=PSsuXs4&sid=s_cr1B9BPADbeMoLAAAA HTTP/1.1" 200 -

@@ -90,7 +90,7 @@ def setup_gpio():
     """Initialize GPIO button and LED; returns (button, led)."""
     if GPIO_AVAILABLE:
         # Use the new GPIO manager
-        button, led = gpio_manager.setup_gpio()
+        button, led, macchanger = gpio_manager.setup_gpio()
         if button and led:
             logging.info(f"GPIO setup successful via gpio_manager on {gpio_manager.platform_info['model']}")
             logging.info(f"Using {gpio_manager.config.get('gpio_library', 'auto')} library")

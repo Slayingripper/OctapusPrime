@@ -183,7 +183,7 @@ class GPIOManager:
                 from gpiozero import Button
                 if existing_button and isinstance(existing_button, Button):
                     existing_button.when_pressed = callback
-                    logging.info(f"Monitoring GPIO {pin} with existing gpiozero Button")
+                    print(f"Monitoring GPIO {pin} with existing gpiozero Button")
                     return existing_button
                 else:
                     button = Button(
@@ -192,7 +192,7 @@ class GPIOManager:
                         bounce_time=self.config["button_bounce_time"]
                     )
                     button.when_pressed = callback
-                    logging.info(f"Monitoring GPIO {pin} with new gpiozero Button")
+                    print(f"Monitoring GPIO {pin} with new gpiozero Button")
                     return button
             
             elif lib_name == "RPi.GPIO" and available.get("RPi.GPIO"):
@@ -222,10 +222,10 @@ class GPIOManager:
                 
                 button = RPiMacchanger(pin, self.config["button_bounce_time"])
                 button.when_pressed = callback
-                logging.info(f"Monitoring GPIO {pin} with RPi.GPIO")
+                print(f"Monitoring GPIO {pin} with RPi.GPIO")
                 return button
             
-            logging.error(f"GPIO library '{lib_name}' not supported for monitoring GPIO {pin}")
+            print(f"GPIO library '{lib_name}' not supported for monitoring GPIO {pin}")
             return None
         
         except Exception as e:
@@ -377,7 +377,7 @@ class GPIOManager:
             @when_pressed.setter
             def when_pressed(self, callback):
                 self._when_pressed = callback
-                # You'd implement event monitoring in a separate thread
+ 
         
         class GpiodMacchanger:
             def __init__(self, line):
