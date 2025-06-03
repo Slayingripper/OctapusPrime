@@ -102,10 +102,8 @@ def init_gpio():
         button, led, macchanger = gpio_manager.setup_gpio()
         if button and led and macchanger:
             logging.info("GPIO initialized successfully")
-            # Monitor the macchanger pin
             macchanger_pin = gpio_manager.config["macchanger_pin"]
-            gpio_manager.monitor_gpio_pin(macchanger_pin, macchanger_callback)
-            # Optionally test LED to confirm setup
+            gpio_manager.monitor_gpio_pin(macchanger_pin, macchanger_callback, existing_button=macchanger)
             led.on()
             import time
             time.sleep(0.5)

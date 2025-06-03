@@ -167,7 +167,7 @@ class GPIOManager:
         return libraries
     
 
-    def monitor_gpio_pin(self, pin: int, callback):
+    def monitor_gpio_pin(self, pin: int, callback, existing_button=None):
         """
         Set up a GPIO pin for monitoring with a callback.
         """
@@ -181,73 +181,48 @@ class GPIOManager:
             
             if lib_name == "gpiozero" or (lib_name == "auto" and available.get("gpiozero")):
                 from gpiozero import Button
-                button = Button(pin, pull_up=self.config["macchanger_pull_up"], bounce_time=self.config["button_bounce_time"])
-                button.when_pressed = callback
-                logging.info(f"Monitoring GPIO {pin} with gpiozero")
-                return button
+                if existing_button and isinstance(existing_button, Button):
+                    existing_button.when_pressed = callback
+                    logging.info(f"Monitoring GPIO {pin} with existing gpiozero Button")
+                    return existing_button
+                else:
+                    button = Button(
+                        pin,
+                        pull_up=self.config["macchanger_pull_up"],
+                        bounce_time=self.config["button_bounce_time"]
+                    )
+                    button.when_pressed = callback
+                    logging.info(f"Monitoring GPIO {pin} with new gpiozero Button")
+                    return button
             
             elif lib_name == "RPi.GPIO" and available.get("RPi.GPIO"):
                 import RPi.GPIO as GPIO
                 GPIO.setmode(GPIO.BCM)
                 GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP if self.config["macchanger_pull_up"] else GPIO.PUD_DOWN)
                 
-                class RPiButton:
-                    def __init__(self, pin):
+                class RPiMacchanger:
+                    def __init__(self, pin, bounce_time):
                         self.pin = pin
+                        self.bounce_time = bounce_time
+                        self._when_pressed = None
+                    
+                    @property
+                    def when_pressed(self):
+                        return self._when_pressed
+                    
+                    @when_pressed.setter
+                    def when_pressed(self, callback):
                         self._when_pressed = callback
-                        GPIO.add_event_detect(self.pin, GPIO.FALLING, callback=lambda x: callback(), bouncetime=int(self.config["button_bounce_time"] * 1000))
+                        GPIO.add_event_detect(
+                            self.pin,
+                            GPIO.FALLING,
+                            callback=lambda x: callback(),
+                            bouncetime=int(self.bounce_time * 1000)
+                        )
                 
-                button = RPiButton(pin)
+                button = RPiMacchanger(pin, self.config["button_bounce_time"])
+                button.when_pressed = callback
                 logging.info(f"Monitoring GPIO {pin} with RPi.GPIO")
-                return button
-            
-            elif lib_name == "libgpiod" and available.get("libgpiod"):
-                import gpiod
-                chip = gpiod.Chip('gpiochip0')
-                line = chip.get_line(pin)
-                line.request(consumer="octapus_macchanger", type=gpiod.LINE_REQ_EV_FALLING_EDGE)
-                
-                class GpiodButton:
-                    def __init__(self, line, callback):
-                        self.line = line
-                        self._when_pressed = callback
-                        self.thread = threading.Thread(target=self._monitor, daemon=True)
-                        self.thread.start()
-                    
-                    def _monitor(self):
-                        while True:
-                            if self.line.event_wait(timeout=1):  # 1-second timeout
-                                event = self.line.event_read()
-                                if event.type == gpiod.LineEvent.FALLING_EDGE:
-                                    self._when_pressed()
-                
-                button = GpiodButton(line, callback)
-                logging.info(f"Monitoring GPIO {pin} with libgpiod")
-                return button
-            
-            elif lib_name == "lgpio" and available.get("lgpio"):
-                import lgpio
-                handle = lgpio.gpiochip_open(0)
-                lgpio.gpio_claim_input(handle, pin, lgpio.SET_PULL_UP if self.config["macchanger_pull_up"] else lgpio.SET_PULL_DOWN)
-                
-                class LgpioButton:
-                    def __init__(self, handle, pin, callback):
-                        self.handle = handle
-                        self.pin = pin
-                        self._when_pressed = callback
-                        self.thread = threading.Thread(target=self._monitor, daemon=True)
-                        self.thread.start()
-                    
-                    def _monitor(self):
-                        while True:
-                            state = lgpio.gpio_read(self.handle, self.pin)
-                            if state == 0:  # Assuming active-low (falling edge)
-                                self._when_pressed()
-                            import time
-                            time.sleep(self.config["button_bounce_time"])
-                
-                button = LgpioButton(handle, pin, callback)
-                logging.info(f"Monitoring GPIO {pin} with lgpio")
                 return button
             
             logging.error(f"GPIO library '{lib_name}' not supported for monitoring GPIO {pin}")
@@ -332,8 +307,9 @@ class GPIOManager:
                 GPIO.add_event_detect(self.pin, GPIO.FALLING, callback=lambda x: callback(), bouncetime=int(self.config["button_bounce_time"] * 1000))
         
         class RPiMacchanger:
-            def __init__(self, pin):
+            def __init__(self, pin, bounce_time):
                 self.pin = pin
+                self.bounce_time = bounce_time
                 self._when_pressed = None
             
             @property
@@ -343,7 +319,12 @@ class GPIOManager:
             @when_pressed.setter
             def when_pressed(self, callback):
                 self._when_pressed = callback
-                GPIO.add_event_detect(self.pin, GPIO.FALLING, callback=lambda x: callback(), bouncetime=int(self.config["button_bounce_time"] * 1000))
+                GPIO.add_event_detect(
+                    self.pin,
+                    GPIO.FALLING,
+                    callback=lambda x: callback(),
+                    bouncetime=int(self.bounce_time * 1000)
+                )
 
         class RPiLED:
             def __init__(self, pin, active_high=True):
