@@ -72,7 +72,51 @@ except Exception:
 app = Flask(__name__, static_folder=str(FRONTEND_DIR), template_folder=str(FRONTEND_DIR))
 socketio = SocketIO(app, async_mode="threading")
 
+# -----------------------------------------------------
+# Macchanger Logic
+# -----------------------------------------------------
+def macchanger_callback():
+    """Callback to change MAC address when button is pressed."""
+    try:
+        # Read network interface from settings or default to 'eth0'
+        interface = "eth0"  # Fallback
+        if SETTINGS_FILE.exists():
+            with open(SETTINGS_FILE, "r") as f:
+                settings = json.load(f)
+                interface = settings.get("networkInterface", "eth0")
+                if interface == "auto":
+                    interfaces = get_available_interfaces()
+                    interface = next(iter(interfaces), "eth0")  # First available interface
+        
+        # Run macchanger to randomize MAC address
+        subprocess.run(["macchanger", "-r", interface], check=True)
+        logging.info(f"MAC address changed for interface {interface}")
+        socketio.emit("log", {"message": f"MAC address changed for {interface}", "level": "info"})
+    except Exception as e:
+        logging.error(f"Failed to change MAC address: {e}")
+        socketio.emit("log", {"message": f"Failed to change MAC address: {e}", "level": "error"})
 
+def init_gpio():
+    """Initialize GPIO pins and set up monitoring for macchanger button."""
+    try:
+        button, led, macchanger = gpio_manager.setup_gpio()
+        if button and led and macchanger:
+            logging.info("GPIO initialized successfully")
+            # Monitor the macchanger pin
+            macchanger_pin = gpio_manager.config["macchanger_pin"]
+            gpio_manager.monitor_gpio_pin(macchanger_pin, macchanger_callback)
+            # Optionally test LED to confirm setup
+            led.on()
+            import time
+            time.sleep(0.5)
+            led.off()
+            logging.info("GPIO setup and monitoring started")
+        else:
+            logging.error("GPIO initialization failed")
+            socketio.emit("log", {"message": "GPIO initialization failed", "level": "error"})
+    except Exception as e:
+        logging.error(f"GPIO setup failed: {e}")
+        socketio.emit("log", {"message": f"GPIO setup failed: {e}", "level": "error"})
 # -----------------------------------------------------
 # GPIO PATCH
 # -----------------------------------------------------

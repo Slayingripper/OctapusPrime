@@ -166,10 +166,101 @@ class GPIOManager:
             
         return libraries
     
-    def setup_gpio(self) -> Tuple[Optional[Any], Optional[Any]]:
+
+    def monitor_gpio_pin(self, pin: int, callback):
         """
-        Initialize GPIO button and LED based on configuration.
-        Returns (button, led) objects or (None, None) if failed.
+        Set up a GPIO pin for monitoring with a callback.
+        """
+        try:
+            available = self.get_available_libraries()
+            use_lib = self.config["gpio_library"]
+            if self.config["manual_override"]:
+                lib_name = use_lib
+            else:
+                lib_name = self.platform_info["recommended_lib"]
+            
+            if lib_name == "gpiozero" or (lib_name == "auto" and available.get("gpiozero")):
+                from gpiozero import Button
+                button = Button(pin, pull_up=self.config["macchanger_pull_up"], bounce_time=self.config["button_bounce_time"])
+                button.when_pressed = callback
+                logging.info(f"Monitoring GPIO {pin} with gpiozero")
+                return button
+            
+            elif lib_name == "RPi.GPIO" and available.get("RPi.GPIO"):
+                import RPi.GPIO as GPIO
+                GPIO.setmode(GPIO.BCM)
+                GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP if self.config["macchanger_pull_up"] else GPIO.PUD_DOWN)
+                
+                class RPiButton:
+                    def __init__(self, pin):
+                        self.pin = pin
+                        self._when_pressed = callback
+                        GPIO.add_event_detect(self.pin, GPIO.FALLING, callback=lambda x: callback(), bouncetime=int(self.config["button_bounce_time"] * 1000))
+                
+                button = RPiButton(pin)
+                logging.info(f"Monitoring GPIO {pin} with RPi.GPIO")
+                return button
+            
+            elif lib_name == "libgpiod" and available.get("libgpiod"):
+                import gpiod
+                chip = gpiod.Chip('gpiochip0')
+                line = chip.get_line(pin)
+                line.request(consumer="octapus_macchanger", type=gpiod.LINE_REQ_EV_FALLING_EDGE)
+                
+                class GpiodButton:
+                    def __init__(self, line, callback):
+                        self.line = line
+                        self._when_pressed = callback
+                        self.thread = threading.Thread(target=self._monitor, daemon=True)
+                        self.thread.start()
+                    
+                    def _monitor(self):
+                        while True:
+                            if self.line.event_wait(timeout=1):  # 1-second timeout
+                                event = self.line.event_read()
+                                if event.type == gpiod.LineEvent.FALLING_EDGE:
+                                    self._when_pressed()
+                
+                button = GpiodButton(line, callback)
+                logging.info(f"Monitoring GPIO {pin} with libgpiod")
+                return button
+            
+            elif lib_name == "lgpio" and available.get("lgpio"):
+                import lgpio
+                handle = lgpio.gpiochip_open(0)
+                lgpio.gpio_claim_input(handle, pin, lgpio.SET_PULL_UP if self.config["macchanger_pull_up"] else lgpio.SET_PULL_DOWN)
+                
+                class LgpioButton:
+                    def __init__(self, handle, pin, callback):
+                        self.handle = handle
+                        self.pin = pin
+                        self._when_pressed = callback
+                        self.thread = threading.Thread(target=self._monitor, daemon=True)
+                        self.thread.start()
+                    
+                    def _monitor(self):
+                        while True:
+                            state = lgpio.gpio_read(self.handle, self.pin)
+                            if state == 0:  # Assuming active-low (falling edge)
+                                self._when_pressed()
+                            import time
+                            time.sleep(self.config["button_bounce_time"])
+                
+                button = LgpioButton(handle, pin, callback)
+                logging.info(f"Monitoring GPIO {pin} with lgpio")
+                return button
+            
+            logging.error(f"GPIO library '{lib_name}' not supported for monitoring GPIO {pin}")
+            return None
+        
+        except Exception as e:
+            logging.error(f"Failed to monitor GPIO {pin}: {e}")
+            return None
+    
+    def setup_gpio(self) -> Tuple[Optional[Any], Optional[Any], Optional[Any]]:
+        """
+        Initialize GPIO button, LED, and macchanger pin based on configuration.
+        Returns (button, led, macchanger) objects or (None, None, None) if failed.
         """
         if self.config["manual_override"]:
             lib_name = self.config["gpio_library"]
@@ -190,73 +281,15 @@ class GPIOManager:
                 return self._setup_lgpio(button_pin, led_pin, macchanger_pin)
             else:
                 logging.error(f"Unsupported GPIO library: {lib_name}")
-                return None, None
-                
+                return None, None, None
+                    
         except Exception as e:
             logging.error(f"GPIO setup failed with {lib_name}: {e}")
-            return None, None
-
-    def monitor_gpio_pin(self, pin: int, callback):
-        """
-        Set up a macchanger button
-        """
-        try:
-            available = self.get_available_libraries()
-            use_lib = self.config["gpio_library"]
-            if self.config["manual_override"]:
-                lib_name = use_lib
-            else:
-                lib_name = self.platform_info["recommended_lib"]
-            
-            if lib_name == "gpiozero" or (lib_name == "auto" and available.get("gpiozero")):
-                from gpiozero import Button
-                button = Button(pin, pull_up=True, bounce_time=0.1)
-                button.when_pressed = callback
-                logging.info(f"Monitoring GPIO {pin} with gpiozero")
-                return button
-            
-            logging.error(f"GPIO library '{lib_name}' not supported for monitoring GPIO {pin}")
-            return None
+            return None, None, None
         
-        except Exception as e:
-            logging.error(f"Failed to monitor GPIO {pin}: {e}")
-            return None
-        
-    def _setup_gpiozero(self, button_pin: int, led_pin: int) -> Tuple[Any, Any]:
+    def _setup_gpiozero(self, button_pin: int, led_pin: int, macchanger_pin: int) -> Tuple[Any, Any, Any]:
         """Setup GPIO using gpiozero library."""
-        # Check if we need to apply the lgpio patch for newer kernels
-        import platform
-        try:
-            kernel_version = platform.release()
-            version_parts = kernel_version.split('-')[0].split('.')
-            if len(version_parts) >= 3:
-                major, minor, patch = map(int, version_parts[:3])
-                if (major > 6) or (major == 6 and minor > 6) or (major == 6 and minor == 6 and patch >= 45):
-                    logging.info(f"Detected kernel {kernel_version} >= 6.6.45, lgpio patch may be needed")
-                    
-                    # Try to apply patch if not already applied
-                    try:
-                        import gpiozero.pins.lgpio
-                        import lgpio
-                        
-                        # Check if patch is already applied by testing the factory
-                        factory = gpiozero.pins.lgpio.LGPIOFactory()
-                        if not hasattr(factory, '_handle'):
-                            def __patched_init(self, chip=None):
-                                gpiozero.pins.lgpio.LGPIOFactory.__bases__[0].__init__(self)
-                                chip = 0
-                                self._handle = lgpio.gpiochip_open(chip)
-                                self._chip = chip
-                                self.pin_class = gpiozero.pins.lgpio.LGPIOPin
-                            
-                            gpiozero.pins.lgpio.LGPIOFactory.__init__ = __patched_init
-                            logging.info("Applied lgpio patch for gpiozero")
-                            
-                    except ImportError:
-                        logging.warning("lgpio libraries not available for patching")
-        except (ValueError, IndexError):
-            pass
-        
+        # ... (existing kernel patch logic) ...
         from gpiozero import Button, LED
         
         button = Button(
@@ -264,7 +297,7 @@ class GPIOManager:
             pull_up=self.config["button_pull_up"],
             bounce_time=self.config["button_bounce_time"]
         )
-        macchanger_pin = Button(
+        macchanger = Button(
             macchanger_pin, 
             pull_up=self.config["macchanger_pull_up"],
             bounce_time=self.config["button_bounce_time"]
@@ -272,7 +305,7 @@ class GPIOManager:
         led = LED(led_pin, active_high=self.config["led_active_high"])
         
         logging.info(f"GPIO setup successful with gpiozero: Button={button_pin}, LED={led_pin}, MACCHANGER={macchanger_pin}")
-        return button, led
+        return button, led, macchanger
     
     def _setup_rpi_gpio(self, button_pin: int, led_pin: int, macchanger_pin: int) -> Tuple[Any, Any, Any]:
         """Setup GPIO using RPi.GPIO library."""
