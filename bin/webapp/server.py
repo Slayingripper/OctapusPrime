@@ -7,11 +7,14 @@ import threading
 import json
 import netifaces
 import ipaddress
+import platform
+import re
+
 from queue import Queue
 from pathlib import Path
 from flask import Flask, send_from_directory, jsonify, request, send_file
 from flask_socketio import SocketIO
-
+from platform import release
 # -----------------------------------------------------
 # 1) Determine BASE_DIR and various subdirectories
 # -----------------------------------------------------
@@ -69,6 +72,50 @@ except Exception:
 app = Flask(__name__, static_folder=str(FRONTEND_DIR), template_folder=str(FRONTEND_DIR))
 socketio = SocketIO(app, async_mode="threading")
 
+
+# -----------------------------------------------------
+# GPIO PATCH
+# -----------------------------------------------------
+def apply_lgpio_patch_if_needed():
+	
+    """Check kernel version and apply lgpio patch for Raspberry Pi 6.6.45+ if needed."""
+    try:
+        kernel_version = platform.release()
+        # Extract version part, e.g. "6.12.25" from "6.12.25+rpt-rpi-2712"
+        match = re.match(r"(\d+)\.(\d+)\.(\d+)", kernel_version)
+        if not match:
+            return False
+
+        major, minor, patch = map(int, match.groups())
+        print(f"Parsed: {kernel_version} -> major={major}, minor={minor}, patch={patch}")
+
+        # Check if kernel version is >= 6.6.45
+        if (major > 6) or (major == 6 and minor > 6) or (major == 6 and minor == 6 and patch >= 45):
+            try:
+                import gpiozero.pins.lgpio
+                import lgpio
+
+                def __patched_init(self, chip=None):
+                    gpiozero.pins.lgpio.LGPIOFactory.__bases__[0].__init__(self)
+                    chip = 0  # Modify chip if necessary
+                    self._handle = lgpio.gpiochip_open(chip)
+                    self._chip = chip
+                    self.pin_class = gpiozero.pins.lgpio.LGPIOPin
+
+                gpiozero.pins.lgpio.LGPIOFactory.__init__ = __patched_init
+                print(f"Applied lgpio patch for kernel {kernel_version}")
+                return True
+
+            except ImportError:
+                print("lgpio patch needed but libraries not available")
+            except Exception as e:
+                print(f"Error applying lgpio patch: {e}")
+
+    except Exception as e:
+        print(f"Error checking kernel version: {e}")
+
+    return False
+    
 # -----------------------------------------------------
 # Network Interface Helper Functions
 # -----------------------------------------------------
@@ -498,13 +545,15 @@ def test_gpio():
     except Exception as e:
         logging.error(f"GPIO test failed: {e}")
         return jsonify({"status": "error", "message": f"GPIO test failed: {e}"}), 500
-
 # -----------------------------------------------------
 # Main entrypoint
 # -----------------------------------------------------
 if __name__ == "__main__":
     print("=== Octapus Web Server starting on 0.0.0.0:8080 ===")
     print("=== Serving frontend from:", FRONTEND_DIR, "===")
+    
+    apply_lgpio_patch_if_needed()
+    
     socketio.run(
         app,
         host="0.0.0.0",
