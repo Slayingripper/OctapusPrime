@@ -9,6 +9,7 @@ import netifaces
 import ipaddress
 import platform
 import re
+import asyncio
 
 from queue import Queue
 from pathlib import Path
@@ -42,6 +43,8 @@ sys.path.insert(0, str(BIN))
 
 from octapus_controller import log_queue, start_scan_thread, start_scenario_thread, get_local_cidr
 from gpio_manager import gpio_manager
+
+loop = asyncio.new_event_loop()
 
 # -----------------------------------------------------
 # Configuration
@@ -77,7 +80,6 @@ socketio = SocketIO(app, async_mode="threading")
 # -----------------------------------------------------
 def macchanger_callback():
     """Callback to change MAC address when button is pressed."""
-    print("yes")
     try:
         # Read network interface from settings or default to 'eth0'
         interface = "eth0"  # Fallback
@@ -90,13 +92,23 @@ def macchanger_callback():
                     interface = next(iter(interfaces), "eth0")  # First available interface
         
         # Run macchanger to randomize MAC address
-        subprocess.run(["sudo macchanger", "-r", interface], check=True)
+        subprocess.run(["sudo","macchanger", "-r", interface], check=True)
         print(f"MAC address changed for interface {interface}")
         socketio.emit("log", {"message": f"MAC address changed for {interface}", "level": "info"})
     except Exception as e:
         print(f"Failed to change MAC address: {e}")
         socketio.emit("log", {"message": f"Failed to change MAC address: {e}", "level": "error"})
-        
+
+
+async def macchanger_button_press(macchanger, debounce_time=0.5):
+    """Continuously check for button press with debounce."""
+    while True:
+        if macchanger.is_pressed:
+            print("Button pressed - changing MAC address")
+            macchanger_callback()
+            await asyncio.sleep(debounce_time)  # Debounce delay
+        await asyncio.sleep(0.1)
+      
 def init_gpio():
     """Initialize GPIO pins and set up monitoring for macchanger button."""
     try:
@@ -107,8 +119,15 @@ def init_gpio():
             time.sleep(0.5)
             led.off()
             logging.info("GPIO initialized successfully")
-            macchanger_pin = gpio_manager.config["macchanger_pin"]
+
+            macchanger_pin = gpio_manager.config.get("macchanger_pin", 23)
             gpio_manager.monitor_gpio_pin(macchanger_pin, macchanger_callback, existing_button=macchanger)
+
+            # Start the event loop in a separate thread
+            asyncio.set_event_loop(loop)
+            loop.create_task(macchanger_button_press(macchanger))
+            threading.Thread(target=loop.run_forever, daemon=True).start()
+
             print("GPIO setup and monitoring started")
         else:
             print("GPIO initialization failed")
