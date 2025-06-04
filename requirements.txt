@@ -6,3 +6,4 @@ python-engineio
 aiohttp
 gpiozero
 lgpio
+threading

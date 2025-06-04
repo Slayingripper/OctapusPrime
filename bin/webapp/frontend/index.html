@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -535,8 +536,15 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .card-header {
@@ -1395,6 +1403,19 @@
         { cmd: "--outfile-format=2", desc: "Output format (hash:plain)" },
         { cmd: "--status", desc: "Show status" },
         { cmd: "--status-timer=60", desc: "Status interval" }
+      ],
+      macchanger: [
+        { cmd: "Usage: macchanger [options] device", desc: "Command usage" },
+        { cmd: "-r", desc: "Set a random MAC address" },
+        { cmd: "-m XX:XX:XX:XX:XX:XX", desc: "Set a specific MAC address" },
+        { cmd: "-s", desc: "Show the current MAC address" },
+        { cmd: "-l", desc: "List known vendors" },
+        { cmd: "-e", desc: "Set MAC to match vendor" },
+        { cmd: "-a", desc: "Set random MAC of same vendor type" },
+        { cmd: "-A", desc: "Set random MAC of any vendor type" },
+        { cmd: "-p", desc: "Preserve current MAC address" },
+        { cmd: "-u", desc: "Restore the original MAC address" },
+        { cmd: "eth0", desc: "Example network interface" }
       ]
     };
 
@@ -2098,4 +2119,5 @@
     }
   </script>
 </body>
+
 </html>

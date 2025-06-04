@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
 import os
+import subprocess
 import sys
 import logging
 import threading
 import json
 import netifaces
 import ipaddress
+import platform
+import re
+import asyncio
+
 from queue import Queue
 from pathlib import Path
 from flask import Flask, send_from_directory, jsonify, request, send_file
 from flask_socketio import SocketIO
-
+from platform import release
 # -----------------------------------------------------
 # 1) Determine BASE_DIR and various subdirectories
 # -----------------------------------------------------
@@ -38,6 +43,8 @@ sys.path.insert(0, str(BIN))
 
 from octapus_controller import log_queue, start_scan_thread, start_scenario_thread, get_local_cidr
 from gpio_manager import gpio_manager
+
+loop = asyncio.new_event_loop()
 
 # -----------------------------------------------------
 # Configuration
@@ -68,6 +75,111 @@ except Exception:
 app = Flask(__name__, static_folder=str(FRONTEND_DIR), template_folder=str(FRONTEND_DIR))
 socketio = SocketIO(app, async_mode="threading")
 
+# -----------------------------------------------------
+# Macchanger Logic
+# -----------------------------------------------------
+def macchanger_callback():
+    """Callback to change MAC address when button is pressed."""
+    try:
+        # Read network interface from settings or default to 'eth0'
+        interface = "eth0"  # Fallback
+        if SETTINGS_FILE.exists():
+            with open(SETTINGS_FILE, "r") as f:
+                settings = json.load(f)
+                interface = settings.get("networkInterface", "eth0")
+                if interface == "auto":
+                    interfaces = get_available_interfaces()
+                    interface = next(iter(interfaces), "eth0")  # First available interface
+        
+        # Run macchanger to randomize MAC address
+        subprocess.run(["sudo","macchanger", "-r", interface], check=True)
+        print(f"MAC address changed for interface {interface}")
+        socketio.emit("log", {"message": f"MAC address changed for {interface}", "level": "info"})
+    except Exception as e:
+        print(f"Failed to change MAC address: {e}")
+        socketio.emit("log", {"message": f"Failed to change MAC address: {e}", "level": "error"})
+
+
+async def macchanger_button_press(macchanger, debounce_time=0.5):
+    """Continuously check for button press with debounce."""
+    while True:
+        if macchanger.is_pressed:
+            print("Button pressed - changing MAC address")
+            macchanger_callback()
+            await asyncio.sleep(debounce_time)  # Debounce delay
+        await asyncio.sleep(0.1)
+      
+def init_gpio():
+    """Initialize GPIO pins and set up monitoring for macchanger button."""
+    try:
+        button, led, macchanger = gpio_manager.setup_gpio()
+        if button and led and macchanger:
+            led.on()
+            import time
+            time.sleep(0.5)
+            led.off()
+            logging.info("GPIO initialized successfully")
+
+            macchanger_pin = gpio_manager.config.get("macchanger_pin", 23)
+            gpio_manager.monitor_gpio_pin(macchanger_pin, macchanger_callback, existing_button=macchanger)
+
+            # Start the event loop in a separate thread
+            asyncio.set_event_loop(loop)
+            loop.create_task(macchanger_button_press(macchanger))
+            threading.Thread(target=loop.run_forever, daemon=True).start()
+
+            print("GPIO setup and monitoring started")
+        else:
+            print("GPIO initialization failed")
+            socketio.emit("log", {"message": "GPIO initialization failed", "level": "error"})
+    except Exception as e:
+        print(f"GPIO setup failed: {e}")
+        socketio.emit("log", {"message": f"GPIO setup failed: {e}", "level": "error"})
+
+      
+# -----------------------------------------------------
+# GPIO PATCH
+# -----------------------------------------------------
+def apply_lgpio_patch_if_needed():
+	
+    """Check kernel version and apply lgpio patch for Raspberry Pi 6.6.45+ if needed."""
+    try:
+        kernel_version = platform.release()
+        # Extract version part, e.g. "6.12.25" from "6.12.25+rpt-rpi-2712"
+        match = re.match(r"(\d+)\.(\d+)\.(\d+)", kernel_version)
+        if not match:
+            return False
+
+        major, minor, patch = map(int, match.groups())
+        print(f"Parsed: {kernel_version} -> major={major}, minor={minor}, patch={patch}")
+
+        # Check if kernel version is >= 6.6.45
+        if (major > 6) or (major == 6 and minor > 6) or (major == 6 and minor == 6 and patch >= 45):
+            try:
+                import gpiozero.pins.lgpio
+                import lgpio
+
+                def __patched_init(self, chip=None):
+                    gpiozero.pins.lgpio.LGPIOFactory.__bases__[0].__init__(self)
+                    chip = 0  # Modify chip if necessary
+                    self._handle = lgpio.gpiochip_open(chip)
+                    self._chip = chip
+                    self.pin_class = gpiozero.pins.lgpio.LGPIOPin
+
+                gpiozero.pins.lgpio.LGPIOFactory.__init__ = __patched_init
+                print(f"Applied lgpio patch for kernel {kernel_version}")
+                return True
+
+            except ImportError:
+                print("lgpio patch needed but libraries not available")
+            except Exception as e:
+                print(f"Error applying lgpio patch: {e}")
+
+    except Exception as e:
+        print(f"Error checking kernel version: {e}")
+
+    return False
+    
 # -----------------------------------------------------
 # Network Interface Helper Functions
 # -----------------------------------------------------
@@ -440,7 +552,7 @@ def update_gpio_config():
         new_config = request.get_json(force=True)
         
         # Validate configuration
-        required_fields = ["button_pin", "led_pin", "gpio_library", "manual_override"]
+        required_fields = ["button_pin", "led_pin", "macchanger", "gpio_library", "manual_override"]
         for field in required_fields:
             if field not in new_config:
                 return jsonify({"status": "error", "message": f"Missing field: {field}"}), 400
@@ -455,8 +567,10 @@ def update_gpio_config():
             return jsonify({"status": "error", "message": "Button pin must be between 0-40"}), 400
         if not (0 <= new_config["led_pin"] <= 40):
             return jsonify({"status": "error", "message": "LED pin must be between 0-40"}), 400
-        if new_config["button_pin"] == new_config["led_pin"]:
-            return jsonify({"status": "error", "message": "Button and LED pins must be different"}), 400
+        if not (0 <= new_config["macchanger_pin"] <= 40):
+            return jsonify({"status": "error", "message": "Macchanger button pin must be between 0-40"}), 400
+        if new_config["button_pin"] == new_config["led_pin"] or new_config["button_pin"] == new_config["macchanger_pin"] or new_config["macchanger_pin"] == new_config["led_pin"] :
+            return jsonify({"status": "error", "message": "Button, LED and Macchanger pins must be different"}), 400
         
         # Save configuration
         if gpio_manager.save_config(new_config):
@@ -480,8 +594,8 @@ def test_gpio():
         gpio_manager.config.update(test_config)
         
         try:
-            button, led = gpio_manager.setup_gpio()
-            if button and led:
+            button, led, macchanger = gpio_manager.setup_gpio()
+            if button and led and macchanger:
                 # Test LED briefly
                 led.on()
                 import time
@@ -500,13 +614,17 @@ def test_gpio():
     except Exception as e:
         logging.error(f"GPIO test failed: {e}")
         return jsonify({"status": "error", "message": f"GPIO test failed: {e}"}), 500
-
 # -----------------------------------------------------
 # Main entrypoint
 # -----------------------------------------------------
 if __name__ == "__main__":
     print("=== Octapus Web Server starting on 0.0.0.0:8080 ===")
     print("=== Serving frontend from:", FRONTEND_DIR, "===")
+    
+    apply_lgpio_patch_if_needed()
+    
+    init_gpio()
+    
     socketio.run(
         app,
         host="0.0.0.0",
