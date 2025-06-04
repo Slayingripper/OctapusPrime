@@ -2,195 +2,372 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Octapus Prime – Landing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OctapusPrime – Security Automation Platform</title>
   <style>
-    /* ===== Global Dark Mode ===== */
+    /* ===== CSS Custom Properties ===== */
+    :root {
+      --primary-bg: #0d0d0d;
+      --secondary-bg: #1a1a1a;
+      --tertiary-bg: #262626;
+      --primary-text: #e6e6e6;
+      --secondary-text: #bbb;
+      --accent-color: #39ff14;
+      --accent-shadow: 0 0 8px #39ff14;
+      --border-color: #333;
+      --font-mono: "Roboto Mono", "Courier New", monospace;
+      --transition: all 0.3s ease;
+      --glow-intense: 0 0 25px #39ff14;
+    }
+
+    /* ===== Reset & Base Styles ===== */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     html, body {
       height: 100%;
-      background: #0d0d0d;
-      color: #e6e6e6;
-      font-family: "Roboto Mono", monospace;
+      background: var(--primary-bg);
+      color: var(--primary-text);
+      font-family: var(--font-mono);
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      position: relative;
     }
+
     a {
       text-decoration: none;
       color: inherit;
     }
 
-    /* ===== Container ===== */
-    #landing-container {
-      position: relative;
-      width: 400px;
-      height: 400px;
+    /* ===== Animated Background ===== */
+    .background-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(57, 255, 20, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: gridFlow 20s linear infinite;
+      z-index: 1;
     }
 
-    /* ===== Shield Background ===== */
+    @keyframes gridFlow {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    /* ===== Main Container ===== */
+    .landing-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    /* ===== Centered Brand Title ===== */
+    .brand-title {
+      text-align: center;
+      z-index: 8;
+      margin-bottom: 40px;
+    }
+
+    .brand-title h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: var(--accent-color);
+      text-shadow: var(--glow-intense);
+      margin-bottom: 15px;
+      letter-spacing: 4px;
+      animation: titlePulse 4s ease-in-out infinite;
+      font-weight: bold;
+    }
+
+    @keyframes titlePulse {
+      0%, 100% { 
+        text-shadow: 0 0 25px var(--accent-color);
+        transform: scale(1);
+      }
+      50% { 
+        text-shadow: 0 0 40px var(--accent-color), 0 0 60px var(--accent-color);
+        transform: scale(1.02);
+      }
+    }
+
+    .brand-subtitle {
+      font-size: 1.1rem;
+      color: var(--secondary-text);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      opacity: 0.9;
+      animation: subtitleFade 3s ease-in-out infinite;
+    }
+
+    @keyframes subtitleFade {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 0.6; }
+    }
+
+    /* ===== Centered Octopus Interface ===== */
+    .octopus-interface {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      animation: float 4s ease-in-out infinite;
+      margin-bottom: 40px;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ===== Enhanced Shield Background ===== */
     .shield-outline {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 300px;
-      height: 350px;
-      border: 3px solid #39ff14;
-      border-radius: 150px 150px 0 0;
+      width: 350px;
+      height: 400px;
+      border: 3px solid var(--accent-color);
+      border-radius: 175px 175px 0 0;
       clip-path: polygon(0% 0%, 100% 0%, 85% 80%, 50% 100%, 15% 80%);
-      box-shadow: 0 0 20px #39ff14;
-      z-index: 1;
+      box-shadow: 
+        inset 0 0 30px rgba(57, 255, 20, 0.2),
+        0 0 30px var(--accent-color);
+      z-index: 2;
+      animation: shieldPulse 3s ease-in-out infinite;
     }
 
-    /* ===== Octopus Head (More Realistic) ===== */
+    @keyframes shieldPulse {
+      0%, 100% { 
+        box-shadow: 
+          inset 0 0 30px rgba(57, 255, 20, 0.2),
+          0 0 30px var(--accent-color);
+      }
+      50% { 
+        box-shadow: 
+          inset 0 0 50px rgba(57, 255, 20, 0.4),
+          0 0 50px var(--accent-color);
+      }
+    }
+
+    /* ===== Enhanced Octopus Head (FIXED) ===== */
     .octopus-head {
       position: absolute;
       top: 50%;
       left: 50%;
+      width: 160px;
+      height: 140px;
+      background: linear-gradient(135deg, var(--accent-color), #2ecc71);
+      border-radius: 80px 80px 35px 35px / 70px 70px 45px 45px;
+      box-shadow: var(--glow-intense);
+      z-index: 5;
+      /* FIXED: Separate transform for initial positioning */
       transform: translate(-50%, -65%);
-      width: 140px;
-      height: 120px;
-      background: #39ff14;
-      /* More octopus-like bulbous shape */
-      border-radius: 70px 70px 30px 30px / 60px 60px 40px 40px;
-      box-shadow: 0 0 25px #39ff14;
-      z-index: 3;
-      position: relative;
+      animation: headBreathe 2s ease-in-out infinite;
     }
 
-    /* Octopus mantle bulge on top */
+    /* FIXED: Animation that maintains center position */
+    @keyframes headBreathe {
+      0%, 100% { 
+        transform: translate(-50%, -65%) scale(1);
+      }
+      50% { 
+        transform: translate(-50%, -65%) scale(1.05);
+      }
+    }
+
+    /* Octopus mantle enhancement */
     .octopus-head::before {
       content: "";
       position: absolute;
-      top: -15px;
-      left: 15px;
-      width: 110px;
-      height: 80px;
-      background: #39ff14;
-      border-radius: 55px 55px 25px 25px / 40px 40px 20px 20px;
-      box-shadow: 0 0 20px #39ff14;
+      top: -20px;
+      left: 10px;
+      width: 140px;
+      height: 90px;
+      background: linear-gradient(135deg, var(--accent-color), #2ecc71);
+      border-radius: 70px 70px 30px 30px / 45px 45px 25px 25px;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.6);
       z-index: -1;
     }
 
-    /* Side fins/flaps typical of octopus */
+    /* Enhanced side fins */
     .octopus-head::after {
       content: "";
       position: absolute;
-      bottom: 10px;
-      left: -10px;
-      width: 160px;
-      height: 40px;
-      background: linear-gradient(90deg, transparent, #39ff14 20%, #39ff14 80%, transparent);
-      border-radius: 20px;
-      opacity: 0.6;
+      bottom: 15px;
+      left: -15px;
+      width: 190px;
+      height: 50px;
+      background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(57, 255, 20, 0.4) 20%, 
+        rgba(57, 255, 20, 0.6) 50%,
+        rgba(57, 255, 20, 0.4) 80%, 
+        transparent
+      );
+      border-radius: 25px;
       z-index: -1;
+      animation: finWave 3s ease-in-out infinite;
     }
 
-    /* Octopus Eyes - More realistic positioning */
+    @keyframes finWave {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.8); }
+    }
+
+    /* ===== Enhanced Cyber Eyes ===== */
     .cyber-eye {
       position: absolute;
-      width: 24px;
-      height: 30px;
-      background: #0d0d0d;
-      top: 35px;
-      z-index: 4;
+      width: 30px;
+      height: 36px;
+      background: var(--primary-bg);
+      top: 40px;
+      z-index: 6;
       border-radius: 50% 50% 40% 40%;
-      border: 2px solid #39ff14;
-      box-shadow: inset 0 0 8px rgba(57, 255, 20, 0.3);
+      border: 3px solid var(--accent-color);
+      box-shadow: 
+        inset 0 0 12px rgba(57, 255, 20, 0.3),
+        0 0 15px var(--accent-color);
+      animation: eyeGlow 2s ease-in-out infinite alternate;
     }
+
+    @keyframes eyeGlow {
+      0% { box-shadow: inset 0 0 12px rgba(57, 255, 20, 0.3), 0 0 15px var(--accent-color); }
+      100% { box-shadow: inset 0 0 20px rgba(57, 255, 20, 0.6), 0 0 25px var(--accent-color); }
+    }
+
     .eye-left {
-      left: 30px;
+      left: 35px;
       transform: rotate(-10deg);
     }
+
     .eye-right {
-      right: 30px;
+      right: 35px;
       transform: rotate(10deg);
     }
+
     .cyber-eye::after {
       content: "";
       position: absolute;
-      top: 8px;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      width: 10px;
-      height: 10px;
-      background: #39ff14;
+      width: 14px;
+      height: 14px;
+      background: var(--accent-color);
       border-radius: 50%;
-      box-shadow: 0 0 8px #39ff14;
+      box-shadow: 0 0 12px var(--accent-color);
+      animation: pupilScan 3s ease-in-out infinite;
     }
 
-    /* Add texture lines to head */
+    @keyframes pupilScan {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      25% { transform: translateX(-30%) translateY(-2px); }
+      50% { transform: translateX(-50%) translateY(0); }
+      75% { transform: translateX(-70%) translateY(-2px); }
+    }
+
+    /* ===== Enhanced Head Texture ===== */
     .head-texture {
       position: absolute;
-      top: 20px;
-      left: 20px;
-      right: 20px;
-      height: 60px;
+      top: 25px;
+      left: 25px;
+      right: 25px;
+      height: 70px;
       background: repeating-linear-gradient(
         45deg,
         transparent,
-        transparent 3px,
-        rgba(13, 13, 13, 0.2) 3px,
-        rgba(13, 13, 13, 0.2) 5px
+        transparent 4px,
+        rgba(13, 13, 13, 0.3) 4px,
+        rgba(13, 13, 13, 0.3) 6px
       );
-      border-radius: 50px;
-      z-index: 2;
-      opacity: 0.5;
+      border-radius: 60px;
+      z-index: 3;
+      opacity: 0.6;
     }
 
-    /* ===== Circuit Board Tentacles ===== */
+    /* ===== Enhanced Circuit Tentacles ===== */
     .circuit-tentacle {
       position: absolute;
-      z-index: 2;
-      transition: all 0.3s ease;
+      z-index: 4;
+      transition: var(--transition);
       cursor: pointer;
     }
 
     .circuit-tentacle:hover {
-      filter: brightness(1.3);
+      filter: brightness(1.4) saturate(1.2);
+      transform: scale(1.05);
     }
 
-    /* Circuit paths - curved like octopus tentacles */
     .circuit-path {
-      stroke: #39ff14;
-      stroke-width: 6;
+      stroke: var(--accent-color);
+      stroke-width: 8;
       fill: none;
-      filter: drop-shadow(0 0 8px #39ff14);
-      transition: all 0.3s ease;
+      filter: drop-shadow(0 0 12px var(--accent-color));
+      transition: var(--transition);
       stroke-linecap: round;
+      stroke-linejoin: round;
+      animation: pathFlow 4s ease-in-out infinite;
+    }
+
+    @keyframes pathFlow {
+      0%, 100% { 
+        stroke-width: 8;
+        filter: drop-shadow(0 0 12px var(--accent-color));
+      }
+      50% { 
+        stroke-width: 10;
+        filter: drop-shadow(0 0 20px var(--accent-color));
+      }
     }
 
     .circuit-tentacle:hover .circuit-path {
-      stroke-width: 8;
-      filter: drop-shadow(0 0 15px #39ff14);
+      stroke-width: 12;
+      filter: drop-shadow(0 0 25px var(--accent-color));
+      animation: pathHover 0.5s ease-out;
     }
 
-    /* Circuit nodes/dots */
+    @keyframes pathHover {
+      0% { stroke-dasharray: 0, 1000; }
+      100% { stroke-dasharray: 1000, 0; }
+    }
+
     .circuit-node {
-      fill: #39ff14;
-      filter: drop-shadow(0 0 4px #39ff14);
-      transition: all 0.3s ease;
+      fill: var(--accent-color);
+      filter: drop-shadow(0 0 6px var(--accent-color));
+      transition: var(--transition);
+      animation: nodePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes nodePulse {
+      0%, 100% { r: 4; opacity: 1; }
+      50% { r: 6; opacity: 0.8; }
     }
 
     .circuit-tentacle:hover .circuit-node {
-      r: 6;
-      filter: drop-shadow(0 0 8px #39ff14);
+      r: 8;
+      filter: drop-shadow(0 0 15px var(--accent-color));
     }
 
-    /* SVG text labels */
     .circuit-label {
-      fill: #39ff14;
-      font-family: "Roboto Mono", monospace;
-      font-size: 11px;
+      fill: var(--accent-color);
+      font-family: var(--font-mono);
+      font-size: 12px;
       font-weight: bold;
-      letter-spacing: 1px;
-      text-shadow: 0 0 8px #39ff14;
-      transition: all 0.3s ease;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 8px var(--accent-color);
+      transition: var(--transition);
       text-anchor: middle;
       dominant-baseline: middle;
       pointer-events: none;
@@ -198,124 +375,444 @@
 
     .circuit-tentacle:hover .circuit-label {
       fill: #ffffff;
-      font-size: 12px;
-      filter: drop-shadow(0 0 12px #39ff14);
+      font-size: 14px;
+      filter: drop-shadow(0 0 15px var(--accent-color));
+      text-shadow: 0 0 20px var(--accent-color);
+    }
+
+    /* ===== Status Indicator ===== */
+    .status-indicator {
+      background: var(--secondary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 8;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      margin-top: 20px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes statusPulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 5px var(--accent-color); }
+      50% { opacity: 0.6; box-shadow: 0 0 15px var(--accent-color); }
+    }
+
+    .status-text {
+      font-size: 13px;
+      color: var(--secondary-text);
+    }
+
+    /* ===== Responsive Design ===== */
+    @media (max-width: 768px) {
+      .octopus-interface {
+        width: 400px;
+        height: 400px;
+      }
+
+      .shield-outline {
+        width: 280px;
+        height: 320px;
+      }
+
+      .octopus-head {
+        width: 130px;
+        height: 110px;
+      }
+
+      .circuit-label {
+        font-size: 10px;
+      }
+
+      .brand-title h1 {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+      }
+
+      .brand-subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .octopus-interface {
+        width: 320px;
+        height: 320px;
+      }
+
+      .shield-outline {
+        width: 220px;
+        height: 260px;
+      }
+
+      .octopus-head {
+        width: 100px;
+        height: 85px;
+      }
+
+      .cyber-eye {
+        width: 20px;
+        height: 24px;
+      }
+
+      .circuit-path {
+        stroke-width: 6;
+      }
+
+      .circuit-label {
+        font-size: 9px;
+      }
+
+      .brand-title h1 {
+        font-size: 2rem;
+        letter-spacing: 1px;
+      }
+
+      .brand-subtitle {
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+    }
+
+    /* ===== Loading Animation ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .landing-container {
+      animation: fadeInUp 1s ease-out;
+    }
+
+    /* ===== Hover Sound Effect Simulation ===== */
+    .circuit-tentacle:hover::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100px;
+      height: 100px;
+      border: 2px solid var(--accent-color);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: sonarPing 0.6s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes sonarPing {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(2);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="landing-container">
-    <!-- Shield Outline -->
-    <div class="shield-outline"></div>
-    
-    <!-- More Realistic Octopus Head -->
-    <div class="octopus-head">
-      <div class="head-texture"></div>
-      <div class="cyber-eye eye-left"></div>
-      <div class="cyber-eye eye-right"></div>
+  <!-- Animated Background -->
+  <div class="background-grid"></div>
+
+  <!-- Main Landing Container -->
+  <div class="landing-container">
+    <!-- Centered Brand Title -->
+    <div class="brand-title">
+      <h1>OCTAPUSPRIME</h1>
+      <div class="brand-subtitle">Security Automation Platform</div>
     </div>
 
-    <!-- Circuit Board Tentacles as SVG with more organic curves -->
-    <svg width="400" height="400" style="position: absolute; top: 0; left: 0; z-index: 2;">
-      <!-- Tentacle 1 - Dashboard (curved like real tentacle) -->
-      <a href="/dashboard" class="circuit-tentacle">
-        <path class="circuit-path" d="M 200 180 Q 230 160 260 150 Q 290 140 320 155"/>
-        <circle class="circuit-node" cx="200" cy="180" r="4"/>
-        <circle class="circuit-node" cx="230" cy="160" r="3"/>
-        <circle class="circuit-node" cx="260" cy="150" r="3"/>
-        <circle class="circuit-node" cx="290" cy="140" r="3"/>
-        <circle class="circuit-node" cx="320" cy="155" r="5"/>
-        <text class="circuit-label" x="340" y="150">DASHBOARD</text>
-      </a>
+    <!-- Centered Octopus Interface -->
+    <div class="octopus-interface">
+      <!-- Enhanced Shield Outline -->
+      <div class="shield-outline"></div>
+      
+      <!-- Enhanced Octopus Head -->
+      <div class="octopus-head">
+        <div class="head-texture"></div>
+        <div class="cyber-eye eye-left"></div>
+        <div class="cyber-eye eye-right"></div>
+      </div>
 
-      <!-- Tentacle 2 - Scenario -->
-      <a href="/scenario_maker" class="circuit-tentacle">
-        <path class="circuit-path" d="M 210 200 Q 240 210 270 225 Q 300 240 320 260"/>
-        <circle class="circuit-node" cx="210" cy="200" r="4"/>
-        <circle class="circuit-node" cx="240" cy="210" r="3"/>
-        <circle class="circuit-node" cx="270" cy="225" r="3"/>
-        <circle class="circuit-node" cx="300" cy="240" r="3"/>
-        <circle class="circuit-node" cx="320" cy="260" r="5"/>
-        <text class="circuit-label" x="340" y="270">SCENARIO</text>
-      </a>
+      <!-- Enhanced Circuit Board Tentacles with CORRECTED LINKS -->
+      <svg width="500" height="500" style="position: absolute; top: 0; left: 0; z-index: 4;">
+        <!-- Dashboard Tentacle -->
+        <a href="/dashboard" class="circuit-tentacle">
+          <path class="circuit-path" d="M 250 200 Q 290 180 330 170 Q 370 160 400 175"/>
+          <circle class="circuit-node" cx="250" cy="200" r="5"/>
+          <circle class="circuit-node" cx="290" cy="180" r="4"/>
+          <circle class="circuit-node" cx="330" cy="170" r="4"/>
+          <circle class="circuit-node" cx="370" cy="160" r="4"/>
+          <circle class="circuit-node" cx="400" cy="175" r="6"/>
+          <text class="circuit-label" x="425" y="170">DASHBOARD</text>
+        </a>
 
-      <!-- Tentacle 3 - Settings -->
-      <a href="/settings" class="circuit-tentacle">
-        <path class="circuit-path" d="M 200 220 Q 210 250 220 280 Q 230 310 240 330"/>
-        <circle class="circuit-node" cx="200" cy="220" r="4"/>
-        <circle class="circuit-node" cx="210" cy="250" r="3"/>
-        <circle class="circuit-node" cx="220" cy="280" r="3"/>
-        <circle class="circuit-node" cx="230" cy="310" r="3"/>
-        <circle class="circuit-node" cx="240" cy="330" r="5"/>
-        <text class="circuit-label" x="250" y="345">SETTINGS</text>
-      </a>
+        <!-- Scenario Maker Tentacle -->
+        <a href="/scenario_maker" class="circuit-tentacle">
+          <path class="circuit-path" d="M 260 220 Q 300 235 340 255 Q 380 275 410 300"/>
+          <circle class="circuit-node" cx="260" cy="220" r="5"/>
+          <circle class="circuit-node" cx="300" cy="235" r="4"/>
+          <circle class="circuit-node" cx="340" cy="255" r="4"/>
+          <circle class="circuit-node" cx="380" cy="275" r="4"/>
+          <circle class="circuit-node" cx="410" cy="300" r="6"/>
+          <text class="circuit-label" x="435" y="310">SCENARIO</text>
+        </a>
 
-      <!-- Tentacle 4 - Logs -->
-      <a href="/logs" class="circuit-tentacle">
-        <path class="circuit-path" d="M 190 220 Q 180 250 170 280 Q 160 310 150 330"/>
-        <circle class="circuit-node" cx="190" cy="220" r="4"/>
-        <circle class="circuit-node" cx="180" cy="250" r="3"/>
-        <circle class="circuit-node" cx="170" cy="280" r="3"/>
-        <circle class="circuit-node" cx="160" cy="310" r="3"/>
-        <circle class="circuit-node" cx="150" cy="330" r="5"/>
-        <text class="circuit-label" x="130" y="345">LOGS</text>
-      </a>
+        <!-- Settings Tentacle -->
+        <a href="/settings" class="circuit-tentacle">
+          <path class="circuit-path" d="M 250 240 Q 260 280 270 320 Q 280 360 290 390"/>
+          <circle class="circuit-node" cx="250" cy="240" r="5"/>
+          <circle class="circuit-node" cx="260" cy="280" r="4"/>
+          <circle class="circuit-node" cx="270" cy="320" r="4"/>
+          <circle class="circuit-node" cx="280" cy="360" r="4"/>
+          <circle class="circuit-node" cx="290" cy="390" r="6"/>
+          <text class="circuit-label" x="305" y="405">SETTINGS</text>
+        </a>
 
-      <!-- Tentacle 5 - Help -->
-      <a href="/help" class="circuit-tentacle">
-        <path class="circuit-path" d="M 190 200 Q 160 210 130 225 Q 100 240 80 260"/>
-        <circle class="circuit-node" cx="190" cy="200" r="4"/>
-        <circle class="circuit-node" cx="160" cy="210" r="3"/>
-        <circle class="circuit-node" cx="130" cy="225" r="3"/>
-        <circle class="circuit-node" cx="100" cy="240" r="3"/>
-        <circle class="circuit-node" cx="80" cy="260" r="5"/>
-        <text class="circuit-label" x="60" y="270">HELP</text>
-      </a>
+        <!-- Logs Tentacle -->
+        <a href="/logs" class="circuit-tentacle">
+          <path class="circuit-path" d="M 240 240 Q 230 280 220 320 Q 210 360 200 390"/>
+          <circle class="circuit-node" cx="240" cy="240" r="5"/>
+          <circle class="circuit-node" cx="230" cy="280" r="4"/>
+          <circle class="circuit-node" cx="220" cy="320" r="4"/>
+          <circle class="circuit-node" cx="210" cy="360" r="4"/>
+          <circle class="circuit-node" cx="200" cy="390" r="6"/>
+          <text class="circuit-label" x="180" y="405">LOGS</text>
+        </a>
 
-      <!-- Tentacle 6 - About -->
-      <a href="/about" class="circuit-tentacle">
-        <path class="circuit-path" d="M 200 180 Q 170 160 140 150 Q 110 140 80 155"/>
-        <circle class="circuit-node" cx="200" cy="180" r="4"/>
-        <circle class="circuit-node" cx="170" cy="160" r="3"/>
-        <circle class="circuit-node" cx="140" cy="150" r="3"/>
-        <circle class="circuit-node" cx="110" cy="140" r="3"/>
-        <circle class="circuit-node" cx="80" cy="155" r="5"/>
-        <text class="circuit-label" x="60" y="150">ABOUT</text>
-      </a>
+        <!-- Help Tentacle -->
+        <a href="/help" class="circuit-tentacle">
+          <path class="circuit-path" d="M 240 220 Q 200 235 160 255 Q 120 275 90 300"/>
+          <circle class="circuit-node" cx="240" cy="220" r="5"/>
+          <circle class="circuit-node" cx="200" cy="235" r="4"/>
+          <circle class="circuit-node" cx="160" cy="255" r="4"/>
+          <circle class="circuit-node" cx="120" cy="275" r="4"/>
+          <circle class="circuit-node" cx="90" cy="300" r="6"/>
+          <text class="circuit-label" x="65" y="310">HELP</text>
+        </a>
 
-      <!-- Tentacle 7 - Updates -->
-      <a href="/updates" class="circuit-tentacle">
-        <path class="circuit-path" d="M 190 160 Q 170 130 150 110 Q 130 90 120 80"/>
-        <circle class="circuit-node" cx="190" cy="160" r="4"/>
-        <circle class="circuit-node" cx="170" cy="130" r="3"/>
-        <circle class="circuit-node" cx="150" cy="110" r="3"/>
-        <circle class="circuit-node" cx="130" cy="90" r="3"/>
-        <circle class="circuit-node" cx="120" cy="80" r="5"/>
-        <text class="circuit-label" x="110" y="65">UPDATES</text>
-      </a>
+        <!-- About Tentacle -->
+        <a href="/about" class="circuit-tentacle">
+          <path class="circuit-path" d="M 250 200 Q 210 180 170 170 Q 130 160 100 175"/>
+          <circle class="circuit-node" cx="250" cy="200" r="5"/>
+          <circle class="circuit-node" cx="210" cy="180" r="4"/>
+          <circle class="circuit-node" cx="170" cy="170" r="4"/>
+          <circle class="circuit-node" cx="130" cy="160" r="4"/>
+          <circle class="circuit-node" cx="100" cy="175" r="6"/>
+          <text class="circuit-label" x="75" y="170">ABOUT</text>
+        </a>
 
-      <!-- Tentacle 8 - Demo -->
-      <a href="/demo" class="circuit-tentacle">
-        <path class="circuit-path" d="M 210 160 Q 230 130 250 110 Q 270 90 280 80"/>
-        <circle class="circuit-node" cx="210" cy="160" r="4"/>
-        <circle class="circuit-node" cx="230" cy="130" r="3"/>
-        <circle class="circuit-node" cx="250" cy="110" r="3"/>
-        <circle class="circuit-node" cx="270" cy="90" r="3"/>
-        <circle class="circuit-node" cx="280" cy="80" r="5"/>
-        <text class="circuit-label" x="290" y="65">DEMO</text>
-      </a>
-    </svg>
+        <!-- Demo Tentacle -->
+        <a href="/demo" class="circuit-tentacle">
+          <path class="circuit-path" d="M 240 180 Q 220 150 200 125 Q 180 100 170 85"/>
+          <circle class="circuit-node" cx="240" cy="180" r="5"/>
+          <circle class="circuit-node" cx="220" cy="150" r="4"/>
+          <circle class="circuit-node" cx="200" cy="125" r="4"/>
+          <circle class="circuit-node" cx="180" cy="100" r="4"/>
+          <circle class="circuit-node" cx="170" cy="85" r="6"/>
+          <text class="circuit-label" x="155" y="70">DEMO</text>
+        </a>
+
+        <!-- Updates Tentacle -->
+        <a href="/updates" class="circuit-tentacle">
+          <path class="circuit-path" d="M 260 180 Q 280 150 300 125 Q 320 100 330 85"/>
+          <circle class="circuit-node" cx="260" cy="180" r="5"/>
+          <circle class="circuit-node" cx="280" cy="150" r="4"/>
+          <circle class="circuit-node" cx="300" cy="125" r="4"/>
+          <circle class="circuit-node" cx="320" cy="100" r="4"/>
+          <circle class="circuit-node" cx="330" cy="85" r="6"/>
+          <text class="circuit-label" x="345" y="70">UPDATES</text>
+        </a>
+
+        <!-- Central Core Indicator -->
+        <circle cx="250" cy="200" r="12" fill="none" stroke="var(--accent-color)" stroke-width="2" opacity="0.6">
+          <animate attributeName="r" values="12;18;12" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+
+    <!-- Centered Status Indicator -->
+    <div class="status-indicator">
+      <div class="status-dot"></div>
+      <div class="status-text">System Online • Security Platform Ready</div>
+    </div>
   </div>
 
   <script>
-    // Add pulse animation to the octopus head
-    const head = document.querySelector('.octopus-head');
-    setInterval(() => {
-      head.style.boxShadow = '0 0 40px #39ff14';
+    // Enhanced JavaScript for improved interactivity
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeLanding();
+    });
+
+    function initializeLanding() {
+      addInteractiveElements();
+      startAnimationSequence();
+      setupResponsiveHandling();
+    }
+
+    function addInteractiveElements() {
+      // FIXED: Enhanced head breathing animation with proper centering
+      const head = document.querySelector('.octopus-head');
+      
+      // Remove any existing transform-based animations that might conflict
+      head.style.transformOrigin = '50% 50%';
+      
+      // Eye tracking effect
+      document.addEventListener('mousemove', (e) => {
+        const rect = document.querySelector('.octopus-head').getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+        
+        const angle = Math.atan2(mouseY - centerY, mouseX - centerX);
+        const distance = Math.min(Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2)) / 10, 3);
+        
+        const offsetX = Math.cos(angle) * distance;
+        const offsetY = Math.sin(angle) * distance;
+        
+        // Update CSS custom properties for eye movement
+        document.documentElement.style.setProperty('--eye-offset-x', `${offsetX}px`);
+        document.documentElement.style.setProperty('--eye-offset-y', `${offsetY}px`);
+      });
+
+      // Tentacle hover effects with sound simulation
+      const tentacles = document.querySelectorAll('.circuit-tentacle');
+      tentacles.forEach(tentacle => {
+        tentacle.addEventListener('mouseenter', () => {
+          // Simulate activation sound with visual feedback
+          const path = tentacle.querySelector('.circuit-path');
+          path.style.strokeDasharray = '20, 5';
+          path.style.animation = 'pathFlow 0.5s ease-out';
+          
+          // Add ripple effect
+          createRippleEffect(tentacle);
+        });
+
+        tentacle.addEventListener('mouseleave', () => {
+          const path = tentacle.querySelector('.circuit-path');
+          path.style.strokeDasharray = 'none';
+          path.style.animation = 'pathFlow 4s ease-in-out infinite';
+        });
+
+        tentacle.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          // Get the href attribute properly for SVG elements
+          const href = tentacle.getAttribute('href') || tentacle.href.baseVal || tentacle.href;
+          
+          // Add click animation before navigation
+          tentacle.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            tentacle.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+              window.location.href = href;
+            }, 150);
+          }, 100);
+        });
+      });
+    }
+
+    function createRippleEffect(element) {
+      const ripple = document.createElement('div');
+      ripple.style.position = 'absolute';
+      ripple.style.borderRadius = '50%';
+      ripple.style.background = 'rgba(57, 255, 20, 0.3)';
+      ripple.style.transform = 'scale(0)';
+      ripple.style.animation = 'ripple 0.6s linear';
+      ripple.style.left = '50%';
+      ripple.style.top = '50%';
+      ripple.style.width = '100px';
+      ripple.style.height = '100px';
+      ripple.style.marginLeft = '-50px';
+      ripple.style.marginTop = '-50px';
+      ripple.style.pointerEvents = 'none';
+      
+      element.appendChild(ripple);
+      
       setTimeout(() => {
-        head.style.boxShadow = '0 0 25px #39ff14';
-      }, 500);
-    }, 2000);
+        ripple.remove();
+      }, 600);
+    }
+
+    function startAnimationSequence() {
+      // Staggered animation for tentacles
+      const tentacles = document.querySelectorAll('.circuit-tentacle');
+      tentacles.forEach((tentacle, index) => {
+        tentacle.style.opacity = '0';
+        tentacle.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+          tentacle.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          tentacle.style.opacity = '1';
+          tentacle.style.transform = 'scale(1)';
+        }, 1000 + (index * 200));
+      });
+
+    }
+
+    function setupResponsiveHandling() {
+      // Handle orientation changes and resize events
+      window.addEventListener('resize', () => {
+        // Recalculate positions if needed
+        adjustLayoutForScreen();
+      });
+
+      window.addEventListener('orientationchange', () => {
+        setTimeout(adjustLayoutForScreen, 100);
+      });
+    }
+
+    function adjustLayoutForScreen() {
+      const container = document.querySelector('.octopus-interface');
+      const viewport = {
+        width: window.innerWidth,
+        height: window.innerHeight
+      };
+
+      // Adjust scaling based on viewport
+      if (viewport.width < 480 || viewport.height < 600) {
+        container.style.transform = 'scale(0.8)';
+      } else if (viewport.width < 768) {
+        container.style.transform = 'scale(0.9)';
+      } else {
+        container.style.transform = 'scale(1)';
+      }
+    }
+
+    // Add CSS for ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize on load
+    window.addEventListener('load', adjustLayoutForScreen);
   </script>
 </body>
 </html>

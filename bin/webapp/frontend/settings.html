@@ -2,747 +2,1375 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>OctapusPrime Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OctapusPrime – Settings</title>
   <style>
-    /* Dark theme styling similar to main interface */
-    html, body {
+    /* ===== CSS Custom Properties ===== */
+    :root {
+      --primary-bg: #0d0d0d;
+      --secondary-bg: #1a1a1a;
+      --tertiary-bg: #262626;
+      --primary-text: #e6e6e6;
+      --secondary-text: #bbb;
+      --accent-color: #39ff14;
+      --accent-shadow: 0 0 8px #39ff14;
+      --border-color: #333;
+      --font-mono: "Roboto Mono", "Courier New", monospace;
+      --transition: all 0.3s ease;
+      --glow-intense: 0 0 25px #39ff14;
+      --warning-color: #ff9500;
+      --error-color: #ff4444;
+      --success-color: #00ff88;
+      --info-color: #44aaff;
+    }
+
+    /* ===== Reset & Base Styles ===== */
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: "Roboto Mono", monospace;
-      background: #0d0d0d;
-      color: #e6e6e6;
-      min-height: 100vh;
     }
-    
+
+    html, body {
+      height: 100%;
+      background: var(--primary-bg);
+      color: var(--primary-text);
+      font-family: var(--font-mono);
+    }
+
+    /* ===== Animated Background ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(57, 255, 20, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 255, 20, 0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+      animation: gridFlow 15s linear infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes gridFlow {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(30px, 30px); }
+    }
+
+    /* ===== Header Section ===== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: var(--secondary-bg);
+      border-bottom: 2px solid var(--accent-color);
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: var(--accent-color);
+      font-size: 14px;
+      padding: 10px 20px;
+      border: 1px solid var(--accent-color);
+      border-radius: 5px;
+      text-shadow: var(--accent-shadow);
+      transition: var(--transition);
+      background: transparent;
+    }
+
+    .back-link:hover {
+      background: var(--accent-color);
+      color: var(--primary-bg);
+      box-shadow: var(--glow-intense);
+      transform: scale(1.05);
+    }
+
+    .page-title {
+      text-align: center;
+      font-size: clamp(24px, 4vw, 32px);
+      color: var(--accent-color);
+      text-shadow: var(--glow-intense);
+      animation: titlePulse 4s ease-in-out infinite;
+      flex: 1;
+    }
+
+    @keyframes titlePulse {
+      0%, 100% { 
+        text-shadow: 0 0 25px var(--accent-color);
+        transform: scale(1);
+      }
+      50% { 
+        text-shadow: 0 0 40px var(--accent-color), 0 0 60px var(--accent-color);
+        transform: scale(1.02);
+      }
+    }
+
+    .header-subtitle {
+      font-size: 14px;
+      color: var(--secondary-text);
+      margin-top: 5px;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--secondary-text);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes statusPulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 5px var(--accent-color); }
+      50% { opacity: 0.6; box-shadow: 0 0 15px var(--accent-color); }
+    }
+
+    /* ===== Container & Layout ===== */
     .container {
-      max-width: 800px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
     }
-    
-    .header {
-      text-align: center;
-      margin-bottom: 40px;
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
     }
-    
-    .header h1 {
-      color: #39ff14;
-      text-shadow: 0 0 8px #39ff14;
-      margin-bottom: 10px;
-    }
-    
+
+    /* ===== Enhanced Sections ===== */
     .section {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 20px;
+      background: var(--secondary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-color), transparent);
+      opacity: 0.8;
+    }
+
+    .section:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 30px rgba(57, 255, 20, 0.1);
+    }
+
+    .section h2 {
+      color: var(--accent-color);
+      margin: 0 0 20px 0;
+      font-size: 20px;
+      text-shadow: var(--accent-shadow);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section h3 {
+      color: var(--info-color);
+      margin: 20px 0 10px 0;
+      font-size: 16px;
+    }
+
+    /* ===== Enhanced Form Elements ===== */
+    .form-group {
       margin-bottom: 20px;
     }
-    
-    .section h2 {
-      color: #39ff14;
-      margin-top: 0;
-      border-bottom: 1px solid #333;
-      padding-bottom: 10px;
-    }
-    
-    .form-group {
-      margin-bottom: 15px;
-    }
-    
+
     .form-group label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       font-weight: bold;
+      color: var(--primary-text);
+      font-size: 14px;
     }
-    
-    .form-group input,
-    .form-group select {
+
+    .form-control {
       width: 100%;
-      padding: 8px 12px;
-      background: #0d0d0d;
-      border: 1px solid #444;
-      border-radius: 4px;
-      color: #e6e6e6;
-      font-family: inherit;
+      padding: 12px 15px;
+      background: var(--primary-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--primary-text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      transition: var(--transition);
     }
-    
-    .form-group input[type="checkbox"] {
-      width: auto;
-      margin-right: 8px;
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+      background: var(--secondary-bg);
     }
-    
+
+    .form-control:disabled {
+      opacity: 0.5;
+      background: var(--tertiary-bg);
+      cursor: not-allowed;
+    }
+
+    .form-help {
+      font-size: 12px;
+      color: var(--secondary-text);
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    /* ===== Enhanced Checkboxes ===== */
     .checkbox-group {
       display: flex;
       align-items: center;
-      margin-bottom: 10px;
-    }
-    
-    .platform-info {
-      background: #262626;
-      border: 1px solid #444;
-      border-radius: 4px;
-      padding: 15px;
       margin-bottom: 15px;
+      cursor: pointer;
     }
-    
-    .platform-info .detected {
-      color: #39ff14;
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 12px;
+      accent-color: var(--accent-color);
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      margin-bottom: 0;
+      cursor: pointer;
+      font-weight: normal;
+    }
+
+    /* ===== Enhanced Platform Info ===== */
+    .platform-info {
+      background: var(--tertiary-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .platform-info::before {
+      content: '🔧';
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      opacity: 0.5;
+    }
+
+    .platform-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .platform-row:last-child {
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+    .platform-label {
       font-weight: bold;
+      color: var(--secondary-text);
     }
-    
+
+    .platform-value {
+      color: var(--accent-color);
+      font-weight: bold;
+      text-shadow: var(--accent-shadow);
+    }
+
+    /* ===== Enhanced Interface List ===== */
     .interface-list {
-      background: #262626;
-      border: 1px solid #444;
-      border-radius: 4px;
-      padding: 10px;
-      margin-top: 10px;
-      max-height: 200px;
+      background: var(--primary-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
+      max-height: 250px;
       overflow-y: auto;
     }
-    
+
     .interface-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px;
-      border-bottom: 1px solid #333;
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      background: var(--secondary-bg);
+      transition: var(--transition);
     }
-    
+
     .interface-item:last-child {
-      border-bottom: none;
+      margin-bottom: 0;
     }
-    
+
+    .interface-item:hover {
+      background: var(--tertiary-bg);
+      border-color: var(--accent-color);
+    }
+
     .interface-name {
       font-weight: bold;
-      color: #39ff14;
+      color: var(--accent-color);
+      font-size: 16px;
     }
-    
+
     .interface-details {
       font-size: 12px;
-      color: #ccc;
+      color: var(--secondary-text);
+      margin-top: 4px;
     }
-    
+
+    .interface-status {
+      color: var(--success-color);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* ===== Enhanced Library Status ===== */
     .library-status {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin-top: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
     }
-    
+
     .library-item {
       display: flex;
       justify-content: space-between;
-      padding: 5px 10px;
-      background: #0d0d0d;
-      border-radius: 4px;
-      border: 1px solid #333;
+      align-items: center;
+      padding: 12px 15px;
+      background: var(--primary-bg);
+      border-radius: 6px;
+      border: 2px solid var(--border-color);
+      transition: var(--transition);
     }
-    
-    .library-item .available {
-      color: #39ff14;
+
+    .library-item:hover {
+      border-color: var(--accent-color);
     }
-    
-    .library-item .unavailable {
-      color: #ff4444;
+
+    .library-name {
+      font-weight: bold;
+      color: var(--primary-text);
     }
-    
+
+    .library-available {
+      color: var(--success-color);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .library-unavailable {
+      color: var(--error-color);
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    /* ===== Enhanced Buttons ===== */
     .button-group {
       display: flex;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 12px;
+      margin-top: 25px;
+      flex-wrap: wrap;
     }
-    
-    button {
-      padding: 10px 20px;
+
+    .btn {
+      padding: 12px 24px;
       border: none;
-      border-radius: 4px;
-      font-family: inherit;
+      border-radius: 6px;
+      font-family: var(--font-mono);
       font-size: 14px;
+      font-weight: bold;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
     }
-    
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
     .btn-primary {
-      background: #39ff14;
-      color: #0d0d0d;
+      background: var(--accent-color);
+      color: var(--primary-bg);
+      border: 2px solid var(--accent-color);
     }
-    
-    .btn-primary:hover {
-      background: #2ecc71;
-      box-shadow: 0 0 8px #39ff14;
+
+    .btn-primary:hover:not(:disabled) {
+      background: #44ff22;
+      box-shadow: var(--glow-intense);
+      transform: translateY(-2px);
     }
-    
+
     .btn-secondary {
-      background: #444;
-      color: #e6e6e6;
+      background: var(--secondary-bg);
+      color: var(--accent-color);
+      border: 2px solid var(--accent-color);
     }
-    
-    .btn-secondary:hover {
-      background: #555;
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--accent-color);
+      color: var(--primary-bg);
+      box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
     }
-    
+
     .btn-danger {
-      background: #ff4444;
+      background: var(--error-color);
       color: white;
+      border: 2px solid var(--error-color);
     }
-    
-    .btn-danger:hover {
-      background: #e63939;
+
+    .btn-danger:hover:not(:disabled) {
+      background: #ff6666;
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
     }
-    
+
+    .btn-warning {
+      background: var(--warning-color);
+      color: var(--primary-bg);
+      border: 2px solid var(--warning-color);
+    }
+
+    .btn-warning:hover:not(:disabled) {
+      background: #ffaa22;
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(255, 149, 0, 0.4);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ===== Enhanced Alerts ===== */
     .alert {
-      padding: 10px 15px;
-      border-radius: 4px;
-      margin-bottom: 15px;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
       display: none;
+      font-weight: bold;
+      position: relative;
+      border-left: 4px solid;
+      animation: slideDown 0.3s ease-out;
     }
-    
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .alert.success {
-      background: rgba(57, 255, 20, 0.1);
-      border: 1px solid #39ff14;
-      color: #39ff14;
+      background: rgba(0, 255, 136, 0.1);
+      border-left-color: var(--success-color);
+      color: var(--success-color);
     }
-    
+
     .alert.error {
       background: rgba(255, 68, 68, 0.1);
-      border: 1px solid #ff4444;
-      color: #ff4444;
+      border-left-color: var(--error-color);
+      color: var(--error-color);
     }
-    
-    .back-link {
-      color: #39ff14;
-      text-decoration: none;
-      margin-bottom: 20px;
-      display: inline-block;
+
+    .alert.warning {
+      background: rgba(255, 149, 0, 0.1);
+      border-left-color: var(--warning-color);
+      color: var(--warning-color);
     }
-    
-    .back-link:hover {
-      text-decoration: underline;
+
+    .alert.info {
+      background: rgba(68, 170, 255, 0.1);
+      border-left-color: var(--info-color);
+      color: var(--info-color);
+    }
+
+    /* ===== Manual Config Toggle ===== */
+    .manual-config {
+      background: var(--tertiary-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 15px;
+      transition: var(--transition);
+    }
+
+    .manual-config.hidden {
+      display: none;
+    }
+
+    /* ===== Loading States ===== */
+    .loading {
+      display: inline-flex;
+      align-items: center;
+      color: var(--secondary-text);
+    }
+
+    .loading::after {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--secondary-text);
+      border-top: 2px solid var(--accent-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-left: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ===== Toast Notifications ===== */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      z-index: 1000;
+      animation: slideIn 0.3s ease-out;
+      max-width: 400px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    /* ===== Responsive Design ===== */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .container {
+        padding: 10px;
+      }
+
+      .settings-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .button-group {
+        justify-content: center;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        font-size: 13px;
+      }
+
+      .library-status {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header {
+        padding: 15px;
+      }
+
+      .container {
+        padding: 5px;
+      }
+
+      .section {
+        padding: 15px;
+      }
+
+      .page-title {
+        font-size: 20px;
+      }
+
+      .form-control {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Header Section -->
+  <header class="header">
+    <a href="/" class="back-link">← Back to Home</a>
+    <div style="text-align: center; flex: 1;">
+      <h1 class="page-title">SYSTEM SETTINGS</h1>
+      <div class="header-subtitle">Configure network, GPIO and hardware settings</div>
+    </div>
+    <div class="status-indicator">
+      <div class="status-dot" id="connectionDot"></div>
+      <span id="connectionText">Ready</span>
+    </div>
+  </header>
+
+  <!-- Main Container -->
   <div class="container">
-    <a href="/" class="back-link">← Back to Dashboard</a>
-    
-    <div class="header">
-      <h1>OctapusPrime Settings</h1>
-      <p>Configure network, GPIO pins and hardware settings</p>
-    </div>
-    
+    <!-- Alert Section -->
     <div id="alert" class="alert"></div>
-    
-    <!-- Network Configuration Section -->
-    <div class="section">
-      <h2>Network Configuration</h2>
-      
-      <div class="form-group">
-        <div class="checkbox-group">
-          <input type="checkbox" id="auto-detect-network" checked>
-          <label for="auto-detect-network">Auto-detect network interface</label>
-        </div>
-        <small>Automatically detect the best network interface for scanning</small>
-      </div>
-      
-      <div class="form-group">
-        <label for="network-interface">Network Interface:</label>
-        <select id="network-interface">
-          <option value="auto">Auto-detect</option>
-          <!-- Populated by JavaScript -->
-        </select>
-        <small>Select the network interface to use for scanning</small>
-      </div>
-      
-      <div class="form-group">
-        <label for="custom-cidr">Custom CIDR (optional):</label>
-        <input type="text" id="custom-cidr" placeholder="e.g., 192.168.1.0/24">
-        <small>Override auto-detected network range with custom CIDR</small>
-      </div>
-      
-      <h3>Available Network Interfaces</h3>
-      <div id="interface-list" class="interface-list">
-        <!-- Populated by JavaScript -->
-      </div>
-      
-      <h3>Scan Configuration</h3>
-      
-      <div class="form-group">
-        <label for="nmap-scan-type">Default Nmap Scan Type:</label>
-        <select id="nmap-scan-type">
-          <option value="quick">Quick Scan (-T4 -F)</option>
-          <option value="intense">Intense Scan (-T4 -A -v)</option>
-          <option value="comprehensive">Comprehensive Scan (-sS -sU -T4 -A -v -PE -PP -PS80,443 -PA3389 -PU40125 -PY)</option>
-          <option value="stealth">Stealth Scan (-sS -T1)</option>
-          <option value="custom">Custom</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="default-scan-ports">Default Port Range:</label>
-        <input type="text" id="default-scan-ports" value="1-1000" placeholder="e.g., 1-1000, 80,443,8080">
-        <small>Default ports to scan (ranges or comma-separated)</small>
-      </div>
-      
-      <div class="form-group">
-        <label for="masscan-rate">Masscan Rate (packets/sec):</label>
-        <input type="number" id="masscan-rate" value="1000" min="100" max="100000">
-        <small>Packet transmission rate for Masscan (higher = faster but more aggressive)</small>
-      </div>
-      
-      <div class="form-group">
-        <label for="thread-count">Default Thread Count:</label>
-        <input type="number" id="thread-count" value="10" min="1" max="100">
-        <small>Number of concurrent threads for tools that support it</small>
-      </div>
-    </div>
-    
-    <!-- Platform Information Section -->
-    <div class="section">
-      <h2>Platform Information</h2>
-      <div class="platform-info">
-        <div>Detected Platform: <span id="platform-name" class="detected">Loading...</span></div>
-        <div>Model: <span id="platform-model" class="detected">Loading...</span></div>
-        <div>Recommended Library: <span id="recommended-lib" class="detected">Loading...</span></div>
-      </div>
-      
-      <h3>Available GPIO Libraries</h3>
-      <div id="library-status" class="library-status">
-        <!-- Populated by JavaScript -->
-      </div>
-    </div>
-    
-    <!-- GPIO Configuration Section -->
-    <div class="section">
-      <h2>GPIO Configuration</h2>
-      
-      <div class="form-group">
-        <div class="checkbox-group">
-          <input type="checkbox" id="auto-detect" checked>
-          <label for="auto-detect">Auto-detect GPIO library (recommended)</label>
-        </div>
-        <small>Automatically select the best GPIO library for your platform</small>
-      </div>
-      
-      <div class="form-group">
-        <div class="checkbox-group">
-          <input type="checkbox" id="manual-override">
-          <label for="manual-override">Manual override GPIO settings</label>
-        </div>
-        <small>Override auto-detection and use custom GPIO configuration</small>
-      </div>
-      
-      <div id="manual-config" style="display: none;">
+
+    <!-- Settings Grid -->
+    <div class="settings-grid">
+      <!-- Network Configuration Section -->
+      <div class="section">
+        <h2>🌐 Network Configuration</h2>
+        
         <div class="form-group">
-          <label for="gpio-library">GPIO Library:</label>
-          <select id="gpio-library">
+          <div class="checkbox-group">
+            <input type="checkbox" id="auto-detect-network" checked>
+            <label for="auto-detect-network">Auto-detect network interface</label>
+          </div>
+          <div class="form-help">Automatically detect the best network interface for scanning</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="network-interface">Network Interface:</label>
+          <select id="network-interface" class="form-control">
             <option value="auto">Auto-detect</option>
-            <option value="gpiozero">gpiozero</option>
-            <option value="RPi.GPIO">RPi.GPIO</option>
-            <option value="libgpiod">libgpiod</option>
-            <option value="lgpio">lgpio</option>
+          </select>
+          <div class="form-help">Select the network interface to use for scanning</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="custom-cidr">Custom CIDR (optional):</label>
+          <input type="text" id="custom-cidr" class="form-control" placeholder="e.g., 192.168.1.0/24">
+          <div class="form-help">Override auto-detected network range with custom CIDR</div>
+        </div>
+
+        <h3>Available Network Interfaces</h3>
+        <div id="interface-list" class="interface-list">
+          <div class="loading">Loading interfaces...</div>
+        </div>
+
+        <h3>Scan Configuration</h3>
+        
+        <div class="form-group">
+          <label for="nmap-scan-type">Default Nmap Scan Type:</label>
+          <select id="nmap-scan-type" class="form-control">
+            <option value="quick">Quick Scan (-T4 -F)</option>
+            <option value="intense">Intense Scan (-T4 -A -v)</option>
+            <option value="comprehensive">Comprehensive Scan (-sS -sU -T4 -A -v)</option>
+            <option value="stealth">Stealth Scan (-sS -T1)</option>
+            <option value="custom">Custom</option>
           </select>
         </div>
-      </div>
-      
-      <div class="form-group">
-        <label for="button-pin">Button GPIO Pin:</label>
-        <input type="number" id="button-pin" min="0" max="40" value="17">
-        <small>GPIO pin number for the trigger button (default: 17)</small>
-      </div>
-      
-      <div class="form-group">
-        <label for="led-pin">LED GPIO Pin:</label>
-        <input type="number" id="led-pin" min="0" max="40" value="27">
-        <small>GPIO pin number for the status LED (default: 27)</small>
-      </div>
-      
-      <div class="form-group">
-        <div class="checkbox-group">
-          <input type="checkbox" id="button-pull-up" checked>
-          <label for="button-pull-up">Button pull-up resistor</label>
+        
+        <div class="form-group">
+          <label for="default-scan-ports">Default Port Range:</label>
+          <input type="text" id="default-scan-ports" class="form-control" value="1-1000" placeholder="e.g., 1-1000, 80,443,8080">
+          <div class="form-help">Default ports to scan (ranges or comma-separated)</div>
         </div>
-        <small>Enable internal pull-up resistor for button (recommended)</small>
-      </div>
-      
-      <div class="form-group">
-        <label for="bounce-time">Button bounce time (seconds):</label>
-        <input type="number" id="bounce-time" step="0.01" min="0" max="1" value="0.1">
-        <small>Debounce time to prevent multiple triggers (default: 0.1s)</small>
-      </div>
-      
-      <div class="form-group">
-        <div class="checkbox-group">
-          <input type="checkbox" id="led-active-high" checked>
-          <label for="led-active-high">LED active high</label>
+        
+        <div class="form-group">
+          <label for="masscan-rate">Masscan Rate (packets/sec):</label>
+          <input type="number" id="masscan-rate" class="form-control" value="1000" min="100" max="100000">
+          <div class="form-help">Packet transmission rate for Masscan (higher = faster but more aggressive)</div>
         </div>
-        <small>LED turns on with high signal (uncheck for active low)</small>
+        
+        <div class="form-group">
+          <label for="thread-count">Default Thread Count:</label>
+          <input type="number" id="thread-count" class="form-control" value="10" min="1" max="100">
+          <div class="form-help">Number of concurrent threads for tools that support it</div>
+        </div>
+
+        <div class="button-group">
+          <button id="test-network-btn" class="btn btn-secondary">🔍 Test Network</button>
+        </div>
       </div>
-      
-      <div class="button-group">
-        <button id="test-gpio-btn" class="btn-secondary">Test GPIO</button>
-        <button id="save-gpio-btn" class="btn-primary">Save GPIO Config</button>
+
+      <!-- Platform Information Section -->
+      <div class="section">
+        <h2>💻 Platform Information</h2>
+        <div class="platform-info">
+          <div class="platform-row">
+            <span class="platform-label">Detected Platform:</span>
+            <span id="platform-name" class="platform-value loading">Loading...</span>
+          </div>
+          <div class="platform-row">
+            <span class="platform-label">Model:</span>
+            <span id="platform-model" class="platform-value loading">Loading...</span>
+          </div>
+          <div class="platform-row">
+            <span class="platform-label">Recommended Library:</span>
+            <span id="recommended-lib" class="platform-value loading">Loading...</span>
+          </div>
+        </div>
+        
+        <h3>Available GPIO Libraries</h3>
+        <div id="library-status" class="library-status">
+          <div class="loading">Loading libraries...</div>
+        </div>
       </div>
-    </div>
-    
-    <!-- System Configuration Section -->
-    <div class="section">
-      <h2>System Configuration</h2>
-      
-      <div class="form-group">
-        <label for="log-verbosity">Log Verbosity:</label>
-        <select id="log-verbosity">
-          <option value="debug">Debug</option>
-          <option value="info">Info</option>
-          <option value="warning">Warning</option>
-          <option value="error">Error</option>
-        </select>
+
+      <!-- GPIO Configuration Section -->
+      <div class="section">
+        <h2>⚡ GPIO Configuration</h2>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="auto-detect" checked>
+            <label for="auto-detect">Auto-detect GPIO library (recommended)</label>
+          </div>
+          <div class="form-help">Automatically select the best GPIO library for your platform</div>
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="manual-override">
+            <label for="manual-override">Manual override GPIO settings</label>
+          </div>
+          <div class="form-help">Override auto-detection and use custom GPIO configuration</div>
+        </div>
+        
+        <div id="manual-config" class="manual-config hidden">
+          <div class="form-group">
+            <label for="gpio-library">GPIO Library:</label>
+            <select id="gpio-library" class="form-control">
+              <option value="auto">Auto-detect</option>
+              <option value="gpiozero">gpiozero (Raspberry Pi)</option>
+              <option value="RPi.GPIO">RPi.GPIO (Raspberry Pi)</option>
+              <option value="OPi.GPIO">OPi.GPIO (Orange Pi / Nano Pi)</option>
+              <option value="libgpiod">libgpiod (Generic Linux)</option>
+              <option value="lgpio">lgpio (Modern Raspberry Pi)</option>
+              <option value="wiringpi">wiringpi (Legacy)</option>
+            </select>
+            <div class="form-help">Select the GPIO library for your platform</div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="button-pin">Button GPIO Pin:</label>
+          <input type="number" id="button-pin" class="form-control" min="0" max="40" value="17">
+          <div class="form-help">GPIO pin number for the trigger button (default: 17)</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="led-pin">LED GPIO Pin:</label>
+          <input type="number" id="led-pin" class="form-control" min="0" max="40" value="27">
+          <div class="form-help">GPIO pin number for the status LED (default: 27)</div>
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="button-pull-up" checked>
+            <label for="button-pull-up">Button pull-up resistor</label>
+          </div>
+          <div class="form-help">Enable internal pull-up resistor for button (recommended)</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="bounce-time">Button bounce time (seconds):</label>
+          <input type="number" id="bounce-time" class="form-control" step="0.01" min="0" max="1" value="0.1">
+          <div class="form-help">Debounce time to prevent multiple triggers (default: 0.1s)</div>
+        </div>
+        
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="led-active-high" checked>
+            <label for="led-active-high">LED active high</label>
+          </div>
+          <div class="form-help">LED turns on with high signal (uncheck for active low)</div>
+        </div>
+        
+        <div class="button-group">
+          <button id="test-gpio-btn" class="btn btn-warning">⚡ Test GPIO</button>
+          <button id="save-gpio-btn" class="btn btn-primary">💾 Save GPIO Config</button>
+        </div>
       </div>
-      
-      <div class="button-group">
-        <button id="test-network-btn" class="btn-secondary">Test Network</button>
-        <button id="save-settings-btn" class="btn-primary">Save All Settings</button>
-        <button id="reset-btn" class="btn-danger">Reset to Defaults</button>
+
+      <!-- System Configuration Section -->
+      <div class="section">
+        <h2>⚙️ System Configuration</h2>
+        
+        <div class="form-group">
+          <label for="log-verbosity">Log Verbosity:</label>
+          <select id="log-verbosity" class="form-control">
+            <option value="debug">Debug</option>
+            <option value="info">Info</option>
+            <option value="warning">Warning</option>
+            <option value="error">Error</option>
+          </select>
+          <div class="form-help">Set the minimum log level to display</div>
+        </div>
+
+        <div class="form-group">
+          <label for="auto-update">Auto-update Tools:</label>
+          <div class="checkbox-group">
+            <input type="checkbox" id="auto-update">
+            <label for="auto-update">Enable automatic tool updates</label>
+          </div>
+          <div class="form-help">Automatically update security tools when available</div>
+        </div>
+
+        <div class="form-group">
+          <label for="scan-timeout">Default Scan Timeout (minutes):</label>
+          <input type="number" id="scan-timeout" class="form-control" value="30" min="1" max="180">
+          <div class="form-help">Maximum time to wait for scan completion</div>
+        </div>
+        
+        <div class="button-group">
+          <button id="save-settings-btn" class="btn btn-primary">💾 Save All Settings</button>
+          <button id="reset-btn" class="btn btn-danger">🔄 Reset to Defaults</button>
+        </div>
       </div>
     </div>
   </div>
-  
+
+  <!-- Socket.IO for live functionality -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
   <script>
-    let currentSettings = {};
-    let currentGpioConfig = {};
-    let platformInfo = {};
-    let availableInterfaces = {};
-    
-    // Load all configurations
-    async function loadAllConfigs() {
-      await Promise.all([
-        loadSettings(),
-        loadGpioConfig(),
-        loadNetworkInterfaces()
-      ]);
-    }
-    
-    // Load general settings
-    async function loadSettings() {
-      try {
-        const response = await fetch('/api/settings');
-        const data = await response.json();
+    class SettingsManager {
+      constructor() {
+        this.currentSettings = {};
+        this.currentGpioConfig = {};
+        this.platformInfo = {};
+        this.availableInterfaces = {};
+        this.socket = null;
         
-        if (data.status === 'success') {
-          currentSettings = data.data;
+        this.init();
+      }
+
+      init() {
+        this.setupEventListeners();
+        this.connectWebSocket();
+        this.loadAllConfigs();
+      }
+
+      setupEventListeners() {
+        // Network settings
+        document.getElementById('auto-detect-network').addEventListener('change', () => this.toggleNetworkConfig());
+        document.getElementById('test-network-btn').addEventListener('click', () => this.testNetwork());
+        
+        // GPIO settings
+        document.getElementById('manual-override').addEventListener('change', () => this.toggleManualConfig());
+        document.getElementById('auto-detect').addEventListener('change', () => this.toggleManualConfig());
+        document.getElementById('test-gpio-btn').addEventListener('click', () => this.testGpio());
+        document.getElementById('save-gpio-btn').addEventListener('click', () => this.saveGpioConfig());
+        
+        // System settings
+        document.getElementById('save-settings-btn').addEventListener('click', () => this.saveAllSettings());
+        document.getElementById('reset-btn').addEventListener('click', () => this.resetToDefaults());
+      }
+
+      connectWebSocket() {
+        try {
+          this.socket = io();
           
-          // Populate form fields
-          document.getElementById('auto-detect-network').checked = currentSettings.autoDetectNetwork !== false;
-          document.getElementById('network-interface').value = currentSettings.networkInterface || 'auto';
-          document.getElementById('custom-cidr').value = currentSettings.customCIDR || '';
-          document.getElementById('nmap-scan-type').value = currentSettings.nmapScanType || 'intense';
-          document.getElementById('default-scan-ports').value = currentSettings.defaultScanPorts || '1-1000';
-          document.getElementById('masscan-rate').value = currentSettings.masscanRate || '1000';
-          document.getElementById('thread-count').value = currentSettings.threadCount || '10';
-          document.getElementById('log-verbosity').value = currentSettings.logVerbosity || 'info';
-          
-          toggleNetworkConfig();
+          this.socket.on('connect', () => {
+            this.updateStatus('Connected', true);
+          });
+
+          this.socket.on('disconnect', () => {
+            this.updateStatus('Disconnected', false);
+          });
+
+        } catch (err) {
+          console.error('WebSocket connection failed:', err);
+          this.updateStatus('Connection Failed', false);
         }
-      } catch (error) {
-        showAlert('Failed to load settings: ' + error.message, 'error');
       }
-    }
-    
-    // Load GPIO configuration
-    async function loadGpioConfig() {
-      try {
-        const response = await fetch('/gpio_config');
-        const data = await response.json();
+
+      async loadAllConfigs() {
+        this.showAlert('Loading configurations...', 'info');
         
-        currentGpioConfig = data.config;
-        platformInfo = data.platform_info;
-        
-        // Update platform info display
-        document.getElementById('platform-name').textContent = platformInfo.platform || 'Unknown';
-        document.getElementById('platform-model').textContent = platformInfo.model || 'Unknown';
-        document.getElementById('recommended-lib').textContent = platformInfo.recommended_lib || 'gpiozero';
-        
-        // Update library status
-        updateLibraryStatus(data.available_libraries);
-        
-        // Populate GPIO form fields
-        document.getElementById('auto-detect').checked = !currentGpioConfig.manual_override;
-        document.getElementById('manual-override').checked = currentGpioConfig.manual_override || false;
-        document.getElementById('gpio-library').value = currentGpioConfig.gpio_library || 'auto';
-        document.getElementById('button-pin').value = currentGpioConfig.button_pin || 17;
-        document.getElementById('led-pin').value = currentGpioConfig.led_pin || 27;
-        document.getElementById('button-pull-up').checked = currentGpioConfig.button_pull_up !== false;
-        document.getElementById('bounce-time').value = currentGpioConfig.button_bounce_time || 0.1;
-        document.getElementById('led-active-high').checked = currentGpioConfig.led_active_high !== false;
-        
-        toggleManualConfig();
-        
-      } catch (error) {
-        showAlert('Failed to load GPIO configuration: ' + error.message, 'error');
+        try {
+          await Promise.all([
+            this.loadSettings(),
+            this.loadGpioConfig(),
+            this.loadNetworkInterfaces()
+          ]);
+          
+          this.showAlert('Configurations loaded successfully', 'success');
+        } catch (error) {
+          this.showAlert('Failed to load some configurations', 'warning');
+        }
       }
-    }
-    
-    // Load network interfaces
-    async function loadNetworkInterfaces() {
-      try {
-        const response = await fetch('/network_interfaces');
-        const data = await response.json();
+
+      async loadSettings() {
+        try {
+          const response = await fetch('/api/settings');
+          const data = await response.json();
+          
+          if (data.status === 'success') {
+            this.currentSettings = data.data;
+            this.populateSettingsForm();
+          }
+        } catch (error) {
+          console.error('Failed to load settings:', error);
+          throw error;
+        }
+      }
+
+      async loadGpioConfig() {
+        try {
+          const response = await fetch('/gpio_config');
+          const data = await response.json();
+          
+          this.currentGpioConfig = data.config;
+          this.platformInfo = data.platform_info;
+          
+          this.updatePlatformInfo();
+          this.updateLibraryStatus(data.available_libraries);
+          this.populateGpioForm();
+          
+        } catch (error) {
+          console.error('Failed to load GPIO config:', error);
+          throw error;
+        }
+      }
+
+      async loadNetworkInterfaces() {
+        try {
+          const response = await fetch('/network_interfaces');
+          const data = await response.json();
+          
+          this.availableInterfaces = data.interfaces;
+          this.updateInterfaceList();
+          this.updateInterfaceDropdown();
+          
+        } catch (error) {
+          console.error('Failed to load network interfaces:', error);
+          throw error;
+        }
+      }
+
+      populateSettingsForm() {
+        const s = this.currentSettings;
         
-        availableInterfaces = data.interfaces;
-        updateInterfaceList();
-        updateInterfaceDropdown();
+        document.getElementById('auto-detect-network').checked = s.autoDetectNetwork !== false;
+        document.getElementById('network-interface').value = s.networkInterface || 'auto';
+        document.getElementById('custom-cidr').value = s.customCIDR || '';
+        document.getElementById('nmap-scan-type').value = s.nmapScanType || 'intense';
+        document.getElementById('default-scan-ports').value = s.defaultScanPorts || '1-1000';
+        document.getElementById('masscan-rate').value = s.masscanRate || '1000';
+        document.getElementById('thread-count').value = s.threadCount || '10';
+        document.getElementById('log-verbosity').value = s.logVerbosity || 'info';
+        document.getElementById('auto-update').checked = s.autoUpdate || false;
+        document.getElementById('scan-timeout').value = s.scanTimeout || '30';
         
-      } catch (error) {
-        showAlert('Failed to load network interfaces: ' + error.message, 'error');
+        this.toggleNetworkConfig();
       }
-    }
-    
-    function updateInterfaceList() {
-      const container = document.getElementById('interface-list');
-      container.innerHTML = '';
-      
-      for (const [name, info] of Object.entries(availableInterfaces)) {
-        const item = document.createElement('div');
-        item.className = 'interface-item';
-        item.innerHTML = `
-          <div>
-            <div class="interface-name">${name}</div>
-            <div class="interface-details">IP: ${info.ip} | Network: ${info.network}</div>
-          </div>
-          <div class="interface-details">${info.status}</div>
-        `;
-        container.appendChild(item);
-      }
-    }
-    
-    function updateInterfaceDropdown() {
-      const select = document.getElementById('network-interface');
-      
-      // Remove existing options except auto
-      while (select.children.length > 1) {
-        select.removeChild(select.lastChild);
-      }
-      
-      // Add interface options
-      for (const name of Object.keys(availableInterfaces)) {
-        const option = document.createElement('option');
-        option.value = name;
-        option.textContent = `${name} (${availableInterfaces[name].network})`;
-        select.appendChild(option);
-      }
-    }
-    
-    function updateLibraryStatus(libraries) {
-      const container = document.getElementById('library-status');
-      container.innerHTML = '';
-      
-      for (const [lib, available] of Object.entries(libraries)) {
-        const item = document.createElement('div');
-        item.className = 'library-item';
-        item.innerHTML = `
-          <span>${lib}</span>
-          <span class="${available ? 'available' : 'unavailable'}">
-            ${available ? '✓ Available' : '✗ Not Available'}
-          </span>
-        `;
-        container.appendChild(item);
-      }
-    }
-    
-    function toggleNetworkConfig() {
-      const autoDetect = document.getElementById('auto-detect-network').checked;
-      const interfaceSelect = document.getElementById('network-interface');
-      
-      if (autoDetect) {
-        interfaceSelect.value = 'auto';
-        interfaceSelect.disabled = true;
-      } else {
-        interfaceSelect.disabled = false;
-      }
-    }
-    
-    function toggleManualConfig() {
-      const manualOverride = document.getElementById('manual-override').checked;
-      const autoDetect = document.getElementById('auto-detect').checked;
-      
-      document.getElementById('manual-config').style.display = manualOverride ? 'block' : 'none';
-      
-      if (manualOverride) {
-        document.getElementById('auto-detect').checked = false;
-      } else if (autoDetect) {
-        document.getElementById('gpio-library').value = 'auto';
-      }
-    }
-    
-    function getSettingsConfig() {
-      return {
-        networkInterface: document.getElementById('network-interface').value,
-        customCIDR: document.getElementById('custom-cidr').value,
-        autoDetectNetwork: document.getElementById('auto-detect-network').checked,
-        nmapScanType: document.getElementById('nmap-scan-type').value,
-        defaultScanPorts: document.getElementById('default-scan-ports').value,
-        masscanRate: document.getElementById('masscan-rate').value,
-        threadCount: document.getElementById('thread-count').value,
-        logVerbosity: document.getElementById('log-verbosity').value
-      };
-    }
-    
-    function getGpioConfig() {
-      return {
-        auto_detect: document.getElementById('auto-detect').checked,
-        manual_override: document.getElementById('manual-override').checked,
-        gpio_library: document.getElementById('gpio-library').value,
-        button_pin: parseInt(document.getElementById('button-pin').value),
-        led_pin: parseInt(document.getElementById('led-pin').value),
-        button_pull_up: document.getElementById('button-pull-up').checked,
-        button_bounce_time: parseFloat(document.getElementById('bounce-time').value),
-        led_active_high: document.getElementById('led-active-high').checked
-      };
-    }
-    
-    function showAlert(message, type) {
-      const alert = document.getElementById('alert');
-      alert.textContent = message;
-      alert.className = `alert ${type}`;
-      alert.style.display = 'block';
-      
-      setTimeout(() => {
-        alert.style.display = 'none';
-      }, 5000);
-    }
-    
-    async function testNetwork() {
-      try {
-        const response = await fetch('/local_cidr');
-        const data = await response.json();
+
+      populateGpioForm() {
+        const g = this.currentGpioConfig;
         
-        if (data.cidr) {
-          showAlert(`Network test successful! Detected CIDR: ${data.cidr} (Interface: ${data.interface || 'auto'})`, 'success');
+        document.getElementById('auto-detect').checked = !g.manual_override;
+        document.getElementById('manual-override').checked = g.manual_override || false;
+        document.getElementById('gpio-library').value = g.gpio_library || 'auto';
+        document.getElementById('button-pin').value = g.button_pin || 17;
+        document.getElementById('led-pin').value = g.led_pin || 27;
+        document.getElementById('button-pull-up').checked = g.button_pull_up !== false;
+        document.getElementById('bounce-time').value = g.button_bounce_time || 0.1;
+        document.getElementById('led-active-high').checked = g.led_active_high !== false;
+        
+        this.toggleManualConfig();
+      }
+
+      updatePlatformInfo() {
+        const platformName = document.getElementById('platform-name');
+        const platformModel = document.getElementById('platform-model');
+        const recommendedLib = document.getElementById('recommended-lib');
+        
+        platformName.textContent = this.platformInfo.platform || 'Unknown';
+        platformName.className = 'platform-value';
+        
+        platformModel.textContent = this.platformInfo.model || 'Unknown';
+        platformModel.className = 'platform-value';
+        
+        recommendedLib.textContent = this.platformInfo.recommended_lib || 'gpiozero';
+        recommendedLib.className = 'platform-value';
+        
+        // Show platform-specific alerts
+        if (this.platformInfo.platform === 'nano_pi') {
+          this.showAlert('Nano Pi detected! OPi.GPIO library is recommended for best compatibility.', 'info');
+        } else if (this.platformInfo.platform === 'orange_pi') {
+          this.showAlert('Orange Pi detected! OPi.GPIO library is recommended for best compatibility.', 'info');
+        }
+      }
+
+      updateLibraryStatus(libraries) {
+        const container = document.getElementById('library-status');
+        container.innerHTML = '';
+        
+        for (const [lib, available] of Object.entries(libraries)) {
+          const item = document.createElement('div');
+          item.className = 'library-item';
+          item.innerHTML = `
+            <span class="library-name">${lib}</span>
+            <span class="${available ? 'library-available' : 'library-unavailable'}">
+              ${available ? '✓ Available' : '✗ Not Available'}
+            </span>
+          `;
+          container.appendChild(item);
+        }
+      }
+
+      updateInterfaceList() {
+        const container = document.getElementById('interface-list');
+        container.innerHTML = '';
+        
+        for (const [name, info] of Object.entries(this.availableInterfaces)) {
+          const item = document.createElement('div');
+          item.className = 'interface-item';
+          item.innerHTML = `
+            <div>
+              <div class="interface-name">${name}</div>
+              <div class="interface-details">IP: ${info.ip} | Network: ${info.network}</div>
+            </div>
+            <div class="interface-status">${info.status}</div>
+          `;
+          container.appendChild(item);
+        }
+      }
+
+      updateInterfaceDropdown() {
+        const select = document.getElementById('network-interface');
+        
+        // Remove existing options except auto
+        while (select.children.length > 1) {
+          select.removeChild(select.lastChild);
+        }
+        
+        // Add interface options
+        for (const name of Object.keys(this.availableInterfaces)) {
+          const option = document.createElement('option');
+          option.value = name;
+          option.textContent = `${name} (${this.availableInterfaces[name].network})`;
+          select.appendChild(option);
+        }
+      }
+
+      toggleNetworkConfig() {
+        const autoDetect = document.getElementById('auto-detect-network').checked;
+        const interfaceSelect = document.getElementById('network-interface');
+        
+        if (autoDetect) {
+          interfaceSelect.value = 'auto';
+          interfaceSelect.disabled = true;
         } else {
-          showAlert('Network test failed: ' + (data.error || 'Unknown error'), 'error');
+          interfaceSelect.disabled = false;
         }
-      } catch (error) {
-        showAlert('Network test failed: ' + error.message, 'error');
       }
-    }
-    
-    async function testGpio() {
-      try {
-        const config = getGpioConfig();
+
+      toggleManualConfig() {
+        const manualOverride = document.getElementById('manual-override').checked;
+        const autoDetect = document.getElementById('auto-detect').checked;
+        const manualConfig = document.getElementById('manual-config');
+        
+        if (manualOverride) {
+          manualConfig.classList.remove('hidden');
+          document.getElementById('auto-detect').checked = false;
+        } else {
+          manualConfig.classList.add('hidden');
+          if (autoDetect) {
+            document.getElementById('gpio-library').value = 'auto';
+          }
+        }
+      }
+
+      getSettingsConfig() {
+        return {
+          networkInterface: document.getElementById('network-interface').value,
+          customCIDR: document.getElementById('custom-cidr').value,
+          autoDetectNetwork: document.getElementById('auto-detect-network').checked,
+          nmapScanType: document.getElementById('nmap-scan-type').value,
+          defaultScanPorts: document.getElementById('default-scan-ports').value,
+          masscanRate: document.getElementById('masscan-rate').value,
+          threadCount: document.getElementById('thread-count').value,
+          logVerbosity: document.getElementById('log-verbosity').value,
+          autoUpdate: document.getElementById('auto-update').checked,
+          scanTimeout: document.getElementById('scan-timeout').value
+        };
+      }
+
+      getGpioConfig() {
+        return {
+          auto_detect: document.getElementById('auto-detect').checked,
+          manual_override: document.getElementById('manual-override').checked,
+          gpio_library: document.getElementById('gpio-library').value,
+          button_pin: parseInt(document.getElementById('button-pin').value),
+          led_pin: parseInt(document.getElementById('led-pin').value),
+          button_pull_up: document.getElementById('button-pull-up').checked,
+          button_bounce_time: parseFloat(document.getElementById('bounce-time').value),
+          led_active_high: document.getElementById('led-active-high').checked
+        };
+      }
+
+      async testNetwork() {
+        const button = document.getElementById('test-network-btn');
+        const originalText = button.innerHTML;
+        button.innerHTML = '🔍 Testing...';
+        button.disabled = true;
+        
+        try {
+          const response = await fetch('/local_cidr');
+          const data = await response.json();
+          
+          if (data.cidr) {
+            this.showToast(`Network test successful! Detected CIDR: ${data.cidr} (Interface: ${data.interface || 'auto'})`, 'success');
+          } else {
+            this.showToast('Network test failed: ' + (data.error || 'Unknown error'), 'error');
+          }
+        } catch (error) {
+          this.showToast('Network test failed: ' + error.message, 'error');
+        } finally {
+          button.innerHTML = originalText;
+          button.disabled = false;
+        }
+      }
+
+      async testGpio() {
+        const config = this.getGpioConfig();
         
         // Validate pins
         if (config.button_pin === config.led_pin) {
-          showAlert('Button and LED pins must be different', 'error');
+          this.showToast('Button and LED pins must be different', 'error');
           return;
         }
         
-        const response = await fetch('/gpio_test', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(config)
-        });
+        const button = document.getElementById('test-gpio-btn');
+        const originalText = button.innerHTML;
+        button.innerHTML = '⚡ Testing...';
+        button.disabled = true;
         
-        const result = await response.json();
-        
-        if (result.status === 'success') {
-          showAlert('GPIO test successful! LED should have blinked briefly.', 'success');
-        } else {
-          showAlert('GPIO test failed: ' + result.message, 'error');
+        try {
+          const response = await fetch('/gpio_test', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(config)
+          });
+          
+          const result = await response.json();
+          
+          if (result.status === 'success') {
+            this.showToast('GPIO test successful! LED should have blinked briefly.', 'success');
+          } else {
+            this.showToast('GPIO test failed: ' + result.message, 'error');
+          }
+          
+        } catch (error) {
+          this.showToast('GPIO test failed: ' + error.message, 'error');
+        } finally {
+          button.innerHTML = originalText;
+          button.disabled = false;
         }
-        
-      } catch (error) {
-        showAlert('GPIO test failed: ' + error.message, 'error');
       }
-    }
-    
-    async function saveGpioConfig() {
-      try {
-        const config = getGpioConfig();
+
+      async saveGpioConfig() {
+        const config = this.getGpioConfig();
         
-        const response = await fetch('/gpio_config', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(config)
-        });
+        const button = document.getElementById('save-gpio-btn');
+        const originalText = button.innerHTML;
+        button.innerHTML = '💾 Saving...';
+        button.disabled = true;
         
-        const result = await response.json();
-        
-        if (result.status === 'saved') {
-          showAlert('GPIO configuration saved successfully! Restart the controller to apply changes.', 'success');
-          currentGpioConfig = config;
-        } else {
-          showAlert('GPIO save failed: ' + result.message, 'error');
+        try {
+          const response = await fetch('/gpio_config', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(config)
+          });
+          
+          const result = await response.json();
+          
+          if (result.status === 'saved') {
+            this.showToast('GPIO configuration saved successfully! Restart the controller to apply changes.', 'success');
+            this.currentGpioConfig = config;
+          } else {
+            this.showToast('GPIO save failed: ' + result.message, 'error');
+          }
+          
+        } catch (error) {
+          this.showToast('GPIO save failed: ' + error.message, 'error');
+        } finally {
+          button.innerHTML = originalText;
+          button.disabled = false;
         }
-        
-      } catch (error) {
-        showAlert('GPIO save failed: ' + error.message, 'error');
       }
-    }
-    
-    async function saveAllSettings() {
-      try {
-        const settings = getSettingsConfig();
+
+      async saveAllSettings() {
+        const settings = this.getSettingsConfig();
         
-        const response = await fetch('/api/settings', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(settings)
-        });
+        const button = document.getElementById('save-settings-btn');
+        const originalText = button.innerHTML;
+        button.innerHTML = '💾 Saving...';
+        button.disabled = true;
         
-        const result = await response.json();
-        
-        if (result.status === 'success') {
-          showAlert('All settings saved successfully!', 'success');
-          currentSettings = settings;
-        } else {
-          showAlert('Settings save failed: ' + result.message, 'error');
+        try {
+          const response = await fetch('/api/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(settings)
+          });
+          
+          const result = await response.json();
+          
+          if (result.status === 'success') {
+            this.showToast('All settings saved successfully!', 'success');
+            this.currentSettings = settings;
+          } else {
+            this.showToast('Settings save failed: ' + result.message, 'error');
+          }
+          
+        } catch (error) {
+          this.showToast('Settings save failed: ' + error.message, 'error');
+        } finally {
+          button.innerHTML = originalText;
+          button.disabled = false;
         }
+      }
+
+      resetToDefaults() {
+        if (confirm('Reset all settings to defaults? This will overwrite your current configuration.')) {
+          // Reset network settings
+          document.getElementById('auto-detect-network').checked = true;
+          document.getElementById('network-interface').value = 'auto';
+          document.getElementById('custom-cidr').value = '';
+          document.getElementById('nmap-scan-type').value = 'intense';
+          document.getElementById('default-scan-ports').value = '1-1000';
+          document.getElementById('masscan-rate').value = '1000';
+          document.getElementById('thread-count').value = '10';
+          document.getElementById('log-verbosity').value = 'info';
+          document.getElementById('auto-update').checked = false;
+          document.getElementById('scan-timeout').value = '30';
+          
+          // Reset GPIO settings
+          document.getElementById('auto-detect').checked = true;
+          document.getElementById('manual-override').checked = false;
+          document.getElementById('gpio-library').value = 'auto';
+          document.getElementById('button-pin').value = 17;
+          document.getElementById('led-pin').value = 27;
+          document.getElementById('button-pull-up').checked = true;
+          document.getElementById('bounce-time').value = 0.1;
+          document.getElementById('led-active-high').checked = true;
+          
+          this.toggleNetworkConfig();
+          this.toggleManualConfig();
+          this.showToast('Configuration reset to defaults. Click Save to apply.', 'warning');
+        }
+      }
+
+      updateStatus(status, connected) {
+        const statusText = document.getElementById('connectionText');
+        const statusDot = document.getElementById('connectionDot');
         
-      } catch (error) {
-        showAlert('Settings save failed: ' + error.message, 'error');
+        statusText.textContent = status;
+        
+        if (connected) {
+          statusDot.style.background = 'var(--accent-color)';
+          statusDot.style.animation = 'statusPulse 2s ease-in-out infinite';
+        } else {
+          statusDot.style.background = 'var(--error-color)';
+          statusDot.style.animation = 'none';
+        }
+      }
+
+      showAlert(message, type = 'info') {
+        const alert = document.getElementById('alert');
+        alert.textContent = message;
+        alert.className = `alert ${type}`;
+        alert.style.display = 'block';
+        
+        setTimeout(() => {
+          alert.style.display = 'none';
+        }, 5000);
+      }
+
+      showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `toast`;
+        toast.style.background = type === 'success' ? 'var(--success-color)' : 
+                                type === 'error' ? 'var(--error-color)' : 
+                                type === 'warning' ? 'var(--warning-color)' : 'var(--info-color)';
+        toast.textContent = message;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+          toast.style.animation = 'slideIn 0.3s ease-out reverse';
+          setTimeout(() => toast.remove(), 300);
+        }, 4000);
       }
     }
-    
-    function resetToDefaults() {
-      if (confirm('Reset all settings to defaults? This will overwrite your current configuration.')) {
-        // Reset network settings
-        document.getElementById('auto-detect-network').checked = true;
-        document.getElementById('network-interface').value = 'auto';
-        document.getElementById('custom-cidr').value = '';
-        document.getElementById('nmap-scan-type').value = 'intense';
-        document.getElementById('default-scan-ports').value = '1-1000';
-        document.getElementById('masscan-rate').value = '1000';
-        document.getElementById('thread-count').value = '10';
-        document.getElementById('log-verbosity').value = 'info';
-        
-        // Reset GPIO settings
-        document.getElementById('auto-detect').checked = true;
-        document.getElementById('manual-override').checked = false;
-        document.getElementById('gpio-library').value = 'auto';
-        document.getElementById('button-pin').value = 17;
-        document.getElementById('led-pin').value = 27;
-        document.getElementById('button-pull-up').checked = true;
-        document.getElementById('bounce-time').value = 0.1;
-        document.getElementById('led-active-high').checked = true;
-        
-        toggleNetworkConfig();
-        toggleManualConfig();
-        showAlert('Configuration reset to defaults. Click Save to apply.', 'success');
-      }
-    }
-    
-    // Event listeners
-    document.getElementById('auto-detect-network').addEventListener('change', toggleNetworkConfig);
-    document.getElementById('manual-override').addEventListener('change', toggleManualConfig);
-    document.getElementById('auto-detect').addEventListener('change', toggleManualConfig);
-    document.getElementById('test-network-btn').addEventListener('click', testNetwork);
-    document.getElementById('test-gpio-btn').addEventListener('click', testGpio);
-    document.getElementById('save-gpio-btn').addEventListener('click', saveGpioConfig);
-    document.getElementById('save-settings-btn').addEventListener('click', saveAllSettings);
-    document.getElementById('reset-btn').addEventListener('click', resetToDefaults);
-    
-    // Load all configurations on page load
-    loadAllConfigs();
+
+    // Initialize the settings manager when DOM is ready
+    document.addEventListener("DOMContentLoaded", () => {
+      new SettingsManager();
+    });
   </script>
 </body>
 </html>

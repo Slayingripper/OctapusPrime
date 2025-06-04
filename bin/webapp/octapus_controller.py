@@ -343,6 +343,24 @@ def start_scenario_thread(steps):
     button, led = setup_gpio()
     asyncio.run(scenario_scan_sequence(steps, led))
 
+def cleanup_gpio():
+    """Clean up GPIO resources when shutting down."""
+    try:
+        # Check which GPIO library is being used
+        if GPIO_AVAILABLE and hasattr(gpio_manager.config, 'gpio_library'):
+            lib_name = gpio_manager.config.get('gpio_library', 'auto')
+            
+            if lib_name == 'OPi.GPIO':
+                import OPi.GPIO as GPIO
+                GPIO.cleanup()
+                logging.info("OPi.GPIO cleanup completed")
+            elif lib_name == 'RPi.GPIO':
+                import RPi.GPIO as GPIO
+                GPIO.cleanup()
+                logging.info("RPi.GPIO cleanup completed")
+    except Exception as e:
+        logging.warning(f"GPIO cleanup failed: {e}")
+
 async def controller():
     """
     Main controller loop: waits for button press to trigger a default scan list.
@@ -367,7 +385,13 @@ async def controller():
             log_and_queue("octapus", f"Controller started with fallback GPIO (kernel {platform.release()})")
             
         log_and_queue("octapus", "Awaiting button press...")
-        await asyncio.Event().wait()
+        
+        try:
+            await asyncio.Event().wait()
+        except KeyboardInterrupt:
+            log_and_queue("octapus", "Controller shutting down...")
+        finally:
+            cleanup_gpio()
     else:
         log_and_queue("octapus", "GPIO not available; cannot run controller.")
 

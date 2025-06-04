@@ -3,449 +3,536 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Octapus Dashboard - Dark Mode</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OctapusPrime - Security Automation Dashboard</title>
   <style>
-    /* ===== Global Dark Mode Styles ===== */
-    html,
-    body {
+    /* ===== CSS Custom Properties ===== */
+    :root {
+      --primary-bg: #0d0d0d;
+      --secondary-bg: #1a1a1a;
+      --tertiary-bg: #262626;
+      --primary-text: #e6e6e6;
+      --secondary-text: #bbb;
+      --accent-color: #39ff14;
+      --accent-shadow: 0 0 8px #39ff14;
+      --border-color: #333;
+      --font-mono: "Roboto Mono", "Courier New", monospace;
+      --transition: all 0.3s ease;
+      --glow-box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+      --error-color: #ff0033;
+      --warning-color: #ffa500;
+      --success-color: #00ff00;
+    }
+
+    /* ===== Reset & Base Styles ===== */
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
+    }
+
+    html, body {
       height: 100%;
-      font-family: "Roboto Mono", monospace;
-      background: #0d0d0d;
-      color: #e6e6e6;
+      font-family: var(--font-mono);
+      background: var(--primary-bg);
+      color: var(--primary-text);
       overflow: hidden;
     }
 
-    /* ===== "Back Home" Link ===== */
-    #home-link {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      font-size: 14px;
-      color: #39ff14;
+    /* ===== Navigation Header ===== */
+    .nav-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--secondary-bg);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    .nav-brand {
+      color: var(--accent-color);
       text-decoration: none;
-      text-shadow: 0 0 4px #39ff14;
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: var(--accent-shadow);
     }
 
-    #home-link:hover {
-      text-decoration: underline;
+    .nav-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
     }
 
-    button {
-      cursor: pointer;
-      border: none;
-      border-radius: 4px;
+    .nav-link {
+      color: var(--secondary-text);
+      text-decoration: none;
       font-size: 14px;
-      padding: 8px 16px;
-      transition: background 0.2s;
-      font-family: inherit;
-      color: #e6e6e6;
-      background: #1a1a1a;
-    }
-
-    button:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    /* ===== Tooltip Styles ===== */
-    .tooltip {
-      position: relative;
-    }
-
-    .tooltip::before {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1a1a1a;
-      color: #39ff14;
       padding: 8px 12px;
       border-radius: 4px;
-      font-size: 11px;
-      white-space: normal;
-      /* Allow text wrapping */
-      max-width: 300px;
-      /* Limit maximum width */
-      width: max-content;
-      z-index: 1000;
-      border: 1px solid #39ff14;
-      box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s;
-      pointer-events: none;
-      text-align: center;
-      line-height: 1.3;
+      transition: var(--transition);
     }
 
-    .tooltip::after {
-      content: "";
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 5px solid transparent;
-      border-top-color: #39ff14;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s;
-      pointer-events: none;
+    .nav-link:hover {
+      color: var(--accent-color);
+      background: var(--tertiary-bg);
     }
 
-    .tooltip:hover::before,
-    .tooltip:hover::after {
-      opacity: 1;
-      visibility: visible;
+    /* ===== Status Indicator ===== */
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
     }
 
-    /* Responsive tooltip positioning */
-    @media (max-width: 768px) {
-      .tooltip::before {
-        max-width: 250px;
-        font-size: 10px;
-      }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--warning-color);
+      animation: pulse 2s infinite;
     }
 
-    /* ===== Command Modal Styles ===== */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
+    .status-dot.connected {
+      background: var(--success-color);
+      animation: none;
     }
 
-    .modal-content {
-      background-color: #1a1a1a;
-      margin: 5% auto;
-      padding: 20px;
-      border: 2px solid #39ff14;
-      border-radius: 8px;
-      width: 80%;
-      max-width: 800px;
-      max-height: 80%;
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* ===== Main Container ===== */
+    .main-container {
+      display: flex;
+      height: 100vh;
+      padding-top: 60px;
+    }
+
+    /* ===== Tool Palette Sidebar ===== */
+    .tool-palette {
+      width: 280px;
+      background: var(--secondary-bg);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
       overflow-y: auto;
-      color: #e6e6e6;
-      box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
     }
 
-    .modal-header {
+    .palette-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .palette-title {
+      font-size: 18px;
+      color: var(--accent-color);
+      margin-bottom: 10px;
+      text-shadow: var(--accent-shadow);
+    }
+
+    .palette-search {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--tertiary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--primary-text);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    .palette-search:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: var(--glow-box-shadow);
+    }
+
+    .palette-content {
+      flex: 1;
+      padding: 15px;
+    }
+
+    .tool-category {
+      margin-bottom: 25px;
+    }
+
+    .category-title {
+      font-size: 14px;
+      color: var(--accent-color);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .tool-card {
+      background: var(--tertiary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      padding: 15px;
+      cursor: grab;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .tool-card:hover {
+      background: #2f2f2f;
+      border-color: var(--accent-color);
+      box-shadow: var(--glow-box-shadow);
+      transform: translateY(-2px);
+    }
+
+    .tool-card:active {
+      cursor: grabbing;
+      transform: translateY(0);
+    }
+
+    .tool-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .tool-name {
+      font-weight: bold;
+      color: var(--accent-color);
+      font-size: 15px;
+    }
+
+    .tool-help-btn {
+      background: none;
+      border: none;
+      color: var(--secondary-text);
+      font-size: 12px;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 3px;
+      transition: var(--transition);
+    }
+
+    .tool-help-btn:hover {
+      color: var(--accent-color);
+      background: var(--secondary-bg);
+    }
+
+    .tool-description {
+      color: var(--secondary-text);
+      font-size: 12px;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .arg-palette {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .arg-chip {
+      background: var(--secondary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 4px 8px;
+      font-size: 11px;
+      color: var(--primary-text);
+      cursor: grab;
+      transition: var(--transition);
+    }
+
+    .arg-chip:hover {
+      background: var(--primary-bg);
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .arg-chip:active {
+      cursor: grabbing;
+    }
+
+    /* ===== Main Content Area ===== */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .content-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-      border-bottom: 1px solid #333;
-      padding-bottom: 10px;
     }
 
-    .modal-title {
-      color: #39ff14;
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .close-btn {
-      background: #ff0033;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      padding: 8px 12px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .close-btn:hover {
-      background: #e6002e;
-    }
-
-    .command-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 12px;
-      margin-top: 15px;
-    }
-
-    .command-item {
-      background: #262626;
-      border: 1px solid #444;
-      border-radius: 4px;
-      padding: 8px 12px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 12px;
-    }
-
-    .command-item:hover {
-      background: #333;
-      border-color: #39ff14;
-      box-shadow: 0 0 8px rgba(57, 255, 20, 0.3);
-    }
-
-    .command-item .cmd {
-      color: #39ff14;
-      font-weight: bold;
-    }
-
-    .command-item .desc {
-      color: #bbb;
-      font-size: 11px;
-      margin-top: 4px;
-    }
-
-    /* ===== Container Layout ===== */
-    #container {
-      display: flex;
-      height: 100%;
-    }
-
-    /* ===== Left Sidebar: Tool Palette ===== */
-    #palette {
-      width: 260px;
-      background: #141414;
-      border-right: 1px solid #333;
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-      box-sizing: border-box;
-      overflow-y: auto;
-    }
-
-    #palette h3 {
-      margin: 0 0 12px 0;
-      font-size: 20px;
-      color: #39ff14;
-      text-shadow: 0 0 8px #39ff14;
-    }
-
-    .tool-card {
-      user-select: none;
-      background: #1f1f1f;
-      border: 1px solid #333;
-      border-radius: 4px;
-      margin-bottom: 12px;
-      padding: 10px;
-      font-weight: 600;
-      text-align: center;
-      color: #39ff14;
-      transition: background 0.2s, box-shadow 0.2s;
-      position: relative;
-    }
-
-    .tool-card:hover {
-      background: #272727;
-      box-shadow: 0 0 8px #39ff14;
-    }
-
-    .tool-card:active {
-      background: #333;
-      box-shadow: 0 0 12px #39ff14;
-    }
-
-    .arg-palette {
-      margin-top: 4px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-
-    .arg-chip {
-      background: #2d2d2d;
-      border: 1px solid #444;
-      border-radius: 12px;
-      padding: 4px 8px;
-      font-size: 12px;
-      color: #e6e6e6;
-      cursor: grab;
-    }
-
-    .arg-chip:hover {
-      background: #3a3a3a;
-    }
-
-    /* ===== Main Content: Dropzone + Controls + Output ===== */
-    #main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-      box-sizing: border-box;
-    }
-
-    #header {
-      flex: 0 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    #header h2 {
-      margin: 0;
+    .content-title {
       font-size: 24px;
-      color: #39ff14;
-      text-shadow: 0 0 8px #39ff14;
+      color: var(--accent-color);
+      text-shadow: var(--accent-shadow);
     }
 
-    #controls {
-      flex: 0 0 auto;
+    .quick-actions {
+      display: flex;
+      gap: 10px;
     }
 
-    #controls button#use-cidr-btn {
-      background: #444;
-      color: #e6e6e6;
-      margin-right: 8px;
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
     }
 
-    #controls button#use-cidr-btn:hover {
-      background: #555;
+    .btn-primary {
+      background: var(--accent-color);
+      color: var(--primary-bg);
+      font-weight: bold;
     }
 
-    #controls button#start-btn {
-      background: #39ff14;
-      color: #0d0d0d;
-      box-shadow: 0 0 8px #39ff14;
-    }
-
-    #controls button#start-btn:hover {
+    .btn-primary:hover {
       background: #2ecc71;
-      box-shadow: 0 0 12px #39ff14;
+      box-shadow: var(--glow-box-shadow);
+      transform: translateY(-2px);
     }
 
-    #controls button#stop-btn {
-      background: #ff0033;
-      color: #f0f0f0;
-      margin-left: 8px;
-      box-shadow: 0 0 8px #ff0033;
+    .btn-secondary {
+      background: var(--tertiary-bg);
+      color: var(--primary-text);
+      border: 1px solid var(--border-color);
     }
 
-    #controls button#stop-btn:hover {
+    .btn-secondary:hover {
+      background: #333;
+      border-color: var(--accent-color);
+    }
+
+    .btn-danger {
+      background: var(--error-color);
+      color: white;
+    }
+
+    .btn-danger:hover {
       background: #e6002e;
-      box-shadow: 0 0 12px #ff0033;
+      box-shadow: 0 0 12px rgba(255, 0, 51, 0.3);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
     }
 
     /* ===== Scenario Controls ===== */
-    #scenario-controls {
-      margin-top: 12px;
+    .scenario-controls {
       display: flex;
-      gap: 8px;
+      gap: 12px;
       align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: var(--secondary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
     }
 
-    #scenario-controls input[type="text"] {
-      padding: 6px 10px;
-      background: #0d0d0d;
-      color: #e6e6e6;
-      border: 1px solid #444;
-      border-radius: 4px;
-      font-size: 13px;
+    .scenario-input {
       flex: 1;
-    }
-
-    #scenario-controls select {
-      background: #1a1a1a;
-      color: #e6e6e6;
-      border: 1px solid #444;
-      border-radius: 4px;
+      padding: 8px 12px;
+      background: var(--tertiary-bg);
+      color: var(--primary-text);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-family: var(--font-mono);
       font-size: 13px;
-      padding: 6px 10px;
     }
 
-    /* ===== Dropzone ===== */
-    #dropzone {
-      flex: 0 0 220px;
-      margin-top: 16px;
-      padding: 12px;
-      background: #1a1a1a;
-      border: 2px dashed #444;
-      border-radius: 4px;
+    .scenario-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: var(--glow-box-shadow);
+    }
+
+    .scenario-select {
+      background: var(--tertiary-bg);
+      color: var(--primary-text);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      min-width: 200px;
+    }
+
+    /* ===== Drop Zone ===== */
+    .drop-zone {
+      flex: 0 0 240px;
+      margin-bottom: 20px;
+      padding: 20px;
+      background: var(--secondary-bg);
+      border: 2px dashed var(--border-color);
+      border-radius: 8px;
       overflow-y: auto;
-      transition: background 0.2s, border-color 0.2s;
+      transition: var(--transition);
       position: relative;
     }
 
-    #dropzone.dragover {
-      background: #272727;
-      border-color: #39ff14;
+    .drop-zone.dragover {
+      background: var(--tertiary-bg);
+      border-color: var(--accent-color);
+      box-shadow: var(--glow-box-shadow);
     }
 
-    #dropzone .placeholder {
+    .drop-zone-placeholder {
       text-align: center;
-      color: #777;
-      margin-top: 60px;
+      color: var(--secondary-text);
       font-style: italic;
+      padding: 40px 20px;
     }
 
     .scheduled-item {
-      background: #262626;
-      border: 1px solid #333;
-      border-radius: 4px;
+      background: var(--tertiary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
       margin-bottom: 12px;
-      padding: 10px;
+      padding: 15px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
-      gap: 8px;
+      gap: 12px;
+      animation: slideIn 0.3s ease-out;
     }
 
-    .scheduled-item .tool-info {
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .scheduled-item:hover {
+      border-color: var(--accent-color);
+    }
+
+    .item-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-color);
+      color: var(--primary-bg);
+      border-radius: 6px;
       display: flex;
       align-items: center;
-      flex: 1;
-      gap: 8px;
-    }
-
-    .scheduled-item .tool-label {
-      font-weight: 600;
-      color: #39ff14;
-      min-width: 80px;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
       flex-shrink: 0;
     }
 
-    .scheduled-item input {
+    .item-content {
       flex: 1;
-      padding: 6px 10px;
-      font-size: 13px;
-      border: 1px solid #444;
-      border-radius: 4px;
-      background: #0d0d0d;
-      color: #e6e6e6;
-      min-width: 300px;
-      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .scheduled-item .remove-btn {
-      background: #ff0033;
-      color: #f0f0f0;
-      margin-left: 8px;
-      padding: 4px 8px;
-      border-radius: 4px;
+    .item-title {
+      font-weight: bold;
+      color: var(--accent-color);
+      font-size: 14px;
+    }
+
+    .item-input {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--primary-bg);
+      color: var(--primary-text);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-family: var(--font-mono);
       font-size: 12px;
     }
 
-    .scheduled-item .remove-btn:hover {
+    .item-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+    }
+
+    .item-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .item-btn {
+      padding: 6px 8px;
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-remove {
+      background: var(--error-color);
+      color: white;
+    }
+
+    .btn-remove:hover {
       background: #e6002e;
     }
 
-    /* ===== Output Area ===== */
-    #output-container {
+    /* ===== Output Section ===== */
+    .output-section {
       flex: 1;
-      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .output-header {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .output-title {
+      font-size: 18px;
+      color: var(--accent-color);
+    }
+
+    .output-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .output-container {
+      flex: 1;
       overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--secondary-bg);
     }
 
     .output-card {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 4px;
-      margin-bottom: 16px;
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+      border-bottom: 1px solid var(--border-color);
       animation: fadeIn 0.3s ease-out;
+    }
+
+    .output-card:last-child {
+      border-bottom: none;
     }
 
     @keyframes fadeIn {
@@ -460,384 +547,485 @@
       }
     }
 
-    .output-header {
-      background: #262626;
-      padding: 10px 14px;
-      border-bottom: 1px solid #333;
+    .card-header {
+      background: var(--tertiary-bg);
+      padding: 12px 16px;
+      cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
       user-select: none;
+      transition: var(--transition);
     }
 
-    .output-header .title {
-      font-weight: 600;
-      color: #39ff14;
+    .card-header:hover {
+      background: #2f2f2f;
     }
 
-    .output-header .toggle-btn {
+    .card-title {
+      font-weight: bold;
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tool-status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--secondary-text);
+    }
+
+    .tool-status.running {
+      background: var(--accent-color);
+      animation: pulse 1s infinite;
+    }
+
+    .tool-status.complete {
+      background: var(--success-color);
+    }
+
+    .tool-status.error {
+      background: var(--error-color);
+    }
+
+    .card-toggle {
       background: none;
       border: none;
+      color: var(--secondary-text);
       font-size: 16px;
-      color: #888;
-      transition: transform 0.2s;
+      cursor: pointer;
+      transition: var(--transition);
+      transform: rotate(0deg);
     }
 
-    .output-header.expanded .toggle-btn {
+    .card-header.expanded .card-toggle {
       transform: rotate(90deg);
-      color: #39ff14;
+      color: var(--accent-color);
     }
 
-    .output-body {
+    .card-body {
       max-height: 0;
-      overflow-y: auto;
-      transition: max-height 0.3s ease, padding 0.3s ease;
-      padding: 0 14px;
-      background: #0d0d0d;
-      font-family: Consolas, monospace;
-      font-size: 13px;
-      color: #00e600;
-      border-top: 1px solid #333;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: var(--primary-bg);
     }
 
-    .output-body.expanded {
-      padding: 8px 14px;
+    .card-body.expanded {
       max-height: 300px;
+      overflow-y: auto;
     }
 
-    .output-line {
-      white-space: pre-wrap;
+    .card-content {
+      padding: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .log-line {
+      color: var(--success-color);
       margin: 0;
-      line-height: 1.3em;
+      white-space: pre-wrap;
     }
 
-    /* ===== Hide default scrollbar in dark areas ===== */
-    #palette::-webkit-scrollbar,
-    #dropzone::-webkit-scrollbar,
-    #output-container::-webkit-scrollbar,
-    .output-body::-webkit-scrollbar {
-      width: 6px;
+    .log-line.error {
+      color: var(--error-color);
     }
 
-    #palette::-webkit-scrollbar-thumb,
-    #dropzone::-webkit-scrollbar-thumb,
-    #output-container::-webkit-scrollbar-thumb,
-    .output-body::-webkit-scrollbar-thumb {
-      background-color: #333;
-      border-radius: 3px;
+    .log-line.warning {
+      color: var(--warning-color);
     }
 
-    #palette::-webkit-scrollbar-track,
-    #dropzone::-webkit-scrollbar-track,
-    #output-container::-webkit-scrollbar-track,
-    .output-body::-webkit-scrollbar-track {
-      background: #0d0d0d;
+    /* ===== Command Modal ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+      background: var(--secondary-bg);
+      margin: 3% auto;
+      padding: 0;
+      border: 2px solid var(--accent-color);
+      border-radius: 12px;
+      width: 90%;
+      max-width: 900px;
+      max-height: 85vh;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(57, 255, 20, 0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 25px;
+      background: var(--tertiary-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-title {
+      color: var(--accent-color);
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .modal-close {
+      background: var(--error-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      background: #e6002e;
+    }
+
+    .modal-body {
+      padding: 25px;
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 15px;
+    }
+
+    .command-item {
+      background: var(--tertiary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .command-item:hover {
+      background: #2f2f2f;
+      border-color: var(--accent-color);
+      box-shadow: var(--glow-box-shadow);
+      transform: translateY(-2px);
+    }
+
+    .command-cmd {
+      color: var(--accent-color);
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+    }
+
+    .command-desc {
+      color: var(--secondary-text);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* ===== Scrollbar Styling ===== */
+    .tool-palette::-webkit-scrollbar,
+    .drop-zone::-webkit-scrollbar,
+    .output-container::-webkit-scrollbar,
+    .card-body::-webkit-scrollbar,
+    .modal-body::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .tool-palette::-webkit-scrollbar-thumb,
+    .drop-zone::-webkit-scrollbar-thumb,
+    .output-container::-webkit-scrollbar-thumb,
+    .card-body::-webkit-scrollbar-thumb,
+    .modal-body::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 4px;
+    }
+
+    .tool-palette::-webkit-scrollbar-thumb:hover,
+    .drop-zone::-webkit-scrollbar-thumb:hover,
+    .output-container::-webkit-scrollbar-thumb:hover,
+    .card-body::-webkit-scrollbar-thumb:hover,
+    .modal-body::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-color);
+    }
+
+    /* ===== Responsive Design ===== */
+    @media (max-width: 1024px) {
+      .tool-palette {
+        width: 250px;
+      }
+      
+      .command-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .tool-palette {
+        width: 100%;
+        height: 300px;
+      }
+      
+      .nav-actions {
+        display: none;
+      }
+      
+      .scenario-controls {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .content-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+    }
+
+    /* ===== Loading States ===== */
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border-color);
+      border-radius: 50%;
+      border-top-color: var(--accent-color);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
   </style>
 </head>
-
 <body>
-  <!-- Back to Landing Link -->
-  <a id="home-link" href="/">← Back to Home</a>
+  <!-- Navigation Header -->
+  <nav class="nav-header">
+    <a href="/" class="nav-brand">OctapusPrime</a>
+    <div class="nav-actions">
+      <div class="status-indicator">
+        <div class="status-dot" id="connection-status"></div>
+        <span id="connection-text">Connecting...</span>
+      </div>
+      <a href="/demo" class="nav-link">Demo</a>
+      <a href="/scenario_maker" class="nav-link">Scenario Builder</a>
+      <a href="/settings" class="nav-link">Settings</a>
+      <a href="/help" class="nav-link">Help</a>
+    </div>
+  </nav>
 
   <!-- Command Modal -->
   <div id="command-modal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <span class="modal-title" id="modal-title">Tool Commands</span>
-        <button class="close-btn" onclick="closeModal()">&times;</button>
+        <h2 class="modal-title" id="modal-title">Tool Commands</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
       </div>
-      <div id="modal-body">
+      <div class="modal-body" id="modal-body">
         <!-- Commands will be populated here -->
       </div>
     </div>
   </div>
 
-  <div id="container">
-    <!-- ===== Left Sidebar: Tool Palette with Arguments ===== -->
-    <div id="palette">
-      <h3>Tools</h3>
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Tool Palette Sidebar -->
+    <aside class="tool-palette">
+      <div class="palette-header">
+        <h3 class="palette-title">Security Tools</h3>
+        <input type="text" class="palette-search" id="tool-search" placeholder="Search tools...">
+      </div>
+      <div class="palette-content" id="tool-categories">
+        <!-- Tool categories will be populated here -->
+      </div>
+    </aside>
 
-      <div class="tool-card tooltip" draggable="true" data-tool="nmap"
-        data-tooltip="Network exploration tool and security scanner">
-        Nmap
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-sV">-sV</div>
-          <div class="arg-chip" draggable="true" data-arg="-A">-A</div>
-          <div class="arg-chip" draggable="true" data-arg="-O">-O</div>
-          <div class="arg-chip" draggable="true" data-arg="-T4">-T4</div>
-          <div class="arg-chip" draggable="true" data-arg="-p 1-1000">-p 1-1000</div>
-          <div class="arg-chip" draggable="true" data-arg="-sS">-sS</div>
-          <div class="arg-chip" draggable="true" data-arg="-sU">-sU</div>
-          <div class="arg-chip" draggable="true" data-arg="--script vuln">--script vuln</div>
-          <div class="arg-chip" draggable="true" data-arg="-oN output.txt">-oN output</div>
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Content Header -->
+      <div class="content-header">
+        <h1 class="content-title">Security Automation Dashboard</h1>
+        <div class="quick-actions">
+          <button class="btn btn-secondary" id="detect-network-btn">Auto-Detect Network</button>
+          <button class="btn btn-primary" id="start-scan-btn">Start Scan</button>
+          <button class="btn btn-danger" id="stop-scan-btn" disabled>Stop Scan</button>
         </div>
       </div>
 
-      <div class="tool-card tooltip" draggable="true" data-tool="masscan"
-        data-tooltip="Fast port scanner for large networks">
-        Masscan
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-p1-65535">-p1-65535</div>
-          <div class="arg-chip" draggable="true" data-arg="--rate 1000">--rate 1000</div>
-          <div class="arg-chip" draggable="true" data-arg="--ping">--ping</div>
-          <div class="arg-chip" draggable="true" data-arg="-e eth0">-e eth0</div>
-          <div class="arg-chip" draggable="true" data-arg="--banners">--banners</div>
-          <div class="arg-chip" draggable="true" data-arg="-oX output.xml">-oX output</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="gobuster"
-        data-tooltip="Directory/file & DNS busting tool">
-        Gobuster
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="dir -u http://target">dir</div>
-          <div class="arg-chip" draggable="true" data-arg="-w /usr/share/wordlists/dirb/common.txt">-w common.txt</div>
-          <div class="arg-chip" draggable="true" data-arg="-x php,txt,html">-x php,txt,html</div>
-          <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
-          <div class="arg-chip" draggable="true" data-arg="-s 200,204,301,302">-s 200,204,301</div>
-          <div class="arg-chip" draggable="true" data-arg="-k">-k</div>
-          <div class="arg-chip" draggable="true" data-arg="-r">-r</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="nikto" data-tooltip="Web vulnerability scanner">
-        Nikto
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-h http://target">-h target</div>
-          <div class="arg-chip" draggable="true" data-arg="-Tuning x">-Tuning x</div>
-          <div class="arg-chip" draggable="true" data-arg="-Display V">-Display V</div>
-          <div class="arg-chip" draggable="true" data-arg="-ssl">-ssl</div>
-          <div class="arg-chip" draggable="true" data-arg="-port 443">-port 443</div>
-          <div class="arg-chip" draggable="true" data-arg="-output nikto.txt">-output nikto.txt</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="sqlmap"
-        data-tooltip="Automatic SQL injection and database takeover tool">
-        SQLmap
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-u http://target?id=1">-u target</div>
-          <div class="arg-chip" draggable="true" data-arg="--batch">--batch</div>
-          <div class="arg-chip" draggable="true" data-arg="--level 5">--level 5</div>
-          <div class="arg-chip" draggable="true" data-arg="--risk 3">--risk 3</div>
-          <div class="arg-chip" draggable="true" data-arg="--dbs">--dbs</div>
-          <div class="arg-chip" draggable="true" data-arg="--tables">--tables</div>
-          <div class="arg-chip" draggable="true" data-arg="--dump">--dump</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="hydra"
-        data-tooltip="Login cracker supporting numerous protocols">
-        Hydra
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-l admin">-l admin</div>
-          <div class="arg-chip" draggable="true" data-arg="-P /usr/share/wordlists/rockyou.txt">-P rockyou.txt</div>
-          <div class="arg-chip" draggable="true" data-arg="-t 4">-t 4</div>
-          <div class="arg-chip" draggable="true" data-arg="ssh://target">ssh://target</div>
-          <div class="arg-chip" draggable="true" data-arg="ftp://target">ftp://target</div>
-          <div class="arg-chip" draggable="true" data-arg="-f">-f</div>
-          <div class="arg-chip" draggable="true" data-arg="-V">-V</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="sslscan" data-tooltip="SSL/TLS configuration scanner">
-        SSLScan
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="--no-failed">--no-failed</div>
-          <div class="arg-chip" draggable="true" data-arg="--show-supported">--show-supported</div>
-          <div class="arg-chip" draggable="true" data-arg="--reuse">--reuse</div>
-          <div class="arg-chip" draggable="true" data-arg="--xml=ssl.xml">--xml=ssl.xml</div>
-          <div class="arg-chip" draggable="true" data-arg="--ipv4">--ipv4</div>
-          <div class="arg-chip" draggable="true" data-arg="--ipv6">--ipv6</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="dirsearch" data-tooltip="Web path discovery tool">
-        Dirsearch
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-u http://target/">-u target</div>
-          <div class="arg-chip" draggable="true" data-arg="-e php,html,js,txt">-e php,html,js</div>
-          <div class="arg-chip" draggable="true" data-arg="-x 400,403,404">-x 400,403</div>
-          <div class="arg-chip" draggable="true" data-arg="-t 50">-t 50</div>
-          <div class="arg-chip" draggable="true" data-arg="--recursive">--recursive</div>
-          <div class="arg-chip" draggable="true" data-arg="--random-agent">--random-agent</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="enum4linux"
-        data-tooltip="SMB enumeration tool for Linux">
-        Enum4Linux
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-a">-a</div>
-          <div class="arg-chip" draggable="true" data-arg="-u user">-u user</div>
-          <div class="arg-chip" draggable="true" data-arg="-p password">-p password</div>
-          <div class="arg-chip" draggable="true" data-arg="-S">-S</div>
-          <div class="arg-chip" draggable="true" data-arg="-U">-U</div>
-          <div class="arg-chip" draggable="true" data-arg="-G">-G</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="nbtscan" data-tooltip="NetBIOS name network scanner">
-        NBTSCAN
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-r">-r</div>
-          <div class="arg-chip" draggable="true" data-arg="-v">-v</div>
-          <div class="arg-chip" draggable="true" data-arg="-s :">-s :</div>
-          <div class="arg-chip" draggable="true" data-arg="-h">-h</div>
-          <div class="arg-chip" draggable="true" data-arg="-m">-m</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="theharvester"
-        data-tooltip="E-mail, subdomain and people names harvester">
-        TheHarvester
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-d example.com">-d domain</div>
-          <div class="arg-chip" draggable="true" data-arg="-b google">-b google</div>
-          <div class="arg-chip" draggable="true" data-arg="-b bing">-b bing</div>
-          <div class="arg-chip" draggable="true" data-arg="-l 500">-l 500</div>
-          <div class="arg-chip" draggable="true" data-arg="-f results.xml">-f results</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="wpscan" data-tooltip="WordPress security scanner">
-        WPScan
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="--url http://target/">--url target</div>
-          <div class="arg-chip" draggable="true" data-arg="--enumerate p">--enumerate p</div>
-          <div class="arg-chip" draggable="true" data-arg="--enumerate u">--enumerate u</div>
-          <div class="arg-chip" draggable="true" data-arg="--enumerate t">--enumerate t</div>
-          <div class="arg-chip" draggable="true" data-arg="--api-token TOKEN">--api-token</div>
-          <div class="arg-chip" draggable="true" data-arg="--force">--force</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="ffuf" data-tooltip="Fast web fuzzer written in Go">
-        FFUF
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-u http://target/FUZZ">-u FUZZ</div>
-          <div class="arg-chip" draggable="true" data-arg="-w /usr/share/wordlists/common.txt">-w common.txt</div>
-          <div class="arg-chip" draggable="true" data-arg="-t 100">-t 100</div>
-          <div class="arg-chip" draggable="true" data-arg="-mc 200,204,301,302">-mc 200,204,301</div>
-          <div class="arg-chip" draggable="true" data-arg="-fc 404">-fc 404</div>
-          <div class="arg-chip" draggable="true" data-arg="-o ffuf.json">-o ffuf.json</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="amass"
-        data-tooltip="In-depth DNS enumeration and network mapping">
-        AMASS
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="enum -d example.com">enum -d</div>
-          <div class="arg-chip" draggable="true" data-arg="-active">-active</div>
-          <div class="arg-chip" draggable="true" data-arg="-passive">-passive</div>
-          <div class="arg-chip" draggable="true" data-arg="-brute">-brute</div>
-          <div class="arg-chip" draggable="true" data-arg="-o amass.txt">-o amass.txt</div>
-          <div class="arg-chip" draggable="true" data-arg="-ip">-ip</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="dnsenum" data-tooltip="DNS enumeration tool">
-        DNSenum
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="example.com">domain</div>
-          <div class="arg-chip" draggable="true" data-arg="--threads 5">--threads 5</div>
-          <div class="arg-chip" draggable="true" data-arg="--dnsserver 8.8.8.8">--dnsserver 8.8.8.8</div>
-          <div class="arg-chip" draggable="true" data-arg="--enum">--enum</div>
-          <div class="arg-chip" draggable="true" data-arg="-f dns.txt">-f dns.txt</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="subfinder" data-tooltip="Subdomain discovery tool">
-        Subfinder
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-d example.com">-d domain</div>
-          <div class="arg-chip" draggable="true" data-arg="-silent">-silent</div>
-          <div class="arg-chip" draggable="true" data-arg="-o subdomains.txt">-o output</div>
-          <div class="arg-chip" draggable="true" data-arg="-all">-all</div>
-          <div class="arg-chip" draggable="true" data-arg="-t 10">-t 10</div>
-          <div class="arg-chip" draggable="true" data-arg="-v">-v</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="john" data-tooltip="Password cracker">
-        John
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="--wordlist=/usr/share/wordlists/rockyou.txt">--wordlist</div>
-          <div class="arg-chip" draggable="true" data-arg="--format=raw-md5">--format</div>
-          <div class="arg-chip" draggable="true" data-arg="hashes.txt">hashes.txt</div>
-          <div class="arg-chip" draggable="true" data-arg="--rules">--rules</div>
-          <div class="arg-chip" draggable="true" data-arg="--show">--show</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="hashcat" data-tooltip="Advanced password recovery">
-        Hashcat
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-m 0">-m 0</div>
-          <div class="arg-chip" draggable="true" data-arg="-a 0">-a 0</div>
-          <div class="arg-chip" draggable="true" data-arg="hashes.txt wordlist.txt">hashes wordlist</div>
-          <div class="arg-chip" draggable="true" data-arg="--force">--force</div>
-          <div class="arg-chip" draggable="true" data-arg="-O">-O</div>
-          <div class="arg-chip" draggable="true" data-arg="--show">--show</div>
-        </div>
-      </div>
-
-      <div class="tool-card tooltip" draggable="true" data-tool="macchanger" data-tooltip="Change MAC address easily">
-        <br>
-        Macchanger
-        <br>
-        <div class="arg-palette">
-          <div class="arg-chip" draggable="true" data-arg="-r">-r (random MAC)</div>
-          <div class="arg-chip" draggable="true" data-arg="-m XX:XX:XX:XX:XX:XX">-m (set specific MAC)</div>
-          <div class="arg-chip" draggable="true" data-arg="-s">-s (show MAC)</div>
-          <div class="arg-chip" draggable="true" data-arg="-a">-a (random MAC of same kind)</div>
-          <div class="arg-chip" draggable="true" data-arg="eth0">eth0 (example interface)</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ===== Main Content: Dropzone, Controls, Output ===== -->
-    <div id="main">
-      <!-- Header + Controls -->
-      <div id="header">
-        <h2>Scheduled Scans</h2>
-        <div id="controls">
-          <button id="use-cidr-btn">Use Local Network</button>
-          <button id="start-btn">Start</button>
-          <button id="stop-btn">Stop</button>
-        </div>
-      </div>
-
-      <!-- Scenario Save/Load -->
-      <div id="scenario-controls">
-        <input type="text" id="scenario-name" placeholder="Scenario name ..." />
-        <button id="save-scenario-btn">Save Scenario</button>
-        <select id="scenario-list">
+      <!-- Scenario Controls -->
+      <div class="scenario-controls">
+        <input type="text" class="scenario-input" id="scenario-name" placeholder="Enter scenario name...">
+        <button class="btn btn-secondary" id="save-scenario-btn">Save Scenario</button>
+        <select class="scenario-select" id="scenario-list">
           <option value="">-- Load Scenario --</option>
         </select>
+        <button class="btn btn-secondary" id="clear-scenario-btn">Clear All</button>
       </div>
 
       <!-- Drop Zone -->
-      <div id="dropzone">
-        <p class="placeholder">Drag a tool here to add it. Double-click tools to see all commands.</p>
+      <div class="drop-zone" id="drop-zone">
+        <div class="drop-zone-placeholder" id="drop-placeholder">
+          <h3>Drag Security Tools Here</h3>
+          <p>Drag tools from the sidebar to create your scan sequence</p>
+          <p><small>Double-click tools to see available commands</small></p>
+        </div>
       </div>
 
-      <!-- Output Area -->
-      <div id="output-container">
-        <!-- Dynamically created output cards appear here -->
+      <!-- Output Section -->
+      <div class="output-section">
+        <div class="output-header">
+          <h3 class="output-title">Live Tool Output</h3>
+          <div class="output-controls">
+            <button class="btn btn-secondary" id="clear-output-btn">Clear Output</button>
+            <button class="btn btn-secondary" id="expand-all-btn">Expand All</button>
+          </div>
+        </div>
+        <div class="output-container" id="output-container">
+          <!-- Output cards will be dynamically added here -->
+        </div>
       </div>
-    </div>
+    </main>
   </div>
 
-  <!-- Socket.IO client for live logs -->
+  <!-- Socket.IO for real-time communication -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.min.js"></script>
   <script>
-    // Command database for each tool
-    const toolCommands = {
+    // Application state
+    const AppState = {
+      socket: null,
+      outputCards: {},
+      isScanning: false,
+      tools: {},
+      scheduledTools: new Map()
+    };
+
+    // Tool categories and definitions
+    const TOOL_CATEGORIES = {
+      'Network Discovery': {
+        nmap: {
+          name: 'Nmap',
+          description: 'Network exploration tool and security scanner',
+          args: ['-sV', '-A', '-O', '-T4', '-p 1-1000', '-sS', '-sU', '--script vuln', '-oN output.txt']
+        },
+        masscan: {
+          name: 'Masscan',
+          description: 'Fast port scanner for large networks',
+          args: ['-p1-65535', '--rate 1000', '--ping', '-e eth0', '--banners', '-oX output.xml']
+        },
+        zmap: {
+          name: 'Zmap',
+          description: 'Internet-wide network scanner',
+          args: ['-p 80', '-B 10M', '-c 1000', '-o results.csv']
+        }
+      },
+      'Web Application': {
+        gobuster: {
+          name: 'Gobuster',
+          description: 'Directory/file & DNS busting tool',
+          args: ['dir -u http://target', '-w /usr/share/wordlists/dirb/common.txt', '-x php,txt,html', '-t 50', '-s 200,204,301,302']
+        },
+        nikto: {
+          name: 'Nikto',
+          description: 'Web vulnerability scanner',
+          args: ['-h http://target', '-Tuning x', '-Display V', '-ssl', '-port 443', '-output nikto.txt']
+        },
+        sqlmap: {
+          name: 'SQLmap',
+          description: 'SQL injection detection and exploitation',
+          args: ['-u http://target?id=1', '--batch', '--level 5', '--risk 3', '--dbs', '--tables', '--dump']
+        },
+        ffuf: {
+          name: 'FFUF',
+          description: 'Fast web fuzzer written in Go',
+          args: ['-u http://target/FUZZ', '-w /usr/share/wordlists/common.txt', '-t 100', '-mc 200,204,301,302', '-fc 404']
+        },
+        wpscan: {
+          name: 'WPScan',
+          description: 'WordPress security scanner',
+          args: ['--url http://target/', '--enumerate p', '--enumerate u', '--enumerate t', '--api-token TOKEN']
+        }
+      },
+      'Credential Testing': {
+        hydra: {
+          name: 'Hydra',
+          description: 'Login cracker supporting numerous protocols',
+          args: ['-l admin', '-P /usr/share/wordlists/rockyou.txt', '-t 4', 'ssh://target', 'ftp://target', '-f', '-V']
+        },
+        john: {
+          name: 'John',
+          description: 'Password cracker',
+          args: ['--wordlist=/usr/share/wordlists/rockyou.txt', '--format=raw-md5', 'hashes.txt', '--rules', '--show']
+        },
+        hashcat: {
+          name: 'Hashcat',
+          description: 'Advanced password recovery',
+          args: ['-m 0', '-a 0', 'hashes.txt wordlist.txt', '--force', '-O', '--show']
+        }
+      },
+      'Network Analysis': {
+        enum4linux: {
+          name: 'Enum4Linux',
+          description: 'SMB enumeration tool for Linux',
+          args: ['-a', '-u user', '-p password', '-S', '-U', '-G']
+        },
+        nbtscan: {
+          name: 'NBTSCAN',
+          description: 'NetBIOS name network scanner',
+          args: ['-r', '-v', '-s :', '-h', '-m']
+        },
+        sslscan: {
+          name: 'SSLScan',
+          description: 'SSL/TLS configuration scanner',
+          args: ['--no-failed', '--show-supported', '--reuse', '--xml=ssl.xml', '--ipv4']
+        }
+      },
+      'Information Gathering': {
+        theharvester: {
+          name: 'TheHarvester',
+          description: 'E-mail, subdomain and people names harvester',
+          args: ['-d example.com', '-b google', '-b bing', '-l 500', '-f results.xml']
+        },
+        amass: {
+          name: 'AMASS',
+          description: 'In-depth DNS enumeration and network mapping',
+          args: ['enum -d example.com', '-active', '-passive', '-brute', '-o amass.txt', '-ip']
+        },
+        subfinder: {
+          name: 'Subfinder',
+          description: 'Subdomain discovery tool',
+          args: ['-d example.com', '-silent', '-o subdomains.txt', '-all', '-t 10', '-v']
+        },
+        dnsenum: {
+          name: 'DNSenum',
+          description: 'DNS enumeration tool',
+          args: ['example.com', '--threads 5', '--dnsserver 8.8.8.8', '--enum', '-f dns.txt']
+        }
+      }
+    };
+
+    // Command database for detailed help
+    const TOOL_COMMANDS = {
       nmap: [
         { cmd: "-sV", desc: "Version detection" },
         { cmd: "-A", desc: "Aggressive scan (OS detection, version detection, script scanning)" },
@@ -849,22 +1037,14 @@
         { cmd: "-T1", desc: "Timing template (slow/stealthy)" },
         { cmd: "-p 1-1000", desc: "Scan ports 1-1000" },
         { cmd: "-p-", desc: "Scan all 65535 ports" },
-        { cmd: "-p 80,443,8080", desc: "Scan specific ports" },
-        { cmd: "--top-ports 1000", desc: "Scan top 1000 ports" },
         { cmd: "--script vuln", desc: "Vulnerability detection scripts" },
         { cmd: "--script auth", desc: "Authentication bypass scripts" },
-        { cmd: "--script discovery", desc: "Discovery scripts" },
-        { cmd: "--script exploit", desc: "Exploitation scripts" },
         { cmd: "-sn", desc: "Ping scan (no port scan)" },
         { cmd: "-Pn", desc: "Skip host discovery" },
         { cmd: "-oN output.txt", desc: "Normal output to file" },
         { cmd: "-oX output.xml", desc: "XML output to file" },
-        { cmd: "-oG output.gnmap", desc: "Grepable output" },
         { cmd: "-v", desc: "Verbose output" },
-        { cmd: "-vv", desc: "Very verbose output" },
-        { cmd: "--reason", desc: "Show reason for port state" },
-        { cmd: "-f", desc: "Fragment packets" },
-        { cmd: "-D RND:10", desc: "Decoy scan with 10 random IPs" }
+        { cmd: "--reason", desc: "Show reason for port state" }
       ],
       masscan: [
         { cmd: "-p1-65535", desc: "Scan all 65535 ports" },
@@ -1239,39 +1419,413 @@
       ]
     };
 
-    // Modal functions
-    function showCommandModal(toolName) {
+    // Initialize application
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeApp();
+    });
+
+    function initializeApp() {
+      initializeSocket();
+      renderToolPalette();
+      setupEventListeners();
+      loadScenarios();
+    }
+
+    // Socket.IO initialization
+    function initializeSocket() {
+      AppState.socket = io();
+      
+      AppState.socket.on('connect', () => {
+        updateConnectionStatus(true);
+      });
+
+      AppState.socket.on('disconnect', () => {
+        updateConnectionStatus(false);
+      });
+
+      AppState.socket.on('log', (data) => {
+        handleLogMessage(data);
+      });
+
+      AppState.socket.on('scan_complete', (data) => {
+        handleScanComplete(data);
+      });
+    }
+
+    function updateConnectionStatus(connected) {
+      const statusDot = document.getElementById('connection-status');
+      const statusText = document.getElementById('connection-text');
+      
+      if (connected) {
+        statusDot.classList.add('connected');
+        statusText.textContent = 'Connected';
+      } else {
+        statusDot.classList.remove('connected');
+        statusText.textContent = 'Disconnected';
+      }
+    }
+
+    // Render tool palette
+    function renderToolPalette() {
+      const container = document.getElementById('tool-categories');
+      container.innerHTML = '';
+
+      Object.entries(TOOL_CATEGORIES).forEach(([category, tools]) => {
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'tool-category';
+        
+        const categoryTitle = document.createElement('h4');
+        categoryTitle.className = 'category-title';
+        categoryTitle.textContent = category;
+        categoryDiv.appendChild(categoryTitle);
+
+        Object.entries(tools).forEach(([toolKey, tool]) => {
+          const toolCard = createToolCard(toolKey, tool);
+          categoryDiv.appendChild(toolCard);
+        });
+
+        container.appendChild(categoryDiv);
+      });
+    }
+
+    function createToolCard(toolKey, tool) {
+      const card = document.createElement('div');
+      card.className = 'tool-card';
+      card.draggable = true;
+      card.dataset.tool = toolKey;
+
+      const header = document.createElement('div');
+      header.className = 'tool-header';
+      
+      const name = document.createElement('div');
+      name.className = 'tool-name';
+      name.textContent = tool.name;
+      
+      const helpBtn = document.createElement('button');
+      helpBtn.className = 'tool-help-btn';
+      helpBtn.textContent = '?';
+      helpBtn.title = 'Show commands';
+      helpBtn.onclick = (e) => {
+        e.stopPropagation();
+        showCommandModal(toolKey);
+      };
+
+      header.appendChild(name);
+      header.appendChild(helpBtn);
+
+      const description = document.createElement('div');
+      description.className = 'tool-description';
+      description.textContent = tool.description;
+
+      const argPalette = document.createElement('div');
+      argPalette.className = 'arg-palette';
+      
+      tool.args.slice(0, 6).forEach(arg => {
+        const chip = document.createElement('div');
+        chip.className = 'arg-chip';
+        chip.textContent = arg;
+        chip.draggable = true;
+        chip.dataset.arg = arg;
+        chip.dataset.tool = toolKey;
+        argPalette.appendChild(chip);
+      });
+
+      card.appendChild(header);
+      card.appendChild(description);
+      card.appendChild(argPalette);
+
+      // Add drag event listeners
+      setupDragEvents(card, toolKey);
+
+      return card;
+    }
+
+    // Setup drag and drop
+    function setupDragEvents(element, toolKey) {
+      element.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', toolKey);
+      });
+
+      // Handle argument chip dragging
+      element.querySelectorAll('.arg-chip').forEach(chip => {
+        chip.addEventListener('dragstart', (e) => {
+          e.stopPropagation();
+          e.dataTransfer.setData('application/json', JSON.stringify({
+            tool: chip.dataset.tool,
+            arg: chip.dataset.arg
+          }));
+        });
+      });
+
+      // Double-click to show commands
+      element.addEventListener('dblclick', () => {
+        showCommandModal(toolKey);
+      });
+    }
+
+    // Setup drop zone
+    function setupDropZone() {
+      const dropZone = document.getElementById('drop-zone');
+      
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
+      });
+
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
+      });
+
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        
+        let data;
+        try {
+          // Try to parse as argument data
+          data = JSON.parse(e.dataTransfer.getData('application/json'));
+          addArgumentToTool(data.tool, data.arg);
+        } catch {
+          // Handle as tool name
+          const toolName = e.dataTransfer.getData('text/plain');
+          if (toolName) {
+            addScheduledTool(toolName);
+          }
+        }
+      });
+    }
+
+    // Add scheduled tool
+    function addScheduledTool(toolKey) {
+      if (AppState.scheduledTools.has(toolKey)) {
+        return; // Tool already added
+      }
+
+      const tool = findToolByKey(toolKey);
+      if (!tool) return;
+
+      const placeholder = document.getElementById('drop-placeholder');
+      if (placeholder) {
+        placeholder.style.display = 'none';
+      }
+
+      const item = createScheduledItem(toolKey, tool);
+      document.getElementById('drop-zone').appendChild(item);
+      
+      AppState.scheduledTools.set(toolKey, {
+        tool: toolKey,
+        args: []
+      });
+
+      // Create output card
+      createOutputCard(toolKey);
+    }
+
+    function createScheduledItem(toolKey, tool) {
+      const item = document.createElement('div');
+      item.className = 'scheduled-item';
+      item.dataset.tool = toolKey;
+
+      const icon = document.createElement('div');
+      icon.className = 'item-icon';
+      icon.textContent = tool.name.charAt(0).toUpperCase();
+
+      const content = document.createElement('div');
+      content.className = 'item-content';
+
+      const title = document.createElement('div');
+      title.className = 'item-title';
+      title.textContent = tool.name;
+
+      const input = document.createElement('input');
+      input.className = 'item-input';
+      input.type = 'text';
+      input.placeholder = 'Enter command arguments...';
+      input.value = tool.args.slice(0, 3).join(' '); // Default args
+
+      content.appendChild(title);
+      content.appendChild(input);
+
+      const actions = document.createElement('div');
+      actions.className = 'item-actions';
+
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'item-btn btn-remove';
+      removeBtn.textContent = '×';
+      removeBtn.onclick = () => removeScheduledTool(toolKey);
+
+      actions.appendChild(removeBtn);
+
+      item.appendChild(icon);
+      item.appendChild(content);
+      item.appendChild(actions);
+
+      return item;
+    }
+
+    function removeScheduledTool(toolKey) {
+      const item = document.querySelector(`[data-tool="${toolKey}"]`);
+      if (item) {
+        item.remove();
+      }
+
+      AppState.scheduledTools.delete(toolKey);
+
+      // Remove output card
+      if (AppState.outputCards[toolKey]) {
+        AppState.outputCards[toolKey].remove();
+        delete AppState.outputCards[toolKey];
+      }
+
+      // Show placeholder if no tools
+      if (AppState.scheduledTools.size === 0) {
+        document.getElementById('drop-placeholder').style.display = 'block';
+      }
+    }
+
+    function addArgumentToTool(toolKey, arg) {
+      const item = document.querySelector(`.scheduled-item[data-tool="${toolKey}"]`);
+      if (!item) {
+        addScheduledTool(toolKey);
+        return addArgumentToTool(toolKey, arg);
+      }
+
+      const input = item.querySelector('.item-input');
+      const current = input.value.trim();
+      if (!current.includes(arg)) {
+        input.value = current ? `${current} ${arg}` : arg;
+      }
+    }
+
+    // Output cards management
+    function createOutputCard(toolKey) {
+      if (AppState.outputCards[toolKey]) {
+        return AppState.outputCards[toolKey];
+      }
+
+      const tool = findToolByKey(toolKey);
+      const card = document.createElement('div');
+      card.className = 'output-card';
+      card.dataset.tool = toolKey;
+
+      const header = document.createElement('div');
+      header.className = 'card-header';
+      
+      const title = document.createElement('div');
+      title.className = 'card-title';
+      title.innerHTML = `
+        <div class="tool-status" id="status-${toolKey}"></div>
+        ${tool.name} Output
+      `;
+
+      const toggle = document.createElement('button');
+      toggle.className = 'card-toggle';
+      toggle.textContent = '▶';
+
+      header.appendChild(title);
+      header.appendChild(toggle);
+
+      const body = document.createElement('div');
+      body.className = 'card-body';
+
+      const content = document.createElement('div');
+      content.className = 'card-content';
+      body.appendChild(content);
+
+      card.appendChild(header);
+      card.appendChild(body);
+
+      // Toggle functionality
+      header.addEventListener('click', () => {
+        const expanded = body.classList.toggle('expanded');
+        header.classList.toggle('expanded', expanded);
+        toggle.textContent = expanded ? '▼' : '▶';
+        
+        if (expanded) {
+          body.scrollTop = body.scrollHeight;
+        }
+      });
+
+      document.getElementById('output-container').appendChild(card);
+      AppState.outputCards[toolKey] = card;
+
+      return card;
+    }
+
+    function handleLogMessage(data) {
+      const { tool, line } = data;
+      if (!AppState.outputCards[tool]) return;
+
+      const content = AppState.outputCards[tool].querySelector('.card-content');
+      const logLine = document.createElement('div');
+      logLine.className = 'log-line';
+      
+      // Color code different types of output
+      if (line.includes('ERROR') || line.includes('FAILED')) {
+        logLine.classList.add('error');
+      } else if (line.includes('WARNING') || line.includes('WARN')) {
+        logLine.classList.add('warning');
+      }
+      
+      logLine.textContent = line;
+      content.appendChild(logLine);
+
+      // Auto-scroll if expanded
+      const body = AppState.outputCards[tool].querySelector('.card-body');
+      if (body.classList.contains('expanded')) {
+        body.scrollTop = body.scrollHeight;
+      }
+
+      // Update tool status
+      updateToolStatus(tool, 'running');
+    }
+
+    function updateToolStatus(toolKey, status) {
+      const statusElement = document.getElementById(`status-${toolKey}`);
+      if (statusElement) {
+        statusElement.className = `tool-status ${status}`;
+      }
+    }
+
+    function handleScanComplete(data) {
+      const { tool, success } = data;
+      updateToolStatus(tool, success ? 'complete' : 'error');
+    }
+
+    // Modal functionality
+    function showCommandModal(toolKey) {
       const modal = document.getElementById('command-modal');
       const title = document.getElementById('modal-title');
       const body = document.getElementById('modal-body');
-
-      title.textContent = `${toolName.toUpperCase()} Commands`;
-
-      const commands = toolCommands[toolName] || [];
+      
+      const tool = findToolByKey(toolKey);
+      title.textContent = `${tool.name} Commands`;
+      
+      const commands = TOOL_COMMANDS[toolKey] || [];
       if (commands.length === 0) {
-        body.innerHTML = '<p>No commands available for this tool yet.</p>';
+        body.innerHTML = '<p>No detailed commands available for this tool yet.</p>';
       } else {
         const grid = document.createElement('div');
         grid.className = 'command-grid';
-
+        
         commands.forEach(command => {
           const item = document.createElement('div');
           item.className = 'command-item';
           item.innerHTML = `
-            <div class="cmd">${command.cmd}</div>
-            <div class="desc">${command.desc}</div>
+            <div class="command-cmd">${command.cmd}</div>
+            <div class="command-desc">${command.desc}</div>
           `;
           item.addEventListener('click', () => {
-            addCommandToTool(toolName, command.cmd);
+            addArgumentToTool(toolKey, command.cmd);
             closeModal();
           });
           grid.appendChild(item);
         });
-
+        
         body.innerHTML = '';
         body.appendChild(grid);
       }
-
+      
       modal.style.display = 'block';
     }
 
@@ -1279,329 +1833,290 @@
       document.getElementById('command-modal').style.display = 'none';
     }
 
-    function addCommandToTool(toolName, command) {
-      let existingItem = document.querySelector(`.scheduled-item[data-tool="${toolName}"]`);
-      if (!existingItem) {
-        addScheduledTool(toolName);
-        existingItem = document.querySelector(`.scheduled-item[data-tool="${toolName}"]`);
-      }
+    // Event listeners setup
+    function setupEventListeners() {
+      setupDropZone();
 
-      const input = existingItem.querySelector('input');
-      const current = input.value.trim();
-      if (!current.includes(command)) {
-        input.value = current ? `${current} ${command}` : command;
-      }
+      // Tool search
+      document.getElementById('tool-search').addEventListener('input', (e) => {
+        filterTools(e.target.value);
+      });
+
+      // Scan controls
+      document.getElementById('start-scan-btn').addEventListener('click', startScan);
+      document.getElementById('stop-scan-btn').addEventListener('click', stopScan);
+      document.getElementById('detect-network-btn').addEventListener('click', detectNetwork);
+
+      // Scenario controls
+      document.getElementById('save-scenario-btn').addEventListener('click', saveScenario);
+      document.getElementById('scenario-list').addEventListener('change', loadScenario);
+      document.getElementById('clear-scenario-btn').addEventListener('click', clearAllTools);
+
+      // Output controls
+      document.getElementById('clear-output-btn').addEventListener('click', clearAllOutput);
+      document.getElementById('expand-all-btn').addEventListener('click', expandAllOutput);
+
+      // Modal close
+      window.addEventListener('click', (e) => {
+        const modal = document.getElementById('command-modal');
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
     }
 
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-      const modal = document.getElementById('command-modal');
-      if (e.target === modal) {
-        closeModal();
-      }
-    });
-
-    // ======== WebSocket / Live Logs Setup ========
-    const socket = io();
-    const outputCards = {};
-
-    socket.on('log', msg => {
-      const { tool, line } = msg;
-      if (!outputCards[tool]) return;
-      const body = outputCards[tool].querySelector('.output-body');
-      const p = document.createElement('p');
-      p.className = 'output-line';
-      p.textContent = line;
-      body.appendChild(p);
-      if (body.classList.contains('expanded')) {
-        body.scrollTop = body.scrollHeight;
-      }
-    });
-
-    // ======== Drag & Drop Logic ========
-    const toolCards = document.querySelectorAll('.tool-card');
-    const dropzone = document.getElementById('dropzone');
-    const placeholder = dropzone.querySelector('.placeholder');
-
-    toolCards.forEach(card => {
-      // Double-click to show command modal
-      card.addEventListener('dblclick', () => {
-        showCommandModal(card.dataset.tool);
-      });
-
-      // Dragging the tool card
-      card.addEventListener('dragstart', e => {
-        e.dataTransfer.setData('text/plain', card.dataset.tool);
-      });
-
-      // Dragging argument chips
-      const argChips = card.querySelectorAll('.arg-chip');
-      argChips.forEach(chip => {
-        chip.addEventListener('dragstart', e => {
-          e.dataTransfer.setData('application/json', JSON.stringify({
-            tool: card.dataset.tool,
-            arg: chip.dataset.arg
-          }));
-        });
-      });
-    });
-
-    dropzone.addEventListener('dragover', e => {
-      e.preventDefault();
-      dropzone.classList.add('dragover');
-    });
-    dropzone.addEventListener('dragleave', () => {
-      dropzone.classList.remove('dragover');
-    });
-    dropzone.addEventListener('drop', e => {
-      e.preventDefault();
-      dropzone.classList.remove('dragover');
-      let data;
-      try {
-        data = JSON.parse(e.dataTransfer.getData('application/json'));
-        const { tool, arg } = data;
-        const existingItem = Array.from(document.querySelectorAll('.scheduled-item'))
-          .find(it => it.dataset.tool === tool);
-        if (existingItem) {
-          const input = existingItem.querySelector('input');
-          const current = input.value.trim();
-          if (!current.includes(arg)) {
-            input.value = current ? `${current} ${arg}` : arg;
-          }
-        }
-      } catch {
-        const toolName = e.dataTransfer.getData('text/plain');
-        if (toolName) {
-          addScheduledTool(toolName);
+    // Utility functions
+    function findToolByKey(toolKey) {
+      for (const category of Object.values(TOOL_CATEGORIES)) {
+        if (category[toolKey]) {
+          return category[toolKey];
         }
       }
-    });
-
-    function addScheduledTool(toolName) {
-      if (placeholder) {
-        placeholder.style.display = 'none';
-      }
-      if (document.querySelector(`.scheduled-item[data-tool="${toolName}"]`)) return;
-
-      const item = document.createElement('div');
-      item.className = 'scheduled-item';
-      item.dataset.tool = toolName;
-
-      const info = document.createElement('div');
-      info.className = 'tool-info';
-      const label = document.createElement('div');
-      label.className = 'tool-label';
-      label.textContent = toolName;
-      info.appendChild(label);
-
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.placeholder = 'Drag args here or type manually';
-      info.appendChild(input);
-
-      const removeBtn = document.createElement('button');
-      removeBtn.className = 'remove-btn';
-      removeBtn.textContent = '✕';
-      removeBtn.addEventListener('click', () => {
-        if (outputCards[toolName]) {
-          outputCards[toolName].remove();
-          delete outputCards[toolName];
-        }
-        item.remove();
-        if (!document.querySelector('.scheduled-item')) {
-          placeholder.style.display = '';
-        }
-      });
-
-      item.appendChild(info);
-      item.appendChild(removeBtn);
-      dropzone.appendChild(item);
-
-      if (!outputCards[toolName]) {
-        const card = createOutputCard(toolName);
-        outputCards[toolName] = card;
-        document.getElementById('output-container').appendChild(card);
-      }
+      return null;
     }
 
-    // ======== Create Output Card ========
-    function createOutputCard(toolName) {
-      const card = document.createElement('div');
-      card.className = 'output-card';
-      card.dataset.tool = toolName;
-
-      const header = document.createElement('div');
-      header.className = 'output-header';
-      header.innerHTML = `
-        <div class="title">${toolName} Output</div>
-        <button class="toggle-btn">▶</button>
-      `;
-      card.appendChild(header);
-
-      const body = document.createElement('div');
-      body.className = 'output-body';
-      card.appendChild(body);
-
-      const toggleBtn = header.querySelector('.toggle-btn');
-      header.addEventListener('click', () => {
-        const expanded = body.classList.toggle('expanded');
-        if (expanded) {
-          header.classList.add('expanded');
-          toggleBtn.textContent = '▼';
-          body.scrollTop = body.scrollHeight;
-        } else {
-          header.classList.remove('expanded');
-          toggleBtn.textContent = '▶';
-        }
+    function filterTools(searchTerm) {
+      const toolCards = document.querySelectorAll('.tool-card');
+      const categories = document.querySelectorAll('.tool-category');
+      
+      toolCards.forEach(card => {
+        const toolName = card.querySelector('.tool-name').textContent.toLowerCase();
+        const toolDesc = card.querySelector('.tool-description').textContent.toLowerCase();
+        const matches = toolName.includes(searchTerm.toLowerCase()) || 
+                       toolDesc.includes(searchTerm.toLowerCase());
+        
+        card.style.display = matches ? 'block' : 'none';
       });
 
-      return card;
+      // Hide empty categories
+      categories.forEach(category => {
+        const visibleTools = category.querySelectorAll('.tool-card[style="display: block;"], .tool-card:not([style])');
+        category.style.display = visibleTools.length > 0 ? 'block' : 'none';
+      });
     }
 
-    // ======== Start/Stop/Use CIDR Button Logic ========
-    document.getElementById('start-btn').addEventListener('click', () => {
-      const items = document.querySelectorAll('.scheduled-item');
-      if (items.length === 0) {
-        alert('No tools scheduled. Drag at least one tool into the list.');
+    // Scan operations
+    function startScan() {
+      if (AppState.scheduledTools.size === 0) {
+        alert('No tools scheduled. Please add some tools first.');
         return;
       }
+
       const scripts = [];
-      items.forEach(it => {
-        const tool = it.dataset.tool;
-        const argsText = it.querySelector('input').value.trim();
-        const args = argsText ? argsText.split(/\s+/) : [];
-        scripts.push({ tool, args });
+      AppState.scheduledTools.forEach((data, toolKey) => {
+        const item = document.querySelector(`.scheduled-item[data-tool="${toolKey}"]`);
+        const input = item.querySelector('.item-input');
+        const args = input.value.trim().split(/\s+/).filter(arg => arg);
+        
+        scripts.push({
+          tool: toolKey,
+          args: args
+        });
       });
-      for (const t in outputCards) {
-        const body = outputCards[t].querySelector('.output-body');
-        body.innerHTML = '';
-      }
+
+      // Clear existing output
+      clearAllOutput();
+
+      // Update UI
+      AppState.isScanning = true;
+      document.getElementById('start-scan-btn').disabled = true;
+      document.getElementById('stop-scan-btn').disabled = false;
+
+      // Start scan
       fetch('/start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ scripts })
       })
-        .then(resp => {
-          if (!resp.ok) {
-            return resp.json().then(j => {
-              console.error(j);
-              alert('Error: ' + j.message);
-            });
-          }
-        })
-        .catch(err => {
-          console.error('Fetch error:', err);
-        });
-    });
-
-    document.getElementById('stop-btn').addEventListener('click', () => {
-      fetch('/stop', { method: 'POST' })
-        .then(() => console.log('Stop requested.'))
-        .catch(err => console.error(err));
-    });
-
-    document.getElementById('use-cidr-btn').addEventListener('click', () => {
-      fetch('/local_cidr')
-        .then(resp => resp.json())
-        .then(data => {
-          if (data.cidr) {
-            let nmapItem = document.querySelector('.scheduled-item[data-tool="nmap"]');
-            if (!nmapItem) {
-              addScheduledTool('nmap');
-              nmapItem = document.querySelector('.scheduled-item[data-tool="nmap"]');
-            }
-            const input = nmapItem.querySelector('input');
-            input.value = `-sV ${data.cidr}`;
-          } else {
-            alert('Failed to detect local network.');
-          }
-        })
-        .catch(err => {
-          console.error(err);
-          alert('Error retrieving local CIDR.');
-        });
-    });
-
-    // ======== Scenario Save/Load Logic ========
-    function refreshScenarioList() {
-      fetch('/list_scenarios')
-        .then(resp => resp.json())
-        .then(data => {
-          const select = document.getElementById('scenario-list');
-          select.innerHTML = '<option value="">-- Load Scenario --</option>';
-          data.scenarios.forEach(name => {
-            const opt = document.createElement('option');
-            opt.value = name;
-            opt.textContent = name;
-            select.appendChild(opt);
-          });
-        })
-        .catch(err => console.error(err));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Scan started:', data);
+      })
+      .catch(error => {
+        console.error('Failed to start scan:', error);
+        alert('Failed to start scan: ' + error.message);
+        resetScanUI();
+      });
     }
 
-    document.getElementById('save-scenario-btn').addEventListener('click', () => {
+    function stopScan() {
+      fetch('/stop', { method: 'POST' })
+        .then(() => {
+          console.log('Scan stopped');
+          resetScanUI();
+        })
+        .catch(error => {
+          console.error('Failed to stop scan:', error);
+        });
+    }
+
+    function resetScanUI() {
+      AppState.isScanning = false;
+      document.getElementById('start-scan-btn').disabled = false;
+      document.getElementById('stop-scan-btn').disabled = true;
+    }
+
+    function detectNetwork() {
+      const btn = document.getElementById('detect-network-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Detecting...';
+
+      fetch('/local_cidr')
+        .then(response => response.json())
+        .then(data => {
+          if (data.cidr) {
+            // Add nmap with detected network
+            addScheduledTool('nmap');
+            setTimeout(() => {
+              addArgumentToTool('nmap', data.cidr);
+            }, 100);
+            
+            alert(`Network detected: ${data.cidr}`);
+          } else {
+            alert('Failed to detect local network');
+          }
+        })
+        .catch(error => {
+          console.error('Network detection failed:', error);
+          alert('Network detection failed: ' + error.message);
+        })
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = 'Auto-Detect Network';
+        });
+    }
+
+    // Scenario management
+    function saveScenario() {
       const name = document.getElementById('scenario-name').value.trim();
       if (!name) {
-        alert('Enter a name for the scenario.');
+        alert('Please enter a scenario name');
         return;
       }
-      const items = document.querySelectorAll('.scheduled-item');
-      if (items.length === 0) {
-        alert('No tools scheduled. Cannot save empty scenario.');
+
+      if (AppState.scheduledTools.size === 0) {
+        alert('No tools to save');
         return;
       }
+
       const scripts = [];
-      items.forEach(it => {
-        const tool = it.dataset.tool;
-        const argsText = it.querySelector('input').value.trim();
-        const args = argsText ? argsText.split(/\s+/) : [];
-        scripts.push({ tool, args });
+      AppState.scheduledTools.forEach((data, toolKey) => {
+        const item = document.querySelector(`.scheduled-item[data-tool="${toolKey}"]`);
+        const input = item.querySelector('.item-input');
+        const args = input.value.trim().split(/\s+/).filter(arg => arg);
+        
+        scripts.push({
+          tool: toolKey,
+          args: args
+        });
       });
+
       fetch('/save_scenario', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, scripts })
       })
-        .then(resp => resp.json())
-        .then(data => {
-          if (data.status === 'saved') {
-            alert(`Scenario "${data.name}" saved.`);
-            refreshScenarioList();
-          } else {
-            alert(`Error: ${data.message}`);
-          }
-        })
-        .catch(err => console.error(err));
-    });
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'saved') {
+          alert(`Scenario "${data.name}" saved successfully`);
+          loadScenarios();
+        } else {
+          alert(`Failed to save scenario: ${data.message}`);
+        }
+      })
+      .catch(error => {
+        console.error('Failed to save scenario:', error);
+        alert('Failed to save scenario: ' + error.message);
+      });
+    }
 
-    document.getElementById('scenario-list').addEventListener('change', e => {
-      const name = e.target.value;
-      if (!name) return;
-      fetch(`/load_scenario/${name}`)
-        .then(resp => resp.json())
+    function loadScenario(event) {
+      const scenarioName = event.target.value;
+      if (!scenarioName) return;
+
+      fetch(`/load_scenario/${scenarioName}`)
+        .then(response => response.json())
         .then(data => {
-          if (data.status && data.status === 'error') {
-            alert(`Error: ${data.message}`);
+          if (data.status === 'error') {
+            alert(`Failed to load scenario: ${data.message}`);
             return;
           }
-          document.querySelectorAll('.scheduled-item').forEach(el => el.remove());
-          document.querySelectorAll('.output-card').forEach(el => el.remove());
-          Object.keys(outputCards).forEach(k => delete outputCards[k]);
 
-          data.scripts.forEach(entry => {
-            const { tool, args } = entry;
-            addScheduledTool(tool);
-            const item = document.querySelector(`.scheduled-item[data-tool="${tool}"]`);
-            if (item) {
-              item.querySelector('input').value = args.join(' ');
-            }
+          // Clear current tools
+          clearAllTools();
+
+          // Load scenario tools
+          data.scripts.forEach(script => {
+            addScheduledTool(script.tool);
+            setTimeout(() => {
+              const item = document.querySelector(`.scheduled-item[data-tool="${script.tool}"]`);
+              if (item) {
+                const input = item.querySelector('.item-input');
+                input.value = script.args.join(' ');
+              }
+            }, 100);
+          });
+
+          alert(`Scenario "${scenarioName}" loaded successfully`);
+        })
+        .catch(error => {
+          console.error('Failed to load scenario:', error);
+          alert('Failed to load scenario: ' + error.message);
+        });
+    }
+
+    function loadScenarios() {
+      fetch('/list_scenarios')
+        .then(response => response.json())
+        .then(data => {
+          const select = document.getElementById('scenario-list');
+          select.innerHTML = '<option value="">-- Load Scenario --</option>';
+          
+          data.scenarios.forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            select.appendChild(option);
           });
         })
-        .catch(err => console.error(err));
-    });
+        .catch(error => {
+          console.error('Failed to load scenarios:', error);
+        });
+    }
 
-    // Initial load of scenarios
-    refreshScenarioList();
+    function clearAllTools() {
+      AppState.scheduledTools.clear();
+      document.querySelectorAll('.scheduled-item').forEach(item => item.remove());
+      document.getElementById('drop-placeholder').style.display = 'block';
+      
+      Object.values(AppState.outputCards).forEach(card => card.remove());
+      AppState.outputCards = {};
+    }
+
+    function clearAllOutput() {
+      Object.values(AppState.outputCards).forEach(card => {
+        const content = card.querySelector('.card-content');
+        content.innerHTML = '';
+      });
+    }
+
+    function expandAllOutput() {
+      Object.values(AppState.outputCards).forEach(card => {
+        const header = card.querySelector('.card-header');
+        const body = card.querySelector('.card-body');
+        const toggle = card.querySelector('.card-toggle');
+        
+        body.classList.add('expanded');
+        header.classList.add('expanded');
+        toggle.textContent = '▼';
+      });
+    }
   </script>
 </body>
 

@@ -2,79 +2,755 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Octapus – Help</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OctapusPrime – Help & Documentation</title>
   <style>
-    /* ===== Global Dark Mode ===== */
+    /* ===== CSS Custom Properties ===== */
+    :root {
+      --primary-bg: #0d0d0d;
+      --secondary-bg: #1a1a1a;
+      --tertiary-bg: #262626;
+      --primary-text: #e6e6e6;
+      --secondary-text: #bbb;
+      --accent-color: #39ff14;
+      --accent-shadow: 0 0 8px #39ff14;
+      --border-color: #333;
+      --font-mono: "Roboto Mono", "Courier New", monospace;
+      --transition: all 0.3s ease;
+      --glow-box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+    }
+
+    /* ===== Reset & Base Styles ===== */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    html, body {
-      height: 100%;
-      background: #0d0d0d;
-      color: #e6e6e6;
-      font-family: "Roboto Mono", monospace;
-      display: flex;
-      flex-direction: column;
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--primary-bg);
+      color: var(--primary-text);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    /* ===== Navigation ===== */
+    .nav-back {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 12px 20px;
+      background: var(--secondary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      text-shadow: var(--accent-shadow);
+      transition: var(--transition);
+    }
+
+    .nav-back:hover {
+      background: var(--tertiary-bg);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(57, 255, 20, 0.2);
+    }
+
+    /* ===== Header ===== */
+    .header {
+      text-align: center;
+      padding: 120px 20px 60px;
+      background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+    }
+
+    .header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--accent-color);
+      text-shadow: var(--accent-shadow);
+      margin-bottom: 20px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    .header .subtitle {
+      font-size: 1.1rem;
+      color: var(--secondary-text);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 8px var(--accent-color); }
+      to { text-shadow: 0 0 20px var(--accent-color), 0 0 30px var(--accent-color); }
+    }
+
+    /* ===== Quick Navigation ===== */
+    .quick-nav {
+      background: var(--secondary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 0 20px 30px;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .quick-nav h2 {
+      color: var(--accent-color);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .nav-item {
+      background: var(--tertiary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 15px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-item:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: var(--glow-box-shadow);
+    }
+
+    .nav-item a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* ===== Main Content ===== */
+    .main-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    .help-section {
+      background: var(--secondary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      position: relative;
       overflow: hidden;
     }
-    a {
-      text-decoration: none;
-      color: #39ff14;
+
+    .help-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-color), transparent);
+      opacity: 0.8;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+      text-shadow: 0 0 4px var(--accent-color);
+    }
+
+    .section-content {
+      color: var(--secondary-text);
+      font-size: 15px;
+    }
+
+    .section-content p {
+      margin-bottom: 16px;
+    }
+
+    .section-content strong {
+      color: var(--primary-text);
+    }
+
+    /* ===== FAQ Accordion ===== */
+    .faq-item {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      background: var(--tertiary-bg);
+      padding: 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .faq-question:hover {
+      background: var(--secondary-bg);
+    }
+
+    .faq-question h3 {
+      color: var(--primary-text);
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .faq-toggle {
+      color: var(--accent-color);
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+    }
+
+    .faq-answer.active {
+      padding: 20px;
+      max-height: 300px;
+    }
+
+    .faq-item.active .faq-toggle {
+      transform: rotate(180deg);
+    }
+
+    /* ===== Feature Grid ===== */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .feature-card {
+      background: var(--tertiary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--glow-box-shadow);
+      border-color: var(--accent-color);
+    }
+
+    .feature-card h4 {
+      color: var(--accent-color);
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .feature-card p {
+      color: var(--secondary-text);
       font-size: 14px;
-      padding: 16px;
-      display: inline-block;
-      text-shadow: 0 0 4px #39ff14;
+      margin-bottom: 15px;
     }
-    a:hover {
-      text-decoration: underline;
-    }
-    h1 {
-      margin-top: 80px;
-      text-align: center;
-      font-size: 28px;
-      color: #39ff14;
-      text-shadow: 0 0 8px #39ff14;
-    }
-    p {
-      margin: 24px auto;
-      max-width: 600px;
-      text-align: center;
-      line-height: 1.4;
-      color: #bbb;
-      font-size: 15px;
-    }
-    ul {
-      margin: 24px auto;
-      max-width: 600px;
+
+    .feature-card ul {
       list-style: none;
-      padding-left: 0;
-      color: #bbb;
-      font-size: 15px;
+      padding: 0;
     }
-    li {
-      margin-bottom: 8px;
+
+    .feature-card li {
+      color: var(--secondary-text);
+      font-size: 13px;
+      padding: 4px 0;
+      position: relative;
+      padding-left: 20px;
     }
-    li::before {
-      content: "• ";
-      color: #39ff14;
+
+    .feature-card li::before {
+      content: "▸";
+      color: var(--accent-color);
+      position: absolute;
+      left: 0;
+    }
+
+    /* ===== Code Blocks ===== */
+    .code-block {
+      background: var(--primary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 15px;
+      margin: 15px 0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      color: var(--accent-color);
+      margin: 0;
+    }
+
+    /* ===== Search Box ===== */
+    .search-container {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 400px;
+      padding: 12px 20px;
+      background: var(--tertiary-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 25px;
+      color: var(--primary-text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-box:focus {
+      border-color: var(--accent-color);
+      box-shadow: var(--glow-box-shadow);
+    }
+
+    .search-box::placeholder {
+      color: var(--secondary-text);
+    }
+
+    /* ===== Responsive Design ===== */
+    @media (max-width: 768px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .help-section {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <a href="/">← Back to Home</a>
-  <h1>Octapus – Help</h1>
-  <p>
-    Welcome to Octapus Help. Below are quick pointers to get you started:
-  </p>
-  <ul>
-    <li><strong>Dashboard:</strong> Drag-and-drop tools, adjust arguments, then start/stop scans.</li>
-    <li><strong>Scenario:</strong> Build custom “if-this-then-that” scan sequences.</li>
-    <li><strong>Settings:</strong> Configure defaults and alert thresholds.</li>
-    <li><strong>Logs:</strong> View live tool output and historical scan data.</li>
-    <li><strong>Updates:</strong> Check for new Octapus versions and news.</li>
-    <li><strong>Demo:</strong> See a preconfigured example scenario in action.</li>
-  </ul>
+  <a href="/" class="nav-back">← Back to Dashboard</a>
+  
+  <header class="header">
+    <h1>Help & Documentation</h1>
+    <p class="subtitle">Complete guide to using OctapusPrime's security automation features</p>
+  </header>
+
+  <!-- Quick Navigation -->
+  <section class="quick-nav">
+    <h2>Quick Navigation</h2>
+    <div class="nav-grid">
+      <div class="nav-item" onclick="scrollToSection('getting-started')">
+        <a href="#getting-started">Getting Started</a>
+      </div>
+      <div class="nav-item" onclick="scrollToSection('dashboard-guide')">
+        <a href="#dashboard-guide">Dashboard Guide</a>
+      </div>
+      <div class="nav-item" onclick="scrollToSection('scenario-builder')">
+        <a href="#scenario-builder">Scenario Builder</a>
+      </div>
+      <div class="nav-item" onclick="scrollToSection('tools-reference')">
+        <a href="#tools-reference">Tools Reference</a>
+      </div>
+      <div class="nav-item" onclick="scrollToSection('gpio-setup')">
+        <a href="#gpio-setup">GPIO Setup</a>
+      </div>
+      <div class="nav-item" onclick="scrollToSection('faq')">
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="main-content">
+    <!-- Search -->
+    <div class="search-container">
+      <input type="text" class="search-box" placeholder="Search help topics..." id="search-input" onkeyup="searchHelp()">
+    </div>
+
+    <!-- Getting Started -->
+    <section class="help-section" id="getting-started">
+      <h2 class="section-title">Getting Started</h2>
+      <div class="section-content">
+        <p>
+          <strong>OctapusPrime</strong> is a comprehensive security automation platform that simplifies complex penetration testing workflows. Whether you're a security professional or just getting started, this guide will help you understand the key features and how to use them effectively.
+        </p>
+        
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>First Steps</h4>
+            <p>Essential tasks to get up and running:</p>
+            <ul>
+              <li>Check network connectivity in Settings</li>
+              <li>Configure GPIO pins if using hardware buttons</li>
+              <li>Test your setup with the Demo page</li>
+              <li>Review available security tools</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Basic Workflow</h4>
+            <p>Typical security testing process:</p>
+            <ul>
+              <li>Select tools from the Dashboard</li>
+              <li>Configure scan parameters</li>
+              <li>Execute scans individually or as scenarios</li>
+              <li>Monitor progress in real-time logs</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Advanced Features</h4>
+            <p>Power user capabilities:</p>
+            <ul>
+              <li>Create conditional scan sequences</li>
+              <li>Save and share custom scenarios</li>
+              <li>Use GPIO buttons for remote triggering</li>
+              <li>Integrate with external systems via API</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard Guide -->
+    <section class="help-section" id="dashboard-guide">
+      <h2 class="section-title">Dashboard Guide</h2>
+      <div class="section-content">
+        <p>The main dashboard is your control center for launching security scans. It provides an intuitive drag-and-drop interface for building custom workflows.</p>
+        
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Available Tools</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>Network Discovery</h4>
+            <ul>
+              <li><strong>Nmap:</strong> Port scanning and service detection</li>
+              <li><strong>Masscan:</strong> High-speed port scanning</li>
+              <li><strong>Zmap:</strong> Internet-wide network scanning</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Web Application Testing</h4>
+            <ul>
+              <li><strong>Gobuster:</strong> Directory and file enumeration</li>
+              <li><strong>Nikto:</strong> Web vulnerability scanning</li>
+              <li><strong>SQLMap:</strong> SQL injection testing</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Credential Attacks</h4>
+            <ul>
+              <li><strong>Hydra:</strong> Network login brute-forcing</li>
+              <li><strong>Medusa:</strong> Parallel login brute-forcer</li>
+              <li><strong>John:</strong> Password hash cracking</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">How to Use</h3>
+        <ol style="padding-left: 20px; color: var(--secondary-text);">
+          <li style="margin-bottom: 10px;"><strong>Select Tools:</strong> Click on tool buttons to add them to your scan sequence</li>
+          <li style="margin-bottom: 10px;"><strong>Configure Parameters:</strong> Adjust arguments, targets, and options for each tool</li>
+          <li style="margin-bottom: 10px;"><strong>Set Network Target:</strong> Specify IP ranges, domains, or use auto-detected network</li>
+          <li style="margin-bottom: 10px;"><strong>Execute Scan:</strong> Click "Start Scan" to begin the automated sequence</li>
+          <li style="margin-bottom: 10px;"><strong>Monitor Progress:</strong> Watch real-time output in the integrated terminal</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Scenario Builder -->
+    <section class="help-section" id="scenario-builder">
+      <h2 class="section-title">Scenario Builder</h2>
+      <div class="section-content">
+        <p>Create sophisticated "if-this-then-that" workflows that automatically adapt based on scan results. Perfect for complex penetration testing methodologies.</p>
+        
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Conditional Logic</h3>
+        <div class="code-block">
+          <pre>Example Scenario:
+1. Nmap scan discovers open port 80
+2. IF port 80 is open, THEN run Gobuster directory scan
+3. IF admin directory found, THEN run Nikto vulnerability scan
+4. IF SSH port 22 is open, THEN run Hydra brute-force attack</pre>
+        </div>
+        
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>Condition Types</h4>
+            <ul>
+              <li><strong>Always:</strong> Step always executes</li>
+              <li><strong>Previous Contains:</strong> Execute if previous output contains text</li>
+              <li><strong>Port Open:</strong> Execute if specific port is discovered</li>
+              <li><strong>Service Detected:</strong> Execute if service is identified</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Best Practices</h4>
+            <ul>
+              <li>Start with broad network discovery</li>
+              <li>Use conditional logic to target findings</li>
+              <li>Include cleanup and reporting steps</li>
+              <li>Test scenarios on safe environments first</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools Reference -->
+    <section class="help-section" id="tools-reference">
+      <h2 class="section-title">Security Tools Reference</h2>
+      <div class="section-content">
+        <p>Complete reference for all integrated security tools with common usage patterns and recommended parameters.</p>
+        
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>Nmap</h4>
+            <p>Network exploration and security auditing</p>
+            <div class="code-block">
+              <pre>Common Scans:
+-sV         Service version detection
+-sS         TCP SYN scan
+-sU         UDP scan
+-A          Aggressive scan (OS, version, scripts)
+-T4         Timing template (fast)
+-p-         Scan all ports</pre>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Gobuster</h4>
+            <p>Directory and file enumeration</p>
+            <div class="code-block">
+              <pre>Directory Scan:
+dir -u http://target.com -w wordlist.txt
+-x php,html    File extensions
+-s 200,204     Status codes
+-t 50          Threads</pre>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Hydra</h4>
+            <p>Network login brute-forcer</p>
+            <div class="code-block">
+              <pre>SSH Brute Force:
+-l admin -P passwords.txt target ssh
+-t 4           Parallel tasks
+-V             Verbose output
+-f             Stop on first success</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GPIO Setup -->
+    <section class="help-section" id="gpio-setup">
+      <h2 class="section-title">GPIO Hardware Setup</h2>
+      <div class="section-content">
+        <p>Configure physical hardware buttons for remote scan triggering. Supports Raspberry Pi, Orange Pi, Nano Pi, and other single-board computers.</p>
+        
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>Supported Platforms</h4>
+            <ul>
+              <li><strong>Raspberry Pi:</strong> gpiozero, RPi.GPIO, lgpio</li>
+              <li><strong>Orange Pi:</strong> OPi.GPIO library</li>
+              <li><strong>Nano Pi:</strong> OPi.GPIO library</li>
+              <li><strong>Generic Linux:</strong> libgpiod</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Basic Wiring</h4>
+            <ul>
+              <li>Button: GPIO pin to GND (with pull-up)</li>
+              <li>LED: GPIO pin through 220Ω resistor</li>
+              <li>Check platform pinout diagrams</li>
+              <li>Test connections before powering on</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Configuration</h4>
+            <ul>
+              <li>Go to Settings → GPIO Configuration</li>
+              <li>Select your platform and library</li>
+              <li>Set button and LED pin numbers</li>
+              <li>Test configuration before saving</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="help-section" id="faq">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="section-content">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h3>How do I install security tools like Nmap and Gobuster?</h3>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            <p>Most tools can be installed via your system's package manager:</p>
+            <div class="code-block">
+              <pre># Ubuntu/Debian
+sudo apt update
+sudo apt install nmap masscan gobuster nikto sqlmap hydra
+
+# Or use the included install script
+./install_tools.sh</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h3>Can I run OctapusPrime without GPIO hardware?</h3>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! OctapusPrime works perfectly without GPIO hardware. You can control everything through the web interface. GPIO buttons are an optional convenience feature for hands-free operation.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h3>How do I create custom wordlists for brute-force attacks?</h3>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            <p>You can use existing wordlists from /usr/share/wordlists/ or create custom ones:</p>
+            <div class="code-block">
+              <pre># Common wordlist locations
+/usr/share/wordlists/rockyou.txt
+/usr/share/wordlists/dirb/common.txt
+/usr/share/wordlists/dirbuster/
+
+# Create custom wordlist
+echo -e "admin\npassword\n123456" > custom.txt</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h3>What network ranges can I scan safely?</h3>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Only scan networks you own or have explicit permission to test.</strong> Common safe ranges for lab environments include:</p>
+            <ul style="margin-top: 10px;">
+              <li>192.168.x.x/24 - Private home/lab networks</li>
+              <li>10.x.x.x/8 - Private corporate networks</li>
+              <li>172.16.x.x/12 - Private networks</li>
+              <li>127.0.0.1 - Localhost only</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h3>How do I access OctapusPrime remotely?</h3>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            <p>The web interface runs on port 8080. Access it via:</p>
+            <div class="code-block">
+              <pre># Local access
+http://localhost:8080
+
+# Remote access (replace IP)
+http://192.168.1.100:8080
+
+# Find your IP address
+ip addr show</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function scrollToSection(sectionId) {
+      document.getElementById(sectionId).scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    function toggleFAQ(element) {
+      const faqItem = element.parentElement;
+      const answer = faqItem.querySelector('.faq-answer');
+      
+      faqItem.classList.toggle('active');
+      answer.classList.toggle('active');
+    }
+
+    function searchHelp() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const sections = document.querySelectorAll('.help-section');
+      
+      sections.forEach(section => {
+        const content = section.textContent.toLowerCase();
+        if (content.includes(searchTerm) || searchTerm === '') {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    }
+
+    // Auto-expand FAQ items based on search
+    document.getElementById('search-input').addEventListener('input', function() {
+      const searchTerm = this.value.toLowerCase();
+      const faqItems = document.querySelectorAll('.faq-item');
+      
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question h3').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+        
+        if ((question.includes(searchTerm) || answer.includes(searchTerm)) && searchTerm !== '') {
+          item.classList.add('active');
+          item.querySelector('.faq-answer').classList.add('active');
+        } else if (searchTerm === '') {
+          item.classList.remove('active');
+          item.querySelector('.faq-answer').classList.remove('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
