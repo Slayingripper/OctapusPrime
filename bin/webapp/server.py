@@ -72,7 +72,7 @@ except Exception:
 # -----------------------------------------------------
 # Flask + SocketIO setup
 # -----------------------------------------------------
-app = Flask(__name__, static_folder=str(FRONTEND_DIR), template_folder=str(FRONTEND_DIR))
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 socketio = SocketIO(app, async_mode="threading")
 
 # -----------------------------------------------------
