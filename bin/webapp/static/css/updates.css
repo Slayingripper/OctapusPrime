@@ -1,0 +1,433 @@
+/* ===== CSS Custom Properties ===== */
+:root {
+  --primary-bg: #0d0d0d;
+  --secondary-bg: #1a1a1a;
+  --tertiary-bg: #262626;
+  --primary-text: #e6e6e6;
+  --secondary-text: #bbb;
+  --accent-color: #39ff14;
+  --accent-shadow: 0 0 8px #39ff14;
+  --border-color: #333;
+  --font-mono: "Roboto Mono", "Courier New", monospace;
+  --transition: all 0.3s ease;
+  --glow-box-shadow: 0 0 12px rgba(57, 255, 20, 0.3);
+  --warning-color: #ff9500;
+  --error-color: #ff4444;
+  --success-color: #00ff88;
+}
+
+/* ===== Reset & Base Styles ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, var(--primary-bg) 0%, #0a0a0a 100%);
+  color: var(--primary-text);
+  font-family: var(--font-mono);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ===== Animated Background Grid ===== */
+.background-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(57, 255, 20, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridFlow 30s linear infinite;
+  z-index: 1;
+}
+
+@keyframes gridFlow {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(40px, 40px); }
+}
+
+/* ===== Navigation ===== */
+.nav-back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 12px 20px;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  transition: var(--transition);
+  z-index: 1000;
+  box-shadow: var(--glow-box-shadow);
+}
+
+.nav-back:hover {
+  background: var(--tertiary-bg);
+  box-shadow: var(--accent-shadow);
+  transform: translateX(-3px);
+}
+
+/* ===== Header ===== */
+.header {
+  text-align: center;
+  padding: 120px 20px 60px;
+  position: relative;
+  z-index: 10;
+}
+
+.header h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  color: var(--accent-color);
+  text-shadow: var(--accent-shadow);
+  margin-bottom: 20px;
+  animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  0% { text-shadow: 0 0 20px var(--accent-color); }
+  100% { text-shadow: 0 0 30px var(--accent-color), 0 0 40px var(--accent-color); }
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--secondary-text);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+/* ===== GitHub Integration Section ===== */
+.github-section {
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 40px;
+  box-shadow: var(--glow-box-shadow);
+}
+
+.github-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.github-icon {
+  width: 32px;
+  height: 32px;
+  fill: var(--accent-color);
+}
+
+.github-title {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  margin: 0;
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--tertiary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.github-link:hover {
+  background: var(--accent-color);
+  color: var(--primary-bg);
+  box-shadow: var(--accent-shadow);
+}
+
+/* ===== Loading Indicator ===== */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--secondary-text);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color);
+  border-top: 3px solid var(--accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== Release Cards ===== */
+.releases-container {
+  display: grid;
+  gap: 25px;
+}
+
+.release-card {
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 25px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.release-card:hover {
+  border-color: var(--accent-color);
+  box-shadow: var(--glow-box-shadow);
+  transform: translateY(-2px);
+}
+
+.release-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-color);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.release-card:hover::before {
+  opacity: 1;
+}
+
+.release-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.release-version {
+  font-size: 1.3rem;
+  color: var(--accent-color);
+  font-weight: bold;
+  margin: 0;
+}
+
+.release-date {
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+  background: var(--tertiary-bg);
+  padding: 4px 12px;
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+}
+
+.release-tag {
+  display: inline-block;
+  background: var(--accent-color);
+  color: var(--primary-bg);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.release-tag.pre-release {
+  background: var(--warning-color);
+}
+
+.release-description {
+  color: var(--primary-text);
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.release-changes {
+  margin-top: 15px;
+}
+
+.changes-title {
+  color: var(--accent-color);
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.changes-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.changes-list li {
+  padding: 5px 0;
+  padding-left: 20px;
+  position: relative;
+  color: var(--secondary-text);
+}
+
+.changes-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+/* ===== Download Links ===== */
+.download-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.download-btn {
+  padding: 8px 16px;
+  background: var(--tertiary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.download-btn:hover {
+  background: var(--accent-color);
+  color: var(--primary-bg);
+}
+
+/* ===== Fallback Content ===== */
+.fallback-updates {
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 30px;
+}
+
+.fallback-title {
+  color: var(--accent-color);
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+.update-list {
+  list-style: none;
+  padding: 0;
+}
+
+.update-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  padding-left: 25px;
+}
+
+.update-list li:last-child {
+  border-bottom: none;
+}
+
+.update-list li::before {
+  content: "●";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-size: 1.2rem;
+}
+
+/* ===== Error State ===== */
+.error-message {
+  background: rgba(255, 68, 68, 0.1);
+  border: 1px solid var(--error-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  color: var(--error-color);
+  text-align: center;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .header {
+    padding: 100px 20px 40px;
+  }
+
+  .main-content {
+    padding: 0 15px 40px;
+  }
+
+  .github-section {
+    padding: 20px;
+  }
+
+  .release-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .download-links {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-back {
+    top: 15px;
+    left: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .release-card {
+    padding: 20px;
+  }
+
+  .github-section {
+    padding: 15px;
+  }
+}

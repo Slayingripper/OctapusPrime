@@ -1,0 +1,103 @@
+{
+  "name": "Web Service Audit with Layered Penetration Testing",
+  "steps": [
+    {
+      "tool": "nmap",
+      "args": [
+        "-sV", 
+        "-sVn", 
+        "-sV", 
+        "-p", 
+        "192.168.1.10", 
+        "-o", "nmap.output",
+        "-sVn",
+        "-sVn", 
+        "-sV"
+      ],
+      "description": "Scan for common vulnerabilities using multiple attack vectors (TCP, UDP, and protocol headers)."
+    },
+    {
+      "tool": "gobuster",
+      "args": [
+        "-sL", 
+        "-w", 
+        "/usr/share/wordlists/dirb/common.txt", 
+        "-e", 
+        "dir",
+        "-t", "l",
+        "-s", 
+        "http://192.168.1.10",
+        "-w", 
+        "wordlists/sharedir"
+      ],
+      "description": "Scan for hidden directories and directory structures using a layered approach."
+    },
+    {
+      "tool": "nikto",
+      "args": [
+        "-h", 
+        "http://192.168.1.10",
+        "-p", 
+        "80", 
+        "-v", 
+        "-s", 
+        "HTTP/1.1",
+        "-s", 
+        "GET",
+        "-s", 
+        "POST",
+        "-s", 
+        "PUT",
+        "-s", 
+        "DELETE",
+        "-s", 
+        "OPTIONS",
+        "-s", 
+        "TRACE",
+        "-s", 
+        "SSL"
+      ],
+      "description": "Penetrate into the application layer with a focus on common vulnerabilities and protocol usage."
+    },
+    {
+      "tool": "sqlmap",
+      "args": [
+        "-u", 
+        "http://192.168.1.10/login.php?user=admin&pass=123",
+        "-r", 
+        "100",
+        "-s", 
+        "sql",
+        "-c", 
+        "100",
+        "-t", 
+        "sql",
+        "-x", 
+        "hash",
+        "-i", 
+        "100",
+        "-m", 
+        "sql"
+      ],
+      "description": "Execute SQL injection attacks with multiple parameters and a SQL map for detailed parameter analysis."
+    },
+    {
+      "tool": "exploitdb",
+      "args": [
+        "-i", 
+        "http://192.168.1.10",
+        "-s", 
+        "exploit",
+        "-s", 
+        "exploit-db",
+        "-s", 
+        "exploit-db",
+        "-s", 
+        "exploit-db",
+        "-s", 
+        "exploit-db"
+      ],
+      "description": "Scan for known exploits using an advanced database of vulnerabilities."
+    }
+  ]
+}

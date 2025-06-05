@@ -1,0 +1,279 @@
+/* ===== CSS Custom Properties ===== */
+:root {
+  --primary-bg: #0d0d0d;
+  --secondary-bg: #1a1a1a;
+  --tertiary-bg: #262626;
+  --primary-text: #e6e6e6;
+  --secondary-text: #bbb;
+  --accent-color: #39ff14;
+  --accent-shadow: 0 0 8px #39ff14;
+  --border-color: #333;
+  --font-mono: "Roboto Mono", "Courier New", monospace;
+  --transition: all 0.3s ease;
+}
+
+/* ===== Reset & Base Styles ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--primary-bg);
+  color: var(--primary-text);
+  font-family: var(--font-mono);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== Navigation ===== */
+.nav-back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 12px 20px;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  text-shadow: var(--accent-shadow);
+  transition: var(--transition);
+}
+
+.nav-back:hover {
+  background: var(--tertiary-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(57, 255, 20, 0.2);
+}
+
+/* ===== Header ===== */
+.header {
+  text-align: center;
+  padding: 120px 20px 60px;
+  background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
+}
+
+.header h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--accent-color);
+  text-shadow: var(--accent-shadow);
+  margin-bottom: 20px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.header .subtitle {
+  font-size: 1.2rem;
+  color: var(--secondary-text);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 8px var(--accent-color); }
+  to { text-shadow: 0 0 20px var(--accent-color), 0 0 30px var(--accent-color); }
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+.content-section {
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 40px;
+  margin-bottom: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.content-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-color), transparent);
+  opacity: 0.8;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin-bottom: 20px;
+  text-shadow: 0 0 4px var(--accent-color);
+}
+
+.section-content {
+  color: var(--secondary-text);
+  font-size: 15px;
+}
+
+.section-content p {
+  margin-bottom: 16px;
+}
+
+.section-content strong {
+  color: var(--primary-text);
+}
+
+/* ===== Lists ===== */
+.feature-list,
+.tech-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li,
+.tech-list li {
+  position: relative;
+  padding: 12px 0 12px 30px;
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.feature-list li:last-child,
+.tech-list li:last-child {
+  border-bottom: none;
+}
+
+.feature-list li::before,
+.tech-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: bold;
+  transform: translateY(2px);
+}
+
+.feature-list li:hover,
+.tech-list li:hover {
+  padding-left: 40px;
+  color: var(--primary-text);
+}
+
+/* ===== Code Elements ===== */
+code {
+  background: var(--tertiary-bg);
+  color: var(--accent-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  border: 1px solid var(--border-color);
+}
+
+/* ===== Installation Steps ===== */
+.install-steps {
+  counter-reset: step-counter;
+  list-style: none;
+  padding: 0;
+}
+
+.install-steps li {
+  counter-increment: step-counter;
+  position: relative;
+  padding: 20px 0 20px 60px;
+  border-left: 2px solid var(--border-color);
+  margin-left: 20px;
+}
+
+.install-steps li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: -25px;
+  top: 15px;
+  background: var(--accent-color);
+  color: var(--primary-bg);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.install-steps li:last-child {
+  border-left-color: transparent;
+}
+
+/* ===== Architecture Grid ===== */
+.arch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.arch-item {
+  background: var(--tertiary-bg);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.arch-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  border-color: var(--accent-color);
+}
+
+.arch-item h4 {
+  color: var(--accent-color);
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--secondary-bg);
+  border-top: 1px solid var(--border-color);
+  margin-top: 40px;
+}
+
+.footer p {
+  color: #777;
+  font-size: 13px;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .content-section {
+    padding: 20px;
+  }
+  
+  .arch-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .install-steps li {
+    padding-left: 40px;
+    margin-left: 10px;
+  }
+  
+  .install-steps li::before {
+    left: -20px;
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+}
