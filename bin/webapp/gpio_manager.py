@@ -11,19 +11,20 @@ from typing import Optional, Tuple, Dict, Any
 BASE_DIR = Path(__file__).resolve().parent
 CONFIG_FILE = BASE_DIR / "gpio_config.json"
 
+
 class GPIOManager:
     """
     Manages GPIO configuration and initialization across different SBC platforms.
     Supports Raspberry Pi, Orange Pi, Odroid, Nano Pi, and manual override.
     """
-    
+
     def __init__(self):
         self.config = self.load_config()
         self.gpio_lib = None
         self.button = None
         self.led = None
         self.platform_info = self.detect_platform()
-        
+
     def load_config(self) -> Dict[str, Any]:
         """Load GPIO configuration from file."""
         default_config = {
@@ -36,12 +37,12 @@ class GPIOManager:
             "button_pull_up": True,
             "macchanger_pull_up": True,
             "button_bounce_time": 0.1,
-            "led_active_high": True
+            "led_active_high": True,
         }
-        
+
         try:
             if CONFIG_FILE.exists():
-                with open(CONFIG_FILE, 'r') as f:
+                with open(CONFIG_FILE, "r") as f:
                     config = json.load(f)
                 # Merge with defaults for any missing keys
                 for key, value in default_config.items():
@@ -50,20 +51,20 @@ class GPIOManager:
                 return config
         except Exception as e:
             logging.warning(f"Failed to load GPIO config: {e}")
-        
+
         return default_config
-    
+
     def save_config(self, config: Dict[str, Any]) -> bool:
         """Save GPIO configuration to file."""
         try:
-            with open(CONFIG_FILE, 'w') as f:
+            with open(CONFIG_FILE, "w") as f:
                 json.dump(config, f, indent=2)
             self.config = config
             return True
         except Exception as e:
             logging.error(f"Failed to save GPIO config: {e}")
             return False
-    
+
     def detect_platform(self) -> Dict[str, str]:
         """
         Detect the current Single Board Computer platform.
@@ -72,19 +73,19 @@ class GPIOManager:
         platform_info = {
             "platform": "unknown",
             "model": "unknown",
-            "recommended_lib": "gpiozero"
+            "recommended_lib": "gpiozero",
         }
-        
+
         try:
             # Check /proc/cpuinfo for platform identification
             if os.path.exists("/proc/cpuinfo"):
                 with open("/proc/cpuinfo", "r") as f:
                     cpuinfo = f.read().lower()
-                
+
                 if "raspberry pi" in cpuinfo:
                     platform_info["platform"] = "raspberry_pi"
                     platform_info["recommended_lib"] = "gpiozero"
-                    
+
                     # Detect specific Pi model
                     if "pi 4" in cpuinfo:
                         platform_info["model"] = "Raspberry Pi 4"
@@ -94,12 +95,12 @@ class GPIOManager:
                         platform_info["model"] = "Raspberry Pi Zero"
                     else:
                         platform_info["model"] = "Raspberry Pi"
-                        
+
                 elif "allwinner" in cpuinfo or "sun" in cpuinfo:
                     # Check if it's specifically a Nano Pi
                     if os.path.exists("/proc/device-tree/model"):
                         with open("/proc/device-tree/model", "r") as f:
-                            model = f.read().strip('\x00').lower()
+                            model = f.read().strip("\x00").lower()
                         if "nanopi" in model or "friendlyarm" in model:
                             platform_info["platform"] = "nano_pi"
                             platform_info["model"] = "Nano Pi"
@@ -112,80 +113,85 @@ class GPIOManager:
                         platform_info["platform"] = "orange_pi"
                         platform_info["model"] = "Orange Pi"
                         platform_info["recommended_lib"] = "OPi.GPIO"
-                        
+
                 elif "odroid" in cpuinfo or "amlogic" in cpuinfo:
                     platform_info["platform"] = "odroid"
                     platform_info["model"] = "Odroid"
                     platform_info["recommended_lib"] = "libgpiod"
-                    
+
                 elif "rockchip" in cpuinfo:
                     platform_info["platform"] = "rock_pi"
                     platform_info["model"] = "Rock Pi"
                     platform_info["recommended_lib"] = "libgpiod"
-        
+
             # Check for device tree model (more reliable on some boards)
             if os.path.exists("/proc/device-tree/model"):
                 with open("/proc/device-tree/model", "r") as f:
-                    model = f.read().strip('\x00').lower()
-                    
+                    model = f.read().strip("\x00").lower()
+
                 if "friendlyarm" in model or "nanopi" in model:
                     platform_info["platform"] = "nano_pi"
                     platform_info["model"] = "Nano Pi"
                     platform_info["recommended_lib"] = "OPi.GPIO"
-                    
+
         except Exception as e:
             logging.warning(f"Platform detection failed: {e}")
-        
+
         return platform_info
-    
+
     def get_available_libraries(self) -> Dict[str, bool]:
         """Check which GPIO libraries are available on the system."""
         libraries = {}
-        
+
         # Test gpiozero
         try:
             import gpiozero
+
             libraries["gpiozero"] = True
         except ImportError:
             libraries["gpiozero"] = False
-        
+
         # Test RPi.GPIO
         try:
             import RPi.GPIO
+
             libraries["RPi.GPIO"] = True
         except ImportError:
             libraries["RPi.GPIO"] = False
-        
+
         # Test OPi.GPIO (for Orange Pi and Nano Pi)
         try:
             import OPi.GPIO
+
             libraries["OPi.GPIO"] = True
         except ImportError:
             libraries["OPi.GPIO"] = False
-        
+
         # Test wiringpi
         try:
             import wiringpi
+
             libraries["wiringpi"] = True
         except ImportError:
             libraries["wiringpi"] = False
-        
+
         # Test libgpiod
         try:
             import gpiod
+
             libraries["libgpiod"] = True
         except ImportError:
             libraries["libgpiod"] = False
-        
+
         # Test lgpio
         try:
             import lgpio
+
             libraries["lgpio"] = True
         except ImportError:
             libraries["lgpio"] = False
-            
+
         return libraries
-    
 
     def monitor_gpio_pin(self, pin: int, callback, existing_button=None):
         """
@@ -198,9 +204,12 @@ class GPIOManager:
                 lib_name = use_lib
             else:
                 lib_name = self.platform_info["recommended_lib"]
-            
-            if lib_name == "gpiozero" or (lib_name == "auto" and available.get("gpiozero")):
+
+            if lib_name == "gpiozero" or (
+                lib_name == "auto" and available.get("gpiozero")
+            ):
                 from gpiozero import Button
+
                 if existing_button and isinstance(existing_button, Button):
                     existing_button.when_pressed = callback
                     print(f"Monitoring GPIO {pin} with existing gpiozero Button")
@@ -209,27 +218,36 @@ class GPIOManager:
                     button = Button(
                         pin,
                         pull_up=self.config["macchanger_pull_up"],
-                        bounce_time=self.config["button_bounce_time"]
+                        bounce_time=self.config["button_bounce_time"],
                     )
                     button.when_pressed = callback
                     print(f"Monitoring GPIO {pin} with new gpiozero Button")
                     return button
-            
+
             elif lib_name == "RPi.GPIO" and available.get("RPi.GPIO"):
                 import RPi.GPIO as GPIO
+
                 GPIO.setmode(GPIO.BCM)
-                GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP if self.config["macchanger_pull_up"] else GPIO.PUD_DOWN)
-                
+                GPIO.setup(
+                    pin,
+                    GPIO.IN,
+                    pull_up_down=(
+                        GPIO.PUD_UP
+                        if self.config["macchanger_pull_up"]
+                        else GPIO.PUD_DOWN
+                    ),
+                )
+
                 class RPiMacchanger:
                     def __init__(self, pin, bounce_time):
                         self.pin = pin
                         self.bounce_time = bounce_time
                         self._when_pressed = None
-                    
+
                     @property
                     def when_pressed(self):
                         return self._when_pressed
-                    
+
                     @when_pressed.setter
                     def when_pressed(self, callback):
                         self._when_pressed = callback
@@ -237,21 +255,21 @@ class GPIOManager:
                             self.pin,
                             GPIO.FALLING,
                             callback=lambda x: callback(),
-                            bouncetime=int(self.bounce_time * 1000)
+                            bouncetime=int(self.bounce_time * 1000),
                         )
-                
+
                 button = RPiMacchanger(pin, self.config["button_bounce_time"])
                 button.when_pressed = callback
                 print(f"Monitoring GPIO {pin} with RPi.GPIO")
                 return button
-            
+
             print(f"GPIO library '{lib_name}' not supported for monitoring GPIO {pin}")
             return None
-        
+
         except Exception as e:
             logging.error(f"Failed to monitor GPIO {pin}: {e}")
             return None
-    
+
     def setup_gpio(self) -> Tuple[Optional[Any], Optional[Any], Optional[Any]]:
         """
         Initialize GPIO button, LED, and macchanger pin based on configuration.
@@ -261,12 +279,14 @@ class GPIOManager:
             lib_name = self.config["gpio_library"]
         else:
             lib_name = self.platform_info["recommended_lib"]
-        
+
         button_pin = self.config["button_pin"]
         led_pin = self.config["led_pin"]
         macchanger_pin = self.config["macchanger_pin"]
         try:
-            if lib_name == "gpiozero" or (lib_name == "auto" and self.get_available_libraries().get("gpiozero")):
+            if lib_name == "gpiozero" or (
+                lib_name == "auto" and self.get_available_libraries().get("gpiozero")
+            ):
                 return self._setup_gpiozero(button_pin, led_pin, macchanger_pin)
             elif lib_name == "RPi.GPIO":
                 return self._setup_rpi_gpio(button_pin, led_pin)
@@ -279,65 +299,68 @@ class GPIOManager:
             else:
                 logging.error(f"Unsupported GPIO library: {lib_name}")
                 return None, None, None
-                    
+
         except Exception as e:
             logging.error(f"GPIO setup failed with {lib_name}: {e}")
             return None, None, None
-        
-    def _setup_gpiozero(self, button_pin: int, led_pin: int, macchanger_pin: int) -> Tuple[Any, Any, Any]:
+
+    def _setup_gpiozero(
+        self, button_pin: int, led_pin: int, macchanger_pin: int
+    ) -> Tuple[Any, Any, Any]:
         """Setup GPIO using gpiozero library."""
         # ... (existing kernel patch logic) ...
         from gpiozero import Button, LED
-        
+
         button = Button(
-            button_pin, 
+            button_pin,
             pull_up=self.config["button_pull_up"],
-            bounce_time=self.config["button_bounce_time"]
+            bounce_time=self.config["button_bounce_time"],
         )
         macchanger = Button(
-            macchanger_pin, 
+            macchanger_pin,
             pull_up=self.config["macchanger_pull_up"],
-            bounce_time=self.config["button_bounce_time"]
+            bounce_time=self.config["button_bounce_time"],
         )
         led = LED(led_pin, active_high=self.config["led_active_high"])
-        
-        logging.info(f"GPIO setup successful with gpiozero: Button={button_pin}, LED={led_pin}, MACCHANGER={macchanger_pin}")
+
+        logging.info(
+            f"GPIO setup successful with gpiozero: Button={button_pin}, LED={led_pin}, MACCHANGER={macchanger_pin}"
+        )
         return button, led, macchanger
-    
-    def _setup_rpi_gpio(self, button_pin: int, led_pin: int, macchanger_pin: int) -> Tuple[Any, Any, Any]:
+
+    def _setup_rpi_gpio(
+        self, button_pin: int, led_pin: int, macchanger_pin: int
+    ) -> Tuple[Any, Any, Any]:
         """Setup GPIO using RPi.GPIO library."""
         import RPi.GPIO as GPIO
-        
+
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP if self.config["button_pull_up"] else GPIO.PUD_DOWN)
-        GPIO.setup(macchanger_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP if self.config["macchanger_pull_up"] else GPIO.PUD_DOWN)
+        GPIO.setup(
+            button_pin,
+            GPIO.IN,
+            pull_up_down=(
+                GPIO.PUD_UP if self.config["button_pull_up"] else GPIO.PUD_DOWN
+            ),
+        )
+        GPIO.setup(
+            macchanger_pin,
+            GPIO.IN,
+            pull_up_down=(
+                GPIO.PUD_UP if self.config["macchanger_pull_up"] else GPIO.PUD_DOWN
+            ),
+        )
         GPIO.setup(led_pin, GPIO.OUT)
-        
+
         # Create wrapper classes to match gpiozero interface
         class RPiButton:
             def __init__(self, pin):
                 self.pin = pin
                 self._when_pressed = None
-            
+
             @property
             def when_pressed(self):
                 return self._when_pressed
-            
-            @when_pressed.setter
-            def when_pressed(self, callback):
-                self._when_pressed = callback
-                GPIO.add_event_detect(self.pin, GPIO.FALLING, callback=lambda x: callback(), bouncetime=int(self.config["button_bounce_time"] * 1000))
-        
-        class RPiMacchanger:
-            def __init__(self, pin, bounce_time):
-                self.pin = pin
-                self.bounce_time = bounce_time
-                self._when_pressed = None
-            
-            @property
-            def when_pressed(self):
-                return self._when_pressed
-            
+
             @when_pressed.setter
             def when_pressed(self, callback):
                 self._when_pressed = callback
@@ -345,7 +368,27 @@ class GPIOManager:
                     self.pin,
                     GPIO.FALLING,
                     callback=lambda x: callback(),
-                    bouncetime=int(self.bounce_time * 1000)
+                    bouncetime=int(self.config["button_bounce_time"] * 1000),
+                )
+
+        class RPiMacchanger:
+            def __init__(self, pin, bounce_time):
+                self.pin = pin
+                self.bounce_time = bounce_time
+                self._when_pressed = None
+
+            @property
+            def when_pressed(self):
+                return self._when_pressed
+
+            @when_pressed.setter
+            def when_pressed(self, callback):
+                self._when_pressed = callback
+                GPIO.add_event_detect(
+                    self.pin,
+                    GPIO.FALLING,
+                    callback=lambda x: callback(),
+                    bouncetime=int(self.bounce_time * 1000),
                 )
 
         class RPiLED:
@@ -353,36 +396,44 @@ class GPIOManager:
                 self.pin = pin
                 self.active_high = active_high
                 self._blinking = False
-            
+
             def on(self):
                 GPIO.output(self.pin, GPIO.HIGH if self.active_high else GPIO.LOW)
-            
+
             def off(self):
                 GPIO.output(self.pin, GPIO.LOW if self.active_high else GPIO.HIGH)
-            
+
             def blink(self, on_time=1, off_time=1):
                 # Simplified blink - in real implementation you'd use threading
                 self._blinking = True
-        
+
         button = RPiButton(button_pin)
         button = RPiMacchanger(macchanger_pin)
         led = RPiLED(led_pin, self.config["led_active_high"])
-        
-        logging.info(f"GPIO setup successful with RPi.GPIO: Button={button_pin}, LED={led_pin}, MACCHANGER={macchanger_pin}")
+
+        logging.info(
+            f"GPIO setup successful with RPi.GPIO: Button={button_pin}, LED={led_pin}, MACCHANGER={macchanger_pin}"
+        )
         return button, led
-    
+
     def _setup_opi_gpio(self, button_pin: int, led_pin: int) -> Tuple[Any, Any]:
         """Setup GPIO using OPi.GPIO library for Orange Pi and Nano Pi."""
         import OPi.GPIO as GPIO
         import time
-        
+
         # Set the board mode - you might need to adjust this based on your specific Nano Pi model
         GPIO.setmode(GPIO.BOARD)  # or GPIO.BCM depending on your preference
-        
+
         # Setup pins
-        GPIO.setup(button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP if self.config["button_pull_up"] else GPIO.PUD_DOWN)
+        GPIO.setup(
+            button_pin,
+            GPIO.IN,
+            pull_up_down=(
+                GPIO.PUD_UP if self.config["button_pull_up"] else GPIO.PUD_DOWN
+            ),
+        )
         GPIO.setup(led_pin, GPIO.OUT)
-        
+
         # Create wrapper classes to match gpiozero interface
         class OPiButton:
             def __init__(self, pin, bounce_time):
@@ -390,40 +441,46 @@ class GPIOManager:
                 self.bounce_time = bounce_time
                 self._when_pressed = None
                 self._last_press = 0
-            
+
             @property
             def when_pressed(self):
                 return self._when_pressed
-            
+
             @when_pressed.setter
             def when_pressed(self, callback):
                 self._when_pressed = callback
                 if callback:
+
                     def edge_callback(channel):
                         current_time = time.time()
                         if current_time - self._last_press > self.bounce_time:
                             self._last_press = current_time
                             callback()
-                    
-                    GPIO.add_event_detect(self.pin, GPIO.FALLING, callback=edge_callback, bouncetime=int(self.bounce_time * 1000))
-        
+
+                    GPIO.add_event_detect(
+                        self.pin,
+                        GPIO.FALLING,
+                        callback=edge_callback,
+                        bouncetime=int(self.bounce_time * 1000),
+                    )
+
         class OPiLED:
             def __init__(self, pin, active_high=True):
                 self.pin = pin
                 self.active_high = active_high
                 self._blinking = False
                 self._blink_thread = None
-            
+
             def on(self):
                 GPIO.output(self.pin, GPIO.HIGH if self.active_high else GPIO.LOW)
-            
+
             def off(self):
                 GPIO.output(self.pin, GPIO.LOW if self.active_high else GPIO.HIGH)
                 self._blinking = False
-            
+
             def blink(self, on_time=1, off_time=1):
                 self._blinking = True
-                
+
                 def _blink():
                     while self._blinking:
                         self.on()
@@ -431,60 +488,66 @@ class GPIOManager:
                         if self._blinking:
                             self.off()
                             time.sleep(off_time)
-                
+
                 if self._blink_thread and self._blink_thread.is_alive():
                     self._blinking = False
                     self._blink_thread.join()
-                
+
                 import threading
+
                 self._blink_thread = threading.Thread(target=_blink, daemon=True)
                 self._blink_thread.start()
-        
+
         button = OPiButton(button_pin, self.config["button_bounce_time"])
         led = OPiLED(led_pin, self.config["led_active_high"])
-        
-        logging.info(f"GPIO setup successful with OPi.GPIO: Button={button_pin}, LED={led_pin}")
+
+        logging.info(
+            f"GPIO setup successful with OPi.GPIO: Button={button_pin}, LED={led_pin}"
+        )
         return button, led
-    
+
     def _setup_libgpiod(self, button_pin: int, led_pin: int) -> Tuple[Any, Any]:
         """Setup GPIO using libgpiod library."""
         import gpiod
-        
+
         # This is a simplified implementation - you'd need to expand for full functionality
-        chip = gpiod.Chip('gpiochip0')
-        
+        chip = gpiod.Chip("gpiochip0")
+
         button_line = chip.get_line(button_pin)
         macchanger_pin = chip.get_line(macchanger_pin)
         led_line = chip.get_line(led_pin)
-        
-        button_line.request(consumer="octapus_button", type=gpiod.LINE_REQ_EV_FALLING_EDGE)
-        macchanger_pin.request(consumer="octapus_button", type=gpiod.LINE_REQ_EV_FALLING_EDGE)
+
+        button_line.request(
+            consumer="octapus_button", type=gpiod.LINE_REQ_EV_FALLING_EDGE
+        )
+        macchanger_pin.request(
+            consumer="octapus_button", type=gpiod.LINE_REQ_EV_FALLING_EDGE
+        )
         led_line.request(consumer="octapus_led", type=gpiod.LINE_REQ_DIR_OUT)
-        
+
         # Create wrapper classes
         class GpiodButton:
             def __init__(self, line):
                 self.line = line
                 self._when_pressed = None
-            
+
             @property
             def when_pressed(self):
                 return self._when_pressed
-            
+
             @when_pressed.setter
             def when_pressed(self, callback):
                 self._when_pressed = callback
- 
-        
+
         class GpiodMacchanger:
             def __init__(self, line):
                 self.line = line
                 self._when_pressed = None
-            
+
             @property
             def when_pressed(self):
                 return self._when_pressed
-            
+
             @when_pressed.setter
             def when_pressed(self, callback):
                 self._when_pressed = callback
@@ -493,59 +556,75 @@ class GPIOManager:
             def __init__(self, line, active_high=True):
                 self.line = line
                 self.active_high = active_high
-            
+
             def on(self):
                 self.line.set_value(1 if self.active_high else 0)
-            
+
             def off(self):
                 self.line.set_value(0 if self.active_high else 1)
-            
+
             def blink(self, on_time=1, off_time=1):
                 pass  # Implement blinking logic
-        
+
         button = GpiodButton(button_line)
         led = GpiodLED(led_line, self.config["led_active_high"])
-        
-        logging.info(f"GPIO setup successful with libgpiod: Button={button_pin}, LED={led_pin}")
+
+        logging.info(
+            f"GPIO setup successful with libgpiod: Button={button_pin}, LED={led_pin}"
+        )
         return button, led
-    
-    def _setup_lgpio(self, button_pin: int, led_pin: int, macchanger_pin: int) -> Tuple[Any, Any, Any]:
+
+    def _setup_lgpio(
+        self, button_pin: int, led_pin: int, macchanger_pin: int
+    ) -> Tuple[Any, Any, Any]:
         """Setup GPIO using lgpio library."""
         import lgpio
-        
+
         handle = lgpio.gpiochip_open(0)
-        
+
         # Configure pins
-        lgpio.gpio_claim_input(handle, button_pin, lgpio.SET_PULL_UP if self.config["button_pull_up"] else lgpio.SET_PULL_DOWN)
-        lgpio.gpio_claim_input(handle, macchanger_pin, lgpio.SET_PULL_UP if self.config["macchanger_pull_up"] else lgpio.SET_PULL_DOWN)
+        lgpio.gpio_claim_input(
+            handle,
+            button_pin,
+            lgpio.SET_PULL_UP if self.config["button_pull_up"] else lgpio.SET_PULL_DOWN,
+        )
+        lgpio.gpio_claim_input(
+            handle,
+            macchanger_pin,
+            (
+                lgpio.SET_PULL_UP
+                if self.config["macchanger_pull_up"]
+                else lgpio.SET_PULL_DOWN
+            ),
+        )
         lgpio.gpio_claim_output(handle, led_pin)
-        
+
         # Create wrapper classes
         class LgpioButton:
             def __init__(self, handle, pin):
                 self.handle = handle
                 self.pin = pin
                 self._when_pressed = None
-            
+
             @property
             def when_pressed(self):
                 return self._when_pressed
-            
+
             @when_pressed.setter
             def when_pressed(self, callback):
                 self._when_pressed = callback
                 # Implement callback registration
-        
+
         class LgpioMacchanger:
             def __init__(self, handle, pin):
                 self.handle = handle
                 self.pin = pin
                 self._when_pressed = None
-            
+
             @property
             def when_pressed(self):
                 return self._when_pressed
-            
+
             @when_pressed.setter
             def when_pressed(self, callback):
                 self._when_pressed = callback
@@ -556,21 +635,24 @@ class GPIOManager:
                 self.handle = handle
                 self.pin = pin
                 self.active_high = active_high
-            
+
             def on(self):
                 lgpio.gpio_write(self.handle, self.pin, 1 if self.active_high else 0)
-            
+
             def off(self):
                 lgpio.gpio_write(self.handle, self.pin, 0 if self.active_high else 1)
-            
+
             def blink(self, on_time=1, off_time=1):
                 pass  # Implement blinking
-        
+
         button = LgpioButton(handle, button_pin)
         led = LgpioLED(handle, led_pin, self.config["led_active_high"])
-        
-        logging.info(f"GPIO setup successful with lgpio: Button={button_pin}, LED={led_pin}")
+
+        logging.info(
+            f"GPIO setup successful with lgpio: Button={button_pin}, LED={led_pin}"
+        )
         return button, led
+
 
 # Global GPIO manager instance
 gpio_manager = GPIOManager()
