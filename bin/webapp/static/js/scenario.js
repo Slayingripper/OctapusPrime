@@ -1771,7 +1771,288 @@ class ScenarioManager {
 
     return item;
   }
+  /**
+ * Run the current scenario
+ */
+async runScenario() {
+  if (!this.validateScenario()) {
+    this.showNotification('Please fix validation errors before running', 'error');
+    return;
+  }
 
+  const scenarioName = this.scenarioNameInput.value.trim() || 'Untitled Scenario';
+  const steps = this.collectSteps();
+
+  if (steps.length === 0) {
+    this.showNotification('No steps to execute', 'warning');
+    return;
+  }
+
+  // Confirm execution
+  if (!confirm(`Run scenario "${scenarioName}" with ${steps.length} steps?`)) {
+    return;
+  }
+
+  try {
+    // Reset execution state
+    this.isRunning = true;
+    this.runningStepIndex = -1;
+    this.stepResults.clear();
+
+    // Update UI for running state
+    this.updateRunningUI(true);
+    this.showNotification(`Starting scenario: ${scenarioName}`, 'info');
+
+    // Prepare scenario data
+    const scenarioData = {
+      name: scenarioName,
+      steps: steps,
+      variables: Object.fromEntries(this.scenarioVariables),
+      timestamp: new Date().toISOString()
+    };
+
+    console.log('Running scenario:', scenarioData); // Debug
+
+    // Send to server via WebSocket or HTTP
+    if (this.socket && this.socket.connected) {
+      this.socket.emit('run_scenario', scenarioData);
+    } else {
+      // Fallback to HTTP POST
+      const response = await fetch('run_scenario', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(scenarioData)
+      });
+
+      const result = await response.json();
+      
+      if (result.status === 'error') {
+        throw new Error(result.message || 'Failed to start scenario');
+      }
+
+      this.showNotification('Scenario started successfully', 'success');
+    }
+
+  } catch (err) {
+    console.error('Error running scenario:', err);
+    this.showNotification(`Error running scenario: ${err.message}`, 'error');
+    this.updateRunningUI(false);
+    this.isRunning = false;
+  }
+}
+
+/**
+ * Validate the current scenario
+ * @returns {boolean} True if scenario is valid
+ */
+validateScenario() {
+  let isValid = true;
+  const errors = [];
+
+  // Check if there are steps
+  const rows = this.stepsTableBody.querySelectorAll('.step-row');
+  if (rows.length === 0) {
+    errors.push('No steps defined');
+    isValid = false;
+  }
+
+  // Validate each step
+  rows.forEach((row, index) => {
+    const toolSelect = row.querySelector('.tool-select');
+    const argsInput = row.querySelector('.args-input');
+
+    if (!toolSelect.value) {
+      errors.push(`Step ${index + 1}: No tool selected`);
+      isValid = false;
+    }
+
+    if (!argsInput.value.trim()) {
+      errors.push(`Step ${index + 1}: No arguments provided`);
+      isValid = false;
+    }
+
+    // Validate variable syntax
+    const variables = argsInput.value.match(/\{([^}]+)\}/g);
+    if (variables) {
+      variables.forEach(variable => {
+        const varName = variable.slice(1, -1);
+        if (!this.scenarioVariables.has(varName) && !this.isBuiltInVariable(varName)) {
+          console.warn(`Step ${index + 1}: Unknown variable ${variable}`);
+        }
+      });
+    }
+  });
+
+  if (!isValid) {
+    console.error('Scenario validation errors:', errors);
+  }
+
+  return isValid;
+}
+
+/**
+ * Check if a variable is a built-in variable
+ * @param {string} varName - Variable name
+ * @returns {boolean} True if built-in
+ */
+isBuiltInVariable(varName) {
+  const builtInVars = ['target', 'network', 'timestamp', 'scan_id', 'user'];
+  return builtInVars.includes(varName);
+}
+
+/**
+ * Collect all steps from the UI
+ * @returns {Array} Array of step objects
+ */
+collectSteps() {
+  const steps = [];
+  const rows = this.stepsTableBody.querySelectorAll('.step-row');
+
+  rows.forEach((row, index) => {
+    const toolSelect = row.querySelector('.tool-select');
+    const argsInput = row.querySelector('.args-input');
+    const conditionSelect = row.querySelector('.condition-select');
+    const conditionValue = row.querySelector('.condition-value');
+    const variablesInput = row.querySelector('.variables-input');
+    const timeoutInput = row.querySelector('.step-timeout');
+
+    if (toolSelect.value) {
+      const step = {
+        tool: toolSelect.value,
+        args: argsInput.value.trim().split(/\s+/).filter(arg => arg),
+        condition: {
+          type: conditionSelect?.value || 'always',
+          value: conditionValue?.value || ''
+        },
+        variables: this.parseVariables(variablesInput?.value || ''),
+        timeout: parseInt(timeoutInput?.value) || 300,
+        metadata: {
+          step_number: index + 1,
+          created: new Date().toISOString()
+        }
+      };
+      steps.push(step);
+    }
+  });
+
+  return steps;
+}
+
+/**
+ * Parse variables from textarea input
+ * @param {string} variablesText - Variables text (var_name: regex_pattern)
+ * @returns {Object} Variables object
+ */
+parseVariables(variablesText) {
+  const variables = {};
+  
+  if (variablesText.trim()) {
+    const lines = variablesText.split('\n');
+    lines.forEach(line => {
+      const match = line.trim().match(/^(\w+):\s*(.+)$/);
+      if (match) {
+        variables[match[1]] = match[2];
+      }
+    });
+  }
+  
+  return variables;
+}
+
+/**
+ * Update UI for running state
+ * @param {boolean} isRunning - Whether scenario is running
+ */
+updateRunningUI(isRunning) {
+  // Disable/enable buttons
+  this.addStepBtn.disabled = isRunning;
+  this.saveScenarioBtn.disabled = isRunning;
+  this.runScenarioBtn.disabled = isRunning;
+  this.clearScenarioBtn.disabled = isRunning;
+  this.loadScenarioBtn.disabled = isRunning;
+
+  // Update run button text
+  this.runScenarioBtn.textContent = isRunning ? 'Running...' : 'Run Scenario';
+
+  // Add/remove running class
+  if (isRunning) {
+    document.body.classList.add('scenario-running');
+  } else {
+    document.body.classList.remove('scenario-running');
+  }
+}
+
+/**
+ * Handle step result from server
+ * @param {Object} data - Step result data
+ */
+handleStepResult(data) {
+  console.log('Step result received:', data);
+  
+  this.runningStepIndex = data.step_index || -1;
+  
+  // Store result
+  this.stepResults.set(data.step_index, data);
+  
+  // Update UI to show current step
+  this.updateStepStatus(data.step_index, data.status);
+  
+  // Extract and store variables
+  if (data.variables) {
+    Object.entries(data.variables).forEach(([key, value]) => {
+      this.scenarioVariables.set(key, value);
+    });
+  }
+  
+  // Show step completion notification
+  const status = data.status === 'success' ? 'success' : 'warning';
+  this.showNotification(
+    `Step ${data.step_index + 1} completed: ${data.tool}`, 
+    status, 
+    3000
+  );
+}
+
+/**
+ * Handle scenario completion
+ * @param {Object} data - Completion data
+ */
+handleScenarioCompletion(data) {
+  console.log('Scenario completed:', data);
+  
+  this.isRunning = false;
+  this.runningStepIndex = -1;
+  this.updateRunningUI(false);
+  
+  const message = data.status === 'success' 
+    ? `Scenario completed successfully (${data.steps_completed}/${data.total_steps} steps)`
+    : `Scenario failed: ${data.message}`;
+    
+  const notificationType = data.status === 'success' ? 'success' : 'error';
+  this.showNotification(message, notificationType, 5000);
+}
+
+/**
+ * Update step status in UI
+ * @param {number} stepIndex - Step index
+ * @param {string} status - Step status
+ */
+updateStepStatus(stepIndex, status) {
+  const rows = this.stepsTableBody.querySelectorAll('.step-row');
+  
+  // Clear all previous status indicators
+  rows.forEach(row => {
+    row.classList.remove('step-running', 'step-success', 'step-error');
+  });
+  
+  // Set current step status
+  if (stepIndex >= 0 && stepIndex < rows.length) {
+    const currentRow = rows[stepIndex];
+    currentRow.classList.add(`step-${status}`);
+  }
+}
   /**
    * Load a scenario into the editor
    * @param {Object} scenario - Scenario object to load

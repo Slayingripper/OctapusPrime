@@ -11,7 +11,7 @@
   
   <header class="header">
     <h1>Help & Documentation</h1>
-    <p class="subtitle">Complete guide to using OctapusPrime's security automation features</p>
+    <p class="subtitle">Complete guide to using OctapusPrime's advanced security automation platform</p>
   </header>
 
   <!-- Quick Navigation -->
@@ -25,16 +25,28 @@
         <a href="#dashboard-guide">Dashboard Guide</a>
       </div>
       <div class="nav-item" onclick="scrollToSection('scenario-builder')">
-        <a href="#scenario-builder">Scenario Builder</a>
+        <a href="#scenario-builder">Enhanced Scenario Builder</a>
+      </div>
+      <div class="nav-item" onclick="scrollToSection('ifttt-system')">
+        <a href="#ifttt-system">IFTTT Logic System</a>
+      </div>
+      <div class="nav-item" onclick="scrollToSection('variable-system')">
+        <a href="#variable-system">Variable System</a>
       </div>
       <div class="nav-item" onclick="scrollToSection('tools-reference')">
-        <a href="#tools-reference">Tools Reference</a>
+        <a href="#tools-reference">Complete Tools Reference</a>
+      </div>
+      <div class="nav-item" onclick="scrollToSection('example-scenarios')">
+        <a href="#example-scenarios">Example Scenarios</a>
       </div>
       <div class="nav-item" onclick="scrollToSection('gpio-setup')">
         <a href="#gpio-setup">GPIO Setup</a>
       </div>
+      <div class="nav-item" onclick="scrollToSection('keyboard-shortcuts')">
+        <a href="#keyboard-shortcuts">Keyboard Shortcuts</a>
+      </div>
       <div class="nav-item" onclick="scrollToSection('faq')">
-        <a href="#faq">FAQ</a>
+        <a href="#faq">FAQ & Troubleshooting</a>
       </div>
     </div>
   </section>
@@ -50,7 +62,7 @@
       <h2 class="section-title">Getting Started</h2>
       <div class="section-content">
         <p>
-          <strong>OctapusPrime</strong> is a comprehensive security automation platform that simplifies complex penetration testing workflows. Whether you're a security professional or just getting started, this guide will help you understand the key features and how to use them effectively.
+          <strong>OctapusPrime</strong> is an advanced security automation platform featuring an enhanced IFTTT (If-This-Then-That) scenario builder, comprehensive variable system, and intelligent conditional execution. Perfect for penetration testers, security researchers, and DevSecOps teams.
         </p>
         
         <div class="feature-grid">
@@ -61,18 +73,20 @@
               <li>Check network connectivity in Settings</li>
               <li>Configure GPIO pins if using hardware buttons</li>
               <li>Test your setup with the Demo page</li>
-              <li>Review available security tools</li>
+              <li>Try loading an example scenario to understand IFTTT logic</li>
+              <li>Review the enhanced tools collection (40+ security tools)</li>
             </ul>
           </div>
           
           <div class="feature-card">
-            <h4>Basic Workflow</h4>
-            <p>Typical security testing process:</p>
+            <h4>Enhanced Workflow</h4>
+            <p>Modern security testing process:</p>
             <ul>
-              <li>Select tools from the Dashboard</li>
-              <li>Configure scan parameters</li>
-              <li>Execute scans individually or as scenarios</li>
-              <li>Monitor progress in real-time logs</li>
+              <li>Create adaptive scenarios with conditional logic</li>
+              <li>Use variables for dynamic parameter substitution</li>
+              <li>Execute intelligent scan sequences that adapt to results</li>
+              <li>Monitor progress with real-time logging and notifications</li>
+              <li>Save and share complex testing methodologies</li>
             </ul>
           </div>
           
@@ -80,10 +94,12 @@
             <h4>Advanced Features</h4>
             <p>Power user capabilities:</p>
             <ul>
-              <li>Create conditional scan sequences</li>
-              <li>Save and share custom scenarios</li>
-              <li>Use GPIO buttons for remote triggering</li>
-              <li>Integrate with external systems via API</li>
+              <li>IFTTT conditional execution system</li>
+              <li>Regex-based variable extraction</li>
+              <li>Real-time variable substitution</li>
+              <li>Example scenario library</li>
+              <li>Enhanced error handling and validation</li>
+              <li>WebSocket-based real-time updates</li>
             </ul>
           </div>
         </div>
@@ -94,130 +110,569 @@
     <section class="help-section" id="dashboard-guide">
       <h2 class="section-title">Dashboard Guide</h2>
       <div class="section-content">
-        <p>The main dashboard is your control center for launching security scans. It provides an intuitive drag-and-drop interface for building custom workflows.</p>
+        <p>The main dashboard provides direct access to individual security tools with enhanced parameter configuration and real-time execution monitoring.</p>
         
-        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Available Tools</h3>
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Enhanced Tool Categories</h3>
         <div class="feature-grid">
           <div class="feature-card">
-            <h4>Network Discovery</h4>
+            <h4>Network Discovery & Scanning</h4>
             <ul>
-              <li><strong>Nmap:</strong> Port scanning and service detection</li>
-              <li><strong>Masscan:</strong> High-speed port scanning</li>
-              <li><strong>Zmap:</strong> Internet-wide network scanning</li>
+              <li><strong>Nmap:</strong> Advanced port scanning and service detection</li>
+              <li><strong>Masscan:</strong> High-speed Internet-scale port scanning</li>
+              <li><strong>Zmap:</strong> Single-packet Internet-wide scanning</li>
+              <li><strong>Amass:</strong> Attack surface mapping and subdomain discovery</li>
+              <li><strong>Subfinder:</strong> Passive subdomain discovery</li>
             </ul>
           </div>
           
           <div class="feature-card">
-            <h4>Web Application Testing</h4>
+            <h4>Web Application Security</h4>
             <ul>
-              <li><strong>Gobuster:</strong> Directory and file enumeration</li>
-              <li><strong>Nikto:</strong> Web vulnerability scanning</li>
-              <li><strong>SQLMap:</strong> SQL injection testing</li>
+              <li><strong>Gobuster:</strong> Directory, file, and subdomain enumeration</li>
+              <li><strong>FFuF:</strong> Fast web fuzzer with advanced filtering</li>
+              <li><strong>Feroxbuster:</strong> Recursive content discovery</li>
+              <li><strong>Nikto:</strong> Comprehensive web vulnerability scanner</li>
+              <li><strong>WhatWeb:</strong> Web technology fingerprinting</li>
+              <li><strong>SQLMap:</strong> Advanced SQL injection exploitation</li>
+              <li><strong>Nuclei:</strong> Fast vulnerability scanner with template engine</li>
             </ul>
           </div>
           
           <div class="feature-card">
-            <h4>Credential Attacks</h4>
+            <h4>Credential & Authentication</h4>
             <ul>
-              <li><strong>Hydra:</strong> Network login brute-forcing</li>
-              <li><strong>Medusa:</strong> Parallel login brute-forcer</li>
-              <li><strong>John:</strong> Password hash cracking</li>
+              <li><strong>Hydra:</strong> Network service brute-forcer</li>
+              <li><strong>John the Ripper:</strong> Password hash cracking</li>
+              <li><strong>Hashcat:</strong> Advanced password recovery</li>
+              <li><strong>TheHarvester:</strong> Email and domain intelligence gathering</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h4>Enumeration & Information Gathering</h4>
+            <ul>
+              <li><strong>Enum4linux:</strong> SMB enumeration for Linux/Windows</li>
+              <li><strong>NBTScan:</strong> NetBIOS name scanning</li>
+              <li><strong>LDAP Search:</strong> Directory service enumeration</li>
+              <li><strong>SNMP Check:</strong> SNMP service enumeration</li>
+              <li><strong>SMB Client:</strong> SMB share enumeration and access</li>
+            </ul>
+          </div>
+
+          <div class="feature-card">
+            <h4>Specialized Tools</h4>
+            <ul>
+              <li><strong>EyeWitness:</strong> Web application screenshot tool</li>
+              <li><strong>TestSSL:</strong> SSL/TLS security assessment</li>
+              <li><strong>Trivy:</strong> Container and dependency vulnerability scanning</li>
+              <li><strong>GitLeaks:</strong> Git repository secret detection</li>
+              <li><strong>Shodan:</strong> Internet-connected device search</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enhanced Scenario Builder -->
+    <section class="help-section" id="scenario-builder">
+      <h2 class="section-title">Enhanced Scenario Builder</h2>
+      <div class="section-content">
+        <p>Create sophisticated penetration testing workflows with the enhanced IFTTT (If-This-Then-That) system. Build adaptive scenarios that respond intelligently to scan results and automatically adjust their behavior.</p>
+        
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Key Features</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>Visual Scenario Builder</h4>
+            <ul>
+              <li>Drag-and-drop interface for building complex workflows</li>
+              <li>Real-time validation and error checking</li>
+              <li>Step-by-step execution monitoring</li>
+              <li>Save/load custom scenarios</li>
+              <li>Import example scenarios from library</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Enhanced Step Configuration</h4>
+            <ul>
+              <li>Tool selection with auto-complete and templates</li>
+              <li>Dynamic argument substitution with variables</li>
+              <li>Conditional execution logic (IF-THEN)</li>
+              <li>Variable extraction with regex patterns</li>
+              <li>Configurable timeouts and error handling</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Workflow Management</h4>
+            <ul>
+              <li>Scenario naming and description</li>
+              <li>Step reordering and duplication</li>
+              <li>Bulk step operations</li>
+              <li>Export/import scenario definitions</li>
+              <li>Version control and sharing</li>
             </ul>
           </div>
         </div>
 
-        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">How to Use</h3>
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Building Your First Scenario</h3>
         <ol style="padding-left: 20px; color: var(--secondary-text);">
-          <li style="margin-bottom: 10px;"><strong>Select Tools:</strong> Click on tool buttons to add them to your scan sequence</li>
-          <li style="margin-bottom: 10px;"><strong>Configure Parameters:</strong> Adjust arguments, targets, and options for each tool</li>
-          <li style="margin-bottom: 10px;"><strong>Set Network Target:</strong> Specify IP ranges, domains, or use auto-detected network</li>
-          <li style="margin-bottom: 10px;"><strong>Execute Scan:</strong> Click "Start Scan" to begin the automated sequence</li>
-          <li style="margin-bottom: 10px;"><strong>Monitor Progress:</strong> Watch real-time output in the integrated terminal</li>
+          <li style="margin-bottom: 15px;">
+            <strong>Add Step:</strong> Click "+ Add Step" to create a new workflow step
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong>Select Tool:</strong> Choose from 40+ categorized security tools
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong>Configure Arguments:</strong> Set tool parameters using variables like {target}
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong>Set Conditions:</strong> Define when this step should execute (IF logic)
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong>Extract Variables:</strong> Use regex to capture data from tool output
+          </li>
+          <li style="margin-bottom: 15px;">
+            <strong>Save Scenario:</strong> Give your workflow a name and save for reuse
+          </li>
         </ol>
       </div>
     </section>
 
-    <!-- Scenario Builder -->
-    <section class="help-section" id="scenario-builder">
-      <h2 class="section-title">Scenario Builder</h2>
+    <!-- IFTTT Logic System -->
+    <section class="help-section" id="ifttt-system">
+      <h2 class="section-title">IFTTT Logic System</h2>
       <div class="section-content">
-        <p>Create sophisticated "if-this-then-that" workflows that automatically adapt based on scan results. Perfect for complex penetration testing methodologies.</p>
+        <p>The If-This-Then-That system allows you to create intelligent workflows that adapt based on previous step results. Each step can have conditions that determine whether it should execute.</p>
         
-        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Conditional Logic</h3>
-        <div class="code-block">
-          <pre>Example Scenario:
-1. Nmap scan discovers open port 80
-2. IF port 80 is open, THEN run Gobuster directory scan
-3. IF admin directory found, THEN run Nikto vulnerability scan
-4. IF SSH port 22 is open, THEN run Hydra brute-force attack</pre>
-        </div>
-        
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Condition Types</h3>
         <div class="feature-grid">
           <div class="feature-card">
-            <h4>Condition Types</h4>
+            <h4>Always Execute</h4>
+            <p>Step runs unconditionally</p>
+            <div class="code-block">
+              <pre>Use for: Initial discovery scans, cleanup tasks, reporting steps</pre>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Previous Step Contains</h4>
+            <p>Execute if previous output contains specific text</p>
+            <div class="code-block">
+              <pre>Example: "80/tcp open"
+Use for: Port-specific follow-up scans</pre>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Previous Step Matches Regex</h4>
+            <p>Execute if previous output matches regex pattern</p>
+            <div class="code-block">
+              <pre>Example: "\d+/tcp\s+open\s+http"
+Use for: Complex pattern matching</pre>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h4>Variable Exists</h4>
+            <p>Execute if a specific variable has been set</p>
+            <div class="code-block">
+              <pre>Example: Check if {web_port} variable exists
+Use for: Conditional web application testing</pre>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h4>Variable Equals</h4>
+            <p>Execute if variable equals specific value</p>
+            <div class="code-block">
+              <pre>Example: {service} equals "http"
+Use for: Service-specific testing</pre>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h4>Previous Step Success/Failure</h4>
+            <p>Execute based on previous step's exit status</p>
+            <div class="code-block">
+              <pre>Use for: Error handling, alternative approaches</pre>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Complex Logic Example</h3>
+        <div class="code-block">
+          <pre>Adaptive Web Application Testing Scenario:
+
+Step 1: Nmap port scan (Always)
+        Args: -sV -p 1-10000 {target}
+        Variables: web_port: (\d+)/tcp\s+open\s+http
+
+Step 2: Gobuster directory scan (IF web_port exists)
+        Args: dir -u http://{target}:{web_port} -w /usr/share/wordlists/dirb/common.txt
+        Variables: admin_dir: (admin|login|dashboard)
+
+Step 3: Nikto web vulnerability scan (IF admin_dir exists)
+        Args: -h http://{target}:{web_port}/{admin_dir}
+
+Step 4: SSL/TLS testing (IF web_port equals "443")
+        Args: --starttls https {target}:{web_port}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Variable System -->
+    <section class="help-section" id="variable-system">
+      <h2 class="section-title">Advanced Variable System</h2>
+      <div class="section-content">
+        <p>Variables enable dynamic parameter substitution and data flow between steps. Extract data from tool output and use it in subsequent steps for intelligent automation.</p>
+        
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Variable Features</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>Built-in Variables</h4>
             <ul>
-              <li><strong>Always:</strong> Step always executes</li>
-              <li><strong>Previous Contains:</strong> Execute if previous output contains text</li>
-              <li><strong>Port Open:</strong> Execute if specific port is discovered</li>
-              <li><strong>Service Detected:</strong> Execute if service is identified</li>
+              <li><strong>{target}:</strong> Primary scan target</li>
+              <li><strong>{network}:</strong> Network range</li>
+              <li><strong>{timestamp}:</strong> Current timestamp</li>
+              <li><strong>{scan_id}:</strong> Unique scan identifier</li>
+              <li><strong>{user}:</strong> Current user</li>
             </ul>
           </div>
           
           <div class="feature-card">
-            <h4>Best Practices</h4>
+            <h4>Custom Variables</h4>
             <ul>
-              <li>Start with broad network discovery</li>
-              <li>Use conditional logic to target findings</li>
-              <li>Include cleanup and reporting steps</li>
-              <li>Test scenarios on safe environments first</li>
+              <li>Extract using regex patterns</li>
+              <li>Multiple variables per step</li>
+              <li>Nested variable substitution</li>
+              <li>Variable validation and type checking</li>
+              <li>Global and step-specific scope</li>
             </ul>
           </div>
+          
+          <div class="feature-card">
+            <h4>Variable Picker</h4>
+            <ul>
+              <li>Click {} button in argument fields</li>
+              <li>Select from available variables</li>
+              <li>Create custom variables on-the-fly</li>
+              <li>Real-time variable preview</li>
+              <li>Variable usage validation</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Variable Extraction Examples</h3>
+        <div class="code-block">
+          <pre>Common Regex Patterns:
+
+Port Extraction:
+Pattern: (\d+)/tcp\s+open
+Result: Captures port numbers like "80", "443", "22"
+
+IP Address Extraction:
+Pattern: (\d+\.\d+\.\d+\.\d+)
+Result: Captures IP addresses from scan output
+
+Service Detection:
+Pattern: (\d+)/tcp\s+open\s+(\w+)
+Result: Captures both port and service name
+
+Directory Discovery:
+Pattern: Status:\s+200.*?\s+Size:\s+\d+.*?\s+(\/\w+)
+Result: Captures discovered directories
+
+Subdomain Extraction:
+Pattern: ([a-zA-Z0-9\-]+\.example\.com)
+Result: Captures discovered subdomains</pre>
+        </div>
+
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Advanced Usage</h3>
+        <div class="code-block">
+          <pre>Multi-Step Variable Flow:
+
+Step 1: Nmap discovers web services
+Variables: 
+  web_ports: (\d+)/tcp\s+open\s+http
+  ssl_ports: (\d+)/tcp\s+open\s+https
+
+Step 2: For each web port, run Gobuster
+Args: dir -u http://{target}:{web_ports} -w wordlist.txt
+Variables:
+  dirs: Status:\s+200.*?\s+(\/\w+)
+
+Step 3: Test discovered directories
+Args: -h http://{target}:{web_ports}/{dirs}
+
+Step 4: Conditional SSL testing
+Condition: IF ssl_ports exists
+Args: --starttls https {target}:{ssl_ports}</pre>
         </div>
       </div>
     </section>
 
     <!-- Tools Reference -->
     <section class="help-section" id="tools-reference">
-      <h2 class="section-title">Security Tools Reference</h2>
+      <h2 class="section-title">Complete Security Tools Reference</h2>
       <div class="section-content">
-        <p>Complete reference for all integrated security tools with common usage patterns and recommended parameters.</p>
+        <p>Comprehensive reference for all 40+ integrated security tools with usage examples, common parameters, and scenario integration tips.</p>
         
         <div class="feature-grid">
           <div class="feature-card">
-            <h4>Nmap</h4>
-            <p>Network exploration and security auditing</p>
+            <h4>Nmap - Network Discovery</h4>
+            <p>Advanced port scanning and service enumeration</p>
             <div class="code-block">
               <pre>Common Scans:
--sV         Service version detection
--sS         TCP SYN scan
--sU         UDP scan
--A          Aggressive scan (OS, version, scripts)
--T4         Timing template (fast)
--p-         Scan all ports</pre>
+-sV -sC         Service/version detection + scripts
+-sS             TCP SYN stealth scan
+-sU             UDP scan
+-A              Aggressive scan (OS, version, scripts)
+-T4             Timing template (faster)
+-p-             Scan all 65535 ports
+--top-ports 1000 Scan most common 1000 ports
+
+Scenario Variables:
+web_ports: (\d+)/tcp\s+open\s+http
+ssh_ports: (\d+)/tcp\s+open\s+ssh
+open_ports: (\d+)/tcp\s+open</pre>
             </div>
           </div>
           
           <div class="feature-card">
-            <h4>Gobuster</h4>
-            <p>Directory and file enumeration</p>
+            <h4>Gobuster - Directory Enumeration</h4>
+            <p>Fast directory and file discovery</p>
             <div class="code-block">
-              <pre>Directory Scan:
-dir -u http://target.com -w wordlist.txt
--x php,html    File extensions
--s 200,204     Status codes
--t 50          Threads</pre>
+              <pre>Directory Mode:
+dir -u http://{target} -w /usr/share/wordlists/dirb/common.txt
+-x php,html,txt  File extensions to search
+-s 200,204,301   Status codes to report
+-t 50            Number of concurrent threads
+-r               Follow redirects
+
+DNS Mode:
+dns -d {target} -w subdomains.txt
+-i               Show IP addresses
+
+Variables:
+directories: Status:\s+200.*?\s+(\/[\w\-]+)
+files: Status:\s+200.*?\s+(\/[\w\-]+\.\w+)</pre>
             </div>
           </div>
           
           <div class="feature-card">
-            <h4>Hydra</h4>
-            <p>Network login brute-forcer</p>
+            <h4>Hydra - Credential Attacks</h4>
+            <p>Network service brute force tool</p>
             <div class="code-block">
               <pre>SSH Brute Force:
--l admin -P passwords.txt target ssh
--t 4           Parallel tasks
--V             Verbose output
--f             Stop on first success</pre>
+-l admin -P /usr/share/wordlists/rockyou.txt {target} ssh
+-t 4             Parallel tasks
+-V               Verbose output
+-f               Stop on first success
+-s 2222          Custom port
+
+HTTP Form Brute Force:
+{target} http-post-form "/login:user=^USER^&pass=^PASS^:Invalid"
+-l admin -P passwords.txt
+
+Variables:
+valid_creds: login:\s+(\w+)\s+password:\s+(\w+)</pre>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h4>Nuclei - Vulnerability Scanner</h4>
+            <p>Fast template-based vulnerability scanner</p>
+            <div class="code-block">
+              <pre>Basic Scan:
+-u http://{target} -t /root/nuclei-templates/
+-severity critical,high  Filter by severity
+-tags cve               Filter by tags
+-o results.txt          Output to file
+
+Bulk Scanning:
+-l targets.txt -t /root/nuclei-templates/
+-c 50                   Concurrent requests
+-rate-limit 100         Rate limiting
+
+Variables:
+vulnerabilities: \[(\w+)\]\s+(.+?)\s+http</pre>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h4>SQLMap - SQL Injection</h4>
+            <p>Advanced SQL injection exploitation tool</p>
+            <div class="code-block">
+              <pre>URL Testing:
+-u "http://{target}/page.php?id=1" --batch
+--dbs                   Enumerate databases
+--tables                Enumerate tables
+--dump                  Dump table data
+--os-shell              Get OS shell
+
+POST Request:
+-r request.txt --data="user=admin&pass=test"
+--level 3 --risk 3     Increase test depth
+
+Variables:
+databases: available\s+databases\s+\[\d+\]:\s*\n((?:\[\*\]\s+\w+\s*\n)+)
+tables: \[\d+\s+tables?\]:\s*\n((?:\|\s+[\w_]+\s+\|\s*\n)+)</pre>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <h4>Masscan - High-Speed Port Scanner</h4>
+            <p>Internet-scale port scanner</p>
+            <div class="code-block">
+              <pre>Fast Scanning:
+-p1-65535 {target} --rate=1000
+-p80,443,22,21,25    Specific ports
+--banners            Grab service banners
+-oG output.gnmap     Output format
+
+Large Networks:
+{network}/24 -p80,443 --rate=10000
+--excludefile exclude.txt
+
+Variables:
+open_ports: Discovered\s+open\s+port\s+(\d+)\/tcp
+hosts: Host:\s+(\d+\.\d+\.\d+\.\d+)</pre>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Tool Integration Tips</h3>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>Chaining Tools Effectively</h4>
+            <ul>
+              <li>Start with broad discovery (Nmap, Masscan)</li>
+              <li>Use results to trigger specific tools</li>
+              <li>Extract service information for targeted attacks</li>
+              <li>Chain web tools: Discovery → Enumeration → Exploitation</li>
+            </ul>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Performance Optimization</h4>
+            <ul>
+              <li>Use appropriate timing templates</li>
+              <li>Adjust thread counts based on target</li>
+              <li>Implement rate limiting for large scans</li>
+              <li>Use targeted wordlists for better results</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Example Scenarios -->
+    <section class="help-section" id="example-scenarios">
+      <h2 class="section-title">Example Scenarios Library</h2>
+      <div class="section-content">
+        <p>Pre-built scenarios demonstrate best practices and common penetration testing methodologies. Use these as starting points for your own custom workflows.</p>
+        
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>Quick Network Discovery</h4>
+            <p>Fast network reconnaissance and service identification</p>
+            <div class="code-block">
+              <pre>1. Nmap TCP scan (Always)
+   Args: -sS -T4 --top-ports 1000 {target}
+   
+2. Service version scan (IF ports found)
+   Args: -sV -sC -p {open_ports} {target}
+   
+3. UDP scan critical ports (Always)
+   Args: -sU --top-ports 100 {target}</pre>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Web Application Assessment</h4>
+            <p>Comprehensive web application security testing</p>
+            <div class="code-block">
+              <pre>1. Web service discovery (Always)
+   Tool: Nmap
+   Extract: web_ports
+   
+2. Directory enumeration (IF web services found)
+   Tool: Gobuster
+   Extract: directories
+   
+3. Vulnerability scanning (Always)
+   Tool: Nikto
+   
+4. Technology fingerprinting (Always)
+   Tool: WhatWeb</pre>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Full Infrastructure Assessment</h4>
+            <p>Complete infrastructure penetration test</p>
+            <div class="code-block">
+              <pre>1. Network discovery
+2. Port scanning
+3. Service enumeration
+4. Vulnerability assessment
+5. Credential attacks
+6. Post-exploitation
+7. Reporting</pre>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="color: var(--accent-color); margin: 20px 0 10px;">Loading Example Scenarios</h3>
+        <ol style="padding-left: 20px; color: var(--secondary-text);">
+          <li style="margin-bottom: 10px;">Click "Load Scenario" in the Scenario Builder</li>
+          <li style="margin-bottom: 10px;">Browse the example scenarios marked with [Example]</li>
+          <li style="margin-bottom: 10px;">Click on a scenario to see its description and steps</li>
+          <li style="margin-bottom: 10px;">Load the scenario to automatically populate the builder</li>
+          <li style="margin-bottom: 10px;">Customize variables and parameters as needed</li>
+          <li style="margin-bottom: 10px;">Save as your own scenario for future use</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Keyboard Shortcuts -->
+    <section class="help-section" id="keyboard-shortcuts">
+      <h2 class="section-title">Keyboard Shortcuts</h2>
+      <div class="section-content">
+        <p>Speed up your workflow with keyboard shortcuts for common operations.</p>
+        
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>Scenario Builder</h4>
+            <div class="code-block">
+              <pre>Ctrl + S    Save current scenario
+Ctrl + N    Add new step
+Ctrl + O    Load scenario
+Ctrl + Del  Clear scenario
+Escape      Close modals/dialogs</pre>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <h4>General Navigation</h4>
+            <div class="code-block">
+              <pre>Ctrl + 1    Dashboard
+Ctrl + 2    Scenario Builder
+Ctrl + 3    Settings
+Ctrl + H    Help page
+F11         Toggle fullscreen</pre>
+            </div>
+          </div>
+          
+          <div class="feature-card">
+            <h4>Step Editing</h4>
+            <div class="code-block">
+              <pre>Tab         Next field
+Shift + Tab Previous field
+Enter       Save/confirm
+Escape      Cancel editing
+Delete      Remove selected step</pre>
             </div>
           </div>
         </div>
@@ -266,88 +721,134 @@ dir -u http://target.com -w wordlist.txt
 
     <!-- FAQ -->
     <section class="help-section" id="faq">
-      <h2 class="section-title">Frequently Asked Questions</h2>
+      <h2 class="section-title">FAQ & Troubleshooting</h2>
       <div class="section-content">
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFAQ(this)">
-            <h3>How do I install security tools like Nmap and Gobuster?</h3>
+            <h3>How do I install all security tools at once?</h3>
             <span class="faq-toggle">▼</span>
           </div>
           <div class="faq-answer">
-            <p>Most tools can be installed via your system's package manager:</p>
+            <p>Use the comprehensive installation script or install tools individually:</p>
             <div class="code-block">
-              <pre># Ubuntu/Debian
+              <pre># Ubuntu/Debian - Full installation
 sudo apt update
-sudo apt install nmap masscan gobuster nikto sqlmap hydra
+sudo apt install nmap masscan gobuster ffuf feroxbuster nikto sqlmap \
+hydra john hashcat amass subfinder nuclei whatweb testssl.sh \
+enum4linux nbtscan ldap-utils snmp smbclient eyewitness trivy
 
 # Or use the included install script
-./install_tools.sh</pre>
+chmod +x install_tools.sh
+sudo ./install_tools.sh
+
+# For specialized tools
+go install github.com/tomnomnom/gf@latest
+pip3 install shodan truffleHog gitleaks</pre>
             </div>
           </div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFAQ(this)">
-            <h3>Can I run OctapusPrime without GPIO hardware?</h3>
+            <h3>Why aren't my scenario variables working?</h3>
             <span class="faq-toggle">▼</span>
           </div>
           <div class="faq-answer">
-            <p>Yes! OctapusPrime works perfectly without GPIO hardware. You can control everything through the web interface. GPIO buttons are an optional convenience feature for hands-free operation.</p>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question" onclick="toggleFAQ(this)">
-            <h3>How do I create custom wordlists for brute-force attacks?</h3>
-            <span class="faq-toggle">▼</span>
-          </div>
-          <div class="faq-answer">
-            <p>You can use existing wordlists from /usr/share/wordlists/ or create custom ones:</p>
-            <div class="code-block">
-              <pre># Common wordlist locations
-/usr/share/wordlists/rockyou.txt
-/usr/share/wordlists/dirb/common.txt
-/usr/share/wordlists/dirbuster/
-
-# Create custom wordlist
-echo -e "admin\npassword\n123456" > custom.txt</pre>
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question" onclick="toggleFAQ(this)">
-            <h3>What network ranges can I scan safely?</h3>
-            <span class="faq-toggle">▼</span>
-          </div>
-          <div class="faq-answer">
-            <p><strong>Only scan networks you own or have explicit permission to test.</strong> Common safe ranges for lab environments include:</p>
+            <p>Common variable issues and solutions:</p>
             <ul style="margin-top: 10px;">
-              <li>192.168.x.x/24 - Private home/lab networks</li>
-              <li>10.x.x.x/8 - Private corporate networks</li>
-              <li>172.16.x.x/12 - Private networks</li>
-              <li>127.0.0.1 - Localhost only</li>
+              <li><strong>Regex not matching:</strong> Test your regex patterns with sample output</li>
+              <li><strong>Variable not found:</strong> Check variable name spelling and scope</li>
+              <li><strong>Empty variables:</strong> Ensure previous step produced expected output</li>
+              <li><strong>Substitution failing:</strong> Use {variable} syntax, check for typos</li>
+            </ul>
+            <div class="code-block">
+              <pre># Debug variables in browser console
+console.log(scenarioManager.scenarioVariables);
+
+# Test regex patterns online
+https://regex101.com/</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h3>How do I create effective IFTTT conditions?</h3>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            <p>Best practices for conditional logic:</p>
+            <ul style="margin-top: 10px;">
+              <li><strong>Start simple:</strong> Use "Always" for initial steps, add conditions later</li>
+              <li><strong>Test conditions:</strong> Run scenarios step-by-step to verify logic</li>
+              <li><strong>Use specific patterns:</strong> Match exact output format, not generic text</li>
+              <li><strong>Plan fallbacks:</strong> Include alternative paths for failed conditions</li>
             </ul>
           </div>
         </div>
 
         <div class="faq-item">
           <div class="faq-question" onclick="toggleFAQ(this)">
-            <h3>How do I access OctapusPrime remotely?</h3>
+            <h3>Can I run scenarios without the web interface?</h3>
             <span class="faq-toggle">▼</span>
           </div>
           <div class="faq-answer">
-            <p>The web interface runs on port 8080. Access it via:</p>
+            <p>Yes! Scenarios can be executed via API or command line:</p>
             <div class="code-block">
-              <pre># Local access
-http://localhost:8080
+              <pre># API execution
+curl -X POST http://localhost:8080/api/run_scenario \
+  -H "Content-Type: application/json" \
+  -d '{"scenario_name": "quick_discovery", "target": "192.168.1.0/24"}'
 
-# Remote access (replace IP)
-http://192.168.1.100:8080
-
-# Find your IP address
-ip addr show</pre>
+# Command line (if supported)
+python3 scenario_runner.py --scenario quick_discovery --target 192.168.1.0/24</pre>
             </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h3>How do I troubleshoot slow or failed scans?</h3>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            <p>Troubleshooting common issues:</p>
+            <ul style="margin-top: 10px;">
+              <li><strong>Timeouts:</strong> Increase step timeout values for large networks</li>
+              <li><strong>Rate limiting:</strong> Add delays between steps or reduce thread counts</li>
+              <li><strong>Permission errors:</strong> Ensure tools have necessary privileges</li>
+              <li><strong>Network issues:</strong> Check connectivity and firewall settings</li>
+              <li><strong>Resource constraints:</strong> Monitor CPU/memory usage during scans</li>
+            </ul>
+            <div class="code-block">
+              <pre># Check tool installation
+which nmap gobuster hydra
+
+# Test basic connectivity
+ping target_ip
+nmap -p 80 target_ip
+
+# Monitor resources
+htop
+iotop</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <h3>What are safe targets for testing scenarios?</h3>
+            <span class="faq-toggle">▼</span>
+          </div>
+          <div class="faq-answer">
+            <p><strong>Only scan networks you own or have explicit permission to test.</strong> Safe testing options:</p>
+            <ul style="margin-top: 10px;">
+              <li><strong>Local VM lab:</strong> VirtualBox/VMware vulnerable machines</li>
+              <li><strong>Practice platforms:</strong> HackTheBox, TryHackMe, VulnHub</li>
+              <li><strong>Intentionally vulnerable apps:</strong> DVWA, WebGoat, Metasploitable</li>
+              <li><strong>Your own infrastructure:</strong> Home lab, test environments</li>
+              <li><strong>Localhost testing:</strong> 127.0.0.1 for basic functionality</li>
+            </ul>
           </div>
         </div>
       </div>
