@@ -515,39 +515,76 @@ def save_scenario():
 
 @app.route("/list_scenarios", methods=["GET"])
 def list_scenarios():
-    """
-    Return a JSON list of all saved scenario names (without .json extension).
-    """
-    names = [file.stem for file in SCENARIO_DIR.glob("*.json")]
-    return jsonify(status="success", scenarios=names)
+    try:
+        scenarios_dir = 'scenarios'
+        scenarios = []
+        
+        if os.path.exists(scenarios_dir):
+            for filename in os.listdir(scenarios_dir):
+                if filename.endswith('.json'):
+                    filepath = os.path.join(scenarios_dir, filename)
+                    try:
+                        with open(filepath, 'r') as f:
+                            scenario_data = json.load(f)
+                            # Add both filename and sanitized name for loading
+                            scenario_data['filename'] = filename
+                            scenario_data['load_name'] = filename[:-5]  # Remove .json extension
+                            scenarios.append(scenario_data)
+                    except Exception as e:
+                        print(f"Error loading scenario {filename}: {e}")
+        
+        return jsonify({
+            "status": "success",
+            "scenarios": scenarios
+        })
+        
+    except Exception as e:
+        return jsonify({
+            "status": "error", 
+            "message": str(e)
+        }), 500
 
 
 @app.route("/load_scenario/<name>", methods=["GET"])
 def load_scenario(name):
     """
-    Load scenario by name; returns JSON { scripts: [...] }.
+    Load scenario by name; returns JSON with scenario data.
     """
+    print(f"Loading scenario: {name}")  # Debug
+    
+    # Try the exact name first
     path = SCENARIO_DIR / f"{name}.json"
+    
+    # If not found, try the sanitized version
     if not path.exists():
+        sanitized = "".join(c for c in name if c.isalnum() or c in ("-", "_")).rstrip()
+        path = SCENARIO_DIR / f"{sanitized}.json"
+        print(f"Trying sanitized path: {path}")  # Debug
+    
+    # If still not found, return 404
+    if not path.exists():
+        print(f"Scenario file not found: {path}")  # Debug
         return jsonify(status="error", message="Scenario not found"), 404
+    
     try:
         with open(path, "r") as f:
             data = json.load(f)
 
-        # The frontend expects { scripts: [...] } format
-        # but your save format might be { name: "...", steps: [...] }
-        # Convert steps to scripts format if needed
-        if "steps" in data:
-            scripts = []
-            for step in data["steps"]:
-                # Convert step format to script format
-                script = {"tool": step.get("tool", ""), "args": step.get("args", [])}
-                scripts.append(script)
-            return jsonify(scripts=scripts)
-        elif "scripts" in data:
-            return jsonify(scripts=data["scripts"])
-        else:
-            return jsonify(status="error", message="Invalid scenario format"), 400
+        print(f"Loaded scenario data: {data}")  # Debug
+        
+        # Return the scenario data at the root level
+        scenario_data = {
+            "status": "success",
+            "name": data.get("name", name),
+            "description": data.get("description", ""),
+            "steps": data.get("steps", []),
+            "variables": data.get("variables", {}),
+            "created": data.get("created", ""),
+            "filename": path.name
+        }
+        
+        print(f"Returning scenario data: {scenario_data}")  # Debug
+        return jsonify(scenario_data)
 
     except Exception as e:
         logging.error(f"Failed to load scenario {name}: {e}")
