@@ -269,7 +269,6 @@ def init_gpio():
         socketio.emit("log", {"message": f"GPIO setup failed: {e}", "level": "error"})
 
 
-
 # -----------------------------------------------------
 # GPIO PATCH
 # -----------------------------------------------------
@@ -291,11 +290,6 @@ def apply_lgpio_patch_if_needed():
         )
 
         # Check if kernel version is >= 6.6.45
-        if (
-            (major > 6)
-            or (major == 6 and minor > 6)
-            or (major == 6 and minor == 6 and patch >= 45)
-        ):
         if (
             (major > 6)
             or (major == 6 and minor > 6)
@@ -343,24 +337,12 @@ def get_available_interfaces():
                     ip = addr_info.get("addr")
                     netmask = addr_info.get("netmask")
                     if ip and ip != "127.0.0.1":  # Skip localhost
-                    ip = addr_info.get("addr")
-                    netmask = addr_info.get("netmask")
-                    if ip and ip != "127.0.0.1":  # Skip localhost
                         try:
                             # Calculate network CIDR
                             network = ipaddress.IPv4Network(
                                 f"{ip}/{netmask}", strict=False
                             )
-                            network = ipaddress.IPv4Network(
-                                f"{ip}/{netmask}", strict=False
-                            )
                             interfaces[iface] = {
-                                "ip": ip,
-                                "netmask": netmask,
-                                "network": str(network),
-                                "status": (
-                                    "up" if iface in netifaces.interfaces() else "down"
-                                ),
                                 "ip": ip,
                                 "netmask": netmask,
                                 "network": str(network),
@@ -370,10 +352,6 @@ def get_available_interfaces():
                             }
                         except Exception:
                             interfaces[iface] = {
-                                "ip": ip,
-                                "netmask": netmask,
-                                "network": f"{ip}/24",  # fallback
-                                "status": "up",
                                 "ip": ip,
                                 "netmask": netmask,
                                 "network": f"{ip}/24",  # fallback
@@ -514,75 +492,160 @@ def network_interfaces():
 
 @app.route("/run_scenario", methods=["POST"])
 def run_scenario():
+    """
+    Enhanced scenario runner with better error handling and logging
+    """
     data = request.get_json()
-
+    
     try:
-        steps = data["steps"]
+        steps = data.get("steps", [])
+        if not steps:
+            return jsonify({"status": "error", "message": "No steps provided"}), 400
+        
         results = []
-
-        for step in steps:
-            tool = step["tool"]
+        
+        for i, step in enumerate(steps):
+            tool = step.get("tool")
             args = step.get("args", [])
-
+            timeout = step.get("timeout", 60)
+            
+            if not tool:
+                return jsonify({"status": "error", "message": f"Step {i+1}: No tool specified"}), 400
+            
             cmd = [tool] + args
-
             print(f"Running command: {' '.join(cmd)}")
-
-            result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=step.get("timeout", 60)
-            )
-
-            results.append(
-                {
+            
+            try:
+                result = subprocess.run(
+                    cmd, 
+                    capture_output=True, 
+                    text=True, 
+                    timeout=timeout
+                )
+                
+                step_result = {
+                    "step": i + 1,
+                    "tool": tool,
                     "command": cmd,
                     "stdout": result.stdout,
                     "stderr": result.stderr,
                     "returncode": result.returncode,
+                    "status": "success" if result.returncode == 0 else "error"
                 }
-            )
-
-        return jsonify({"status": "success", "results": results}), 200
-
-    except Exception as e:
-        print("Error running scenario:", e)
-        return jsonify({"status": "error", "message": str(e)}), 500
-
-
-
-@app.route("/run_scenario", methods=["POST"])
-def run_scenario():
-    data = request.get_json()
-
-    try:
-        steps = data["steps"]
-        results = []
-
-        for step in steps:
-            tool = step["tool"]
-            args = step.get("args", [])
-
-            cmd = [tool] + args
-
-            print(f"Running command: {' '.join(cmd)}")
-
-            result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=step.get("timeout", 60)
-            )
-
-            results.append(
-                {
+                results.append(step_result)
+                
+                # Emit real-time update via WebSocket
+                socketio.emit("step_result", step_result)
+                
+            except subprocess.TimeoutExpired:
+                error_result = {
+                    "step": i + 1,
+                    "tool": tool,
                     "command": cmd,
-                    "stdout": result.stdout,
-                    "stderr": result.stderr,
-                    "returncode": result.returncode,
+                    "error": f"Command timed out after {timeout} seconds",
+                    "status": "timeout"
                 }
-            )
-
-        return jsonify({"status": "success", "results": results}), 200
-
+                results.append(error_result)
+                socketio.emit("step_result", error_result)
+                
+            except FileNotFoundError:
+                error_result = {
+                    "step": i + 1,
+                    "tool": tool,
+                    "command": cmd,
+                    "error": f"Tool '{tool}' not found. Please ensure it's installed and in PATH.",
+                    "status": "not_found"
+                }
+                results.append(error_result)
+                socketio.emit("step_result", error_result)
+        
+        return jsonify({
+            "status": "success", 
+            "results": results,
+            "total_steps": len(steps),
+            "completed_steps": len(results)
+        }), 200
+        
     except Exception as e:
-        print("Error running scenario:", e)
-        return jsonify({"status": "error", "message": str(e)}), 500
+        error_msg = f"Error running scenario: {str(e)}"
+        print(error_msg)
+        logging.error(error_msg)
+        return jsonify({"status": "error", "message": error_msg}), 500
+
+
+# Add the missing /api/run_scenario endpoint:
+@app.route("/api/run_scenario", methods=["POST"])
+def run_scenario_api():
+    """
+    Run a scenario via HTTP API (enhanced version for scenario builder)
+    """
+    try:
+        data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                "status": "error",
+                "message": "No scenario data provided"
+            }), 400
+        
+        scenario_name = data.get('name', 'Untitled Scenario')
+        steps = data.get('steps', [])
+        variables = data.get('variables', {})
+        timestamp = data.get('timestamp', '')
+        
+        print(f"API: Running scenario '{scenario_name}' with {len(steps)} steps")
+        print(f"Variables: {variables}")
+        
+        if not steps:
+            return jsonify({
+                "status": "error",
+                "message": "No steps to execute"
+            }), 400
+        
+        # Validate steps
+        for i, step in enumerate(steps):
+            if not step.get('tool'):
+                return jsonify({
+                    "status": "error",
+                    "message": f"Step {i + 1}: No tool specified"
+                }), 400
+            
+            if not step.get('args'):
+                return jsonify({
+                    "status": "error", 
+                    "message": f"Step {i + 1}: No arguments provided"
+                }), 400
+        
+        # Start scenario execution in background thread
+        scenario_data = {
+            "name": scenario_name,
+            "steps": steps,
+            "variables": variables,
+            "timestamp": timestamp
+        }
+        
+        # Use the existing start_scenario_thread function
+        t = threading.Thread(target=start_scenario_thread, args=(steps,), daemon=True)
+        t.start()
+        
+        print(f"Started scenario thread for: {scenario_name}")
+        
+        return jsonify({
+            "status": "success",
+            "message": f"Scenario '{scenario_name}' started successfully",
+            "scenario_id": f"scenario_{int(time.time() * 1000)}",
+            "steps_count": len(steps),
+            "execution_method": "background_thread"
+        })
+        
+    except Exception as e:
+        print(f"Error in /api/run_scenario: {e}")
+        logging.error(f"Error running scenario via API: {e}")
+        return jsonify({
+            "status": "error", 
+            "message": str(e)
+        }), 500
+
 
 
 @app.route("/start", methods=["POST"])
@@ -662,24 +725,12 @@ def save_scenario():
 
 
     try:
-        from pathlib import Path
-
-        temp_path = path.with_suffix(".json.tmp")
-
-        temp_path.parent.mkdir(parents=True, exist_ok=True)
-
-        with temp_path.open("w") as f:
-        from pathlib import Path
-
         temp_path = path.with_suffix(".json.tmp")
 
         temp_path.parent.mkdir(parents=True, exist_ok=True)
 
         with temp_path.open("w") as f:
             json.dump({"name": sanitized, "steps": steps}, f, indent=2)
-
-        temp_path.rename(path)
-        print(f"File saved successfully to {path}")
 
         temp_path.rename(path)
         print(f"File saved successfully to {path}")
@@ -934,20 +985,8 @@ def save_settings():
             "networkInterface" in new_settings
             and new_settings["networkInterface"] != "auto"
         ):
-        if (
-            "networkInterface" in new_settings
-            and new_settings["networkInterface"] != "auto"
-        ):
             available_interfaces = get_available_interfaces()
             if new_settings["networkInterface"] not in available_interfaces:
-                return (
-                    jsonify(
-                        status="error",
-                        message=f"Invalid network interface. Available interfaces: {', '.join(available_interfaces.keys())}",
-                    ),
-                    400,
-                )
-
                 return (
                     jsonify(
                         status="error",
