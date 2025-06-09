@@ -1,0 +1,131 @@
+{
+  "name": "testinggg",
+  "steps": [
+    {
+      "tool": "whatweb",
+      "args": [
+        "{target_url}",
+        "-v"
+      ],
+      "condition": {
+        "type": "always",
+        "operator": null,
+        "value": ""
+      },
+      "timeout": 60,
+      "variables": {
+        "web_tech": "(?i)(wordpress|drupal|joomla|apache|nginx|php|asp\\.net)",
+        "cms_version": "([0-9]+\\.[0-9]+\\.[0-9]+)"
+      },
+      "metadata": {
+        "created": "2025-06-09T17:54:41.104Z",
+        "index": 0
+      }
+    },
+    {
+      "tool": "nikto",
+      "args": [
+        "-h",
+        "{target_url}",
+        "-C",
+        "all",
+        "-Format",
+        "txt"
+      ],
+      "condition": {
+        "type": "prev_success",
+        "operator": null,
+        "value": ""
+      },
+      "timeout": 300,
+      "variables": {
+        "vulnerabilities": "(?i)(vulnerability|exploit|cve-[0-9]{4}-[0-9]+)",
+        "severity": "(?i)(high|critical|medium)"
+      },
+      "metadata": {
+        "created": "2025-06-09T17:54:41.104Z",
+        "index": 1
+      }
+    },
+    {
+      "tool": "gobuster",
+      "args": [
+        "dir",
+        "-u",
+        "{target_url}",
+        "-w",
+        "{wordlist_path}",
+        "-x",
+        "php,html,txt,js,css",
+        "-t",
+        "50"
+      ],
+      "condition": {
+        "type": "prev_contains",
+        "operator": null,
+        "value": "200 OK"
+      },
+      "timeout": 600,
+      "variables": {
+        "directories": "Status",
+        "admin_paths": "(?i)(/admin|/administrator|/wp-admin|/login)"
+      },
+      "metadata": {
+        "created": "2025-06-09T17:54:41.104Z",
+        "index": 2
+      }
+    },
+    {
+      "tool": "sqlmap",
+      "args": [
+        "-u",
+        "{target_url}",
+        "--batch",
+        "--level=2",
+        "--risk=2",
+        "--random-agent"
+      ],
+      "condition": {
+        "type": "output_contains",
+        "operator": null,
+        "value": "Parameter"
+      },
+      "timeout": 900,
+      "variables": {
+        "sql_injectable": "(?i)(injectable|vulnerable)",
+        "database_type": "(?i)(mysql|postgresql|oracle|mssql)"
+      },
+      "metadata": {
+        "created": "2025-06-09T17:54:41.104Z",
+        "index": 3
+      }
+    },
+    {
+      "tool": "nuclei",
+      "args": [
+        "-u",
+        "{target_url}",
+        "-t",
+        "/nuclei-templates/",
+        "-severity",
+        "high,critical",
+        "-o",
+        "/tmp/nuclei_results.txt"
+      ],
+      "condition": {
+        "type": "always",
+        "operator": null,
+        "value": ""
+      },
+      "timeout": 300,
+      "variables": {
+        "critical_vulns": "\\[critical\\].*?\\[(.*?)\\]",
+        "cve_found": "(CVE-[0-9]{4}-[0-9]+)"
+      },
+      "metadata": {
+        "created": "2025-06-09T17:54:41.104Z",
+        "index": 4
+      }
+    }
+  ]
+}

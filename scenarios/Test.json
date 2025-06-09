@@ -1,0 +1,48 @@
+{
+  "name": "Test",
+  "steps": [
+    {
+      "tool": "nmap",
+      "args": [
+        "-sV",
+        "-A",
+        "-O",
+        "-sS",
+        "-p",
+        "1-1000",
+        "{target}"
+      ],
+      "condition": {
+        "type": "always",
+        "operator": null,
+        "value": ""
+      },
+      "timeout": 300,
+      "variables": {},
+      "metadata": {
+        "created": "2025-06-09T17:40:19.866Z",
+        "index": 0
+      }
+    },
+    {
+      "tool": "nikto",
+      "args": [
+        "-h",
+        "{target_url}",
+        "-C",
+        "all"
+      ],
+      "condition": {
+        "type": "never",
+        "operator": null,
+        "value": "das"
+      },
+      "timeout": 300,
+      "variables": {},
+      "metadata": {
+        "created": "2025-06-09T17:40:19.866Z",
+        "index": 1
+      }
+    }
+  ]
+}
