@@ -6,21 +6,21 @@
 class ScenarioManager {
   constructor() {
     // grab inputs/buttons/stats/table/body/empty‐state
-    this.scenarioNameInput   = document.getElementById('scenario-name');
-    this.addStepBtn          = document.getElementById('add-step-btn');
-    this.loadScenarioBtn     = document.getElementById('load-scenario-btn');
-    this.saveScenarioBtn     = document.getElementById('save-scenario-btn');
-    this.runScenarioBtn      = document.getElementById('run-scenario-btn');
-    this.clearScenarioBtn    = document.getElementById('clear-scenario-btn');
-    this.stepCountEl         = document.getElementById('step-count');
-    this.toolCountEl         = document.getElementById('tool-count');
-    this.stepsTableBody      = document.getElementById('steps-tbody');
-    this.emptyState          = document.getElementById('empty-state');
+    this.scenarioNameInput = document.getElementById('scenario-name');
+    this.addStepBtn = document.getElementById('add-step-btn');
+    this.loadScenarioBtn = document.getElementById('load-scenario-btn');
+    this.saveScenarioBtn = document.getElementById('save-scenario-btn');
+    this.runScenarioBtn = document.getElementById('run-scenario-btn');
+    this.clearScenarioBtn = document.getElementById('clear-scenario-btn');
+    this.stepCountEl = document.getElementById('step-count');
+    this.toolCountEl = document.getElementById('tool-count');
+    this.stepsTableBody = document.getElementById('steps-tbody');
+    this.emptyState = document.getElementById('empty-state');
 
     // core data
     this.scenarioVariables = new Map();
-    this.stepResults       = new Map();
-    this.isRunning         = false;
+    this.stepResults = new Map();
+    this.isRunning = false;
     this.tools = [
       "nmap", "masscan", "gobuster", "nikto", "sqlmap", "hydra",
       "sslscan", "nbtscan", "dnsenum", "john", "hashcat", "dirb",
@@ -29,11 +29,11 @@ class ScenarioManager {
       "ffuf", "subfinder", "eyewitness", "gitleaks", "shodan",
       "nuclei", "feroxbuster", "whatweb", "testssl", "smbclient"
     ];
-    
+
     this.conditionTypes = [
       { value: "always", label: "Always Execute", needsValue: false, category: "basic" },
       { value: "never", label: "Never Execute (Skip)", needsValue: false, category: "basic" },
-      
+
       // Previous step conditions
       { value: "prev_success", label: "If Previous Step Succeeded", needsValue: false, category: "previous" },
       { value: "prev_fail", label: "If Previous Step Failed", needsValue: false, category: "previous" },
@@ -41,14 +41,14 @@ class ScenarioManager {
       { value: "prev_not_contains", label: "If Previous Output Does NOT Contain", needsValue: true, category: "previous" },
       { value: "prev_regex", label: "If Previous Output Matches Regex", needsValue: true, category: "previous" },
       { value: "prev_exit_code", label: "If Previous Exit Code Equals", needsValue: true, category: "previous" },
-      
+
       // Output analysis conditions
       { value: "output_contains", label: "If ANY Previous Output Contains", needsValue: true, category: "output" },
       { value: "output_not_contains", label: "If NO Previous Output Contains", needsValue: true, category: "output" },
       { value: "output_regex", label: "If ANY Previous Output Matches Regex", needsValue: true, category: "output" },
       { value: "output_line_count", label: "If Previous Output Line Count", needsValue: true, category: "output" },
       { value: "output_size", label: "If Previous Output Size (bytes)", needsValue: true, category: "output" },
-      
+
       // File system conditions
       { value: "file_exists", label: "If File Exists", needsValue: true, category: "filesystem" },
       { value: "file_not_exists", label: "If File Does NOT Exist", needsValue: true, category: "filesystem" },
@@ -56,31 +56,31 @@ class ScenarioManager {
       { value: "file_regex", label: "If File Matches Regex", needsValue: true, category: "filesystem" },
       { value: "file_size", label: "If File Size", needsValue: true, category: "filesystem" },
       { value: "dir_exists", label: "If Directory Exists", needsValue: true, category: "filesystem" },
-      
+
       // Variable conditions
       { value: "var_set", label: "If Variable Is Set", needsValue: true, category: "variables" },
       { value: "var_equals", label: "If Variable Equals", needsValue: true, category: "variables" },
       { value: "var_contains", label: "If Variable Contains", needsValue: true, category: "variables" },
       { value: "var_regex", label: "If Variable Matches Regex", needsValue: true, category: "variables" },
-      
+
       // Network conditions
       { value: "port_open", label: "If Port Is Open", needsValue: true, category: "network" },
       { value: "port_closed", label: "If Port Is Closed", needsValue: true, category: "network" },
       { value: "host_up", label: "If Host Is Up", needsValue: true, category: "network" },
       { value: "host_down", label: "If Host Is Down", needsValue: true, category: "network" },
       { value: "service_detected", label: "If Service Detected", needsValue: true, category: "network" },
-      
+
       // Time-based conditions
       { value: "time_after", label: "If Current Time After", needsValue: true, category: "time" },
       { value: "time_before", label: "If Current Time Before", needsValue: true, category: "time" },
       { value: "execution_time", label: "If Previous Step Took Longer Than", needsValue: true, category: "time" },
-      
+
       // Advanced logical conditions
       { value: "step_result", label: "If Specific Step Result", needsValue: true, category: "advanced" },
       { value: "count_condition", label: "If Count of Matches", needsValue: true, category: "advanced" },
       { value: "custom_script", label: "If Custom Script Returns True", needsValue: true, category: "advanced" }
     ];
-    
+
     this.operators = [
       { value: "equals", label: "=" },
       { value: "not_equals", label: "!=" },
@@ -95,7 +95,7 @@ class ScenarioManager {
       { value: "regex", label: "matches regex" },
       { value: "not_regex", label: "does not match regex" }
     ];
-    
+
     this.stepTemplates = {
       "nmap": {
         args: ["-sV", "-A", "-O", "-sS", "-p 1-1000", "{target}"],
@@ -134,7 +134,7 @@ class ScenarioManager {
         expectedOutputs: ["vulnerabilities", "CVEs", "security issues"]
       }
     };
-    
+
     // DOM elements
     this.stepsTableBody = document.getElementById("steps-tbody");
     this.scenarioNameInput = document.getElementById("scenario-name");
@@ -148,7 +148,7 @@ class ScenarioManager {
     this.runningStepIndex = -1;
     this.scenarioVariables = new Map(); // Store scenario-wide variables
     this.stepResults = new Map(); // Store results from each step
-    
+
     this.init();
   }
 
@@ -171,12 +171,12 @@ class ScenarioManager {
 
       // Set up event listeners
       this.setupEventListeners();
-      
+
       // Initialize UI
       this.updateUI();
-      
+
       console.log('Enhanced Scenario Manager initialized successfully');
-      
+
     } catch (error) {
       console.error('Failed to initialize Enhanced Scenario Manager:', error);
       this.showNotification('Failed to initialize scenario manager', 'error');
@@ -198,15 +198,15 @@ class ScenarioManager {
    * Setup all event listeners
    */
   setupEventListeners() {
-    this.addStepBtn.addEventListener('click',  () => this.addStep());
-    this.loadScenarioBtn.addEventListener('click',  () => this.showLoadModal());
-    this.saveScenarioBtn.addEventListener('click',  () => this.saveScenario());
-    this.runScenarioBtn.addEventListener('click',  () => this.runScenario());
-    this.clearScenarioBtn.addEventListener('click',() => this.clearScenario());
+    this.addStepBtn.addEventListener('click', () => this.addStep());
+    this.loadScenarioBtn.addEventListener('click', () => this.showLoadModal());
+    this.saveScenarioBtn.addEventListener('click', () => this.saveScenario());
+    this.runScenarioBtn.addEventListener('click', () => this.runScenario());
+    this.clearScenarioBtn.addEventListener('click', () => this.clearScenario());
 
     // name “Enter” saves
     this.scenarioNameInput.addEventListener('keydown', e => {
-      if (e.key==='Enter') this.saveScenario();
+      if (e.key === 'Enter') this.saveScenario();
     });
 
     // keyboard shortcuts, auto‐save, WS listeners…
@@ -218,19 +218,19 @@ class ScenarioManager {
    */
   updateUI() {
     // toggle empty-state
-    this.emptyState.style.display = this.stepsTableBody.children.length ? 'none':'block';
+    this.emptyState.style.display = this.stepsTableBody.children.length ? 'none' : 'block';
     // update stats
     this.stepCountEl.textContent = this.stepsTableBody.children.length;
     const tools = new Set(
       Array.from(this.stepsTableBody.children)
-        .map(r=>r.querySelector('.tool-select').value)
-        .filter(v=>v)
+        .map(r => r.querySelector('.tool-select').value)
+        .filter(v => v)
     );
     this.toolCountEl.textContent = tools.size;
     // enable/disable buttons
-    const hasSteps = this.stepsTableBody.children.length>0;
-    this.saveScenarioBtn.disabled  = !hasSteps;
-    this.runScenarioBtn.disabled   = !hasSteps;
+    const hasSteps = this.stepsTableBody.children.length > 0;
+    this.saveScenarioBtn.disabled = !hasSteps;
+    this.runScenarioBtn.disabled = !hasSteps;
     this.clearScenarioBtn.disabled = !hasSteps;
   }
 
@@ -243,17 +243,17 @@ class ScenarioManager {
       e.preventDefault();
       this.saveScenario();
     }
-    
+
     if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
       e.preventDefault();
       this.addStep();
     }
-    
+
     if ((e.ctrlKey || e.metaKey) && e.key === 'o') {
       e.preventDefault();
       this.showLoadModal();
     }
-    
+
     if (e.key === 'Escape') {
       this.hideLoadModal();
     }
@@ -271,7 +271,7 @@ class ScenarioManager {
       }
 
       this.socket = io();
-      
+
       this.socket.on('connect', () => {
         console.log('WebSocket connected');
         this.updateStatus('Connected', true);
@@ -316,13 +316,13 @@ class ScenarioManager {
   addStep(stepData = null) {
     const stepIndex = this.stepsTableBody.children.length;
     const row = this.createStepRow(stepIndex, stepData);
-    
+
     row.classList.add('step-row-enter');
-    
+
     this.stepsTableBody.appendChild(row);
     this.updateUI();
     this.showNotification('Enhanced IFTTT step added successfully', 'success');
-    
+
     if (!stepData) {
       const toolSelect = row.querySelector('.tool-select');
       setTimeout(() => toolSelect.focus(), 100);
@@ -350,11 +350,11 @@ class ScenarioManager {
     const tdTool = document.createElement("td");
     const toolContainer = document.createElement("div");
     toolContainer.className = "tool-container";
-    
+
     const toolLabel = document.createElement("label");
     toolLabel.textContent = "THEN execute:";
     toolLabel.className = "condition-label";
-    
+
     const selectTool = this.createToolSelect(stepData?.tool);
     toolContainer.appendChild(toolLabel);
     toolContainer.appendChild(selectTool);
@@ -442,7 +442,7 @@ class ScenarioManager {
   createConditionSelect(stepData = null) {
     const select = document.createElement("select");
     select.className = "form-control condition-select";
-    
+
     // Group conditions by category
     const categories = {};
     this.conditionTypes.forEach(condType => {
@@ -456,7 +456,7 @@ class ScenarioManager {
     Object.keys(categories).forEach(category => {
       const optgroup = document.createElement("optgroup");
       optgroup.label = category.charAt(0).toUpperCase() + category.slice(1);
-      
+
       categories[category].forEach(condType => {
         const option = document.createElement("option");
         option.value = condType.value;
@@ -465,10 +465,10 @@ class ScenarioManager {
         option.dataset.category = condType.category;
         optgroup.appendChild(option);
       });
-      
+
       select.appendChild(optgroup);
     });
-    
+
     if (stepData && stepData.condition) {
       select.value = stepData.condition.type;
     }
@@ -477,7 +477,7 @@ class ScenarioManager {
     select.addEventListener("change", (e) => {
       this.handleConditionTypeChange(e.target);
     });
-    
+
     return select;
   }
 
@@ -489,18 +489,18 @@ class ScenarioManager {
   createOperatorSelect(stepData = null) {
     const select = document.createElement("select");
     select.className = "form-control operator-select";
-    
+
     this.operators.forEach(op => {
       const option = document.createElement("option");
       option.value = op.value;
       option.textContent = op.label;
       select.appendChild(option);
     });
-    
+
     if (stepData && stepData.condition && stepData.condition.operator) {
       select.value = stepData.condition.operator;
     }
-    
+
     return select;
   }
 
@@ -514,33 +514,33 @@ class ScenarioManager {
     const valueInput = container.querySelector('.condition-value');
     const regexHelper = container.querySelector('.regex-helper');
     const validationIcon = container.querySelector('.validation-icon');
-    
+
     const selectedOption = conditionSelect.selectedOptions[0];
     const needsValue = selectedOption ? selectedOption.dataset.needsValue === 'true' : false;
     const conditionType = conditionSelect.value;
-    
+
     // Show/hide operator selector for complex conditions
     const needsOperator = [
-      'output_line_count', 'output_size', 'file_size', 'execution_time', 
+      'output_line_count', 'output_size', 'file_size', 'execution_time',
       'count_condition', 'var_equals', 'var_contains'
     ].includes(conditionType);
-    
+
     operatorSelect.style.display = needsOperator ? 'block' : 'none';
-    
+
     // Show/hide value input
     valueInput.style.display = needsValue ? 'block' : 'none';
     valueInput.disabled = !needsValue;
-    
+
     // Show/hide regex helper
-    const isRegexCondition = conditionType.includes('regex') || 
-                            operatorSelect.value === 'regex' || 
-                            operatorSelect.value === 'not_regex';
+    const isRegexCondition = conditionType.includes('regex') ||
+      operatorSelect.value === 'regex' ||
+      operatorSelect.value === 'not_regex';
     regexHelper.style.display = isRegexCondition ? 'inline-block' : 'none';
-    
+
     // Update placeholder and validation
     this.updateConditionPlaceholder(valueInput, conditionType);
     this.validateCondition(container);
-    
+
     if (!needsValue) {
       valueInput.value = "";
     }
@@ -575,7 +575,7 @@ class ScenarioManager {
       'count_condition': 'Pattern and count (e.g., "open port":>5)',
       'custom_script': 'Script path or inline code'
     };
-    
+
     input.placeholder = placeholders[conditionType] || 'Enter condition value...';
   }
 
@@ -591,25 +591,25 @@ class ScenarioManager {
     input.type = "text";
     input.className = "form-control condition-value";
     input.placeholder = "Enter condition value...";
-    
+
     if (stepData && stepData.condition && stepData.condition.value) {
       input.value = stepData.condition.value;
     }
-    
+
     // Add real-time validation
     input.addEventListener('input', () => {
       this.validateCondition(input.closest('.condition-container'));
     });
-    
+
     input.addEventListener('blur', () => {
       this.validateCondition(input.closest('.condition-container'));
     });
-    
+
     // Add variable substitution hints
     input.addEventListener('focus', () => {
       this.showVariableHints(input);
     });
-    
+
     return input;
   }
 
@@ -622,22 +622,22 @@ class ScenarioManager {
     const operatorSelect = container.querySelector('.operator-select');
     const valueInput = container.querySelector('.condition-value');
     const validationIcon = container.querySelector('.validation-icon');
-    
+
     const conditionType = conditionSelect.value;
     const value = valueInput.value.trim();
-    
+
     let isValid = true;
     let errorMessage = '';
-    
+
     // Check if value is required
     const selectedOption = conditionSelect.selectedOptions[0];
     const needsValue = selectedOption ? selectedOption.dataset.needsValue === 'true' : false;
-    
+
     if (needsValue && !value) {
       isValid = false;
       errorMessage = 'Value required for this condition';
     }
-    
+
     // Validate regex patterns
     if (conditionType.includes('regex') && value) {
       try {
@@ -647,7 +647,7 @@ class ScenarioManager {
         errorMessage = 'Invalid regex pattern';
       }
     }
-    
+
     // Validate specific formats
     if (isValid && value) {
       switch (conditionType) {
@@ -658,7 +658,7 @@ class ScenarioManager {
             errorMessage = 'Must be a number or comparison (e.g., >30)';
           }
           break;
-          
+
         case 'port_open':
         case 'port_closed':
           if (!/^[\w.-]+:\d+$/.test(value)) {
@@ -666,7 +666,7 @@ class ScenarioManager {
             errorMessage = 'Must be in format host:port';
           }
           break;
-          
+
         case 'time_after':
         case 'time_before':
           if (!/^\d{2}:\d{2}$/.test(value)) {
@@ -676,12 +676,12 @@ class ScenarioManager {
           break;
       }
     }
-    
+
     // Update validation icon
     validationIcon.innerHTML = isValid ? '✅' : '❌';
     validationIcon.title = isValid ? 'Valid condition' : errorMessage;
     validationIcon.className = `validation-icon ${isValid ? 'valid' : 'invalid'}`;
-    
+
     return isValid;
   }
 
@@ -720,21 +720,21 @@ class ScenarioManager {
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(modal);
     modal.style.display = 'block';
-    
+
     // Event listeners
     modal.querySelector('.modal-close').addEventListener('click', () => {
       modal.remove();
     });
-    
+
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.remove();
       }
     });
-    
+
     modal.querySelectorAll('.pattern-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         input.value = btn.dataset.pattern;
@@ -742,24 +742,24 @@ class ScenarioManager {
         modal.remove();
       });
     });
-    
+
     // Real-time regex testing
     const testInput = modal.querySelector('.test-input');
     const testResult = modal.querySelector('.test-result');
-    
+
     const testRegex = () => {
       const pattern = input.value;
       const testText = testInput.value;
-      
+
       if (!pattern || !testText) {
         testResult.innerHTML = '';
         return;
       }
-      
+
       try {
         const regex = new RegExp(pattern, 'g');
         const matches = testText.match(regex);
-        
+
         if (matches) {
           testResult.innerHTML = `<span class="success">✅ ${matches.length} match(es): ${matches.join(', ')}</span>`;
         } else {
@@ -769,7 +769,7 @@ class ScenarioManager {
         testResult.innerHTML = `<span class="error">❌ Invalid regex: ${e.message}</span>`;
       }
     };
-    
+
     input.addEventListener('input', testRegex);
     testInput.addEventListener('input', testRegex);
   }
@@ -782,31 +782,31 @@ class ScenarioManager {
     // Create tooltip with available variables
     const tooltip = document.createElement('div');
     tooltip.className = 'variable-tooltip';
-    
+
     const variables = Array.from(this.scenarioVariables.keys());
     const variableList = variables.map(v => `{${v}}`).join(', ');
-    
+
     tooltip.innerHTML = `
       <strong>Available Variables:</strong><br>
       ${variableList || 'No variables defined yet'}<br>
       <em>Use {variable_name} in your conditions</em>
     `;
-    
+
     document.body.appendChild(tooltip);
-    
+
     const rect = input.getBoundingClientRect();
     tooltip.style.position = 'fixed';
     tooltip.style.top = (rect.bottom + 5) + 'px';
     tooltip.style.left = rect.left + 'px';
     tooltip.style.zIndex = '1000';
-    
+
     // Remove tooltip after delay or on focus out
     const removeTooltip = () => {
       if (tooltip.parentNode) {
         tooltip.remove();
       }
     };
-    
+
     setTimeout(removeTooltip, 5000);
     input.addEventListener('blur', removeTooltip, { once: true });
   }
@@ -823,24 +823,24 @@ class ScenarioManager {
     // Variable extraction section
     const varSection = document.createElement("div");
     varSection.className = "variable-section";
-    
+
     const varLabel = document.createElement("label");
     varLabel.textContent = "Extract Variables:";
     varLabel.className = "section-label";
-    
+
     const varInput = document.createElement("input");
     varInput.type = "text";
     varInput.className = "form-control variable-extract";
     varInput.placeholder = "var_name:regex_pattern";
     varInput.title = "Extract variables from output using regex (e.g., ip_addr:\\d+\\.\\d+\\.\\d+\\.\\d+)";
-    
+
     if (stepData && stepData.variables) {
       varInput.value = Object.entries(stepData.variables).map(([k, v]) => `${k}:${v}`).join(';');
     }
-    
+
     varSection.appendChild(varLabel);
     varSection.appendChild(varInput);
-    
+
     // Step timeout
     const timeoutInput = document.createElement("input");
     timeoutInput.type = "number";
@@ -849,10 +849,10 @@ class ScenarioManager {
     timeoutInput.min = "1";
     timeoutInput.max = "3600";
     timeoutInput.value = stepData?.timeout || "300";
-    
+
     container.appendChild(varSection);
     container.appendChild(timeoutInput);
-    
+
     return container;
   }
 
@@ -864,12 +864,12 @@ class ScenarioManager {
   createToolSelect(selectedTool = null) {
     const select = document.createElement("select");
     select.className = "form-control tool-select";
-    
+
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = "Select a tool...";
     select.appendChild(defaultOption);
-    
+
     // Group tools by category
     const categories = {
       "Network Scanning": ["nmap", "masscan", "zmap"],
@@ -880,33 +880,33 @@ class ScenarioManager {
       "Enumeration": ["enum4linux", "nbtscan", "ldapsearch", "snmp-check"],
       "Other": ["eyewitness", "gitleaks", "smbclient"]
     };
-    
+
     Object.entries(categories).forEach(([category, tools]) => {
       const optgroup = document.createElement("optgroup");
       optgroup.label = category;
-      
+
       tools.forEach(tool => {
         if (this.tools.includes(tool)) {
           const option = document.createElement("option");
           option.value = tool;
           option.textContent = tool;
-          
+
           // Add template info if available
           if (this.stepTemplates[tool]) {
             option.title = this.stepTemplates[tool].description;
           }
-          
+
           optgroup.appendChild(option);
         }
       });
-      
+
       select.appendChild(optgroup);
     });
-    
+
     if (selectedTool) {
       select.value = selectedTool;
     }
-    
+
     select.addEventListener("change", (e) => {
       this.handleToolChange(e.target);
       this.updateUI();
@@ -920,19 +920,19 @@ class ScenarioManager {
    */
   updateUI() {
     // toggle empty-state
-    this.emptyState.style.display = this.stepsTableBody.children.length ? 'none':'block';
+    this.emptyState.style.display = this.stepsTableBody.children.length ? 'none' : 'block';
     // update stats
     this.stepCountEl.textContent = this.stepsTableBody.children.length;
     const tools = new Set(
       Array.from(this.stepsTableBody.children)
-        .map(r=>r.querySelector('.tool-select').value)
-        .filter(v=>v)
+        .map(r => r.querySelector('.tool-select').value)
+        .filter(v => v)
     );
     this.toolCountEl.textContent = tools.size;
     // enable/disable buttons
-    const hasSteps = this.stepsTableBody.children.length>0;
-    this.saveScenarioBtn.disabled  = !hasSteps;
-    this.runScenarioBtn.disabled   = !hasSteps;
+    const hasSteps = this.stepsTableBody.children.length > 0;
+    this.saveScenarioBtn.disabled = !hasSteps;
+    this.runScenarioBtn.disabled = !hasSteps;
     this.clearScenarioBtn.disabled = !hasSteps;
   }
 
@@ -955,11 +955,11 @@ class ScenarioManager {
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.style.animation = 'slideIn 0.3s ease-out';
-    
+
     // Create content with proper escaping
     const messageSpan = document.createElement('span');
     messageSpan.textContent = message;
-    
+
     const closeBtn = document.createElement('button');
     closeBtn.className = 'notification-close';
     closeBtn.innerHTML = '×';
@@ -973,13 +973,13 @@ class ScenarioManager {
         }, 300);
       }
     };
-    
+
     notification.appendChild(messageSpan);
     notification.appendChild(closeBtn);
-    
+
     // Add to DOM
     document.body.appendChild(notification);
-    
+
     // Default timeouts based on type
     const defaultTimeout = {
       'success': 3000,
@@ -987,7 +987,7 @@ class ScenarioManager {
       'warning': 4000,
       'info': timeout || 5000
     }[type] || 3000;
-    
+
     // Auto-remove after timeout
     setTimeout(() => {
       if (notification.parentElement) {
@@ -1010,7 +1010,7 @@ class ScenarioManager {
     if (variables.length > 0) {
       const variableList = variables.map(v => `• ${v}: ${scenario.variables[v]}`).join('\n');
       const hint = `Remember to customize these variables for your target:\n${variableList}`;
-      
+
       setTimeout(() => {
         this.showNotification(hint, 'info', 8000);
       }, 1500);
@@ -1024,30 +1024,30 @@ class ScenarioManager {
    */
   getScenarioFeatures(scenario) {
     const features = [];
-    
+
     if (scenario.steps) {
       const tools = [...new Set(scenario.steps.map(s => s.tool))];
       features.push(`Uses tools: ${tools.slice(0, 3).join(', ')}${tools.length > 3 ? '...' : ''}`);
-      
+
       const conditionalSteps = scenario.steps.filter(s => s.condition?.type !== 'always').length;
       if (conditionalSteps > 0) {
         features.push(`${conditionalSteps} conditional steps with IFTTT logic`);
       }
-      
+
       const variableExtracting = scenario.steps.filter(s => Object.keys(s.variables || {}).length > 0).length;
       if (variableExtracting > 0) {
         features.push(`${variableExtracting} steps extract variables`);
       }
-      
-      const regexSteps = scenario.steps.filter(s => 
-        s.condition?.type?.includes('regex') || 
+
+      const regexSteps = scenario.steps.filter(s =>
+        s.condition?.type?.includes('regex') ||
         Object.values(s.variables || {}).some(v => v.includes('\\'))
       ).length;
       if (regexSteps > 0) {
         features.push(`Advanced regex pattern matching`);
       }
     }
-    
+
     return features.slice(0, 4); // Limit to 4 features
   }
 
@@ -1071,42 +1071,42 @@ class ScenarioManager {
   createStepRow(stepData = null) {
     const row = document.createElement("tr");
     row.className = "step-row";
-    
+
     // Step number
     const stepNumCell = document.createElement("td");
     const stepNum = this.stepsTableBody ? this.stepsTableBody.children.length + 1 : 1;
     stepNumCell.innerHTML = `<span class="step-number">${stepNum}</span>`;
-    
+
     // Tool select
     const toolCell = document.createElement("td");
     const toolSelect = this.createToolSelect(stepData?.tool);
     toolCell.appendChild(toolSelect);
-    
+
     // Arguments input
     const argsCell = document.createElement("td");
     const argsInput = this.createArgumentsInput(stepData);
     argsCell.appendChild(argsInput);
-    
+
     // Condition select
     const conditionCell = document.createElement("td");
     const conditionContainer = this.createConditionContainer(stepData);
     conditionCell.appendChild(conditionContainer);
-    
+
     // Variables input
     const variablesCell = document.createElement("td");
     const variablesInput = this.createVariablesInput(stepData);
     variablesCell.appendChild(variablesInput);
-    
+
     // Timeout input
     const timeoutCell = document.createElement("td");
     const timeoutInput = this.createTimeoutInput(stepData);
     timeoutCell.appendChild(timeoutInput);
-    
+
     // Remove button
     const removeCell = document.createElement("td");
     const removeBtn = this.createRemoveButton(row);
     removeCell.appendChild(removeBtn);
-    
+
     // Append all cells
     row.appendChild(stepNumCell);
     row.appendChild(toolCell);
@@ -1115,7 +1115,7 @@ class ScenarioManager {
     row.appendChild(variablesCell);
     row.appendChild(timeoutCell);
     row.appendChild(removeCell);
-    
+
     return row;
   }
 
@@ -1127,10 +1127,10 @@ class ScenarioManager {
   createConditionContainer(stepData = null) {
     const container = document.createElement("div");
     container.className = "condition-container";
-    
+
     const select = document.createElement("select");
     select.className = "form-control condition-select";
-    
+
     // Add condition options
     this.conditionTypes.forEach(condition => {
       const option = document.createElement("option");
@@ -1138,33 +1138,33 @@ class ScenarioManager {
       option.textContent = condition.label;
       select.appendChild(option);
     });
-    
+
     if (stepData?.condition?.type) {
       select.value = stepData.condition.type;
     }
-    
+
     const valueInput = document.createElement("input");
     valueInput.type = "text";
     valueInput.className = "form-control condition-value";
     valueInput.placeholder = "Condition value...";
     valueInput.style.marginTop = "5px";
-    
+
     if (stepData?.condition?.value) {
       valueInput.value = stepData.condition.value;
     }
-    
+
     // Show/hide value input based on condition type
     const updateValueInput = () => {
       const needsValue = !['always', 'prev_success', 'prev_fail'].includes(select.value);
       valueInput.style.display = needsValue ? 'block' : 'none';
     };
-    
+
     select.addEventListener('change', updateValueInput);
     updateValueInput();
-    
+
     container.appendChild(select);
     container.appendChild(valueInput);
-    
+
     return container;
   }
 
@@ -1178,14 +1178,14 @@ class ScenarioManager {
     textarea.className = "form-control variables-input";
     textarea.placeholder = "var_name: regex_pattern\none_per_line";
     textarea.rows = 2;
-    
+
     if (stepData?.variables) {
       const varsText = Object.entries(stepData.variables)
         .map(([key, value]) => `${key}: ${value}`)
         .join('\n');
       textarea.value = varsText;
     }
-    
+
     return textarea;
   }
 
@@ -1202,7 +1202,7 @@ class ScenarioManager {
     input.min = "1";
     input.max = "3600";
     input.value = stepData?.timeout || "300";
-    
+
     return input;
   }
 
@@ -1216,20 +1216,20 @@ class ScenarioManager {
     input.type = "text";
     input.className = "form-control args-input";
     input.placeholder = "Tool arguments (use {variable} for substitution)";
-    
+
     if (stepData && stepData.args) {
       input.value = Array.isArray(stepData.args) ? stepData.args.join(" ") : stepData.args;
     }
-    
+
     // Add variable substitution validation
     input.addEventListener('input', () => {
       this.validateVariables(input);
     });
-    
+
     input.addEventListener('blur', () => {
       this.validateArguments(input);
     });
-    
+
     // Add variable insertion helper
     input.addEventListener('dblclick', () => {
       this.showVariableSelector(input);
@@ -1244,7 +1244,7 @@ class ScenarioManager {
    */
   validateArguments(input) {
     const value = input.value.trim();
-    
+
     // Check for dangerous patterns
     const dangerousPatterns = [
       /<script.*?>/i,
@@ -1253,16 +1253,16 @@ class ScenarioManager {
       /;\s*rm\s+-rf/i,
       /;\s*sudo/i
     ];
-    
+
     const hasDangerous = dangerousPatterns.some(pattern => pattern.test(value));
-    
+
     if (hasDangerous) {
       input.style.borderColor = 'var(--error-color)';
       this.showNotification('Potentially dangerous content detected in arguments', 'error');
     } else {
       input.style.borderColor = 'var(--border-color)';
     }
-    
+
     // Validate variables
     this.validateVariables(input);
   }
@@ -1274,14 +1274,14 @@ class ScenarioManager {
   validateVariables(input) {
     const value = input.value;
     const variables = value.match(/\{([^}]+)\}/g);
-    
+
     if (variables) {
       const undefinedVars = variables.filter(v => {
         const varName = v.slice(1, -1);
-        return !this.scenarioVariables.has(varName) && 
-               !['target', 'target_url', 'username', 'service', 'port', 'password'].includes(varName);
+        return !this.scenarioVariables.has(varName) &&
+          !['target', 'target_url', 'username', 'service', 'port', 'password'].includes(varName);
       });
-      
+
       if (undefinedVars.length > 0) {
         input.style.borderColor = 'var(--warning-color)';
         input.title = `Undefined variables: ${undefinedVars.join(', ')}`;
@@ -1302,10 +1302,10 @@ class ScenarioManager {
   showVariableSelector(input) {
     const modal = document.createElement('div');
     modal.className = 'modal variable-modal';
-    
+
     const availableVars = Array.from(this.scenarioVariables.keys());
     const commonVars = ['target', 'target_url', 'username', 'password', 'service', 'port'];
-    
+
     modal.innerHTML = `
       <div class="modal-content">
         <div class="modal-header">
@@ -1332,16 +1332,16 @@ class ScenarioManager {
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(modal);
     modal.style.display = 'block';
-    
+
     // Event listeners
     modal.querySelector('.modal-close').addEventListener('click', () => modal.remove());
     modal.addEventListener('click', (e) => {
       if (e.target === modal) modal.remove();
     });
-    
+
     modal.querySelectorAll('.var-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const cursorPos = input.selectionStart || 0;
@@ -1351,27 +1351,27 @@ class ScenarioManager {
         input.value = textBefore + `{${btn.dataset.var}}` + textAfter;
         input.focus();
         input.setSelectionRange(cursorPos + btn.dataset.var.length + 2, cursorPos + btn.dataset.var.length + 2);
-        
+
         this.validateVariables(input);
         modal.remove();
       });
     });
-    
+
     const customVarBtn = modal.querySelector('.custom-var-btn');
     if (customVarBtn) {
       customVarBtn.addEventListener('click', () => {
         const customInput = modal.querySelector('.custom-var-input');
         const varName = customInput.value.trim();
-        
+
         if (varName) {
           const cursorPos = input.selectionStart || 0;
           const textBefore = input.value.substring(0, cursorPos);
           const textAfter = input.value.substring(input.selectionEnd || cursorPos);
-          
+
           input.value = textBefore + `{${varName}}` + textAfter;
           input.focus();
           input.setSelectionRange(cursorPos + varName.length + 2, cursorPos + varName.length + 2);
-          
+
           this.validateVariables(input);
           modal.remove();
         }
@@ -1387,7 +1387,7 @@ class ScenarioManager {
     if (!this.loadModal) {
       this.createLoadModal();
     }
-    
+
     if (this.loadModal) {
       this.loadModal.style.display = "block";
       await this.loadAvailableScenarios();
@@ -1464,9 +1464,9 @@ class ScenarioManager {
       console.error('Scenario list element not found');
       return;
     }
-    
+
     scenarioList.innerHTML = '<div class="loading">Loading scenarios...</div>';
-    
+
     try {
       // Load saved scenarios from server
       let savedScenarios = [];
@@ -1479,7 +1479,7 @@ class ScenarioManager {
       } catch (err) {
         console.warn('Could not load saved scenarios:', err);
       }
-      
+
       // Load example scenarios
       let exampleScenarios = [];
       try {
@@ -1495,7 +1495,7 @@ class ScenarioManager {
       } catch (err) {
         console.warn('Could not load example scenarios:', err);
       }
-      
+
       // Combine scenarios
       const allScenarios = [
         ...savedScenarios,
@@ -1505,7 +1505,7 @@ class ScenarioManager {
           name: `[Example] ${scenario.name}`
         }))
       ];
-      
+
       if (allScenarios.length > 0) {
         this.renderScenarioList(allScenarios);
       } else {
@@ -1524,37 +1524,37 @@ class ScenarioManager {
   renderScenarioList(scenarios) {
     const scenarioList = document.getElementById('scenario-list');
     if (!scenarioList) return;
-    
+
     scenarioList.innerHTML = '';
-    
+
     if (scenarios.length === 0) {
       scenarioList.innerHTML = '<p>No scenarios found</p>';
       return;
     }
-    
+
     // Group scenarios by type
     const savedScenarios = scenarios.filter(s => !s.isExample);
     const exampleScenarios = scenarios.filter(s => s.isExample);
-    
+
     // Add saved scenarios section
     if (savedScenarios.length > 0) {
       const savedHeader = document.createElement('h4');
       savedHeader.textContent = 'Saved Scenarios';
       savedHeader.className = 'scenario-section-header';
       scenarioList.appendChild(savedHeader);
-      
+
       savedScenarios.forEach(scenario => {
         scenarioList.appendChild(this.createScenarioItem(scenario));
       });
     }
-    
+
     // Add example scenarios section
     if (exampleScenarios.length > 0) {
       const exampleHeader = document.createElement('h4');
       exampleHeader.textContent = 'Example Scenarios';
       exampleHeader.className = 'scenario-section-header example-header';
       scenarioList.appendChild(exampleHeader);
-      
+
       exampleScenarios.forEach(scenario => {
         scenarioList.appendChild(this.createScenarioItem(scenario));
       });
@@ -1569,10 +1569,10 @@ class ScenarioManager {
   createScenarioItem(scenario) {
     const item = document.createElement('div');
     item.className = `scenario-item ${scenario.isExample ? 'example-scenario' : ''}`;
-    
+
     const stepsCount = scenario.steps?.length || 0;
     const variableCount = Object.keys(scenario.variables || {}).length;
-    
+
     item.innerHTML = `
       <h4>${this.escapeHtml(scenario.name)}</h4>
       <div class="scenario-meta">
@@ -1591,12 +1591,31 @@ class ScenarioManager {
         </div>
       ` : ''}
     `;
-    
-    item.addEventListener('click', () => {
-      this.loadScenario(scenario);
-      this.hideLoadModal();
+
+    item.addEventListener('click', async () => {
+      try {
+        const scenarioName = scenario;
+        // Use scenario.name in URL
+        const response = await fetch(`/load_scenario/${encodeURIComponent(scenarioName)}`);
+        const data = await response.json();
+        
+        if (data.status === 'error') {
+          console.error('Failed to load scenario:', data.message);
+          this.showNotification(`Failed to load scenario: ${data.message}`, 'error');
+          return;
+        }
+
+        // Pass loaded scenario data to loadScenario
+        this.loadScenario(data);
+
+        this.hideLoadModal();
+      } catch (err) {
+        console.error('Error loading scenario:', err);
+        this.showNotification('Error loading scenario', 'error');
+      }
     });
-    
+
+
     return item;
   }
 
@@ -1610,12 +1629,12 @@ class ScenarioManager {
       if (this.stepsTableBody) {
         this.stepsTableBody.innerHTML = '';
       }
-      
+
       // Set scenario name
       if (this.scenarioNameInput) {
-        this.scenarioNameInput.value = scenario.name.replace('[Example] ', '');
+        this.scenarioNameInput.value = (scenario.name || '').replace('[Example] ', '');
       }
-      
+
       // Load scenario variables
       if (scenario.variables) {
         this.scenarioVariables.clear();
@@ -1623,26 +1642,26 @@ class ScenarioManager {
           this.scenarioVariables.set(key, value);
         });
       }
-      
+
       // Load steps
       if (scenario.steps && Array.isArray(scenario.steps)) {
         scenario.steps.forEach((stepData, index) => {
           this.addStep(stepData);
         });
       }
-      
+
       // Update UI
       this.updateUI();
-      
+
       // Show success message
       const scenarioType = scenario.isExample ? 'example scenario' : 'scenario';
       this.showNotification(`Loaded ${scenarioType}: ${scenario.name}`, 'success');
-      
+
       // If it's an example, show variables that need to be customized
       if (scenario.isExample) {
         this.showVariableCustomizationHint(scenario);
       }
-      
+
     } catch (err) {
       console.error('Error loading scenario:', err);
       this.showNotification('Error loading scenario', 'error');
@@ -1654,17 +1673,17 @@ class ScenarioManager {
    */
   async saveScenario() {
     const scenarioName = this.scenarioNameInput?.value?.trim();
-    
+
     if (!scenarioName) {
       this.showNotification('Please enter a scenario name', 'error');
       return;
     }
-    
+
     if (!this.stepsTableBody || this.stepsTableBody.children.length === 0) {
       this.showNotification('Please add at least one step', 'error');
       return;
     }
-    
+
     const scenarioData = {
       name: scenarioName,
       description: '',
@@ -1685,7 +1704,7 @@ class ScenarioManager {
       });
 
       const result = await response.json();
-      
+
       if (result.status === 'success') {
         this.showNotification(`Scenario "${scenarioName}" saved successfully!`, 'success');
       } else {
@@ -1705,21 +1724,21 @@ class ScenarioManager {
       this.showNotification('No steps to run', 'error');
       return;
     }
-    
+
     if (this.isRunning) {
       // Stop running scenario
       this.stopScenario();
       return;
     }
-    
+
     this.isRunning = true;
     this.updateUI();
-    
+
     const scenarioData = {
       name: this.scenarioNameInput?.value?.trim() || 'Unnamed Scenario',
       steps: this.getStepsData()
     };
-    
+
     try {
       const response = await fetch('/run_scenario', {
         method: 'POST',
@@ -1728,9 +1747,9 @@ class ScenarioManager {
         },
         body: JSON.stringify(scenarioData)
       });
-      
+
       const result = await response.json();
-      
+
       if (result.status === 'success') {
         this.showNotification('Scenario started successfully', 'success');
         this.currentScenarioId = result.scenario_id;
@@ -1756,7 +1775,7 @@ class ScenarioManager {
       this.updateUI();
       return;
     }
-    
+
     try {
       const response = await fetch('/stop_scenario', {
         method: 'POST',
@@ -1765,9 +1784,9 @@ class ScenarioManager {
         },
         body: JSON.stringify({ scenario_id: this.currentScenarioId })
       });
-      
+
       const result = await response.json();
-      
+
       if (result.status === 'success') {
         this.showNotification('Scenario stopped', 'warning');
       } else {
@@ -1777,7 +1796,7 @@ class ScenarioManager {
       console.error('Stop error:', error);
       this.showNotification('Error stopping scenario', 'error');
     }
-    
+
     this.isRunning = false;
     this.currentScenarioId = null;
     this.updateUI();
@@ -1791,11 +1810,11 @@ class ScenarioManager {
       if (this.stepsTableBody) {
         this.stepsTableBody.innerHTML = '';
       }
-      
+
       if (this.scenarioNameInput) {
         this.scenarioNameInput.value = '';
       }
-      
+
       this.scenarioVariables.clear();
       this.updateUI();
       this.showNotification('Scenario cleared', 'info');
@@ -1808,7 +1827,7 @@ class ScenarioManager {
    */
   getStepsData() {
     const steps = [];
-    
+
     if (this.stepsTableBody) {
       Array.from(this.stepsTableBody.children).forEach((row, index) => {
         const toolSelect = row.querySelector('.tool-select');
@@ -1855,7 +1874,7 @@ class ScenarioManager {
         }
       });
     }
-    
+
     return steps;
   }
 
@@ -1867,17 +1886,17 @@ class ScenarioManager {
     const selectedTool = toolSelect.value;
     const row = toolSelect.closest('tr');
     const argsInput = row.querySelector('.args-input');
-    
+
     if (selectedTool && this.stepTemplates[selectedTool] && argsInput && !argsInput.value.trim()) {
       const template = this.stepTemplates[selectedTool];
       argsInput.value = template.args.join(' ');
-      
+
       // Show template info
       this.showNotification(
-        `Auto-populated arguments for ${selectedTool}: ${template.description}`, 
+        `Auto-populated arguments for ${selectedTool}: ${template.description}`,
         'info'
       );
-      
+
       // Highlight variables in the arguments
       this.highlightVariables(argsInput);
     }
@@ -1890,11 +1909,11 @@ class ScenarioManager {
   highlightVariables(input) {
     const value = input.value;
     const variables = value.match(/\{[^}]+\}/g);
-    
+
     if (variables) {
       input.title = `Variables found: ${variables.join(', ')}`;
       input.style.borderColor = 'var(--info-color)';
-      
+
       setTimeout(() => {
         input.style.borderColor = 'var(--border-color)';
       }, 2000);
@@ -1925,7 +1944,7 @@ class ScenarioManager {
         variables: Object.fromEntries(this.scenarioVariables),
         timestamp: new Date().toISOString()
       };
-      
+
       try {
         localStorage.setItem('scenario_draft', JSON.stringify(draftData));
       } catch (e) {
@@ -1940,12 +1959,12 @@ class ScenarioManager {
    */
   handleScenarioProgress(data) {
     console.log('Scenario progress:', data);
-    
+
     if (data.step_index !== undefined) {
       this.runningStepIndex = data.step_index;
       this.highlightRunningStep(data.step_index);
     }
-    
+
     if (data.message) {
       this.showNotification(data.message, 'info');
     }
@@ -1957,17 +1976,17 @@ class ScenarioManager {
    */
   handleScenarioCompleted(data) {
     console.log('Scenario completed:', data);
-    
+
     this.isRunning = false;
     this.runningStepIndex = -1;
     this.currentScenarioId = null;
-    
+
     this.clearRunningHighlights();
     this.updateUI();
-    
+
     const message = data.success ? 'Scenario completed successfully!' : 'Scenario completed with errors';
     const type = data.success ? 'success' : 'warning';
-    
+
     this.showNotification(message, type);
   }
 
@@ -1977,11 +1996,11 @@ class ScenarioManager {
    */
   handleStepResult(data) {
     console.log('Step result:', data);
-    
+
     if (data.step_index !== undefined) {
       this.updateStepStatus(data.step_index, data.success, data.output);
     }
-    
+
     // Store step results for variable extraction
     if (data.variables) {
       Object.entries(data.variables).forEach(([key, value]) => {
@@ -1996,7 +2015,7 @@ class ScenarioManager {
    */
   handleVariableUpdate(data) {
     console.log('Variable updated:', data);
-    
+
     if (data.variables) {
       Object.entries(data.variables).forEach(([key, value]) => {
         this.scenarioVariables.set(key, value);
@@ -2011,7 +2030,7 @@ class ScenarioManager {
   highlightRunningStep(stepIndex) {
     // Clear previous highlights
     this.clearRunningHighlights();
-    
+
     if (this.stepsTableBody && this.stepsTableBody.children[stepIndex]) {
       const row = this.stepsTableBody.children[stepIndex];
       row.classList.add('step-running');
@@ -2038,10 +2057,10 @@ class ScenarioManager {
   updateStepStatus(stepIndex, success, output) {
     if (this.stepsTableBody && this.stepsTableBody.children[stepIndex]) {
       const row = this.stepsTableBody.children[stepIndex];
-      
+
       row.classList.remove('step-running');
       row.classList.add(success ? 'step-success' : 'step-error');
-      
+
       // Store result for conditional logic
       if (!this.stepResults) {
         this.stepResults = new Map();
@@ -2091,7 +2110,7 @@ function loadExampleScenarios() {
     console.warn('ExampleScenarios not found');
     return [];
   }
-  
+
   try {
     return Object.keys(ExampleScenarios).map(key => ({
       id: key,

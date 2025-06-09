@@ -518,11 +518,8 @@ def list_scenarios():
     """
     Return a JSON list of all saved scenario names (without .json extension).
     """
-    names = []
-
-    for file in SCENARIO_DIR.glob("*.json"):
-        names.append(file.stem)
-    return jsonify(scenarios=names)
+    names = [file.stem for file in SCENARIO_DIR.glob("*.json")]
+    return jsonify(status="success", scenarios=names)
 
 
 @app.route("/load_scenario/<name>", methods=["GET"])
