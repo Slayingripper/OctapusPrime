@@ -499,7 +499,7 @@ python3 bin/octapus_controller.py
 - **Custom Configuration**: Easy to modify startup parameters
 
 **Note**: Running directly will only be active while your terminal session is open. For production deployments, systemd services are recommended for automatic startup and proper daemon management.
-````markdown
+
 
 ## Usage
 
