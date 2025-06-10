@@ -17,9 +17,39 @@ With OctapusPrime, you can create sophisticated adaptive penetration testing wor
 
 ---
 
+## 🎥 Visual Feature Overview
+
+### Main Landing Page
+![OctapusPrime Main Page](GIFS/Main.gif)
+*landing page with navigation to all features and modern octopus-themed design*
+
+### Enhanced Dashboard
+![Tool Dashboard](GIFS/dashboard.gif)
+*Access to 40+ categorized security tools with real-time execution monitoring*
+
+### Advanced IFTTT Scenario Builder
+![Scenario Builder](GIFS/scenario_builder.gif)
+*Visual workflow creation with conditional logic, variable extraction, and intelligent automation*
+
+### System Settings & Configuration
+![Settings Page](GIFS/settings.gif)
+*GPIO configuration, network settings, and platform-specific hardware setup*
+
+### Real-time Execution Logs
+![Live Logging](GIFS/logs.gif)
+*Watch tool execution in real-time with variable extraction and conditional logic decisions*
+
+---
+
 ## Table of Contents
 
 - [OctapusPrime One‐Touch Pentest Suite](#octapusprime-onetouch-pentest-suite)
+  - [🎥 Visual Feature Overview](#-visual-feature-overview)
+    - [Main Landing Page](#main-landing-page)
+    - [Enhanced Dashboard](#enhanced-dashboard)
+    - [Advanced IFTTT Scenario Builder](#advanced-ifttt-scenario-builder)
+    - [System Settings \& Configuration](#system-settings--configuration)
+    - [Real-time Execution Logs](#real-time-execution-logs)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Architecture Overview](#architecture-overview)
@@ -79,6 +109,9 @@ With OctapusPrime, you can create sophisticated adaptive penetration testing wor
   - **Scenario Management:** Save, load, and share complex testing workflows
   - **Validation System:** Real-time argument and variable validation
 
+![IFTTT Workflow Example](GIFS/scenario_builder.gif)
+*Create intelligent workflows that adapt based on scan results*
+
 - **Enhanced Web Interface**  
   - **Modern Dark Theme:** Professional security-focused design
   - **Tool Categories:** Organized tool selection with descriptions
@@ -87,12 +120,18 @@ With OctapusPrime, you can create sophisticated adaptive penetration testing wor
   - **Keyboard Shortcuts:** Productivity enhancements for power users
   - **Responsive Design:** Works on desktop, tablet, and mobile devices
 
+![Dashboard Overview](GIFS/dashboard.gif)
+*Comprehensive tool dashboard with categorized security tools*
+
 - **Professional Backend Architecture**  
   - **Thread-safe Execution:** Parallel tool execution with proper resource management
   - **WebSocket Communication:** Real-time bidirectional communication
   - **RESTful API:** Complete API for automation and integration
   - **Error Handling:** Comprehensive error recovery and reporting
   - **Logging System:** Detailed execution logs and debugging information
+
+![Real-time Logging](GIFS/logs.gif)
+*Watch execution progress with real-time variable extraction and logging*
 
 ---
 
@@ -500,8 +539,11 @@ python3 bin/octapus_controller.py
 
 **Note**: Running directly will only be active while your terminal session is open. For production deployments, systemd services are recommended for automatic startup and proper daemon management.
 
+---
 
 ## Usage
+
+![OctapusPrime Interface Overview](GIFS/mainpage.gif)
 
 ### Enhanced Scenario Builder
 1. **Access Builder**: Navigate to `/scenario` from the main interface
@@ -510,6 +552,9 @@ python3 bin/octapus_controller.py
 4. **Configure Logic**: Set IF-THEN conditions for adaptive execution
 5. **Extract Variables**: Use regex patterns to capture data from tool outputs
 6. **Save & Load**: Manage reusable scenario libraries
+
+![Scenario Builder Demo](GIFS/scenario_builder.gif)
+*Build intelligent workflows with conditional logic and variable extraction*
 
 ### IFTTT Logic System
 **Condition Types:**
@@ -549,10 +594,15 @@ Step 3: Nuclei vulnerability scan (IF directories found)
 2. **Default Scan**: Press button to trigger preconfigured scan sequence
 3. **LED Feedback**: Visual indication of scan progress and completion
 
+![Settings Configuration](GIFS/settings.gif)
+*Configure GPIO pins and hardware settings for physical button integration*
+
 ### Web UI Mode
 1. **Landing Page**: Navigate to `http://[device-ip]:8080`
 2. **Enhanced Dashboard**: Access full tool suite and scenario builder
 3. **Real-time Monitoring**: Watch execution progress and extract variables
+
+![Dashboard Features](GIFS/dashboard.gif)
 
 #### Dashboard Features:
 - **40+ Categorized Tools**: Organized by function and use case
@@ -573,6 +623,9 @@ Step 3: Nuclei vulnerability scan (IF directories found)
 - **Variable Extraction**: Watch variables being captured from outputs
 - **Conditional Execution**: See IF-THEN logic decisions in real-time
 - **Historical Logs**: Access previous scan results and extracted data
+
+![Live Execution Monitoring](GIFS/logs.gif)
+*Monitor execution progress with real-time logging and variable extraction*
 
 ---
 
@@ -600,6 +653,7 @@ OctapusPrime/
 ├── templates/                     # Tool argument templates
 ├── systemd/                       # Enhanced service configurations
 ├── docs/                          # Additional documentation
+├── GIFS/                          # Demo GIFs and screenshots
 ├── venv/                          # Python virtual environment
 ├── requirements.txt               # Python dependencies
 └── README.md                      # This comprehensive guide
