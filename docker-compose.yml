@@ -1,0 +1,15 @@
+services:
+  octapus:
+    image: almalinux:9
+    network_mode: host
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: octapus
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./logs:/opt/octapusprime/bin/logs
+      - ./scenarios:/opt/octapusprime/scenarios
+    environment:
+      - PYTHONUNBUFFERED=1
