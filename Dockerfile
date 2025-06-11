@@ -4,6 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     GO_VERSION=1.21.5 \
     PATH=$PATH:/root/go/bin
 
+    
 # Install apt dependencies (tools that are available in repos)
 RUN apt-get update && apt-get install -y --no-install-recommends \
       software-properties-common \
