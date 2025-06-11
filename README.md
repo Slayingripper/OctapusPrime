@@ -590,9 +590,10 @@ Step 3: Nuclei vulnerability scan (IF directories found)
 - Real-time substitution and validation
 
 ### Physical Button Mode
-1. **Hardware Setup**: Connect momentary button to GPIO 17, LED to GPIO 27
+1. **Hardware Setup**: Connect momentary button to GPIO 17, GPIO 23 ,LED to GPIO 27
 2. **Default Scan**: Press button to trigger preconfigured scan sequence
-3. **LED Feedback**: Visual indication of scan progress and completion
+3. **Machanger**: Press the button to located at the GPIO 23 to easily change the MAC address
+4. **LED Feedback**: Visual indication of scan progress and completion
 
 ![Settings Configuration](GIFS/settings.gif)
 *Configure GPIO pins and hardware settings for physical button integration*
@@ -758,6 +759,10 @@ sio = socketio.Client()
 sio.connect('http://localhost:8080')
 print('WebSocket connection successful')
 "
+
+# Docker Build
+sudo docker compose build
+sudo docker run --network host -it almalinux:9
 ```
 
 ---
