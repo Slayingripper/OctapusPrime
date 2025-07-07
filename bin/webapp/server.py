@@ -10,6 +10,7 @@ import ipaddress
 import platform
 import re
 import asyncio
+import time
 
 from queue import Queue
 from pathlib import Path
@@ -24,15 +25,10 @@ from platform import release
 HERE = Path(__file__).resolve().parent  # .../bin/webapp
 BIN = HERE.parent  # .../bin
 BASE_DIR = BIN.parent  # project root, e.g. /opt/octapus
-HERE = Path(__file__).resolve().parent  # .../bin/webapp
-BIN = HERE.parent  # .../bin
-BASE_DIR = BIN.parent  # project root, e.g. /opt/octapus
 FRONTEND_DIR = BASE_DIR / "frontend"
-LOG_DIR = HERE / "logs"  # Changed from BASE_DIR / "logs"
 LOG_DIR = HERE / "logs"  # Changed from BASE_DIR / "logs"
 SCENARIO_DIR = BASE_DIR / "scenarios"
 OCTAPUS_LOG_FILE = LOG_DIR / "octapus.log"
-SETTINGS_FILE = BASE_DIR / "settings.json"  # Path for storing settings
 SETTINGS_FILE = BASE_DIR / "settings.json"  # Path for storing settings
 
 # Ensure logs and scenarios directories exist
@@ -54,12 +50,6 @@ from octapus_controller import (
     start_scenario_thread,
     get_local_cidr,
 )
-from octapus_controller import (
-    log_queue,
-    start_scan_thread,
-    start_scenario_thread,
-    get_local_cidr,
-)
 from gpio_manager import gpio_manager
 
 loop = asyncio.new_event_loop()
@@ -68,9 +58,7 @@ loop = asyncio.new_event_loop()
 # Configuration
 # -----------------------------------------------------
 WEBAPP_DIR = HERE  # webapp folder
-WEBAPP_DIR = HERE  # webapp folder
 FRONTEND_DIR = WEBAPP_DIR / "frontend"
-LOG_FILE = LOG_DIR / "webapp.log"
 LOG_FILE = LOG_DIR / "webapp.log"
 
 # -----------------------------------------------------
@@ -92,7 +80,6 @@ except Exception:
 # -----------------------------------------------------
 # Flask + SocketIO setup
 # -----------------------------------------------------
-app = Flask(__name__, static_folder="static", static_url_path="/static")
 app = Flask(__name__, static_folder="static", static_url_path="/static")
 socketio = SocketIO(app, async_mode="threading")
 
@@ -116,25 +103,14 @@ def macchanger_callback():
                         iter(interfaces), "eth0"
                     )  # First available interface
 
-                    interface = next(
-                        iter(interfaces), "eth0"
-                    )  # First available interface
-
         # Run macchanger to randomize MAC address
-        subprocess.run(["sudo", "macchanger", "-r", interface], check=True)
         subprocess.run(["sudo", "macchanger", "-r", interface], check=True)
         print(f"MAC address changed for interface {interface}")
         socketio.emit(
             "log", {"message": f"MAC address changed for {interface}", "level": "info"}
         )
-        socketio.emit(
-            "log", {"message": f"MAC address changed for {interface}", "level": "info"}
-        )
     except Exception as e:
         print(f"Failed to change MAC address: {e}")
-        socketio.emit(
-            "log", {"message": f"Failed to change MAC address: {e}", "level": "error"}
-        )
         socketio.emit(
             "log", {"message": f"Failed to change MAC address: {e}", "level": "error"}
         )
@@ -186,46 +162,7 @@ async def scenario_button_press(scenario, debounce_time=0.5):
         await asyncio.sleep(0.1)
 
 
-
-
-def scenario_button_callback():
-    """Callback to run a scenario."""
-    try:
-        # Load scenario JSON
-        with open(SCENARIO_DIR, "r") as f:
-            scenario = json.load(f)
-
-        print(f"Running scenario: {scenario.get('name', 'Unnamed')}")
-
-        for step in scenario.get("steps", []):
-            tool = step.get("tool")
-            args = step.get("args", [])
-            cmd = [tool] + args
-
-            print(f"Running command: {' '.join(cmd)}")
-            result = subprocess.run(cmd, capture_output=True, text=True)
-
-            if result.returncode == 0:
-                print(f"Success:\n{result.stdout}")
-            else:
-                print(f"Error (code {result.returncode}):\n{result.stderr}")
-
-    except Exception as e:
-        print(f"Failed to run scenario: {e}")
-
-
-async def scenario_button_press(scenario, debounce_time=0.5):
-    """Continuously check for button press with debounce."""
-    while True:
-        if scenario.is_pressed:
-            print("Button pressed - changing MAC address")
-            macchanger_callback()
-            await asyncio.sleep(debounce_time)  # Debounce delay
-        await asyncio.sleep(0.1)
-
-
 def init_gpio():
-    """Initialize GPIO pins and set up monitoring for the buttons."""
     """Initialize GPIO pins and set up monitoring for the buttons."""
     try:
         button, led, macchanger = gpio_manager.setup_gpio()
@@ -233,17 +170,11 @@ def init_gpio():
             led.on()
             import time
 
-
             time.sleep(0.5)
             led.off()
             logging.info("GPIO initialized successfully")
 
             macchanger_pin = gpio_manager.config.get("macchanger_pin", 23)
-            gpio_manager.monitor_gpio_pin(
-                macchanger_pin, macchanger_callback, existing_button=macchanger
-            )
-            # button_pin = gpio_manager.config.get("button_pin", 17)
-            # gpio_manager.monitor_gpio_pin(button_pin, scenario_button_callback, existing_button=button)
             gpio_manager.monitor_gpio_pin(
                 macchanger_pin, macchanger_callback, existing_button=macchanger
             )
@@ -258,9 +189,6 @@ def init_gpio():
             print("GPIO setup and monitoring started")
         else:
             print("GPIO initialization failed")
-            socketio.emit(
-                "log", {"message": "GPIO initialization failed", "level": "error"}
-            )
             socketio.emit(
                 "log", {"message": "GPIO initialization failed", "level": "error"}
             )
@@ -370,7 +298,6 @@ def get_cidr_for_interface(interface_name):
     try:
         interfaces = get_available_interfaces()
         if interface_name in interfaces:
-            return interfaces[interface_name]["network"]
             return interfaces[interface_name]["network"]
         else:
             # Fallback to auto-detection
@@ -868,7 +795,6 @@ DEFAULT_SETTINGS = {
     "defaultScanPorts": "1-1000",
     "masscanRate": "1000",
     "threadCount": "10",
-    "threadCount": "10",
 }
 
 
@@ -886,17 +812,10 @@ def get_settings():
             settings_data = json.load(f)
         # Merge with defaults to ensure all keys are present
         current_settings = {**DEFAULT_SETTINGS, **settings_data}
-        current_settings = {**DEFAULT_SETTINGS, **settings_data}
         return jsonify(status="success", data=current_settings)
     except Exception as e:
         logging.error(f"Failed to load settings: {e}")
         # Fallback to default settings on error
-        return jsonify(
-            status="success",
-            data=DEFAULT_SETTINGS,
-            message=f"Error loading settings, defaults returned: {e}",
-        )
-
         return jsonify(
             status="success",
             data=DEFAULT_SETTINGS,
@@ -921,14 +840,6 @@ def save_settings():
                 400,
             )
 
-            return (
-                jsonify(
-                    status="error",
-                    message="Invalid settings format, expected a JSON object.",
-                ),
-                400,
-            )
-
         # Validate specific settings
         valid_scan_types = ["intense", "quick", "comprehensive", "stealth", "custom"]
         if (
@@ -943,31 +854,7 @@ def save_settings():
                 400,
             )
 
-        if (
-            "nmapScanType" in new_settings
-            and new_settings["nmapScanType"] not in valid_scan_types
-        ):
-            return (
-                jsonify(
-                    status="error",
-                    message=f"Invalid scan type. Must be one of: {', '.join(valid_scan_types)}",
-                ),
-                400,
-            )
-
         valid_log_levels = ["debug", "info", "warning", "error"]
-        if (
-            "logVerbosity" in new_settings
-            and new_settings["logVerbosity"] not in valid_log_levels
-        ):
-            return (
-                jsonify(
-                    status="error",
-                    message=f"Invalid log level. Must be one of: {', '.join(valid_log_levels)}",
-                ),
-                400,
-            )
-
         if (
             "logVerbosity" in new_settings
             and new_settings["logVerbosity"] not in valid_log_levels
@@ -1000,13 +887,6 @@ def save_settings():
             try:
                 ipaddress.IPv4Network(new_settings["customCIDR"], strict=False)
             except ValueError:
-                return (
-                    jsonify(
-                        status="error",
-                        message="Invalid CIDR format. Use format like 192.168.1.0/24",
-                    ),
-                    400,
-                )
                 return (
                     jsonify(
                         status="error",
@@ -1063,13 +943,6 @@ def update_gpio_config():
             "gpio_library",
             "manual_override",
         ]
-        required_fields = [
-            "button_pin",
-            "led_pin",
-            "macchanger",
-            "gpio_library",
-            "manual_override",
-        ]
         for field in required_fields:
             if field not in new_config:
                 return (
@@ -1077,21 +950,7 @@ def update_gpio_config():
                     400,
                 )
 
-                return (
-                    jsonify({"status": "error", "message": f"Missing field: {field}"}),
-                    400,
-                )
-
         # Validate GPIO library
-        valid_libraries = [
-            "auto",
-            "gpiozero",
-            "RPi.GPIO",
-            "OPi.GPIO",
-            "libgpiod",
-            "lgpio",
-            "wiringpi",
-        ]
         valid_libraries = [
             "auto",
             "gpiozero",
@@ -1130,46 +989,12 @@ def update_gpio_config():
                 ),
                 400,
             )
-            return (
-                jsonify(
-                    {"status": "error", "message": "Button pin must be between 0-40"}
-                ),
-                400,
-            )
         if not (0 <= new_config["led_pin"] <= 40):
             return (
                 jsonify({"status": "error", "message": "LED pin must be between 0-40"}),
                 400,
             )
-            return (
-                jsonify({"status": "error", "message": "LED pin must be between 0-40"}),
-                400,
-            )
         if not (0 <= new_config["macchanger_pin"] <= 40):
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Macchanger button pin must be between 0-40",
-                    }
-                ),
-                400,
-            )
-        if (
-            new_config["button_pin"] == new_config["led_pin"]
-            or new_config["button_pin"] == new_config["macchanger_pin"]
-            or new_config["macchanger_pin"] == new_config["led_pin"]
-        ):
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": "Button, LED and Macchanger pins must be different",
-                    }
-                ),
-                400,
-            )
-
             return (
                 jsonify(
                     {
@@ -1203,18 +1028,7 @@ def update_gpio_config():
                     "message": "GPIO configuration updated successfully",
                 }
             )
-            return jsonify(
-                {
-                    "status": "saved",
-                    "message": "GPIO configuration updated successfully",
-                }
-            )
         else:
-            return (
-                jsonify({"status": "error", "message": "Failed to save configuration"}),
-                500,
-            )
-
             return (
                 jsonify({"status": "error", "message": "Failed to save configuration"}),
                 500,
@@ -1222,11 +1036,6 @@ def update_gpio_config():
 
     except Exception as e:
         logging.error(f"Failed to update GPIO config: {e}")
-        return (
-            jsonify({"status": "error", "message": f"Invalid configuration: {e}"}),
-            400,
-        )
-
         return (
             jsonify({"status": "error", "message": f"Invalid configuration: {e}"}),
             400,
@@ -1275,10 +1084,27 @@ def test_gpio():
 
 # -----------------------------------------------------
 # Uncomment for GPIO testing without GPIOs
-
-
 # -----------------------------------------------------
-# Uncomment for GPIO testing without GPIOs
+# from gpiozero.pins.mock import MockFactory
+# from gpiozero import Device
+
+# Device.pin_factory = MockFactory()
+
+# from gpiozero import Button
+
+# button = Button(17)
+
+# def on_press():
+#     print("Button pressed!")
+
+# @app.route('/simulate')
+# def simulate_press():
+#     import time
+#     button.pin.drive_high()
+#     time.sleep(0.2)
+#     button.pin.drive_low()
+#     return "Simulated button press!"
+
 # -----------------------------------------------------
 # from gpiozero.pins.mock import MockFactory
 # from gpiozero import Device
@@ -1295,49 +1121,15 @@ def test_gpio():
 
 # def simulate_press():
 #     import time
-#     button.pin.drive_high()
-#     time.sleep(0.2)
-#     button.pin.drive_low()
-#     return "Simulated button press!"def on_press():
-#     print("Button pressed!")
-# @app.route('/simulate')
-
-# # -----------------------------------------------------
-# from gpiozero.pins.mock import MockFactory
-# from gpiozero import Device
-
-# Device.pin_factory = MockFactory()
-
-# from gpiozero import Button
-
-# button = Button(17)
-
-# def on_press():
-#     print("Button pressed!")
-# @app.route('/simulate')
-
-# def simulate_press():
-#     import time
-#     button.pin.drive_high()
-#     time.sleep(0.2)
-#     button.pin.drive_low()
-#     return "Simulated button press!"def on_press():
-#     print("Button pressed!")
-# @app.route('/simulate')
-
-# # -----------------------------------------------------
+# -----------------------------------------------------
 # Main entrypoint
 # -----------------------------------------------------
 if __name__ == "__main__":
     print("=== Octapus Web Server starting on 0.0.0.0:8080 ===")
     print("=== Serving frontend from:", FRONTEND_DIR, "===")
 
-
     apply_lgpio_patch_if_needed()
 
-
     init_gpio()
-
-    socketio.run(app, host="0.0.0.0", port=8080, debug=False)
 
     socketio.run(app, host="0.0.0.0", port=8080, debug=False)
