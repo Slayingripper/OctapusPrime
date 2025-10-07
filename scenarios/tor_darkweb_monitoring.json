@@ -1,0 +1,100 @@
+{
+  "name": "Tor & Dark Web Network Monitoring",
+  "description": "Advanced scenario for detecting Tor relay usage, dark web activities, anonymization networks (I2P), and monitoring encrypted traffic patterns based on network forensics",
+  "steps": [
+    {
+      "tool": "nmap",
+      "args": ["-p", "9001,9030,9050,9051,7656", "-sV", "{{TARGET_IP}}"],
+      "description": "Scan for Tor relay ports (9001, 9030) and SOCKS proxy (9050, 9051), I2P ports (7656)",
+      "extract": {
+        "tor_relay": {
+          "pattern": "(9001|9030)/tcp\\s+open",
+          "description": "Detect Tor relay services"
+        },
+        "tor_proxy": {
+          "pattern": "(9050|9051)/tcp\\s+open",
+          "description": "Detect Tor SOCKS proxy"
+        },
+        "i2p_router": {
+          "pattern": "7656/tcp\\s+open",
+          "description": "Detect I2P router"
+        }
+      }
+    },
+    {
+      "tool": "nmap",
+      "args": ["--script=tor-*", "-p", "9001,9030,9050,9051", "{{TARGET_IP}}"],
+      "description": "Run Tor-specific NSE scripts for relay detection",
+      "condition": {
+        "if": "{{tor_relay}}",
+        "operator": "exists"
+      }
+    },
+    {
+      "tool": "nmap",
+      "args": ["-p", "8080,8118", "--script=http-proxy-brute", "{{TARGET_IP}}"],
+      "description": "Detect HTTP proxies commonly used with Tor/I2P"
+    },
+    {
+      "tool": "masscan",
+      "args": ["-p1-65535", "--rate=1000", "{{TARGET_IP}}"],
+      "description": "Fast full port scan to identify all open ports for anonymization services",
+      "extract": {
+        "all_ports": {
+          "pattern": "Discovered open port (\\d+)/tcp",
+          "description": "Extract all open ports"
+        }
+      }
+    },
+    {
+      "tool": "nikto",
+      "args": ["-h", "http://{{TARGET_IP}}:8080", "-useproxy", "http://{{TARGET_IP}}:9050"],
+      "description": "Test web services through Tor SOCKS proxy",
+      "condition": {
+        "if": "{{tor_proxy}}",
+        "operator": "exists"
+      }
+    },
+    {
+      "tool": "nmap",
+      "args": ["--script=ssl-cert", "-p", "443,9001", "{{TARGET_IP}}"],
+      "description": "Extract SSL certificates to identify Tor relay operators"
+    },
+    {
+      "tool": "nmap",
+      "args": ["-sV", "--script=banner", "-p", "{{all_ports}}", "{{TARGET_IP}}"],
+      "description": "Banner grabbing on all open ports to identify hidden services",
+      "condition": {
+        "if": "{{all_ports}}",
+        "operator": "exists"
+      }
+    },
+    {
+      "tool": "whatweb",
+      "args": ["--proxy", "socks5://{{TARGET_IP}}:9050", "http://check.torproject.org"],
+      "description": "Verify Tor connectivity through detected proxy",
+      "condition": {
+        "if": "{{tor_proxy}}",
+        "operator": "exists"
+      }
+    },
+    {
+      "tool": "nmap",
+      "args": ["--script=http-title,http-headers", "-p", "80,443,8080", "{{TARGET_IP}}"],
+      "description": "Enumerate web services that might be part of darknet infrastructure"
+    },
+    {
+      "tool": "theharvester",
+      "args": ["-d", "torproject.org", "-b", "all"],
+      "description": "OSINT gathering for Tor-related infrastructure and contacts"
+    }
+  ],
+  "metadata": {
+    "category": "Network Forensics/Threat Intelligence",
+    "target_services": ["Tor Relays", "Tor Hidden Services", "I2P Routers", "Anonymization Networks"],
+    "protocols": ["Tor", "I2P", "SOCKS5", "HTTP Proxy"],
+    "use_cases": ["Network monitoring", "Threat detection", "Anonymization network analysis"],
+    "severity": "medium",
+    "notes": "Useful for detecting unauthorized anonymization services on networks. Use responsibly and in accordance with applicable laws. Requires proper legal authorization for network monitoring activities."
+  }
+}

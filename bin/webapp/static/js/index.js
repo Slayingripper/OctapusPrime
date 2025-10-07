@@ -108,6 +108,28 @@ const TOOL_CATEGORIES = {
       description: 'DNS enumeration tool',
       args: ['example.com', '--threads 5', '--dnsserver 8.8.8.8', '--enum', '-f dns.txt']
     }
+  },
+  'ICS/SCADA Security': {
+    plc_tool: {
+      name: 'PLC Tool',
+      description: 'Custom Modbus TCP client for PLC communication and testing',
+      args: ['192.168.1.10 502 read 0 10', '192.168.1.10 502 read_reg 0 5', '192.168.1.10 502 write_coil 0 1']
+    },
+    mbtget: {
+      name: 'mbtget',
+      description: 'Modbus TCP register reading tool',
+      args: ['-r1 -a0 -n10 192.168.1.10', '-r3 -a0 -n50 192.168.1.10', '-p 502 192.168.1.10']
+    },
+    testssl: {
+      name: 'TestSSL',
+      description: 'SSL/TLS security assessment tool',
+      args: ['--full 192.168.1.10:443', '--severity HIGH 192.168.1.10', '--protocols 192.168.1.10']
+    },
+    nuclei: {
+      name: 'Nuclei',
+      description: 'Fast vulnerability scanner based on templates',
+      args: ['-u http://192.168.1.10', '-t cves/', '-t iot/', '-t network/', '-severity critical,high']
+    }
   }
 };
 
