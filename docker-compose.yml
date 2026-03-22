@@ -4,8 +4,11 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: octapus
-    ports:
-      - "0.0.0.0:5000:5000"
+    network_mode: host
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
     volumes:
       - ./logs:/opt/octapusprime/bin/logs
       - ./scenarios:/opt/octapusprime/scenarios

