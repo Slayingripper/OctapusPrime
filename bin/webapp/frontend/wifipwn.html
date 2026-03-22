@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OctapusPrime – WiFi Pwn</title>
+  <link rel="stylesheet" href="/static/css/wifipwn.css">
+</head>
+<body>
+  <a href="/" class="nav-back">← Back to Dashboard</a>
+
+  <header class="header">
+    <h1>WiFi Pwn</h1>
+    <p class="subtitle">Pwnagotchi-style WiFi handshake capture &amp; WPA-SEC submission</p>
+  </header>
+
+  <main class="main-content">
+
+    <!-- Controls Section -->
+    <section class="controls-section">
+      <div class="control-row">
+        <div class="control-group">
+          <label for="wifi-iface">Wireless Interface</label>
+          <select id="wifi-iface">
+            <option value="">Loading...</option>
+          </select>
+          <button id="btn-refresh-ifaces" class="btn btn-small" title="Refresh interfaces">⟳</button>
+        </div>
+        <div class="control-group">
+          <label>Monitor Mode</label>
+          <div class="btn-group">
+            <button id="btn-monitor-on" class="btn btn-accent">Enable Monitor</button>
+            <button id="btn-monitor-off" class="btn btn-outline" disabled>Disable Monitor</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label>Actions</label>
+          <div class="btn-group">
+            <button id="btn-scan" class="btn btn-accent" disabled>Scan Networks</button>
+            <button id="btn-auto" class="btn btn-accent" disabled>Auto Hunt</button>
+            <button id="btn-stop" class="btn btn-danger" disabled>Stop</button>
+          </div>
+        </div>
+      </div>
+      <div id="status-bar" class="status-bar">
+        <span class="status-dot idle" id="status-dot"></span>
+        <span id="status-text">Idle</span>
+      </div>
+    </section>
+
+    <!-- Networks Table -->
+    <section class="table-section">
+      <h2 class="section-title">Discovered Networks</h2>
+      <div class="table-wrapper">
+        <table id="networks-table">
+          <thead>
+            <tr>
+              <th>ESSID</th>
+              <th>BSSID</th>
+              <th>Channel</th>
+              <th>Power</th>
+              <th>Encryption</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="networks-body">
+            <tr><td colspan="6" class="empty-msg">No networks scanned yet</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Handshakes Table -->
+    <section class="table-section">
+      <h2 class="section-title">Captured Handshakes</h2>
+      <div class="control-row" style="margin-bottom: 16px;">
+        <button id="btn-submit-all" class="btn btn-accent" disabled>Submit All to WPA-SEC</button>
+        <button id="btn-check-results" class="btn btn-outline">Check WPA-SEC Results</button>
+      </div>
+      <div class="table-wrapper">
+        <table id="handshakes-table">
+          <thead>
+            <tr>
+              <th>ESSID</th>
+              <th>BSSID</th>
+              <th>Captured</th>
+              <th>Submitted</th>
+              <th>Cracked</th>
+              <th>Password</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="handshakes-body">
+            <tr><td colspan="7" class="empty-msg">No handshakes captured yet</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Log Console -->
+    <section class="log-section">
+      <h2 class="section-title">Live Log</h2>
+      <div id="wifi-log" class="log-console"></div>
+    </section>
+
+  </main>
+
+  <script src="/static/js/wifipwn.js"></script>
+</body>
+</html>

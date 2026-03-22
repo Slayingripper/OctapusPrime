@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       samba-common-bin samba-libs \
       ldap-utils \
       snmp snmp-mibs-downloader \
+      aircrack-ng wireless-tools iw \
       postgresql-client mysql-client golang chromium-browser && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 

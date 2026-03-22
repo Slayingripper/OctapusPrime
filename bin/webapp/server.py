@@ -51,6 +51,7 @@ from octapus_controller import (
     get_local_cidr,
 )
 from gpio_manager import gpio_manager
+from wifi_pwn import wifi_manager, set_log_queue as wifi_set_log_queue
 
 loop = asyncio.new_event_loop()
 
@@ -382,6 +383,180 @@ def updates_page():
 def demo_page():
     """Serve a placeholder demo page (must create demo.html)."""
     return send_from_directory(str(FRONTEND_DIR), "demo.html")
+
+
+
+@app.route("/wifipwn", methods=["GET"])
+def wifipwn_page():
+    """Serve the WiFi Pwn page."""
+    return send_from_directory(str(FRONTEND_DIR), "wifipwn.html")
+
+
+# -----------------------------------------------------
+# WiFi Pwn API Endpoints
+# -----------------------------------------------------
+
+@app.route("/api/wifi/interfaces", methods=["GET"])
+def wifi_interfaces():
+    """Return wireless interfaces."""
+    ifaces = wifi_manager.get_wireless_interfaces()
+    return jsonify(status="success", interfaces=ifaces)
+
+
+@app.route("/api/wifi/monitor", methods=["POST"])
+def wifi_monitor():
+    """Enable or disable monitor mode."""
+    data = request.get_json(force=True)
+    action = data.get("action", "enable")
+    interface = data.get("interface")
+
+    if action == "enable":
+        if not interface:
+            return jsonify(status="error", message="Interface required"), 400
+        mon = wifi_manager.enable_monitor_mode(interface)
+        if mon:
+            return jsonify(status="success", monitor_interface=mon)
+        return jsonify(status="error", message="Failed to enable monitor mode"), 500
+    else:
+        wifi_manager.disable_monitor_mode()
+        return jsonify(status="success", message="Monitor mode disabled")
+
+
+@app.route("/api/wifi/scan", methods=["POST"])
+def wifi_scan():
+    """Scan for WiFi networks."""
+    data = request.get_json(force=True) if request.is_json else {}
+    duration = data.get("duration", 15)
+    duration = min(max(int(duration), 5), 60)
+
+    networks = wifi_manager.scan_networks(duration=duration)
+    return jsonify(status="success", networks=networks, count=len(networks))
+
+
+@app.route("/api/wifi/deauth", methods=["POST"])
+def wifi_deauth():
+    """Capture handshake for a specific network via deauthentication."""
+    data = request.get_json(force=True)
+    bssid = data.get("bssid")
+    channel = data.get("channel")
+    essid = data.get("essid", "")
+    duration = data.get("duration", 30)
+
+    if not bssid or not channel:
+        return jsonify(status="error", message="bssid and channel required"), 400
+
+    duration = min(max(int(duration), 10), 120)
+
+    def _run():
+        wifi_manager.capture_handshake(bssid, int(channel), essid, duration)
+
+    threading.Thread(target=_run, daemon=True).start()
+    return jsonify(status="success", message=f"Targeting {essid or bssid}")
+
+
+@app.route("/api/wifi/handshakes", methods=["GET"])
+def wifi_handshakes():
+    """Return list of captured handshakes."""
+    status = wifi_manager.get_status()
+    return jsonify(status="success", handshakes=status["handshakes"])
+
+
+@app.route("/api/wifi/submit", methods=["POST"])
+def wifi_submit_wpasec():
+    """Submit a captured handshake to WPA-SEC."""
+    data = request.get_json(force=True)
+    bssid = data.get("bssid")
+
+    # Load WPA-SEC API key from settings
+    api_key = ""
+    if SETTINGS_FILE.exists():
+        try:
+            with open(SETTINGS_FILE, "r") as f:
+                settings = json.load(f)
+                api_key = settings.get("wpaSecKey", "")
+        except Exception:
+            pass
+
+    if not api_key:
+        return jsonify(status="error", message="WPA-SEC API key not configured in settings"), 400
+
+    if bssid:
+        # Submit specific handshake
+        hs = next((h for h in wifi_manager.captured_handshakes if h["bssid"].lower() == bssid.lower()), None)
+        if not hs:
+            return jsonify(status="error", message="Handshake not found"), 404
+        result = wifi_manager.submit_to_wpasec(hs["file"], api_key)
+        if result["success"]:
+            hs["submitted"] = True
+        return jsonify(status="success" if result["success"] else "error", **result)
+    else:
+        # Submit all unsubmitted
+        submitted = 0
+        for hs in wifi_manager.captured_handshakes:
+            if not hs["submitted"]:
+                result = wifi_manager.submit_to_wpasec(hs["file"], api_key)
+                if result["success"]:
+                    hs["submitted"] = True
+                    submitted += 1
+        return jsonify(status="success", message=f"Submitted {submitted} handshakes")
+
+
+@app.route("/api/wifi/results", methods=["GET"])
+def wifi_wpasec_results():
+    """Check WPA-SEC for cracked results."""
+    api_key = ""
+    if SETTINGS_FILE.exists():
+        try:
+            with open(SETTINGS_FILE, "r") as f:
+                settings = json.load(f)
+                api_key = settings.get("wpaSecKey", "")
+        except Exception:
+            pass
+    if not api_key:
+        return jsonify(status="error", message="WPA-SEC API key not configured"), 400
+
+    result = wifi_manager.check_wpasec_results(api_key)
+    return jsonify(**result)
+
+
+@app.route("/api/wifi/auto", methods=["POST"])
+def wifi_auto_hunt():
+    """Start or stop auto-hunt mode."""
+    data = request.get_json(force=True)
+    action = data.get("action", "start")
+
+    if action == "stop":
+        result = wifi_manager.stop()
+        return jsonify(**result)
+
+    interface = data.get("interface")
+    if not interface:
+        return jsonify(status="error", message="Interface required"), 400
+
+    api_key = ""
+    if SETTINGS_FILE.exists():
+        try:
+            with open(SETTINGS_FILE, "r") as f:
+                settings = json.load(f)
+                api_key = settings.get("wpaSecKey", "")
+        except Exception:
+            pass
+
+    result = wifi_manager.start_auto_hunt(interface, api_key)
+    return jsonify(**result)
+
+
+@app.route("/api/wifi/stop", methods=["POST"])
+def wifi_stop():
+    """Stop any running WiFi operation."""
+    result = wifi_manager.stop()
+    return jsonify(**result)
+
+
+@app.route("/api/wifi/status", methods=["GET"])
+def wifi_status():
+    """Get current WiFi module status."""
+    return jsonify(status="success", **wifi_manager.get_status())
 
 
 
@@ -808,6 +983,7 @@ DEFAULT_SETTINGS = {
     "defaultScanPorts": "1-1000",
     "masscanRate": "1000",
     "threadCount": "10",
+    "wpaSecKey": "",
 }
 
 
@@ -1126,5 +1302,8 @@ if __name__ == "__main__":
     apply_lgpio_patch_if_needed()
 
     init_gpio()
+
+    # Connect WiFi module to the shared log queue
+    wifi_set_log_queue(log_queue)
 
     socketio.run(app, host="0.0.0.0", port=8080, debug=False, allow_unsafe_werkzeug=True)

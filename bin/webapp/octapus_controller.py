@@ -327,19 +327,29 @@ async def scenario_scan_sequence(steps, led):
         led.off()
     log_and_queue("octapus", "Scenario execution completed")
 
+# Cache GPIO objects so they're only initialized once
+_gpio_cache = {"button": None, "led": None, "initialized": False}
+
+def _get_or_setup_gpio():
+    """Return cached (button, led) or set up GPIO once."""
+    if not _gpio_cache["initialized"]:
+        _gpio_cache["button"], _gpio_cache["led"] = setup_gpio()
+        _gpio_cache["initialized"] = True
+    return _gpio_cache["button"], _gpio_cache["led"]
+
 def start_scan_thread(scripts):
     """
     Helper to launch dynamic_scan_sequence(...) in its own asyncio event loop.
     This function runs in a separate Thread so it does not block Flask.
     """
-    button, led = setup_gpio()
+    _, led = _get_or_setup_gpio()
     asyncio.run(dynamic_scan_sequence(scripts, led))
 
 def start_scenario_thread(steps):
     """
     Helper to launch scenario_scan_sequence(...) in its own asyncio event loop.
     """
-    button, led = setup_gpio()
+    _, led = _get_or_setup_gpio()
     asyncio.run(scenario_scan_sequence(steps, led))
 
 def cleanup_gpio():

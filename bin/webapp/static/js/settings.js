@@ -26,6 +26,9 @@ class SettingsManager {
     document.getElementById('test-gpio-btn').addEventListener('click', () => this.testGpio());
     document.getElementById('save-gpio-btn').addEventListener('click', () => this.saveGpioConfig());
     
+    // WPA-SEC settings
+    document.getElementById('test-wpasec-btn').addEventListener('click', () => this.testWpaSecKey());
+
     // System settings
     document.getElementById('save-settings-btn').addEventListener('click', () => this.saveAllSettings());
     document.getElementById('reset-btn').addEventListener('click', () => this.resetToDefaults());
@@ -126,6 +129,7 @@ class SettingsManager {
     document.getElementById('log-verbosity').value = s.logVerbosity || 'info';
     document.getElementById('auto-update').checked = s.autoUpdate || false;
     document.getElementById('scan-timeout').value = s.scanTimeout || '30';
+    document.getElementById('wpasec-key').value = s.wpaSecKey || '';
     
     this.toggleNetworkConfig();
   }
@@ -258,7 +262,8 @@ class SettingsManager {
       threadCount: document.getElementById('thread-count').value,
       logVerbosity: document.getElementById('log-verbosity').value,
       autoUpdate: document.getElementById('auto-update').checked,
-      scanTimeout: document.getElementById('scan-timeout').value
+      scanTimeout: document.getElementById('scan-timeout').value,
+      wpaSecKey: document.getElementById('wpasec-key').value
     };
   }
 
@@ -412,6 +417,7 @@ class SettingsManager {
       document.getElementById('log-verbosity').value = 'info';
       document.getElementById('auto-update').checked = false;
       document.getElementById('scan-timeout').value = '30';
+      document.getElementById('wpasec-key').value = '';
       
       // Reset GPIO settings
       document.getElementById('auto-detect').checked = true;
@@ -426,6 +432,32 @@ class SettingsManager {
       this.toggleNetworkConfig();
       this.toggleManualConfig();
       this.showToast('Configuration reset to defaults. Click Save to apply.', 'warning');
+    }
+  }
+
+  async testWpaSecKey() {
+    const key = document.getElementById('wpasec-key').value.trim();
+    if (!key) {
+      this.showToast('Enter a WPA-SEC API key first', 'warning');
+      return;
+    }
+    const button = document.getElementById('test-wpasec-btn');
+    const originalText = button.innerHTML;
+    button.innerHTML = '🔑 Testing...';
+    button.disabled = true;
+    try {
+      const response = await fetch('/api/wifi/results');
+      const data = await response.json();
+      if (data.success) {
+        this.showToast('WPA-SEC key is valid! ' + (data.results ? data.results.length + ' cracked results found.' : ''), 'success');
+      } else {
+        this.showToast('WPA-SEC test: ' + (data.message || 'Unknown response'), 'warning');
+      }
+    } catch (error) {
+      this.showToast('WPA-SEC test failed: ' + error.message, 'error');
+    } finally {
+      button.innerHTML = originalText;
+      button.disabled = false;
     }
   }
 
