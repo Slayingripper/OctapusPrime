@@ -109,7 +109,7 @@ def setup_gpio():
             macchanger_pin = gpio_manager.config.get('macchanger_pin', 23)
             led_pin = gpio_manager.config.get('led_pin', 27)
             pull_up = gpio_manager.config.get('button_pull_up', True)
-            pull_up = gpio_manager.config.get('macchanger_pull_up', True)
+            macchanger_pull_up = gpio_manager.config.get('macchanger_pull_up', True)
             bounce_time = gpio_manager.config.get('button_bounce_time', 0.1)
             active_high = gpio_manager.config.get('led_active_high', True)
         else:
@@ -177,9 +177,9 @@ def parse_nmap_xml(xml_path):
             if ports is None:
                 continue
             open_ports = [
-                int(p.find("portid").text)
+                int(p.get("portid"))
                 for p in ports.findall("port")
-                if p.find("state").get("state") == "open"
+                if p.find("state") is not None and p.find("state").get("state") == "open"
             ]
             if any(p in (80, 443) for p in open_ports):
                 results["web"].append(ip)
@@ -315,7 +315,6 @@ async def scenario_scan_sequence(steps, led):
         if tool == "nmap":
             xml_path = str(Path("/tmp") / f"octapus_nmap_{os.getpid()}.xml")
             cmd = ["nmap"] + args + ["-oX", xml_path]
-            await run_script(tool, cmd)
             prev_output = await run_script(tool, cmd, capture_output=[])
             try:
                 os.remove(xml_path)

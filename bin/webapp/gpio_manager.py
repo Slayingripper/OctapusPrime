@@ -289,9 +289,9 @@ class GPIOManager:
             ):
                 return self._setup_gpiozero(button_pin, led_pin, macchanger_pin)
             elif lib_name == "RPi.GPIO":
-                return self._setup_rpi_gpio(button_pin, led_pin)
+                return self._setup_rpi_gpio(button_pin, led_pin, macchanger_pin)
             elif lib_name == "OPi.GPIO":
-                return self._setup_opi_gpio(button_pin, led_pin)
+                return self._setup_opi_gpio(button_pin, led_pin, macchanger_pin)
             elif lib_name == "libgpiod":
                 return self._setup_libgpiod(button_pin, led_pin, macchanger_pin)
             elif lib_name == "lgpio":
@@ -352,6 +352,8 @@ class GPIOManager:
         GPIO.setup(led_pin, GPIO.OUT)
 
         # Create wrapper classes to match gpiozero interface
+        bounce_time_ms = int(self.config["button_bounce_time"] * 1000)
+
         class RPiButton:
             def __init__(self, pin):
                 self.pin = pin
@@ -368,7 +370,7 @@ class GPIOManager:
                     self.pin,
                     GPIO.FALLING,
                     callback=lambda x: callback(),
-                    bouncetime=int(self.config["button_bounce_time"] * 1000),
+                    bouncetime=bounce_time_ms,
                 )
 
         class RPiMacchanger:
@@ -408,18 +410,21 @@ class GPIOManager:
                 self._blinking = True
 
         button = RPiButton(button_pin)
-        button = RPiMacchanger(macchanger_pin)
+        macchanger = RPiMacchanger(macchanger_pin, self.config["button_bounce_time"])
         led = RPiLED(led_pin, self.config["led_active_high"])
 
         logging.info(
             f"GPIO setup successful with RPi.GPIO: Button={button_pin}, LED={led_pin}, MACCHANGER={macchanger_pin}"
         )
-        return button, led
+        return button, led, macchanger
 
-    def _setup_opi_gpio(self, button_pin: int, led_pin: int) -> Tuple[Any, Any]:
+    def _setup_opi_gpio(self, button_pin: int, led_pin: int, macchanger_pin: int = None) -> Tuple[Any, Any, Any]:
         """Setup GPIO using OPi.GPIO library for Orange Pi and Nano Pi."""
         import OPi.GPIO as GPIO
         import time
+
+        if macchanger_pin is None:
+            macchanger_pin = self.config.get("macchanger_pin", 23)
 
         # Set the board mode - you might need to adjust this based on your specific Nano Pi model
         GPIO.setmode(GPIO.BOARD)  # or GPIO.BCM depending on your preference
@@ -430,6 +435,13 @@ class GPIOManager:
             GPIO.IN,
             pull_up_down=(
                 GPIO.PUD_UP if self.config["button_pull_up"] else GPIO.PUD_DOWN
+            ),
+        )
+        GPIO.setup(
+            macchanger_pin,
+            GPIO.IN,
+            pull_up_down=(
+                GPIO.PUD_UP if self.config["macchanger_pull_up"] else GPIO.PUD_DOWN
             ),
         )
         GPIO.setup(led_pin, GPIO.OUT)
@@ -499,29 +511,33 @@ class GPIOManager:
                 self._blink_thread.start()
 
         button = OPiButton(button_pin, self.config["button_bounce_time"])
+        macchanger = OPiButton(macchanger_pin, self.config["button_bounce_time"])
         led = OPiLED(led_pin, self.config["led_active_high"])
 
         logging.info(
-            f"GPIO setup successful with OPi.GPIO: Button={button_pin}, LED={led_pin}"
+            f"GPIO setup successful with OPi.GPIO: Button={button_pin}, LED={led_pin}, MACCHANGER={macchanger_pin}"
         )
-        return button, led
+        return button, led, macchanger
 
-    def _setup_libgpiod(self, button_pin: int, led_pin: int) -> Tuple[Any, Any]:
+    def _setup_libgpiod(self, button_pin: int, led_pin: int, macchanger_pin: int = None) -> Tuple[Any, Any, Any]:
         """Setup GPIO using libgpiod library."""
         import gpiod
+
+        if macchanger_pin is None:
+            macchanger_pin = self.config.get("macchanger_pin", 23)
 
         # This is a simplified implementation - you'd need to expand for full functionality
         chip = gpiod.Chip("gpiochip0")
 
         button_line = chip.get_line(button_pin)
-        macchanger_pin = chip.get_line(macchanger_pin)
+        macchanger_line = chip.get_line(macchanger_pin)
         led_line = chip.get_line(led_pin)
 
         button_line.request(
             consumer="octapus_button", type=gpiod.LINE_REQ_EV_FALLING_EDGE
         )
-        macchanger_pin.request(
-            consumer="octapus_button", type=gpiod.LINE_REQ_EV_FALLING_EDGE
+        macchanger_line.request(
+            consumer="octapus_macchanger", type=gpiod.LINE_REQ_EV_FALLING_EDGE
         )
         led_line.request(consumer="octapus_led", type=gpiod.LINE_REQ_DIR_OUT)
 
@@ -567,12 +583,13 @@ class GPIOManager:
                 pass  # Implement blinking logic
 
         button = GpiodButton(button_line)
+        macchanger = GpiodMacchanger(macchanger_line)
         led = GpiodLED(led_line, self.config["led_active_high"])
 
         logging.info(
-            f"GPIO setup successful with libgpiod: Button={button_pin}, LED={led_pin}"
+            f"GPIO setup successful with libgpiod: Button={button_pin}, LED={led_pin}, MACCHANGER={macchanger_pin}"
         )
-        return button, led
+        return button, led, macchanger
 
     def _setup_lgpio(
         self, button_pin: int, led_pin: int, macchanger_pin: int
@@ -646,12 +663,13 @@ class GPIOManager:
                 pass  # Implement blinking
 
         button = LgpioButton(handle, button_pin)
+        macchanger = LgpioMacchanger(handle, macchanger_pin)
         led = LgpioLED(handle, led_pin, self.config["led_active_high"])
 
         logging.info(
-            f"GPIO setup successful with lgpio: Button={button_pin}, LED={led_pin}"
+            f"GPIO setup successful with lgpio: Button={button_pin}, LED={led_pin}, MACCHANGER={macchanger_pin}"
         )
-        return button, led
+        return button, led, macchanger
 
 
 # Global GPIO manager instance

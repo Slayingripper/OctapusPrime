@@ -127,10 +127,19 @@ async def macchanger_button_press(macchanger, debounce_time=0.5):
 
 
 def scenario_button_callback():
-    """Callback to run a scenario."""
+    """Callback to run the most recent scenario file."""
     try:
-        # Load scenario JSON
-        with open(SCENARIO_DIR, "r") as f:
+        # Find the most recently modified scenario JSON in the scenarios directory
+        scenario_files = sorted(
+            SCENARIO_DIR.glob("*.json"),
+            key=lambda f: f.stat().st_mtime,
+            reverse=True,
+        )
+        if not scenario_files:
+            print("No scenario files found")
+            return
+
+        with open(scenario_files[0], "r") as f:
             scenario = json.load(f)
 
         print(f"Running scenario: {scenario.get('name', 'Unnamed')}")
@@ -138,6 +147,8 @@ def scenario_button_callback():
         for step in scenario.get("steps", []):
             tool = step.get("tool")
             args = step.get("args", [])
+            if not tool:
+                continue
             cmd = [tool] + args
 
             print(f"Running command: {' '.join(cmd)}")
@@ -156,8 +167,8 @@ async def scenario_button_press(scenario, debounce_time=0.5):
     """Continuously check for button press with debounce."""
     while True:
         if scenario.is_pressed:
-            print("Button pressed - changing MAC address")
-            macchanger_callback()
+            print("Button pressed - running scenario")
+            scenario_button_callback()
             await asyncio.sleep(debounce_time)  # Debounce delay
         await asyncio.sleep(0.1)
 
@@ -210,9 +221,6 @@ def apply_lgpio_patch_if_needed():
             return False
 
         major, minor, patch = map(int, match.groups())
-        print(
-            f"Parsed: {kernel_version} -> major={major}, minor={minor}, patch={patch}"
-        )
         print(
             f"Parsed: {kernel_version} -> major={major}, minor={minor}, patch={patch}"
         )
@@ -595,6 +603,14 @@ def start_scan():
 
 
 
+@app.route("/stop", methods=["POST"])
+def stop_scan():
+    """Stop any running scan (best-effort: logs a stop request)."""
+    logging.info("HTTP /stop received. Stop requested.")
+    return jsonify(status="stop requested")
+
+
+
 @app.route("/start_scenario", methods=["POST"])
 def start_scenario():
     """
@@ -627,7 +643,7 @@ def start_scenario():
 def save_scenario():
     payload = request.get_json(force=True)
     name = payload.get("name", "").strip()
-    steps = payload.get("steps", [])
+    steps = payload.get("steps", []) or payload.get("scripts", [])
 
 
     if not name:
@@ -642,14 +658,7 @@ def save_scenario():
             400,
         )
 
-    if not sanitized:
-        return (
-            jsonify(status="error", message="Invalid scenario name after sanitization"),
-            400,
-        )
-
     path = SCENARIO_DIR / f"{sanitized}.json"
-
 
     try:
         temp_path = path.with_suffix(".json.tmp")
@@ -666,19 +675,16 @@ def save_scenario():
 
     return jsonify(status="success", name=sanitized)
 
-    return jsonify(status="success", name=sanitized)
-
 
 @app.route("/list_scenarios", methods=["GET"])
 def list_scenarios():
     try:
-        scenarios_dir = 'scenarios'
         scenarios = []
         
-        if os.path.exists(scenarios_dir):
-            for filename in os.listdir(scenarios_dir):
+        if SCENARIO_DIR.exists():
+            for filename in os.listdir(str(SCENARIO_DIR)):
                 if filename.endswith('.json'):
-                    filepath = os.path.join(scenarios_dir, filename)
+                    filepath = SCENARIO_DIR / filename
                     try:
                         with open(filepath, 'r') as f:
                             scenario_data = json.load(f)
@@ -751,14 +757,21 @@ def load_scenario(name):
 @socketio.on("connect")
 def on_connect():
     """
-    When a WebSocket client connects, forward log_queue items continuously.
+    When a WebSocket client connects, start forwarding log_queue items.
+    Uses a timeout to periodically check if the task should continue.
     """
     logging.info("New WebSocket client connected")
 
     def send_logs():
+        from queue import Empty
         while True:
-            msg = log_queue.get()
-            socketio.emit("log", msg)
+            try:
+                msg = log_queue.get(timeout=1.0)
+                socketio.emit("log", msg)
+            except Empty:
+                continue
+            except Exception:
+                break
 
     socketio.start_background_task(send_logs)
 
@@ -919,14 +932,6 @@ def get_gpio_config():
         }
     )
 
-    return jsonify(
-        {
-            "config": gpio_manager.config,
-            "platform_info": gpio_manager.platform_info,
-            "available_libraries": gpio_manager.get_available_libraries(),
-        }
-    )
-
 
 @app.route("/gpio_config", methods=["POST"])
 def update_gpio_config():
@@ -939,7 +944,7 @@ def update_gpio_config():
         required_fields = [
             "button_pin",
             "led_pin",
-            "macchanger",
+            "macchanger_pin",
             "gpio_library",
             "manual_override",
         ]
@@ -961,16 +966,6 @@ def update_gpio_config():
             "wiringpi",
         ]
         if new_config["gpio_library"] not in valid_libraries:
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": f"Invalid GPIO library. Must be one of: {', '.join(valid_libraries)}",
-                    }
-                ),
-                400,
-            )
-
             return (
                 jsonify(
                     {

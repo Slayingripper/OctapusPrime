@@ -1191,7 +1191,7 @@ function loadScenarioData(scenarioData) {
   clearAllTools();
 
   // Load scenario tools
-  const scripts = scenarioData.scripts || scenarioData.tools || [];
+  const scripts = scenarioData.scripts || scenarioData.steps || scenarioData.tools || [];
   scripts.forEach(script => {
     addScheduledTool(script.tool);
     setTimeout(() => {
@@ -1233,10 +1233,11 @@ function loadScenarios() {
       console.log('Scenarios loaded from server:', data);
       
       if (data.scenarios && Array.isArray(data.scenarios)) {
-        data.scenarios.forEach(scenarioName => {
+        data.scenarios.forEach(scenario => {
           const option = document.createElement('option');
-          option.value = scenarioName;
-          option.textContent = scenarioName;
+          const name = scenario.load_name || scenario.name || scenario.filename;
+          option.value = name;
+          option.textContent = name;
           scenarioList.appendChild(option);
         });
       }
