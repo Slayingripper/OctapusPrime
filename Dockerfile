@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install Python tools missing from apt repos
 RUN pip3 install --no-cache-dir theharvester
 COPY requirements.txt /tmp/requirements.txt
-RUN pip3 install --upgrade pip && pip3 install -r /tmp/requirements.txt
+RUN pip3 install --upgrade pip && pip3 install --ignore-installed -r /tmp/requirements.txt
 
 # Install Feroxbuster (download prebuilt binary)
 RUN curl -LO https://github.com/epi052/feroxbuster/releases/latest/download/feroxbuster-linux-x86_64 && \
