@@ -216,9 +216,13 @@ class WiFiPwnManager:
             return []
 
         csv_prefix = str(HANDSHAKE_DIR / "scan_result")
-        # Remove old scan files
-        for f in glob.glob(f"{csv_prefix}*"):
-            os.remove(f)
+        # Remove old scan files (may be root-owned from sudo airodump)
+        old_files = glob.glob(f"{csv_prefix}*")
+        if old_files:
+            subprocess.run(
+                ["sudo", "rm", "-f"] + old_files,
+                capture_output=True, timeout=5
+            )
 
         _emit("wifi", f"Scanning for networks on {iface} ({duration}s)...")
 
@@ -230,12 +234,17 @@ class WiFiPwnManager:
                     "--write", csv_prefix,
                     iface,
                 ],
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
             )
             time.sleep(duration)
             proc.terminate()
-            proc.wait(timeout=5)
+            try:
+                stdout, stderr = proc.communicate(timeout=5)
+                if stderr:
+                    _emit("wifi", f"airodump stderr: {stderr.decode(errors='ignore')[:200]}")
+            except subprocess.TimeoutExpired:
+                proc.kill()
         except Exception as e:
             _emit("wifi", f"Scan error: {e}")
             return []
@@ -243,22 +252,35 @@ class WiFiPwnManager:
         # Parse the CSV — find the actual file (number may vary)
         csv_candidates = sorted(glob.glob(f"{csv_prefix}*.csv"))
         csv_file = csv_candidates[0] if csv_candidates else f"{csv_prefix}-01.csv"
-        _emit("wifi", f"Parsing CSV: {csv_file} (exists: {os.path.exists(csv_file)})")
-        networks = self._parse_airodump_csv(csv_file)
+
+        if not os.path.exists(csv_file):
+            _emit("wifi", f"No CSV output file found at {csv_file}")
+            return []
+
+        # Read the CSV (may be root-owned)
+        try:
+            with open(csv_file, "r", errors="ignore") as f:
+                csv_content = f.read()
+        except PermissionError:
+            result = subprocess.run(
+                ["sudo", "cat", csv_file],
+                capture_output=True, text=True, timeout=5
+            )
+            csv_content = result.stdout
+
+        _emit("wifi", f"CSV size: {len(csv_content)} bytes")
+        networks = self._parse_airodump_csv_content(csv_content)
         self.networks = networks
         _emit("wifi", f"Found {len(networks)} networks")
         return networks
 
-    def _parse_airodump_csv(self, csv_path):
-        """Parse airodump-ng CSV output into AP list and client associations."""
+    def _parse_airodump_csv_content(self, content):
+        """Parse airodump-ng CSV content string into AP list and client associations."""
         networks = []
-        if not os.path.exists(csv_path):
+        if not content or not content.strip():
             return networks
 
         try:
-            with open(csv_path, "r", errors="ignore") as f:
-                content = f.read()
-
             # Normalize line endings and split AP / client sections
             content = content.replace("\r\n", "\n")
             sections = re.split(r"\n\s*\n", content, maxsplit=1)
@@ -390,9 +412,13 @@ class WiFiPwnManager:
         self.current_target = {"bssid": bssid, "essid": essid, "channel": channel}
         cap_prefix = str(HANDSHAKE_DIR / f"hs_{bssid.replace(':', '')}")
 
-        # Remove old capture files for this BSSID
-        for f in glob.glob(f"{cap_prefix}*"):
-            os.remove(f)
+        # Remove old capture files for this BSSID (may be root-owned)
+        old_caps = glob.glob(f"{cap_prefix}*")
+        if old_caps:
+            subprocess.run(
+                ["sudo", "rm", "-f"] + old_caps,
+                capture_output=True, timeout=5
+            )
 
         _emit("wifi", f"Targeting {essid or bssid} on ch {channel} "
               f"({len(client_macs) if client_macs else 0} known clients)...")
@@ -476,6 +502,19 @@ class WiFiPwnManager:
         cap_candidates = sorted(glob.glob(f"{cap_prefix}*.cap"))
         for cap_file in cap_candidates:
             if self._verify_handshake(cap_file, bssid):
+                # Avoid duplicate records for the same BSSID
+                existing = next(
+                    (h for h in self.captured_handshakes
+                     if h["bssid"].lower() == bssid.lower()),
+                    None,
+                )
+                if existing:
+                    existing["file"] = cap_file
+                    existing["timestamp"] = time.strftime("%Y-%m-%d %H:%M:%S")
+                    existing["submitted"] = False  # new capture, needs re-submit
+                    _emit("wifi", f"Handshake re-captured for {essid or bssid}!")
+                    return existing
+
                 hs_record = {
                     "bssid": bssid,
                     "essid": essid,
@@ -511,7 +550,7 @@ class WiFiPwnManager:
     # WPA-SEC integration
     # ------------------------------------------------------------------
     def submit_to_wpasec(self, cap_file, api_key):
-        """Upload a .cap file to wpa-sec.stanev.org."""
+        """Upload a .cap file to wpa-sec.stanev.org (once per file)."""
         if not api_key:
             _emit("wifi", "WPA-SEC API key not configured")
             return {"success": False, "message": "API key not configured"}
@@ -519,6 +558,16 @@ class WiFiPwnManager:
         if not os.path.exists(cap_file):
             _emit("wifi", f"Capture file not found: {cap_file}")
             return {"success": False, "message": "File not found"}
+
+        # Guard: skip if already submitted
+        hs_rec = next(
+            (h for h in self.captured_handshakes
+             if h["file"] == cap_file and h["submitted"]),
+            None,
+        )
+        if hs_rec:
+            _emit("wifi", f"{os.path.basename(cap_file)} already submitted — skipping")
+            return {"success": True, "message": "Already submitted"}
 
         _emit("wifi", f"Submitting {os.path.basename(cap_file)} to WPA-SEC...")
 
@@ -533,7 +582,12 @@ class WiFiPwnManager:
 
             if resp.status_code == 200:
                 body = resp.text.strip()
-                _emit("wifi", f"WPA-SEC response: {body}")
+                # Mark submitted in our records
+                for h in self.captured_handshakes:
+                    if h["file"] == cap_file:
+                        h["submitted"] = True
+                        break
+                _emit("wifi", f"✓ Submitted to WPA-SEC: {body}")
                 return {"success": True, "message": body}
             else:
                 msg = f"WPA-SEC upload failed (HTTP {resp.status_code})"

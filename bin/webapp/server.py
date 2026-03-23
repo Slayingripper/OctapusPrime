@@ -486,6 +486,8 @@ def wifi_submit_wpasec():
         hs = next((h for h in wifi_manager.captured_handshakes if h["bssid"].lower() == bssid.lower()), None)
         if not hs:
             return jsonify(status="error", message="Handshake not found"), 404
+        if hs["submitted"]:
+            return jsonify(status="success", success=True, message="Already submitted")
         result = wifi_manager.submit_to_wpasec(hs["file"], api_key)
         if result["success"]:
             hs["submitted"] = True
@@ -505,8 +507,9 @@ def wifi_submit_wpasec():
 @app.route("/api/wifi/results", methods=["GET"])
 def wifi_wpasec_results():
     """Check WPA-SEC for cracked results."""
-    api_key = ""
-    if SETTINGS_FILE.exists():
+    # Accept key as query param (for test) or fall back to settings file
+    api_key = request.args.get("key", "").strip()
+    if not api_key and SETTINGS_FILE.exists():
         try:
             with open(SETTINGS_FILE, "r") as f:
                 settings = json.load(f)

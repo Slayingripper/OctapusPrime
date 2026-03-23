@@ -446,7 +446,7 @@ class SettingsManager {
     button.innerHTML = '🔑 Testing...';
     button.disabled = true;
     try {
-      const response = await fetch('/api/wifi/results');
+      const response = await fetch('/api/wifi/results?key=' + encodeURIComponent(key));
       const data = await response.json();
       if (data.success) {
         this.showToast('WPA-SEC key is valid! ' + (data.results ? data.results.length + ' cracked results found.' : ''), 'success');
