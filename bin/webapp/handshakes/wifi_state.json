@@ -29,38 +29,32 @@
       "cracked": false,
       "password": null,
       "verified": false
+    },
+    {
+      "bssid": "10:27:F5:E3:58:DE",
+      "essid": "<<<<<Wi-Fi>>>>>",
+      "file": "/home/whitefalcon/gitstuff/OctapusPrime/bin/webapp/handshakes/hs_1027F5E358DE-01.cap",
+      "timestamp": "2026-03-23 18:19:25",
+      "submitted": true,
+      "cracked": false,
+      "password": null,
+      "verified": false
     }
   ],
   "networks": [
     {
-      "bssid": "36:16:9D:BD:B1:CA",
-      "essid": "NetWire_Guest",
-      "channel": 6,
-      "power": -71,
-      "encryption": "WPA2 WPA",
+      "bssid": "A8:42:A1:69:30:A2",
+      "essid": "<<<<<Wi-Fi>>>>>",
+      "channel": 9,
+      "power": -87,
+      "encryption": "WPA2",
       "clients": []
     },
     {
-      "bssid": "30:16:9D:BD:B1:CA",
-      "essid": "NetWire24@Ezt139",
-      "channel": 6,
-      "power": -83,
-      "encryption": "WPA3 WPA2",
-      "clients": []
-    },
-    {
-      "bssid": "36:16:9D:BD:B1:B2",
-      "essid": "NetWire_Guest",
-      "channel": 6,
-      "power": -82,
-      "encryption": "WPA2 WPA",
-      "clients": []
-    },
-    {
-      "bssid": "3A:16:9D:BD:B1:CA",
+      "bssid": "AA:42:A1:29:30:A2",
       "essid": "",
-      "channel": 6,
-      "power": -80,
+      "channel": 9,
+      "power": -86,
       "encryption": "WPA2",
       "clients": []
     },
@@ -68,65 +62,81 @@
       "bssid": "30:16:9D:BD:B1:B2",
       "essid": "NetWire24@Ezt139",
       "channel": 6,
-      "power": -82,
+      "power": -86,
       "encryption": "WPA3 WPA2",
+      "clients": []
+    },
+    {
+      "bssid": "36:16:9D:BD:B1:B2",
+      "essid": "NetWire_Guest",
+      "channel": 6,
+      "power": -86,
+      "encryption": "WPA2 WPA",
       "clients": []
     },
     {
       "bssid": "3A:16:9D:BD:B1:B2",
       "essid": "",
       "channel": 6,
-      "power": -81,
+      "power": -85,
       "encryption": "WPA2",
+      "clients": []
+    },
+    {
+      "bssid": "36:16:9D:BD:B1:CA",
+      "essid": "NetWire_Guest",
+      "channel": 6,
+      "power": -84,
+      "encryption": "WPA2 WPA",
+      "clients": []
+    },
+    {
+      "bssid": "3A:16:9D:BD:B1:CA",
+      "essid": "",
+      "channel": 6,
+      "power": -82,
+      "encryption": "WPA2",
+      "clients": []
+    },
+    {
+      "bssid": "30:16:9D:BD:B1:CA",
+      "essid": "NetWire24@Ezt139",
+      "channel": 6,
+      "power": -85,
+      "encryption": "WPA3 WPA2",
       "clients": []
     },
     {
       "bssid": "10:27:F5:E3:58:DE",
       "essid": "<<<<<Wi-Fi>>>>>",
       "channel": 6,
-      "power": -79,
+      "power": -66,
       "encryption": "WPA2 WPA",
-      "clients": [
-        "56:36:EE:8D:EE:ED"
-      ]
+      "clients": []
     },
     {
       "bssid": "0A:79:8C:AE:D2:B8",
       "essid": "CYTA_e7Bz",
       "channel": 5,
-      "power": -77,
+      "power": -73,
       "encryption": "WPA2 WPA",
-      "clients": []
+      "clients": [
+        "80:9F:9B:37:26:4C"
+      ]
     },
     {
       "bssid": "3A:20:28:AE:E6:5C",
       "essid": "CYTA_uT4c",
       "channel": 1,
-      "power": -73,
+      "power": -55,
       "encryption": "WPA2 WPA",
       "clients": [
+        "88:28:7D:37:B0:45",
         "A0:38:8B:8D:93:3E",
         "D4:A6:51:52:1D:60",
-        "88:28:7D:37:B0:45"
+        "D4:A6:51:52:45:62",
+        "34:EA:34:B5:10:24"
       ]
-    },
-    {
-      "bssid": "98:F7:81:8A:B0:69",
-      "essid": "",
-      "channel": 5,
-      "power": -1,
-      "encryption": "WPA",
-      "clients": [
-        "60:56:EE:E6:0C:E5"
-      ]
-    },
-    {
-      "bssid": "2C:99:24:65:75:E1",
-      "essid": "",
-      "channel": 1,
-      "power": -1,
-      "encryption": "",
-      "clients": []
     }
   ],
   "whitelist": [

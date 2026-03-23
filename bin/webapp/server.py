@@ -19,6 +19,11 @@ from flask_socketio import SocketIO
 from platform import release
 
 
+def _sudo():
+    """Return ['sudo'] prefix when not running as root, else empty list."""
+    return [] if os.geteuid() == 0 else ["sudo"]
+
+
 # -----------------------------------------------------
 # 1) Determine BASE_DIR and various subdirectories
 # -----------------------------------------------------
@@ -105,7 +110,7 @@ def macchanger_callback():
                     )  # First available interface
 
         # Run macchanger to randomize MAC address
-        subprocess.run(["sudo", "macchanger", "-r", interface], check=True)
+        subprocess.run(_sudo() + ["macchanger", "-r", interface], check=True)
         print(f"MAC address changed for interface {interface}")
         socketio.emit(
             "log", {"message": f"MAC address changed for {interface}", "level": "info"}
