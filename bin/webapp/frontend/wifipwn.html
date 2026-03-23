@@ -7,71 +7,58 @@
   <link rel="stylesheet" href="/static/css/wifipwn.css">
 </head>
 <body>
-  <a href="/" class="nav-back">← Back to Dashboard</a>
 
-  <header class="header">
-    <h1>WiFi Pwn</h1>
-    <p class="subtitle">Pwnagotchi-style WiFi handshake capture &amp; WPA-SEC submission</p>
-  </header>
+  <!-- Top Bar: nav + title + controls + status -->
+  <header class="top-bar">
+    <a href="/" class="nav-back">← Back</a>
+    <h1 class="top-title">WiFi Pwn</h1>
 
-  <main class="main-content">
-
-    <!-- Controls Section -->
-    <section class="controls-section">
-      <div class="control-row">
-        <div class="control-group">
-          <label for="wifi-iface">Wireless Interface</label>
-          <select id="wifi-iface">
-            <option value="">Loading...</option>
-          </select>
+    <div class="control-row">
+      <div class="control-group">
+        <label for="wifi-iface">Interface</label>
+        <div class="inline-row">
+          <select id="wifi-iface"><option value="">Loading...</option></select>
           <button id="btn-refresh-ifaces" class="btn btn-small" title="Refresh interfaces">⟳</button>
         </div>
-        <div class="control-group">
-          <label>Monitor Mode</label>
-          <div class="btn-group">
-            <button id="btn-monitor-on" class="btn btn-accent">Enable Monitor</button>
-            <button id="btn-monitor-off" class="btn btn-outline" disabled>Disable Monitor</button>
-          </div>
-        </div>
-        <div class="control-group">
-          <label>Actions</label>
-          <div class="btn-group">
-            <button id="btn-scan" class="btn btn-accent" disabled>Scan Networks</button>
-            <button id="btn-auto" class="btn btn-accent" disabled>Auto Hunt</button>
-            <button id="btn-stop" class="btn btn-danger" disabled>Stop</button>
-          </div>
+      </div>
+      <div class="control-group">
+        <label>Monitor</label>
+        <div class="btn-group">
+          <button id="btn-monitor-on" class="btn btn-accent">Enable</button>
+          <button id="btn-monitor-off" class="btn btn-outline" disabled>Disable</button>
         </div>
       </div>
-      <div id="status-bar" class="status-bar">
-        <span class="status-dot idle" id="status-dot"></span>
-        <span id="status-text">Idle</span>
+      <div class="control-group">
+        <label>Actions</label>
+        <div class="btn-group">
+          <button id="btn-scan" class="btn btn-accent" disabled>Scan</button>
+          <button id="btn-auto" class="btn btn-accent" disabled>Auto Hunt</button>
+          <button id="btn-stop" class="btn btn-danger" disabled>Stop</button>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Live Spectrum Scanner -->
-    <section class="table-section" id="spectrum-section">
-      <h2 class="section-title">📡 Live Spectrum Scanner</h2>
-      <div class="control-row" style="margin-bottom: 16px;">
-        <button id="btn-spectrum-start" class="btn btn-accent" disabled>Start Live Scan</button>
-        <button id="btn-spectrum-stop" class="btn btn-danger" disabled>Stop Live Scan</button>
-      </div>
-      <div id="spectrum-display" class="spectrum-display">
-        <div class="spectrum-placeholder">Enable monitor mode and start live scan to view real-time signal strengths</div>
-      </div>
-    </section>
+    <div id="status-bar" class="status-bar">
+      <span class="status-dot idle" id="status-dot"></span>
+      <span id="status-text">Idle</span>
+    </div>
+  </header>
 
-    <!-- Networks Table -->
-    <section class="table-section">
-      <h2 class="section-title">Discovered Networks</h2>
-      <div class="table-wrapper">
+  <!-- Dashboard Grid -->
+  <main class="dashboard">
+
+    <!-- Top-left: Networks -->
+    <section class="panel panel-networks">
+      <h2 class="panel-title">Discovered Networks</h2>
+      <div class="panel-scroll">
         <table id="networks-table">
           <thead>
             <tr>
               <th>ESSID</th>
               <th>BSSID</th>
-              <th>Channel</th>
+              <th>Ch</th>
               <th>Power</th>
-              <th>Encryption</th>
+              <th>Enc</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -82,38 +69,54 @@
       </div>
     </section>
 
-    <!-- Handshakes Table -->
-    <section class="table-section">
-      <h2 class="section-title">Captured Handshakes</h2>
-      <div class="control-row" style="margin-bottom: 16px;">
-        <button id="btn-submit-all" class="btn btn-accent" disabled>Submit All to WPA-SEC</button>
-        <button id="btn-check-results" class="btn btn-outline">Check WPA-SEC Results</button>
+    <!-- Top-right: Handshakes -->
+    <section class="panel panel-handshakes">
+      <div class="panel-title-row">
+        <h2 class="panel-title">Captured Handshakes</h2>
+        <div class="btn-group">
+          <button id="btn-submit-all" class="btn btn-accent btn-xs" disabled>Submit All</button>
+          <button id="btn-check-results" class="btn btn-outline btn-xs">Check Results</button>
+        </div>
       </div>
-      <div class="table-wrapper">
+      <div class="panel-scroll">
         <table id="handshakes-table">
           <thead>
             <tr>
               <th>ESSID</th>
               <th>BSSID</th>
-              <th>Captured</th>
-              <th>Handshake</th>
-              <th>Submitted</th>
+              <th>Time</th>
+              <th>HS</th>
+              <th>Sent</th>
               <th>Cracked</th>
-              <th>Password</th>
+              <th>Pass</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody id="handshakes-body">
-            <tr><td colspan="8" class="empty-msg">No handshakes captured yet</td></tr>
+            <tr><td colspan="8" class="empty-msg">No captures yet</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- Log Console -->
-    <section class="log-section">
-      <h2 class="section-title">Live Log</h2>
-      <div id="wifi-log" class="log-console"></div>
+    <!-- Bottom-left: Spectrum -->
+    <section class="panel panel-spectrum">
+      <div class="panel-title-row">
+        <h2 class="panel-title">📡 Spectrum</h2>
+        <div class="btn-group">
+          <button id="btn-spectrum-start" class="btn btn-accent btn-xs" disabled>Start</button>
+          <button id="btn-spectrum-stop" class="btn btn-danger btn-xs" disabled>Stop</button>
+        </div>
+      </div>
+      <div id="spectrum-display" class="panel-scroll spectrum-display">
+        <div class="spectrum-placeholder">Enable monitor mode and start live scan</div>
+      </div>
+    </section>
+
+    <!-- Bottom-right: Log -->
+    <section class="panel panel-log">
+      <h2 class="panel-title">Live Log</h2>
+      <div id="wifi-log" class="panel-scroll log-console"></div>
     </section>
 
   </main>
