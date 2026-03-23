@@ -441,6 +441,7 @@ def wifi_deauth():
     channel = data.get("channel")
     essid = data.get("essid", "")
     duration = data.get("duration", 30)
+    client_macs = data.get("clients", [])
 
     if not bssid or not channel:
         return jsonify(status="error", message="bssid and channel required"), 400
@@ -448,10 +449,10 @@ def wifi_deauth():
     duration = min(max(int(duration), 10), 120)
 
     def _run():
-        wifi_manager.capture_handshake(bssid, int(channel), essid, duration)
+        wifi_manager.capture_handshake(bssid, int(channel), essid, duration, client_macs=client_macs)
 
     threading.Thread(target=_run, daemon=True).start()
-    return jsonify(status="success", message=f"Targeting {essid or bssid}")
+    return jsonify(status="success", message=f"Targeting {essid or bssid} with deauth")
 
 
 @app.route("/api/wifi/handshakes", methods=["GET"])

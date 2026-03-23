@@ -1,0 +1,13 @@
+{
+  "networkInterface": "auto",
+  "customCIDR": "",
+  "autoDetectNetwork": true,
+  "nmapScanType": "intense",
+  "defaultScanPorts": "1-1000",
+  "masscanRate": "1000",
+  "threadCount": "10",
+  "logVerbosity": "info",
+  "autoUpdate": false,
+  "scanTimeout": "30",
+  "wpaSecKey": ""
+}

