@@ -19,10 +19,15 @@
   const netBody      = document.getElementById("networks-body");
   const hsBody       = document.getElementById("handshakes-body");
   const logConsole   = document.getElementById("wifi-log");
+  const btnSpecStart = document.getElementById("btn-spectrum-start");
+  const btnSpecStop  = document.getElementById("btn-spectrum-stop");
+  const specDisplay  = document.getElementById("spectrum-display");
 
   let monitorEnabled = false;
   let pollTimer = null;
+  let spectrumTimer = null;
   let scannedNetworks = [];  // store last scan results for client info
+  let whitelistSet = new Set();  // whitelisted BSSIDs (lowercase)
 
   // -------------------------------------------------------------------
   // Helpers
@@ -103,6 +108,7 @@
       btnMonOff.disabled = false;
       btnScan.disabled = false;
       btnAuto.disabled = false;
+      btnSpecStart.disabled = false;
     } else {
       log("Failed: " + (data.message || "unknown error"));
       setStatus("error", "Monitor mode failed");
@@ -122,6 +128,9 @@
     btnScan.disabled = true;
     btnAuto.disabled = true;
     btnStop.disabled = true;
+    btnSpecStart.disabled = true;
+    btnSpecStop.disabled = true;
+    stopSpectrumPolling();
     setStatus("idle", "Idle");
     log("Monitor mode disabled");
   }
@@ -166,13 +175,15 @@
       const isWPA = enc.includes("WPA");
       const badgeClass = isWPA ? "badge-wpa" : "badge-open";
       const clientCount = Array.isArray(n.clients) ? n.clients.length : 0;
-      return `<tr>
-        <td>${escapeHtml(n.essid || "<hidden>")}</td>
+      const isWL = whitelistSet.has((n.bssid || "").toLowerCase());
+      const wlBtn = `<button class="btn-table-wl${isWL ? " active" : ""}" onclick="window._toggleWhitelist('${escapeHtml(n.bssid)}')" title="${isWL ? 'Remove from whitelist' : 'Whitelist (skip in Auto Hunt)'}">${isWL ? '&#x1f6e1;' : '&#x1f6e1;'}</button>`;
+      return `<tr class="${isWL ? 'row-whitelisted' : ''}">
+        <td>${escapeHtml(n.essid || "<hidden>")}${isWL ? ' <span class="badge badge-wl">WL</span>' : ''}</td>
         <td style="font-size:0.75rem">${escapeHtml(n.bssid)}</td>
         <td>${n.channel}</td>
         <td>${n.power} dBm</td>
         <td><span class="badge ${badgeClass}">${escapeHtml(enc)}</span>${clientCount ? ` <span class="badge badge-yes">${clientCount} client${clientCount > 1 ? "s" : ""}</span>` : ""}</td>
-        <td>${isWPA ? `<button class="btn-table" onclick="window._deauth(${idx})">Capture</button>` : "-"}</td>
+        <td>${wlBtn}${isWPA && !isWL ? ` <button class="btn-table" onclick="window._deauth(${idx})">Capture</button>` : isWPA && isWL ? '' : "-"}</td>
       </tr>`;
     }).join("");
   }
@@ -202,6 +213,23 @@
 
     // Start polling for status updates
     startPolling();
+  };
+
+  // -------------------------------------------------------------------
+  // Whitelist toggle
+  // -------------------------------------------------------------------
+  window._toggleWhitelist = async function (bssid) {
+    const b = bssid.toLowerCase();
+    const action = whitelistSet.has(b) ? "remove" : "add";
+    const data = await api("/api/wifi/whitelist", {
+      method: "POST",
+      body: JSON.stringify({ action, bssid }),
+    });
+    if (data.status === "success" && data.whitelist) {
+      whitelistSet = new Set(data.whitelist.map(x => x.toLowerCase()));
+      renderNetworks(scannedNetworks);
+      log((action === "add" ? "Whitelisted" : "Un-whitelisted") + " " + bssid);
+    }
   };
 
   // -------------------------------------------------------------------
@@ -239,24 +267,54 @@
   // -------------------------------------------------------------------
   function renderHandshakes(handshakes) {
     if (!handshakes || !handshakes.length) {
-      hsBody.innerHTML = '<tr><td colspan="7" class="empty-msg">No handshakes captured yet</td></tr>';
+      hsBody.innerHTML = '<tr><td colspan="8" class="empty-msg">No captures yet — target a network to begin</td></tr>';
       btnSubmitAll.disabled = true;
       return;
     }
 
-    const hasUnsubmitted = handshakes.some((h) => !h.submitted);
+    const hasUnsubmitted = handshakes.some((h) => !h.submitted && h.verified);
     btnSubmitAll.disabled = !hasUnsubmitted;
 
-    hsBody.innerHTML = handshakes.map((h) => `<tr>
+    hsBody.innerHTML = handshakes.map((h) => {
+      let actionBtn = "-";
+      if (h.verified && !h.submitted) {
+        actionBtn = `<button class="btn-table" onclick="window._submitHs('${escapeHtml(h.bssid)}')">Submit</button>`;
+      } else if (!h.verified) {
+        actionBtn = `<button class="btn-table-warn" onclick="window._retryCapture('${escapeHtml(h.bssid)}', '${escapeHtml(h.essid || '')}')">Retry Capture</button>`;
+      }
+      return `<tr>
       <td>${escapeHtml(h.essid || "")}</td>
       <td style="font-size:0.75rem">${escapeHtml(h.bssid)}</td>
       <td>${escapeHtml(h.timestamp)}</td>
+      <td><span class="badge ${h.verified ? "badge-yes" : "badge-no"}">${h.verified ? "✓ Valid" : "✗ No Handshake"}</span></td>
       <td><span class="badge ${h.submitted ? "badge-yes" : "badge-no"}">${h.submitted ? "Yes" : "No"}</span></td>
       <td><span class="badge ${h.cracked ? "badge-yes" : "badge-no"}">${h.cracked ? "Yes" : "No"}</span></td>
       <td>${h.password ? escapeHtml(h.password) : "-"}</td>
-      <td>${!h.submitted ? `<button class="btn-table" onclick="window._submitHs('${escapeHtml(h.bssid)}')">Submit</button>` : "-"}</td>
-    </tr>`).join("");
+      <td>${actionBtn}</td>
+    </tr>`;
+    }).join("");
   }
+
+  window._retryCapture = async function (bssid, essid) {
+    // Find the network in last scan to get channel + clients
+    const net = scannedNetworks.find((n) => n.bssid.toLowerCase() === bssid.toLowerCase());
+    const channel = net ? net.channel : 1;
+    const clientMacs = net && Array.isArray(net.clients) ? net.clients : [];
+    log("Retrying capture for " + (essid || bssid) + "...");
+    setStatus("capturing", "Retrying capture...");
+    btnStop.disabled = false;
+    await api("/api/wifi/deauth", {
+      method: "POST",
+      body: JSON.stringify({
+        bssid: bssid,
+        channel: channel,
+        essid: essid,
+        duration: 45,
+        clients: clientMacs,
+      }),
+    });
+    startPolling();
+  };
 
   window._submitHs = async function (bssid) {
     log("Submitting handshake for " + bssid + "...");
@@ -293,6 +351,88 @@
   }
 
   // -------------------------------------------------------------------
+  // Live Spectrum Scanner
+  // -------------------------------------------------------------------
+  async function startSpectrumScan() {
+    log("Starting live spectrum scan...");
+    const data = await api("/api/wifi/spectrum/start", {
+      method: "POST",
+      body: JSON.stringify({ interval: 3 }),
+    });
+    if (data.success) {
+      btnSpecStart.disabled = true;
+      btnSpecStop.disabled = false;
+      startSpectrumPolling();
+    } else {
+      log("Spectrum start failed: " + (data.message || ""));
+    }
+  }
+
+  async function stopSpectrumScan() {
+    log("Stopping live spectrum scan...");
+    await api("/api/wifi/spectrum/stop", { method: "POST" });
+    btnSpecStart.disabled = !monitorEnabled;
+    btnSpecStop.disabled = true;
+    stopSpectrumPolling();
+    specDisplay.innerHTML = '<div class="spectrum-placeholder">Spectrum scan stopped</div>';
+  }
+
+  function startSpectrumPolling() {
+    if (spectrumTimer) return;
+    spectrumTimer = setInterval(fetchSpectrumData, 2000);
+    fetchSpectrumData();
+  }
+
+  function stopSpectrumPolling() {
+    if (spectrumTimer) {
+      clearInterval(spectrumTimer);
+      spectrumTimer = null;
+    }
+  }
+
+  async function fetchSpectrumData() {
+    const data = await api("/api/wifi/spectrum/data");
+    if (data.status !== "success") return;
+    renderSpectrum(data.networks || []);
+  }
+
+  function renderSpectrum(networks) {
+    if (!networks.length) {
+      specDisplay.innerHTML = '<div class="spectrum-placeholder">Listening... waiting for signals</div>';
+      return;
+    }
+
+    const html = networks.map((n) => {
+      // Map dBm to percentage (typical range: -100 to -20)
+      const pct = Math.max(0, Math.min(100, ((n.power + 100) / 80) * 100));
+      let signalClass, dbmClass;
+      if (n.power >= -50) {
+        signalClass = "signal-strong";
+        dbmClass = "strong";
+      } else if (n.power >= -70) {
+        signalClass = "signal-medium";
+        dbmClass = "medium";
+      } else {
+        signalClass = "signal-weak";
+        dbmClass = "weak";
+      }
+      const clientBadge = n.clients ? ` 👤${n.clients}` : "";
+      return `<div class="spectrum-row">
+        <div class="spectrum-essid">${escapeHtml(n.essid || "<hidden>")}</div>
+        <div class="spectrum-bssid">${escapeHtml(n.bssid)}</div>
+        <div class="spectrum-channel">CH${n.channel}</div>
+        <div class="spectrum-bar-wrapper">
+          <div class="spectrum-bar ${signalClass}" style="width:${pct}%"></div>
+        </div>
+        <div class="spectrum-dbm ${dbmClass}">${n.power} dBm</div>
+        <div class="spectrum-clients">${clientBadge}</div>
+      </div>`;
+    }).join("");
+
+    specDisplay.innerHTML = `<div class="spectrum-grid">${html}</div>`;
+  }
+
+  // -------------------------------------------------------------------
   // Polling / Status
   // -------------------------------------------------------------------
   async function refreshStatus() {
@@ -301,8 +441,31 @@
 
     renderHandshakes(data.handshakes || []);
 
+    // Restore whitelist
+    if (data.whitelist) {
+      whitelistSet = new Set(data.whitelist.map(x => x.toLowerCase()));
+    }
+
     if (data.networks && data.networks.length) {
+      scannedNetworks = data.networks;
       renderNetworks(data.networks);
+    }
+
+    // Restore monitor mode state
+    if (data.monitor_iface) {
+      monitorEnabled = true;
+      btnMonOn.disabled = true;
+      btnMonOff.disabled = false;
+      btnScan.disabled = false;
+      btnAuto.disabled = false;
+      btnSpecStart.disabled = data.spectrum_running || false;
+    }
+
+    // Restore spectrum state
+    if (data.spectrum_running) {
+      btnSpecStart.disabled = true;
+      btnSpecStop.disabled = false;
+      if (!spectrumTimer) startSpectrumPolling();
     }
 
     if (data.is_running) {
@@ -313,6 +476,7 @@
         setStatus("running", "Running");
       }
       btnStop.disabled = false;
+      startPolling();
     }
   }
 
@@ -339,10 +503,13 @@
   btnStop.addEventListener("click", stopAll);
   btnSubmitAll.addEventListener("click", submitAll);
   btnCheckRes.addEventListener("click", checkResults);
+  btnSpecStart.addEventListener("click", startSpectrumScan);
+  btnSpecStop.addEventListener("click", stopSpectrumScan);
 
   // -------------------------------------------------------------------
   // Init
   // -------------------------------------------------------------------
   loadInterfaces();
+  refreshStatus();
   log("WiFi Pwn module loaded");
 })();

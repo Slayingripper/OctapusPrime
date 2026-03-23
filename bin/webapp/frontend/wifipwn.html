@@ -48,6 +48,18 @@
       </div>
     </section>
 
+    <!-- Live Spectrum Scanner -->
+    <section class="table-section" id="spectrum-section">
+      <h2 class="section-title">📡 Live Spectrum Scanner</h2>
+      <div class="control-row" style="margin-bottom: 16px;">
+        <button id="btn-spectrum-start" class="btn btn-accent" disabled>Start Live Scan</button>
+        <button id="btn-spectrum-stop" class="btn btn-danger" disabled>Stop Live Scan</button>
+      </div>
+      <div id="spectrum-display" class="spectrum-display">
+        <div class="spectrum-placeholder">Enable monitor mode and start live scan to view real-time signal strengths</div>
+      </div>
+    </section>
+
     <!-- Networks Table -->
     <section class="table-section">
       <h2 class="section-title">Discovered Networks</h2>
@@ -84,6 +96,7 @@
               <th>ESSID</th>
               <th>BSSID</th>
               <th>Captured</th>
+              <th>Handshake</th>
               <th>Submitted</th>
               <th>Cracked</th>
               <th>Password</th>
@@ -91,7 +104,7 @@
             </tr>
           </thead>
           <tbody id="handshakes-body">
-            <tr><td colspan="7" class="empty-msg">No handshakes captured yet</td></tr>
+            <tr><td colspan="8" class="empty-msg">No handshakes captured yet</td></tr>
           </tbody>
         </table>
       </div>

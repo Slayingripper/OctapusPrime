@@ -486,6 +486,8 @@ def wifi_submit_wpasec():
         hs = next((h for h in wifi_manager.captured_handshakes if h["bssid"].lower() == bssid.lower()), None)
         if not hs:
             return jsonify(status="error", message="Handshake not found"), 404
+        if not hs.get("verified", False):
+            return jsonify(status="error", message="No valid handshake captured for this network yet"), 400
         if hs["submitted"]:
             return jsonify(status="success", success=True, message="Already submitted")
         result = wifi_manager.submit_to_wpasec(hs["file"], api_key)
@@ -493,10 +495,10 @@ def wifi_submit_wpasec():
             hs["submitted"] = True
         return jsonify(status="success" if result["success"] else "error", **result)
     else:
-        # Submit all unsubmitted
+        # Submit all unsubmitted (only verified ones)
         submitted = 0
         for hs in wifi_manager.captured_handshakes:
-            if not hs["submitted"]:
+            if not hs["submitted"] and hs.get("verified", False):
                 result = wifi_manager.submit_to_wpasec(hs["file"], api_key)
                 if result["success"]:
                     hs["submitted"] = True
@@ -557,11 +559,50 @@ def wifi_stop():
     return jsonify(**result)
 
 
+@app.route("/api/wifi/spectrum/start", methods=["POST"])
+def wifi_spectrum_start():
+    """Start live spectrum scanning."""
+    data = request.get_json(force=True) if request.is_json else {}
+    interval = min(max(int(data.get("interval", 3)), 2), 10)
+    result = wifi_manager.start_spectrum_scan(interval=interval)
+    return jsonify(status="success" if result["success"] else "error", **result)
+
+
+@app.route("/api/wifi/spectrum/stop", methods=["POST"])
+def wifi_spectrum_stop():
+    """Stop live spectrum scanning."""
+    result = wifi_manager.stop_spectrum_scan()
+    return jsonify(status="success", **result)
+
+
+@app.route("/api/wifi/spectrum/data", methods=["GET"])
+def wifi_spectrum_data():
+    """Get current spectrum readings."""
+    data = wifi_manager.get_spectrum_data()
+    return jsonify(status="success", **data)
+
+
 @app.route("/api/wifi/status", methods=["GET"])
 def wifi_status():
     """Get current WiFi module status."""
     return jsonify(status="success", **wifi_manager.get_status())
 
+
+@app.route("/api/wifi/whitelist", methods=["POST"])
+def wifi_whitelist():
+    """Add or remove a BSSID from the auto-hunt whitelist."""
+    data = request.get_json(force=True)
+    action = data.get("action")
+    bssid = data.get("bssid", "")
+    if not bssid:
+        return jsonify(status="error", message="Missing bssid"), 400
+    if action == "add":
+        result = wifi_manager.whitelist_add(bssid)
+    elif action == "remove":
+        result = wifi_manager.whitelist_remove(bssid)
+    else:
+        return jsonify(status="error", message="action must be 'add' or 'remove'"), 400
+    return jsonify(status="success", **result)
 
 
 @app.route("/local_cidr", methods=["GET"])

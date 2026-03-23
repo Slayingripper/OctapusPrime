@@ -2,3 +2,5 @@ venv/
 bin/webapp/__pycache__
 *.pyc
 *.pyo
+*.cap
+*.csv

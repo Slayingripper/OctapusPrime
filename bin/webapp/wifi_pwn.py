@@ -23,6 +23,7 @@ from queue import Queue
 BASE_DIR = Path(__file__).resolve().parent
 HANDSHAKE_DIR = BASE_DIR / "handshakes"
 HANDSHAKE_DIR.mkdir(parents=True, exist_ok=True)
+STATE_FILE = HANDSHAKE_DIR / "wifi_state.json"
 
 # WPA-SEC API
 WPA_SEC_URL = "https://wpa-sec.stanev.org"
@@ -58,10 +59,55 @@ class WiFiPwnManager:
         self.original_iface = None
         self.networks = []
         self.captured_handshakes = []
+        self.whitelist = []  # list of whitelisted BSSIDs (lowercase)
         self.current_target = None
         self._stop_event = threading.Event()
         self._process = None
         self._scan_thread = None
+        self._spectrum_thread = None
+        self._spectrum_stop = threading.Event()
+        self.spectrum_running = False
+        self.spectrum_data = []  # live signal readings
+        self._load_state()
+
+    # ------------------------------------------------------------------
+    # State persistence
+    # ------------------------------------------------------------------
+    def _save_state(self):
+        """Persist captured handshakes and networks to disk."""
+        try:
+            state = {
+                "captured_handshakes": self.captured_handshakes,
+                "networks": self.networks[:50],
+                "whitelist": self.whitelist,
+            }
+            tmp = str(STATE_FILE) + ".tmp"
+            with open(tmp, "w") as f:
+                json.dump(state, f, indent=2)
+            os.replace(tmp, STATE_FILE)
+        except Exception as e:
+            logging.warning(f"Failed to save WiFi state: {e}")
+
+    def _load_state(self):
+        """Restore state from disk on startup."""
+        if not STATE_FILE.exists():
+            return
+        try:
+            with open(STATE_FILE, "r") as f:
+                state = json.load(f)
+            # Restore handshakes — only keep entries whose cap files still exist
+            for hs in state.get("captured_handshakes", []):
+                cap = hs.get("file", "")
+                if os.path.exists(cap):
+                    # Re-verify handshake on load
+                    hs["verified"] = self._verify_handshake(cap, hs.get("bssid"))
+                    self.captured_handshakes.append(hs)
+            self.networks = state.get("networks", [])
+            self.whitelist = state.get("whitelist", [])
+            if self.captured_handshakes:
+                _emit("wifi", f"Restored {len(self.captured_handshakes)} handshake(s) from disk")
+        except Exception as e:
+            logging.warning(f"Failed to load WiFi state: {e}")
 
     # ------------------------------------------------------------------
     # Interface management
@@ -271,6 +317,7 @@ class WiFiPwnManager:
         _emit("wifi", f"CSV size: {len(csv_content)} bytes")
         networks = self._parse_airodump_csv_content(csv_content)
         self.networks = networks
+        self._save_state()
         _emit("wifi", f"Found {len(networks)} networks")
         return networks
 
@@ -352,6 +399,127 @@ class WiFiPwnManager:
             _emit("wifi", f"CSV parse error: {e}")
 
         return networks
+
+    # ------------------------------------------------------------------
+    # Live Spectrum Scanner (real-time signal monitoring)
+    # ------------------------------------------------------------------
+    def start_spectrum_scan(self, interface=None, interval=3):
+        """
+        Start a continuous background airodump-ng scan that refreshes
+        signal strength data every *interval* seconds for direction-finding.
+        """
+        iface = interface or self.monitor_iface
+        if not iface:
+            _emit("wifi", "No monitor interface for spectrum scan")
+            return {"success": False, "message": "No monitor interface"}
+
+        if self.spectrum_running:
+            return {"success": False, "message": "Spectrum scan already running"}
+
+        self._spectrum_stop.clear()
+        self.spectrum_running = True
+
+        def _spectrum_loop():
+            csv_prefix = str(HANDSHAKE_DIR / "spectrum")
+            try:
+                while not self._spectrum_stop.is_set():
+                    # Clean old files
+                    old = glob.glob(f"{csv_prefix}*")
+                    if old:
+                        subprocess.run(
+                            ["sudo", "rm", "-f"] + old,
+                            capture_output=True, timeout=5,
+                        )
+
+                    # Run a quick scan burst
+                    proc = subprocess.Popen(
+                        [
+                            "sudo", "airodump-ng",
+                            "--output-format", "csv",
+                            "--write", csv_prefix,
+                            iface,
+                        ],
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                    )
+                    # Wait for interval
+                    for _ in range(interval):
+                        if self._spectrum_stop.is_set():
+                            break
+                        time.sleep(1)
+                    proc.terminate()
+                    try:
+                        proc.communicate(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        proc.kill()
+
+                    if self._spectrum_stop.is_set():
+                        break
+
+                    # Parse the CSV
+                    csv_candidates = sorted(glob.glob(f"{csv_prefix}*.csv"))
+                    if not csv_candidates:
+                        continue
+
+                    csv_file = csv_candidates[0]
+                    try:
+                        with open(csv_file, "r", errors="ignore") as f:
+                            csv_content = f.read()
+                    except PermissionError:
+                        r = subprocess.run(
+                            ["sudo", "cat", csv_file],
+                            capture_output=True, text=True, timeout=5,
+                        )
+                        csv_content = r.stdout
+
+                    networks = self._parse_airodump_csv_content(csv_content)
+
+                    # Build spectrum data: essid, bssid, channel, power, encryption
+                    self.spectrum_data = [
+                        {
+                            "essid": n.get("essid", ""),
+                            "bssid": n.get("bssid", ""),
+                            "channel": n.get("channel", 0),
+                            "power": n.get("power", -100),
+                            "encryption": n.get("encryption", ""),
+                            "clients": len(n.get("clients", []))
+                                       if isinstance(n.get("clients"), list) else 0,
+                        }
+                        for n in networks
+                    ]
+
+            except Exception as e:
+                _emit("wifi", f"Spectrum scan error: {e}")
+            finally:
+                self.spectrum_running = False
+                self.spectrum_data = []
+                # Clean up
+                old = glob.glob(f"{csv_prefix}*")
+                if old:
+                    subprocess.run(
+                        ["sudo", "rm", "-f"] + old,
+                        capture_output=True, timeout=5,
+                    )
+
+        self._spectrum_thread = threading.Thread(target=_spectrum_loop, daemon=True)
+        self._spectrum_thread.start()
+        _emit("wifi", "Live spectrum scan started")
+        return {"success": True, "message": "Spectrum scan started"}
+
+    def stop_spectrum_scan(self):
+        """Stop the live spectrum scanner."""
+        self._spectrum_stop.set()
+        self.spectrum_running = False
+        _emit("wifi", "Spectrum scan stopped")
+        return {"success": True, "message": "Spectrum scan stopped"}
+
+    def get_spectrum_data(self):
+        """Return current spectrum readings."""
+        return {
+            "running": self.spectrum_running,
+            "networks": sorted(self.spectrum_data,
+                               key=lambda n: n["power"], reverse=True),
+        }
 
     # ------------------------------------------------------------------
     # Deauthentication & handshake capture
@@ -500,43 +668,59 @@ class WiFiPwnManager:
 
         # Check for captured handshake
         cap_candidates = sorted(glob.glob(f"{cap_prefix}*.cap"))
-        for cap_file in cap_candidates:
-            if self._verify_handshake(cap_file, bssid):
-                # Avoid duplicate records for the same BSSID
-                existing = next(
-                    (h for h in self.captured_handshakes
-                     if h["bssid"].lower() == bssid.lower()),
-                    None,
-                )
-                if existing:
-                    existing["file"] = cap_file
-                    existing["timestamp"] = time.strftime("%Y-%m-%d %H:%M:%S")
-                    existing["submitted"] = False  # new capture, needs re-submit
-                    _emit("wifi", f"Handshake re-captured for {essid or bssid}!")
-                    return existing
+        cap_file = cap_candidates[0] if cap_candidates else None
+        has_handshake = cap_file and self._verify_handshake(cap_file, bssid)
 
-                hs_record = {
-                    "bssid": bssid,
-                    "essid": essid,
-                    "file": cap_file,
-                    "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-                    "submitted": False,
-                    "cracked": False,
-                    "password": None,
-                }
-                self.captured_handshakes.append(hs_record)
-                _emit("wifi", f"Handshake captured for {essid or bssid}!")
-                return hs_record
+        if cap_file:
+            # Avoid duplicate records for the same BSSID
+            existing = next(
+                (h for h in self.captured_handshakes
+                 if h["bssid"].lower() == bssid.lower()),
+                None,
+            )
+            if existing:
+                existing["file"] = cap_file
+                existing["timestamp"] = time.strftime("%Y-%m-%d %H:%M:%S")
+                existing["verified"] = has_handshake
+                if has_handshake:
+                    existing["submitted"] = False  # new valid capture, needs re-submit
+                self._save_state()
+                if has_handshake:
+                    _emit("wifi", f"✓ Valid handshake captured for {essid or bssid}!")
+                else:
+                    _emit("wifi", f"Capture saved for {essid or bssid} — no valid handshake yet")
+                return existing
 
-        _emit("wifi", f"No handshake captured for {essid or bssid}")
+            hs_record = {
+                "bssid": bssid,
+                "essid": essid,
+                "file": cap_file,
+                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "submitted": False,
+                "cracked": False,
+                "password": None,
+                "verified": has_handshake,
+            }
+            self.captured_handshakes.append(hs_record)
+            self._save_state()
+            if has_handshake:
+                _emit("wifi", f"✓ Valid handshake captured for {essid or bssid}!")
+            else:
+                _emit("wifi", f"Capture saved for {essid or bssid} — no valid handshake yet")
+            return hs_record
+
+        _emit("wifi", f"No capture file generated for {essid or bssid}")
         self.current_target = None
         return None
 
     def _verify_handshake(self, cap_file, bssid):
         """Use aircrack-ng to verify a captured handshake."""
         try:
+            cmd = ["sudo", "aircrack-ng", cap_file]
+            if bssid:
+                cmd.extend(["-b", bssid])
             result = subprocess.run(
-                ["sudo", "aircrack-ng", cap_file],
+                cmd,
                 capture_output=True, text=True, timeout=15,
             )
             output = result.stdout + result.stderr
@@ -569,6 +753,11 @@ class WiFiPwnManager:
             _emit("wifi", f"{os.path.basename(cap_file)} already submitted — skipping")
             return {"success": True, "message": "Already submitted"}
 
+        # Validate: ensure file contains a valid WPA handshake
+        if not self._verify_handshake(cap_file, None):
+            _emit("wifi", f"No valid handshake in {os.path.basename(cap_file)} — not submitting")
+            return {"success": False, "message": "No valid handshake found in capture file"}
+
         _emit("wifi", f"Submitting {os.path.basename(cap_file)} to WPA-SEC...")
 
         try:
@@ -588,6 +777,7 @@ class WiFiPwnManager:
                         h["submitted"] = True
                         break
                 _emit("wifi", f"✓ Submitted to WPA-SEC: {body}")
+                self._save_state()
                 return {"success": True, "message": body}
             else:
                 msg = f"WPA-SEC upload failed (HTTP {resp.status_code})"
@@ -625,6 +815,8 @@ class WiFiPwnManager:
                             if hs["bssid"].lower() == parts[0].lower():
                                 hs["cracked"] = True
                                 hs["password"] = ":".join(parts[2:])
+
+                self._save_state()
 
                 _emit("wifi", f"WPA-SEC: {len(results)} cracked networks found")
                 return {"success": True, "results": results}
@@ -674,6 +866,11 @@ class WiFiPwnManager:
                         if self._stop_event.is_set():
                             break
 
+                        # Skip whitelisted APs
+                        if net["bssid"].lower() in self.whitelist:
+                            _emit("wifi", f"Skipping whitelisted AP: {net['essid']} ({net['bssid']})")
+                            continue
+
                         # Skip already captured
                         already = any(
                             h["bssid"].lower() == net["bssid"].lower()
@@ -720,6 +917,8 @@ class WiFiPwnManager:
         """Stop any running WiFi operation."""
         self._stop_event.set()
         self.is_running = False
+        if self.spectrum_running:
+            self.stop_spectrum_scan()
         _emit("wifi", "Stop signal sent")
         return {"success": True, "message": "Stop signal sent"}
 
@@ -735,6 +934,8 @@ class WiFiPwnManager:
             "current_target": self.current_target,
             "networks_found": len(self.networks),
             "networks": self.networks[:50],
+            "spectrum_running": self.spectrum_running,
+            "whitelist": self.whitelist,
             "handshakes": [
                 {
                     "bssid": h["bssid"],
@@ -743,10 +944,32 @@ class WiFiPwnManager:
                     "submitted": h["submitted"],
                     "cracked": h["cracked"],
                     "password": h["password"],
+                    "verified": h.get("verified", False),
                 }
                 for h in self.captured_handshakes
             ],
         }
+
+    # ------------------------------------------------------------------
+    # Whitelist management
+    # ------------------------------------------------------------------
+    def whitelist_add(self, bssid):
+        """Add a BSSID to the whitelist."""
+        b = bssid.lower().strip()
+        if b not in self.whitelist:
+            self.whitelist.append(b)
+            self._save_state()
+            _emit("wifi", f"Whitelisted AP: {bssid}")
+        return {"success": True, "whitelist": self.whitelist}
+
+    def whitelist_remove(self, bssid):
+        """Remove a BSSID from the whitelist."""
+        b = bssid.lower().strip()
+        if b in self.whitelist:
+            self.whitelist.remove(b)
+            self._save_state()
+            _emit("wifi", f"Removed from whitelist: {bssid}")
+        return {"success": True, "whitelist": self.whitelist}
 
 
 # Singleton instance

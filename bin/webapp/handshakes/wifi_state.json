@@ -1,0 +1,157 @@
+{
+  "captured_handshakes": [
+    {
+      "bssid": "10:27:F5:E3:58:DE",
+      "essid": "<<<<<Wi-Fi>>>>>",
+      "file": "/home/whitefalcon/gitstuff/OctapusPrime/bin/webapp/handshakes/hs_1027F5E358DE-01.cap",
+      "timestamp": "2026-03-23 09:58:31",
+      "submitted": false,
+      "cracked": false,
+      "password": null,
+      "verified": false
+    },
+    {
+      "bssid": "30:16:9D:BD:B1:CA",
+      "essid": "NetWire24@Ezt139",
+      "file": "/home/whitefalcon/gitstuff/OctapusPrime/bin/webapp/handshakes/hs_30169DBDB1CA-01.cap",
+      "timestamp": "2026-03-23 10:09:04",
+      "submitted": true,
+      "cracked": false,
+      "password": null,
+      "verified": false
+    },
+    {
+      "bssid": "30:16:9D:BD:B1:B2",
+      "essid": "NetWire24@Ezt139",
+      "file": "/home/whitefalcon/gitstuff/OctapusPrime/bin/webapp/handshakes/hs_30169DBDB1B2-01.cap",
+      "timestamp": "2026-03-23 10:08:54",
+      "submitted": true,
+      "cracked": false,
+      "password": null,
+      "verified": false
+    },
+    {
+      "bssid": "36:16:9D:BD:B1:B2",
+      "essid": "NetWire_Guest",
+      "file": "/home/whitefalcon/gitstuff/OctapusPrime/bin/webapp/handshakes/hs_36169DBDB1B2-01.cap",
+      "timestamp": "2026-03-23 10:09:21",
+      "submitted": false,
+      "cracked": false,
+      "password": null,
+      "verified": false
+    },
+    {
+      "bssid": "36:16:9D:BD:B1:CA",
+      "essid": "NetWire_Guest",
+      "file": "/home/whitefalcon/gitstuff/OctapusPrime/bin/webapp/handshakes/hs_36169DBDB1CA-01.cap",
+      "timestamp": "2026-03-23 10:10:37",
+      "submitted": true,
+      "cracked": false,
+      "password": null,
+      "verified": false
+    },
+    {
+      "bssid": "0A:79:8C:AE:D2:B8",
+      "essid": "CYTA_e7Bz",
+      "file": "/home/whitefalcon/gitstuff/OctapusPrime/bin/webapp/handshakes/hs_0A798CAED2B8-01.cap",
+      "timestamp": "2026-03-23 10:11:45",
+      "submitted": true,
+      "cracked": false,
+      "password": null,
+      "verified": false
+    }
+  ],
+  "networks": [
+    {
+      "bssid": "0A:79:8C:AE:D2:B8",
+      "essid": "CYTA_e7Bz",
+      "channel": 5,
+      "power": -87,
+      "encryption": "WPA2 WPA",
+      "clients": [
+        "54:F1:5F:95:3C:20"
+      ]
+    },
+    {
+      "bssid": "AA:42:A1:29:30:A2",
+      "essid": "",
+      "channel": 9,
+      "power": -86,
+      "encryption": "WPA2",
+      "clients": []
+    },
+    {
+      "bssid": "3A:16:9D:BD:B1:B2",
+      "essid": "",
+      "channel": 6,
+      "power": -88,
+      "encryption": "WPA2",
+      "clients": []
+    },
+    {
+      "bssid": "A8:42:A1:69:30:A2",
+      "essid": "<<<<<Wi-Fi>>>>>",
+      "channel": 9,
+      "power": -87,
+      "encryption": "WPA2",
+      "clients": []
+    },
+    {
+      "bssid": "30:16:9D:BD:B1:CA",
+      "essid": "NetWire24@Ezt139",
+      "channel": 6,
+      "power": -87,
+      "encryption": "WPA3 WPA2",
+      "clients": []
+    },
+    {
+      "bssid": "10:27:F5:E3:58:DE",
+      "essid": "<<<<<Wi-Fi>>>>>",
+      "channel": 6,
+      "power": -70,
+      "encryption": "WPA2 WPA",
+      "clients": []
+    },
+    {
+      "bssid": "3A:20:28:AE:E6:5C",
+      "essid": "CYTA_uT4c",
+      "channel": 1,
+      "power": -40,
+      "encryption": "WPA2 WPA",
+      "clients": [
+        "D4:A6:51:52:1D:60",
+        "88:28:7D:37:B0:45",
+        "D4:A6:51:52:45:62"
+      ]
+    },
+    {
+      "bssid": "A4:98:13:8A:CD:A2",
+      "essid": "",
+      "channel": 7,
+      "power": -1,
+      "encryption": "",
+      "clients": [
+        "94:F8:27:F2:0E:50"
+      ]
+    },
+    {
+      "bssid": "36:16:9D:BD:B1:CA",
+      "essid": "NetWire_Guest",
+      "channel": 6,
+      "power": -88,
+      "encryption": "WPA2 WPA",
+      "clients": []
+    },
+    {
+      "bssid": "3A:16:9D:BD:B1:CA",
+      "essid": "",
+      "channel": 6,
+      "power": -85,
+      "encryption": "WPA2",
+      "clients": []
+    }
+  ],
+  "whitelist": [
+    "3a:20:28:ae:e6:5c"
+  ]
+}
